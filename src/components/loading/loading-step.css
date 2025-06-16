@@ -1,0 +1,7 @@
+.wrap-loading {
+  outline: 1px solid #efefef;
+  outline-offset: 0.25rem;
+}
+.wrap-loading .box {
+  margin-block-start: 0.5rem;
+}
