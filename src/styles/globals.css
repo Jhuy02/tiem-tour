@@ -237,3 +237,12 @@ input[type='number'] {
 .gjs-pn-panel.gjs-pn-commands.gjs-one-bg.gjs-two-color {
   padding: 0;
 }
+
+/* Arrow hover effect */
+.arrow-icon:hover .arrow-path {
+  fill: #fbbf24 !important;
+}
+
+.arrow-icon:hover {
+  cursor: pointer;
+}

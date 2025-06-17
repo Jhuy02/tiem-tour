@@ -4,7 +4,7 @@ import type {Metadata} from 'next'
 import localFont from 'next/font/local'
 
 const dvnLuckiestGuy = localFont({
-  src: './fonts/DvnLuckiestGuy-Regular.ttf',
+  src: './fonts/Dvn-LuckiestGuy-Regular.ttf',
   variable: '--font-dvn-luckiest-guy',
   weight: '400',
   preload: false,

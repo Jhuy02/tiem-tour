@@ -1,11 +1,12 @@
-import { Toaster } from '@/components/ui/sonner'
-import GsapProvider from '@/provider/GsapProvider'
+import {Toaster} from '@/components/ui/sonner'
+// import GsapProvider from '@/provider/GsapProvider'
 import NextTopLoader from 'nextjs-toploader'
 
-export default function MainLayout({ children }: { children: React.ReactNode }) {
+export default function MainLayout({children}: {children: React.ReactNode}) {
   return (
     <>
-      <GsapProvider>{children}</GsapProvider>
+      {/* <GsapProvider>{children}</GsapProvider> */}
+      {children}
       <Toaster richColors />
       <NextTopLoader
         color='linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%)'
