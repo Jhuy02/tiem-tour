@@ -4,7 +4,7 @@ import type {Metadata} from 'next'
 import localFont from 'next/font/local'
 
 const dvnLuckiestGuy = localFont({
-  src: './fonts/DVN-LuckiestGuy-Regular.ttf',
+  src: './fonts/Dvn-LuckiestGuy-Regular.ttf',
   variable: '--font-dvn-luckiest-guy',
   weight: '400',
   preload: false,
@@ -36,6 +36,7 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
+  userScalable: false,
 }
 
 export default async function RootLayout({
