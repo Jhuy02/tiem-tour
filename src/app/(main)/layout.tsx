@@ -8,7 +8,7 @@ export default async function MainLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [dataOptions] = await Promise.all([fetchData({api: `v1/options`})])
+  const [dataOptions] = await Promise.all([fetchData({api: `api/v1/options`})])
 
   return (
     <>
