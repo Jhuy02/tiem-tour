@@ -1,12 +1,23 @@
+import Footer from '@/layout/footer/footer'
 import {Toaster} from '@/components/ui/sonner'
+import fetchData from '@/fetches/fetchData'
 // import GsapProvider from '@/provider/GsapProvider'
 import NextTopLoader from 'nextjs-toploader'
 
-export default function MainLayout({children}: {children: React.ReactNode}) {
+export default async function MainLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const data = await fetchData({
+    api: 'options',
+  })
+
   return (
     <>
       {/* <GsapProvider>{children}</GsapProvider> */}
       {children}
+      <Footer data={data.footer} />
       <Toaster richColors />
       <NextTopLoader
         color='linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%)'

@@ -1,0 +1,52 @@
+import {IFooter} from '@/types/footer.interface'
+import Link from 'next/link'
+import Image from 'next/image'
+
+interface FooterMobileContactProps {
+  data: IFooter
+}
+
+const FooterMobileContact = ({data}: FooterMobileContactProps) => {
+  return (
+    <div className='footer__mb-two'>
+      <div className='footer__mb-two--item'>
+        <p className='footer__mb-two--item-title'>
+          {data.footer_contact.title}
+        </p>
+        <a
+          href={`tel:${data.footer_contact.hotline_1}`}
+          className='footer__mb-two--item-content'
+        >
+          {data.footer_contact.hotline_1}
+        </a>
+        <a
+          href={`tel:${data.footer_contact.hotline_2}`}
+          className='footer__mb-two--item-content'
+        >
+          {data.footer_contact.hotline_2}
+        </a>
+        <div className='footer__mb-two--item-social'>
+          {data.footer_contact.social_links.map((item, index) => (
+            <Link
+              href={item.link.url}
+              key={index}
+            >
+              <Image
+                src={item.icon.url}
+                alt={item.icon.alt}
+                width={24}
+                height={24}
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
+      <div className='footer__mb-two--item'>
+        <p className='footer__mb-two--item-title'>{data.address.title}</p>
+        <p className='footer__mb-two--item-content'>{data.address.desc}</p>
+      </div>
+    </div>
+  )
+}
+
+export default FooterMobileContact
