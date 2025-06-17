@@ -9,13 +9,13 @@ import {useGSAP} from '@gsap/react'
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother)
 
 export default function GsapProvider({children}: {children: React.ReactNode}) {
-  useGSAP(() => {
-    ScrollSmoother.create({
-      smooth: 1,
-      effects: true,
-      smoothTouch: false,
-    })
-  }, [])
+  // useGSAP(() => {
+  //   ScrollSmoother.create({
+  //     smooth: 1,
+  //     effects: true,
+  //     smoothTouch: false,
+  //   })
+  // }, [])
   return (
     <div id='smooth-wrapper'>
       <div id='smooth-content'>{children}</div>
