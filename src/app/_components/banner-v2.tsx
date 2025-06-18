@@ -26,7 +26,6 @@ interface IBannerV2 {
 }
 
 export default function BannerV2({data}: IBannerV2) {
-  console.log(data)
   const isMobile = useIsMobile()
   const bannerRef = useRef<HTMLDivElement>(null)
   const handleScrollDown = () => {

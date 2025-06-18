@@ -26,11 +26,12 @@ class CF7Request {
     unitTag: string
   }): Promise<any> {
     if (!id || !unitTag) {
-      throw new Error('Both \'id\' and \'unitTag\' are required.')
+      throw new Error("Both 'id' and 'unitTag' are required.")
     }
 
     try {
       this.formData.set('_wpcf7_unit_tag', unitTag) // Use set to avoid duplicates
+
       const response = await fetch(this.getEndpoint(id), {
         method: 'POST',
         body: this.formData,
