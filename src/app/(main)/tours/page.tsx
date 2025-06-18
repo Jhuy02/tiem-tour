@@ -20,7 +20,6 @@ export default async function TourListPage() {
       }),
     ),
   )
-  console.log(bestChooseTourList)
   return (
     <main className="bg-center bg-no-repeat bg-cover bg-[url('/images/background-page-mobile.webp')] sm:bg-[url('/images/background-page-pc.webp')]">
       <BannerV2 data={compound_banner} />

@@ -57,8 +57,7 @@ export default function ContactForm({data}: IContactPageACF) {
       }
       const request = new CF7Request(dataForm)
       const response = await request.send(endpoints.contactForm)
-      console.log('request:', request)
-      console.log('response:', response)
+
       if (response?.invalid_fields?.length === 0) {
         setDialogStatus('success')
       } else {
