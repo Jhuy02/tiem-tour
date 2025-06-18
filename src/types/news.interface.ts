@@ -52,3 +52,8 @@ export interface NewsList {
   }
   category: string
 }
+
+export interface Categories {
+  name: string
+  slug: string
+}

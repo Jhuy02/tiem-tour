@@ -15,7 +15,7 @@ export default async function MainLayout({
     <>
       <Header dataOptions={dataOptions} />
       {children}
-      {/* <Footer data={data.footer} /> */}
+      <Footer data={dataOptions.footer} />
       <Toaster richColors />
       <NextTopLoader
         color='linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%)'
