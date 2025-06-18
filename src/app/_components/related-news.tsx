@@ -9,8 +9,8 @@ import 'swiper/css/pagination'
 import {Navigation, Pagination} from 'swiper/modules'
 import Link from 'next/link'
 import NewsCard from '@/app/_components/news-card'
-import IconNavigationPrevV1 from '@/components/icon/IconNavigationPrevV1'
-import IconNavigationNextV1 from '@/components/icon/IconNavigationNextV1'
+import ButtonNavPrev from '@/app/_components/button-nav-prev'
+import ButtonNavNext from '@/app/_components/button-nav-next'
 
 interface RelatedNewsItem {
   category: string
@@ -39,13 +39,9 @@ export default function RelatedNewsList({data}: RelatedNewsList) {
           <h2 className='text-[#3b3943] font-dvn-luckiest-guy text-[1.5625rem] sm:text-[3rem] font-normal leading-[130%] flex-1 mr-[1.5rem]'>
             Related Blog
           </h2>
-          <div className='hidden sm:flex items-center shrink-0'>
-            <button className='related-swiper-prev-btn group flex items-center justify-center size-[4rem] rounded-full border-[4px] border-solid cursor-pointer transition-all duration-300 ease-out last:ml-[1rem] hover:bg-[#25acab] hover:border-[#25acab] disabled:cursor-not-allowed disabled:pointer-events-none border-[rgba(0,0,0,0.12)]'>
-              <IconNavigationPrevV1 className='w-[1.625rem] h-auto shrink-0 group-hover:fill-[#fff] fill-[#3b3943] group-disabled:opacity-[0.25]' />
-            </button>
-            <button className='related-swiper-next-btn group flex items-center justify-center size-[4rem] rounded-full border-[4px] border-solid cursor-pointer transition-all duration-300 ease-out last:ml-[1rem] hover:bg-[#25acab] hover:border-[#25acab] disabled:cursor-not-allowed disabled:pointer-events-none border-[rgba(0,0,0,0.12)]'>
-              <IconNavigationNextV1 className='w-[1.625rem] h-auto shrink-0 group-hover:fill-[#fff] fill-[#3b3943] group-disabled:opacity-[0.25]' />
-            </button>
+          <div className='hidden sm:flex items-center shrink-0 space-x-[1rem]'>
+            <ButtonNavPrev className='related-swiper-prev-btn' />
+            <ButtonNavNext className='related-swiper-next-btn' />
           </div>
         </div>
         <div className='hidden sm:block'>
