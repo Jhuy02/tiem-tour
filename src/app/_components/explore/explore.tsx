@@ -7,6 +7,8 @@ import {useEffect, useRef} from 'react'
 import gsap from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 import SplitText from 'gsap/SplitText'
+import ExploreContainerImages from './components/explore-container-images'
+import ExploreContent from './components/explore-content'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -127,105 +129,12 @@ const Explore = ({data}: {data: IExplore}) => {
           className='explore__container-top--mobile'
         />
         <div className='explore__container'>
-          <Image
-            src={'/background.webp'}
-            alt='explore-container-img'
-            width={1920}
-            height={1080}
-            className='explore__container-img'
+          <ExploreContainerImages />
+          <ExploreContent
+            desc={data.desc}
+            descRef={descRef}
+            hint={data.hint}
           />
-          <Image
-            src={'/home/explore/flower.webp'}
-            alt='explore-container-flower'
-            width={259.513}
-            height={259.513}
-            className='explore__container-flower'
-          />
-          <Image
-            src={'/home/explore/river.webp'}
-            alt='explore-container-river'
-            width={1920}
-            height={1080}
-            className='explore__container-river'
-          />
-          <Image
-            src={'/home/explore/river-mb.webp'}
-            alt='explore-container-river-mb'
-            width={1920}
-            height={1080}
-            className='explore__container-river-mb'
-          />
-          <Image
-            src={'/home/explore/river-2.webp'}
-            alt='explore-container-river-2'
-            width={1920}
-            height={1080}
-            className='explore__container-river-2'
-          />
-          <Image
-            src={'/home/explore/fanxipang.webp'}
-            alt='explore-container-fanxipang'
-            width={1920}
-            height={1080}
-            className='explore__container-fanxipang'
-          />
-          <Image
-            src={'/home/explore/fanxipang-2.webp'}
-            alt='explore-container-fanxipang-2'
-            width={1920}
-            height={1080}
-            className='explore__container-fanxipang-2'
-          />
-          <Image
-            src={'/home/explore/coin.webp'}
-            alt='explore-container-remove-bg'
-            width={1920}
-            height={1080}
-            className='explore__container-remove-bg'
-          />
-          <p className='explore__container-text'>Nhoque River</p>
-          <div className='explore__content'>
-            <div className='explore__content-item'>
-              <div className='explore__content-circle'>
-                <Image
-                  src={'/home/explore/circle-text.webp'}
-                  alt='explore-content-circle-text'
-                  width={1920}
-                  height={1080}
-                  className='explore__content-circle-text'
-                />
-                <Image
-                  src={'/home/explore/pattern.svg'}
-                  alt='explore-content-circle-pattern'
-                  width={1920}
-                  height={1080}
-                  className='explore__content-circle-pattern'
-                />
-              </div>
-              <p
-                className='explore__content-desc'
-                ref={descRef}
-              >
-                {data.desc}
-              </p>
-            </div>
-            <div className='explore__content-list'>
-              {data.hint.map((item, index) => (
-                <div
-                  className='explore__content-hint'
-                  key={index}
-                >
-                  <Image
-                    src={item.icon.url}
-                    alt={item.icon.alt}
-                    width={1920}
-                    height={1080}
-                  />
-                  <p>{item.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
     </>
