@@ -18,14 +18,15 @@ const FooterTop = ({data}: FooterTopProps) => {
             <h2 className='footer__top-right--content-title'>
               {data.footer_title}
             </h2>
-            <a
+            <Link
               href={`mailto:${data.footer_email}`}
+              target='_blank'
               className='footer__top-right--content-link'
             >
               {data.footer_email}
-            </a>
+            </Link>
             <Link
-              href={data.footer_link.url}
+              href={`/contact`}
               target={data.footer_link.target}
               className='footer__top-right--content-button space-x-[0.625rem]'
             >

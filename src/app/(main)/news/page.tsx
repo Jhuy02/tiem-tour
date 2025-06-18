@@ -2,6 +2,15 @@ import fetchData from '@/fetches/fetchData'
 import Featured from './_components/featured'
 import NewsList from './_components/news-list'
 import BannerV2 from '@/app/_components/banner-v2'
+import {Suspense} from 'react'
+
+// Simple loading component for Suspense fallback
+const NewsLoading = () => (
+  <div className='flex items-center justify-center py-8'>
+    <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600'></div>
+    <span className='ml-3 text-gray-600'>Loading news...</span>
+  </div>
+)
 
 const NewsPage = async () => {
   const [{acf}, featured, {data: news}, categories] = await Promise.all([
@@ -30,10 +39,12 @@ const NewsPage = async () => {
           <div className='flex items-center xsm:flex-col xsm:relative xsm:my-0 my-[6.25rem]'>
             <Featured featured={featured} />
           </div>
-          <NewsList
-            news={news}
-            categories={categories}
-          />
+          <Suspense fallback={<NewsLoading />}>
+            <NewsList
+              news={news}
+              categories={categories}
+            />
+          </Suspense>
         </section>
       </div>
     </>

@@ -3,6 +3,7 @@ import FooterContact from './footer-contact'
 import FooterAddress from './footer-address'
 import FooterPayment from './footer-payment'
 import ArrowUpRight from './arrow-up-right'
+import Link from 'next/link'
 
 interface FooterBottomProps {
   data: IFooter
@@ -15,10 +16,13 @@ const FooterBottom = ({data}: FooterBottomProps) => {
         <FooterSvg className='absolute top-0 right-0 w-[1.40625rem] h-[1.40625rem] translate-x-[50%] translate-y-[-50%]' />
         <div className='footer__bottom-left--content'>
           <p>{data.footer_desc.footer_copyright}</p>
-          <a href={data.footer_desc.design_copyright.url}>
+          <Link
+            href={data.footer_desc.design_copyright.url}
+            target='_blank'
+          >
             <p>{data.footer_desc.design_copyright.title}</p>
             <ArrowUpRight />
-          </a>
+          </Link>
         </div>
       </div>
       <div className='footer__bottom-right'>

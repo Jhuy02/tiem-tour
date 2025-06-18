@@ -7,6 +7,17 @@ interface FooterMobileContactProps {
 }
 
 const FooterMobileContact = ({data}: FooterMobileContactProps) => {
+  const isEmail = (url: string) => {
+    return url.includes('@') && !url.startsWith('http')
+  }
+
+  const getHref = (url: string) => {
+    if (isEmail(url)) {
+      return `mailto:${url}`
+    }
+    return url
+  }
+
   return (
     <div className='footer__mb-two'>
       <div className='footer__mb-two--item'>
@@ -28,8 +39,9 @@ const FooterMobileContact = ({data}: FooterMobileContactProps) => {
         <div className='footer__mb-two--item-social'>
           {data.footer_contact.social_links.map((item, index) => (
             <Link
-              href={item.link.url}
+              href={getHref(item.link.url)}
               key={index}
+              target='_blank'
             >
               <Image
                 src={item.icon.url}
