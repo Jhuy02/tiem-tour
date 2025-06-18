@@ -38,7 +38,6 @@ export default function ContactForm({data}: IContactPageACF) {
   const [dialogStatus, setDialogStatus] = useState<'success' | 'error' | null>(
     null,
   )
-  console.log('Penđing', isPending)
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -160,13 +159,13 @@ export default function ContactForm({data}: IContactPageACF) {
             <button
               type='submit'
               className={clsx(styles.formSubmit, {
-                'cursor-not-allowed pointer-events-none bg-[#25ACAB]! opacity-50':
+                'cursor-not-allowed pointer-events-none bg-[#25ACAB]! border-[#25ACAB]! opacity-50':
                   isPending,
               })}
             >
               <span
                 className={clsx(styles.formSubmitText, {
-                  'text-[#fff]': isPending,
+                  'text-[#fff]!': isPending,
                 })}
               >
                 Send information
