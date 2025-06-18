@@ -1,3 +1,4 @@
+import Footer from '@/layout/footer/footer'
 import {Toaster} from '@/components/ui/sonner'
 import fetchData from '@/fetches/fetchData'
 import Header from '@/layout/header'
@@ -13,8 +14,8 @@ export default async function MainLayout({
   return (
     <>
       <Header dataOptions={dataOptions} />
-      {/* <GsapProvider>{children}</GsapProvider> */}
       {children}
+      {/* <Footer data={data.footer} /> */}
       <Toaster richColors />
       <NextTopLoader
         color='linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%)'

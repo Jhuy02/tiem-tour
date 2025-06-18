@@ -241,6 +241,51 @@ input[type='number'] {
   padding: 0;
 }
 
+/* Arrow hover effect */
+.arrow-icon:hover .arrow-path {
+  fill: #fbbf24 !important;
+}
+
+.arrow-icon:hover {
+  cursor: pointer;
+}
+
+/* Featured Swiper Pagination Custom Style */
+.featured-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.625rem !important;
+  z-index: 10;
+}
+
+.featured-pagination .swiper-pagination-bullet {
+  width: 4.8315rem;
+  height: 0.375rem;
+  background: #adadad;
+  opacity: 1;
+  margin: 0;
+  border-radius: 0.1875rem;
+  transition: all 0.3s ease;
+}
+
+.featured-pagination .swiper-pagination-bullet-active {
+  background: #637381;
+}
+
+@media screen and (max-width: 639px) {
+  .featured-pagination {
+    bottom: -1.25rem !important;
+  }
+
+  .featured-pagination .swiper-pagination-bullet {
+    width: 4.1275rem;
+  }
+}
+
 .scrollbar-hidden {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
