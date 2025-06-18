@@ -13,6 +13,8 @@ const categories = [
 
 const NewsList = ({news}: {news: NewsList[]}) => {
   const [activeIndex, setActiveIndex] = useState(0)
+  console.log(news)
+
   return (
     <>
       <div className='flex justify-between items-center'>
@@ -41,7 +43,7 @@ const NewsList = ({news}: {news: NewsList[]}) => {
         {news.map((item) => (
           <div
             key={item.link}
-            className='relative w-[21.4375rem] h-[27.3125rem]'
+            className='relative w-[21.4375rem] h-[27.3125rem] group'
           >
             <Image
               src={'/news/card-bg.webp'}
@@ -50,7 +52,7 @@ const NewsList = ({news}: {news: NewsList[]}) => {
               fill
               quality={100}
             />
-            <div className='p-[1.75rem_1.5rem] w-full relative'>
+            <div className='p-[1.75rem_1.5rem] w-full relative h-[11.875rem]'>
               <p className='space-x-[0.75rem] font-trip-sans'>
                 <span className='text-[#FCFF49] text-[0.75rem] font-extrabold leading-[0.9rem] tracking-[0.0018rem] uppercase'>
                   {item.category}
@@ -64,14 +66,15 @@ const NewsList = ({news}: {news: NewsList[]}) => {
                 {item.title}
               </h3>
             </div>
-            <div className='relative w-[19.625rem] h-[12.0625rem] rounded-[8.0625rem]'>
+            <div className='relative w-[19.625rem] h-[12.0625rem] rounded-[8.0625rem] overflow-hidden mx-auto transition-transform duration-300'>
               <Image
-                src={item.image.url}
-                alt={item.image.alt}
-                className='w-full h-full object-cover'
-                quality={100}
-                width={19.625}
-                height={12.0625}
+                src={
+                  item.image !== null ? item.image.url : '/card-default.webp'
+                }
+                alt={item.image !== null ? item.image.alt : 'card-default'}
+                className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-500'
+                width={314}
+                height={209.333}
               />
             </div>
           </div>
