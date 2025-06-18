@@ -53,3 +53,13 @@
     paint-order: stroke fill;
   }
 }
+
+/* Swiper fade effect styles */
+.swiper-fade .swiper-slide {
+  pointer-events: none;
+  transition-property: opacity;
+}
+
+.swiper-fade .swiper-slide-active {
+  pointer-events: auto;
+}

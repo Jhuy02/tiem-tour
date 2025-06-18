@@ -9,7 +9,10 @@ interface FooterMobileCopyrightProps {
 const FooterMobileCopyright = ({data}: FooterMobileCopyrightProps) => {
   return (
     <div className='footer__mb-copyright'>
-      <Link href={data.footer_desc.design_copyright.url}>
+      <Link
+        href={data.footer_desc.design_copyright.url}
+        target='_blank'
+      >
         <p>{data.footer_desc.design_copyright.title}</p>
         <ArrowUpRight />
       </Link>

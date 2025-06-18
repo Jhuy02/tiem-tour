@@ -12,6 +12,8 @@ import {Swiper, SwiperSlide} from 'swiper/react'
 
 // Import Swiper styles
 import 'swiper/css'
+import 'swiper/css/effect-fade'
+import {Autoplay, EffectFade} from 'swiper/modules'
 
 interface IBannerImage {
   image_pc: {url: string; alt?: string}
@@ -94,7 +96,22 @@ export default function BannerV2({data}: IBannerV2) {
         ></h1>
       </div>
 
-      <Swiper className='absolute top-0 left-0 w-full h-full z-0!'>
+      <Swiper
+        className='absolute top-0 left-0 w-full h-full z-0! swiper-fade'
+        loop={true}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay, EffectFade]}
+        speed={1000}
+        slidesPerView={1}
+        spaceBetween={0}
+        effect='fade'
+        fadeEffect={{
+          crossFade: true,
+        }}
+      >
         {data?.banner_image?.map(({image_pc, image_mobile}, index) => {
           const imageUrl = isMobile ? image_mobile.url : image_pc.url
           const altText = isMobile ? image_mobile.alt : image_pc.alt
