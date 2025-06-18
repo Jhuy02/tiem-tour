@@ -1,7 +1,7 @@
 import Footer from '@/layout/footer/footer'
 import {Toaster} from '@/components/ui/sonner'
 import fetchData from '@/fetches/fetchData'
-// import GsapProvider from '@/provider/GsapProvider'
+import Header from '@/layout/header'
 import NextTopLoader from 'nextjs-toploader'
 
 export default async function MainLayout({
@@ -9,15 +9,13 @@ export default async function MainLayout({
 }: {
   children: React.ReactNode
 }) {
-  const data = await fetchData({
-    api: 'api/v1/options',
-  })
+  const [dataOptions] = await Promise.all([fetchData({api: `api/v1/options`})])
 
   return (
     <>
-      {/* <GsapProvider>{children}</GsapProvider> */}
+      <Header dataOptions={dataOptions} />
       {children}
-      <Footer data={data.footer} />
+      {/* <Footer data={data.footer} /> */}
       <Toaster richColors />
       <NextTopLoader
         color='linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%)'

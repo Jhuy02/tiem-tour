@@ -1,0 +1,69 @@
+import React from 'react'
+
+export default function IconScrollDown(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={30}
+      height={50}
+      viewBox='0 0 30 50'
+      fill='none'
+      {...props}
+    >
+      <rect
+        x='0.226562'
+        width='29.5455'
+        height={50}
+        rx='14.7727'
+        fill='#2E3A45'
+      />
+      <rect
+        x='0.226562'
+        width='29.5455'
+        height={50}
+        rx='14.7727'
+        fill='url(#paint0_linear_2400_24119)'
+      />
+      <rect
+        x='2.5'
+        y='2.27344'
+        width={25}
+        height='45.4545'
+        rx='12.5'
+        fill='#F7F4E8'
+      />
+      <rect
+        x='12.1602'
+        y='22.1602'
+        width='5.68182'
+        height='5.68182'
+        rx='2.84091'
+        fill='#EC352D'
+      />
+      <defs>
+        <linearGradient
+          id='paint0_linear_2400_24119'
+          x1='14.9993'
+          y1={0}
+          x2='14.9993'
+          y2={50}
+          gradientUnits='userSpaceOnUse'
+        >
+          <stop stopColor='#EC352D' />
+          <stop
+            offset='0.5'
+            stopColor='#EC352D'
+          />
+          <stop
+            offset='0.5'
+            stopColor='#5AC8C8'
+          />
+          <stop
+            offset={1}
+            stopColor='#5AC8C8'
+          />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
