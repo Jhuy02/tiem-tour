@@ -10,7 +10,7 @@ export default async function MainLayout({
   children: React.ReactNode
 }) {
   const data = await fetchData({
-    api: 'options',
+    api: 'api/v1/options',
   })
 
   return (

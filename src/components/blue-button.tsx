@@ -9,6 +9,7 @@ interface BlueButtonProps {
   borderColor?: string
   imageFilter?: string
   arrowColor?: string
+  className?: string
 }
 
 export function BlueButton({
@@ -17,11 +18,12 @@ export function BlueButton({
   textColor = '#19c2c2',
   borderColor = 'rgba(255, 255, 255, 0.12)',
   arrowColor = '#19c2c2',
+  className,
 }: BlueButtonProps) {
   return (
     <Link
       href={href}
-      className='flex px-10 py-5 justify-center items-center gap-2.5 rounded-[3.125rem] border-4 shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)] w-fit mx-auto mt-14 relative overflow-hidden transition-all duration-700 ease-in-out z-10 bg-transparent no-underline group'
+      className={`flex justify-center items-center gap-2.5 rounded-[3.125rem] border-4 shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)] w-fit relative overflow-hidden transition-all duration-700 ease-in-out z-10 bg-transparent no-underline group ${className}`}
       style={{borderColor}}
     >
       <p
