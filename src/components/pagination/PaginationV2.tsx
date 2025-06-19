@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import useIsMobile from '@/hooks/useIsMobile';
-import { cn } from '@/lib/utils';
-import { gsap } from "gsap";
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { forwardRef, useEffect } from 'react';
-import ReactPaginate from 'react-paginate';
+import useIsMobile from '@/hooks/useIsMobile'
+import {cn} from '@/lib/utils'
+import {gsap} from 'gsap'
+import {usePathname, useRouter, useSearchParams} from 'next/navigation'
+import {forwardRef, useEffect} from 'react'
+import ReactPaginate from 'react-paginate'
 
 import ScrollToPlugin from 'gsap/ScrollToPlugin'
 import EaselPlugin from 'gsap/EaselPlugin'
@@ -55,24 +55,24 @@ const PaginationV2 = forwardRef(
       if (ref && ref.current) {
         gsap.to(window, {
           duration: isMobile ? 1 : 0.5,
-          scrollTo: { y: ref.current.offsetTop - 80 },
+          scrollTo: {y: ref.current.offsetTop - 80},
           ease: 'power2.out',
-        });
+        })
       }
     }
 
     return (
       <ReactPaginate
-        activeClassName='!bg-[#1A2B49] text-white lg:hover:bg-[#1A2B49]'
-        pageClassName='size-[2rem] xsm:size-[2rem] rounded-full flex-center text-textDark text-[0.875rem] font-medium leading-normal bg-[#292929]/10 [&>a]:size-full [&>a]:flex-center select-none lg:hover:bg-[#1A2B49]/20 xsm:text-[0.7rem]'
+        activeClassName='!bg-[#25ACAB] text-white lg:hover:bg-[#25ACAB] border-none cursor-pointer'
+        pageClassName='size-[2.5rem] xsm:size-[2rem] rounded-full flex-center text-[#303030]/80 text-[0.875rem] leading-[2.5rem] bg-transparent [&>a]:size-full [&>a]:flex-center select-none lg:hover:bg-[#25ACAB] xsm:text-[0.7rem] lg:hover:text-white border-black/12 border cursor-pointer'
         previousLabel={
-          <button className='group size-[2rem] rounded-full flex-center lg:hover:bg-[#1A2B49]/20 xsm:size-[2rem]'>
-            <ICArrowPagination className='ease-pagination-bezier size-[0.8rem] transition-all duration-300 lg:group-hover:scale-[1.2]' />
+          <button className='group size-[2rem] rounded-full flex-center xsm:size-[2rem] cursor-pointer'>
+            <ICArrowPagination className='ease-pagination-bezier size-[1.5rem] transition-all duration-300 lg:group-hover:scale-[1.2]' />
           </button>
         }
         nextLabel={
-          <button className='group size-[2rem] rounded-full flex-center lg:hover:bg-[#1A2B49]/20 xsm:size-[2rem]'>
-            <ICArrowPagination className='ease-pagination-bezier size-[0.8rem] rotate-180 transition-all duration-300 lg:group-hover:scale-[1.2]' />
+          <button className='group size-[2rem] rounded-full flex-center xsm:size-[2rem] cursor-pointer'>
+            <ICArrowPagination className='ease-pagination-bezier size-[1.5rem] rotate-180 transition-all duration-300 lg:group-hover:scale-[1.2]' />
           </button>
         }
         breakClassName='w-fit xsm:size-[2rem] rounded-[0.75rem] flex-center select-none'
@@ -107,15 +107,18 @@ const ICArrowPagination = ({className}: {className?: string}) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='8'
-      height='12'
-      viewBox='0 0 8 12'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
       fill='none'
       className={className}
     >
       <path
-        d='M6.66699 1L1.66781 5.99918L6.66699 10.9984'
-        stroke='#292929'
+        d='M18 17L13 12L18 7M11 17L6 12L11 7'
+        stroke='#303030'
+        strokeWidth='2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   )
@@ -125,18 +128,18 @@ const ICBreakPagination = ({className}: {className?: string}) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='5'
-      height='4'
-      viewBox='0 0 5 4'
+      width='24'
+      height='24'
+      viewBox='0 0 24 24'
       fill='none'
       className={className}
     >
-      <ellipse
-        cx='2.33351'
-        cy='2'
-        rx='2.00002'
-        ry='2'
-        fill='#292929'
+      <path
+        d='M6 17L11 12L6 7M13 17L18 12L13 7'
+        stroke='#303030'
+        strokeWidth='2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   )

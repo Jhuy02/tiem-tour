@@ -17,7 +17,7 @@ const useIsMobile = () => {
       }
     }
 
-    const debouncedCheckMobile = debounce(checkMobile, 50)
+    const debouncedCheckMobile = debounce(checkMobile, 0)
 
     checkMobile()
     window.addEventListener('resize', debouncedCheckMobile)

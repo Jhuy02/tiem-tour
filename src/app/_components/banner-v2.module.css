@@ -1,0 +1,65 @@
+.bannerTitle {
+  color: #fb0;
+  text-align: center;
+  text-shadow: 3.376px 5.064px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke-width: 0.75rem;
+  -webkit-text-stroke-color: #432b00;
+  font-family: var(--font-dvn-luckiest-guy);
+  font-size: 3.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 87%;
+  letter-spacing: 0.07rem;
+  paint-order: stroke fill;
+}
+.bannerTitle strong {
+  text-shadow: 5.218px 7.826px 0px rgba(0, 0, 0, 0.25);
+  -webkit-text-stroke-width: 0.875rem;
+  -webkit-text-stroke-color: #452c01;
+  font-size: 4.75rem;
+  letter-spacing: 0.095rem;
+  paint-order: stroke fill;
+  display: block;
+  transform: translateY(-0.25rem);
+  position: relative;
+  z-index: -1;
+}
+
+@media (max-width: 639.98px) {
+  .bannerTitle strong {
+    text-shadow: 3.007px 4.51px 0px rgba(0, 0, 0, 0.25);
+    -webkit-text-stroke-width: 0.575rem;
+    font-size: 2.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 87%;
+    letter-spacing: 0.045rem;
+    paint-order: stroke fill;
+    display: block;
+    transform: translateY(-0.25rem);
+    position: relative;
+    z-index: -1;
+    white-space: nowrap;
+  }
+
+  .bannerTitle {
+    text-shadow: 1.945px 2.918px 0px rgba(0, 0, 0, 0.25);
+    -webkit-text-stroke-width: 0.425rem;
+    font-size: 1.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 87%;
+    letter-spacing: 0.0375rem;
+    paint-order: stroke fill;
+  }
+}
+
+/* Swiper fade effect styles */
+.swiper-fade .swiper-slide {
+  pointer-events: none;
+  transition-property: opacity;
+}
+
+.swiper-fade .swiper-slide-active {
+  pointer-events: auto;
+}
