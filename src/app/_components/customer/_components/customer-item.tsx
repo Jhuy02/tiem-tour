@@ -9,6 +9,9 @@ interface CustomerItemProps {
 }
 
 export const CustomerItem = ({item, isReverse}: CustomerItemProps) => {
+  const RATING_COUNT = 4
+
+
   return (
     <div
       className={`customer__item swiper-slide${
@@ -38,7 +41,7 @@ export const CustomerItem = ({item, isReverse}: CustomerItemProps) => {
               <div className='customer__item-avatar-info'>
                 <span className='customer__item-name'>{item.name}</span>
                 <div className='customer__item-rating-mobile'>
-                  {Array.from({length: 4}).map((_, i) => (
+                  {Array.from({length: RATING_COUNT}).map((_, i) => (
                     <Rating key={i} />
                   ))}
                 </div>

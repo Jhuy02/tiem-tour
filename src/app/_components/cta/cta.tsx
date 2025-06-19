@@ -52,8 +52,7 @@ const CTA = ({data}: {data: ICta}) => {
     circle.style.strokeDashoffset = String(length)
 
     const updateCircle = () => {
-      const scrollTop =
-        document.body.scrollTop + document.documentElement.scrollTop
+      const scrollTop = document.documentElement.scrollTop
       const docHeight =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight
