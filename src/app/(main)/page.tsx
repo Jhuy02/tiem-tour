@@ -14,7 +14,7 @@ export default async function Page() {
       fetchData({api: `wp/v2/pages/19?_fields=acf&acf_format=standard`}),
       fetchData({api: `api/v1/taxonomies?taxonomies=location,duration`}),
       fetchData({api: `api/v1/home-our-tour`}),
-      fetchData({api: `api/v1/guild-news`}),
+      fetchData({api: `custom/v1/guild-news`}),
     ])
 
   const defaultLocation = dataTaxonomies?.location?.[0]?.slug || ''
@@ -22,7 +22,6 @@ export default async function Page() {
   const {data: discoverTours} = await fetchData({
     api: `api/v1/get-all/tour?page=1&limit=6&tax=location&location=${defaultLocation}&order=DESC&orderby=date`,
   })
-  console.log(dataPostOurTour)
   return (
     <>
       <Banner
