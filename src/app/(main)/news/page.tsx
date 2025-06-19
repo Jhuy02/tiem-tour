@@ -4,7 +4,6 @@ import NewsList from './_components/news-list'
 import BannerV2 from '@/app/_components/banner-v2'
 import {Suspense} from 'react'
 
-// Simple loading component for Suspense fallback
 const NewsLoading = () => (
   <div className='flex items-center justify-center py-8'>
     <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600'></div>

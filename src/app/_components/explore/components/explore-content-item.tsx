@@ -17,7 +17,7 @@ const ExploreContentItem = ({desc, descRef}: Props) => (
         className='explore__content-circle-text'
       />
       <Image
-        src={'/home/explore/pattern.svg'}
+        src={'/pattern.svg'}
         alt='explore-content-circle-pattern'
         width={1920}
         height={1080}
