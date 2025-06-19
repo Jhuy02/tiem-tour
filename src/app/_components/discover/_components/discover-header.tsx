@@ -33,23 +33,24 @@ const DiscoverHeader = ({
         <p className='discover__header-desc'>{data.sub_title}</p>
       </article>
       <article className='discover__header-right'>
-        {location.map((loc) => (
-          <div
-            key={loc.id}
-            className={`discover__header-right-item ${
-              activeLocation === loc.slug ? 'active' : ''
-            }`}
-            onClick={() => onLocationChange(loc.slug)}
-          >
-            <ImageFallback
-              src={loc.map_location}
-              alt={loc.name}
-              width={64}
-              height={64}
-            />
-            <span>{loc.name}</span>
-          </div>
-        ))}
+        {Array.isArray(location) &&
+          location.map((loc) => (
+            <div
+              key={loc.id}
+              className={`discover__header-right-item ${
+                activeLocation === loc.slug ? 'active' : ''
+              }`}
+              onClick={() => onLocationChange(loc.slug)}
+            >
+              <ImageFallback
+                src={loc.map_location}
+                alt={loc.name}
+                width={64}
+                height={64}
+              />
+              <span>{loc.name}</span>
+            </div>
+          ))}
       </article>
     </div>
   )
