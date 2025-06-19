@@ -1,5 +1,4 @@
 import {IDiscoverTour} from '@/types/discover.interface'
-import Image from 'next/image'
 import Link from 'next/link'
 import ImageFallback from '@/components/image/ImageFallback'
 
@@ -14,7 +13,7 @@ const TourCard = ({tour}: TourCardProps) => {
         href={tour.link}
         className='group xsm:group-none'
       >
-        <Image
+        <ImageFallback
           src={'/home/discover/bg-card.webp'}
           alt='bg-card'
           width={355}

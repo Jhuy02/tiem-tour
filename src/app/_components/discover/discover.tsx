@@ -83,6 +83,7 @@ const Discover = ({
             tours={tours}
             toursData={toursData}
             isLoading={isLoading}
+            activeLocation={activeLocation}
           />
         ) : (
           <DesktopTourSwiper

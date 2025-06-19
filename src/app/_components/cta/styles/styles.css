@@ -1,0 +1,236 @@
+/* ====================== CTA ========================= */
+#CTA-buttons {
+}
+#CTA-buttons.active {
+  opacity: 1;
+  pointer-events: auto;
+  right: 0.75rem;
+}
+
+#CTA-buttons {
+  position: fixed;
+  bottom: 2rem;
+  right: -100%;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+#CTA-buttons .booknow {
+  width: 3.71613rem;
+  height: 3.71613rem;
+  border-radius: 50%;
+  padding: 0.75rem;
+  text-align: center;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--Palette-Color-Green-test-2, #286a00);
+  color: var(--Text-Body-white, rgba(255, 255, 255, 0.8));
+  font-family: 'ABC Ginto Nord Condensed Unlicensed Trial';
+  font-size: 0.625rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 0.6875rem; /* 110% */
+}
+
+#CTA-buttons .whatsapp {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+}
+
+#CTA-buttons .whatsapp img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+#CTA-buttons .scroll-to-top {
+  width: 3.125rem;
+  height: 3.125rem;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  margin-top: 1rem;
+}
+#CTA-buttons .scroll-to-top svg {
+  width: 100%;
+  height: 100%;
+}
+@keyframes scroll-to-top {
+  0% {
+    transform: translateY(0.3rem);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(0.3rem);
+  }
+}
+#CTA-buttons .scroll-to-top .arrow {
+  animation: scroll-to-top 1s ease-in-out infinite;
+}
+
+.fab__whatsapp {
+  width: 3.125rem;
+  height: 3.125rem;
+  position: relative;
+  background-color: transparent;
+  border-radius: 50%;
+  border: none;
+  margin-top: 1.125rem;
+  margin-left: 0.5rem;
+}
+
+.fab__whatsapp .fab__whatsapp__icon {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.fab__whatsapp .fab__whatsapp__icon img {
+  width: 4rem;
+  height: auto;
+  object-fit: contain;
+  min-width: 4rem;
+  transform: translateX(0.125rem);
+}
+
+.fab__whatsapp .fab__whatsapp__animation1 {
+  transform: translate(-55%, -45%);
+}
+
+.fab__whatsapp .fab__whatsapp__animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3.125rem;
+  height: 3.125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fab__whatsapp .fab__whatsapp__animation .animation__ping__1 {
+  background: #c8d3c8;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  transform-origin: center;
+}
+
+.fab__whatsapp .fab__whatsapp__animation .animation__ping__2 {
+  width: 115%;
+  min-width: 115%;
+  height: 115%;
+  border-radius: 50%;
+  transform-origin: center;
+  background: #cdd4cd;
+  transform: translate(-0.2rem, 0.1rem);
+}
+
+.fab__whatsapp .fab__whatsapp__animation .animation__ping__3 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform-origin: center;
+  background: #dee4de;
+  transform: translate(-0.2rem, 0.1rem);
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.messenger {
+  display: flex;
+  width: 3.64731rem;
+  height: 3.64731rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.125rem;
+  margin-left: 0.3125rem;
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: translateX(-0.25rem) scale(1.8);
+    opacity: 0;
+  }
+}
+
+@media screen and (max-width: 639.98px) {
+  #CTA-buttons .booknow {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  #CTA-buttons .whatsapp {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  #CTA-buttons .scroll-to-top {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .fab__whatsapp {
+    transform: scale(0.7);
+  }
+}
+
+#chat-with-us {
+  display: none;
+  padding: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0px -4px 12px 0px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+}
+#chat-with-us .logo {
+  width: 6.42188rem;
+  height: 1.96875rem;
+  object-fit: contain;
+}
+#chat-with-us .chat-btn {
+  display: flex;
+  height: 2.875rem;
+  padding: 1.1875rem 1.6875rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6.25rem;
+  background: var(--Palette-Color-Invert-invert, #f2f0e8);
+  color: var(--Palette-Color-Text---Title-text---title, #242421);
+  text-align: center;
+  /* PC/Buttons/buttons */
+  font-family: 'Be Vietnam';
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 115%; /* 0.8625rem */
+  text-transform: uppercase;
+}

@@ -1,0 +1,394 @@
+#guild {
+  height: 62.295rem;
+  width: 100%;
+  position: relative;
+  padding-top: 2.125rem;
+  background: #f0ebe5;
+}
+
+#guild .guild__top {
+  width: 100%;
+  height: 8.325rem;
+  position: absolute;
+  top: -8.125rem;
+  left: 0;
+  object-fit: cover;
+  z-index: 5;
+  display: block;
+}
+
+#guild .guild__top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6.25rem;
+}
+
+#guild .guild__overlay-pc {
+  display: block;
+  height: 66.9375rem;
+  width: 100%;
+  align-self: stretch;
+  background: linear-gradient(180deg, #fff 0%, #f0ebe5 72.66%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+#guild .guild__top-header-title {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+}
+
+#guild .guild__top-header-title img {
+  width: 4rem;
+  height: 4rem;
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(346deg)
+    brightness(101%) contrast(101%);
+  margin-right: 0.8125rem;
+}
+
+#guild .guild__top-header-title span {
+  transform: rotate(-2.013deg);
+  color: #f76942;
+
+  -webkit-text-stroke-width: 7px;
+  -webkit-text-stroke-color: rgba(255, 51, 0, 0.3);
+  font-family: var(--font-nvn-motherland);
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#guild .guild__top-header-left > p {
+  color: var(--Text-Tittle-1, #3b3943);
+  font-family: var(--font-dvn-luckiest-guy);
+  font-size: 3.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 4.2rem */
+  margin-top: 0.4375rem;
+  position: relative;
+  z-index: 3;
+}
+
+#guild .guild__top-header-right {
+  color: var(--Text-Body-80, rgba(48, 48, 48, 0.8));
+  font-family: var(--font-trip-sans);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 1.2rem */
+  letter-spacing: 0.0025rem;
+  width: 21.91856rem;
+  position: relative;
+  z-index: 3;
+}
+
+#guild .guild__list {
+  padding: 0 6.25rem;
+  margin-top: 4rem;
+  position: relative;
+  z-index: 3;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+#guild .guild__list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+#guild .guild__item {
+  position: relative;
+  display: flex;
+  height: 27.3125rem;
+  flex-direction: column;
+  align-items: center;
+}
+
+#guild .guild__item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+#guild .guild__item-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #115a46;
+  opacity: 0.7;
+  z-index: 2;
+}
+
+#guild .guild__item-content article {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  width: 20.9375rem;
+  padding: 1.75rem 1.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+#guild .guild__item-content article p {
+  display: flex;
+  align-items: center;
+}
+
+#guild .guild__item-content article p .guild__item-tag {
+  color: var(--Yellow, #fcff49);
+
+  /* PC/12/12 - B - chip */
+  font-family: 'Trip Sans';
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 120%; /* 0.9rem */
+  letter-spacing: 0.00188rem;
+  text-transform: uppercase;
+}
+
+#guild .guild__item-content article p .guild__item-dot {
+  color: #fff;
+  margin: 0 0.75rem;
+}
+
+#guild .guild__item-content article p .guild__item-date {
+  color: #fff;
+
+  /* PC/12/12-R-120% */
+  font-family: 'Trip Sans';
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 0.9rem */
+  letter-spacing: 0.00188rem;
+  opacity: 0.6;
+}
+
+#guild .guild__item-title {
+  margin-top: 1rem;
+  color: var(--Text-Body-White---80, rgba(255, 255, 255, 0.8));
+  font-feature-settings: 'liga' off, 'clig' off;
+
+  /* PC/H4/24-R- Upper */
+  font-family: 'DVN - Luckiest Guy';
+  font-size: 1.625rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 1.95rem */
+  letter-spacing: 0.01563rem;
+  text-transform: uppercase;
+  opacity: 0.8;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#guild .guild__item-content--image {
+  width: 19rem;
+  height: 13.08331rem;
+
+  border-radius: 8.0625rem;
+  overflow: hidden;
+  position: relative;
+  z-index: 3;
+  margin: 0 auto;
+}
+
+#guild .guild__item-content--image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+#guild .swiper-slide:hover .guild__item-content--image img {
+  transform: scale(1.05);
+}
+
+#guild .guild__bg-mobile,
+#guild .guild__overlay-mobile {
+  display: none;
+}
+
+#guild .guild__button-container {
+  display: block;
+}
+
+@media screen and (max-width: 639.98px) {
+  #guild .guild__overlay-pc {
+    display: none;
+  }
+  #guild {
+    height: 44.275rem;
+    width: 100%;
+    padding-top: 1rem;
+    background: linear-gradient(180deg, #fff 0%, rgba(240, 235, 229, 0) 72.66%);
+  }
+
+  #guild .guild__bg-mobile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: block;
+  }
+
+  #guild .guild__overlay-mobile {
+    background: linear-gradient(180deg, #fff 0%, rgba(240, 235, 229, 0) 72.66%);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: block;
+  }
+
+  #guild .guild__top-header {
+    padding: 0 0.75rem;
+    position: relative;
+    z-index: 3;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 2.875rem;
+  }
+
+  #guild .guild__top-header-title img {
+    width: 2.5rem;
+    height: 2.5rem;
+    aspect-ratio: 1/1;
+    margin-right: 0.3125rem;
+  }
+
+  #guild .guild__top-header-title span {
+    -webkit-text-stroke-width: 3px;
+    font-family: var(--font-nvn-motherland);
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  #guild .guild__top-header-left > p {
+    color: var(--Text-Tittle-1, #3b3943);
+
+    /* MB/H2/25-L */
+    font-family: var(--font-dvn-luckiest-guy);
+    font-size: 1.5625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%; /* 2.03125rem */
+    margin-top: 0;
+  }
+
+  #guild .guild__top-header-right {
+    color: var(--Text-Body-80, rgba(48, 48, 48, 0.8));
+
+    /* MB/14/14 - R - Mb */
+    font-family: var(--font-trip-sans);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 1.3125rem */
+    letter-spacing: 0.00219rem;
+  }
+
+  #guild .guild__list {
+    margin-top: 1.875rem;
+    padding: 0;
+    position: relative;
+    z-index: 3;
+    overflow: auto;
+  }
+
+  #guild .swiper-wrapper {
+    width: max-content;
+    padding: 0 0.75rem;
+  }
+
+  #guild .guild__item {
+    width: 18.625rem;
+    height: 23.5rem;
+    margin-right: 0.75rem;
+  }
+
+  #guild .guild__item:last-child {
+    margin-right: 0rem;
+  }
+
+  #guild .guild__item-content article {
+    display: flex;
+    width: 18.625rem;
+    padding: 1.5rem 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+
+  #guild .guild__item-content article p .guild__item-tag {
+    color: var(--Yellow, #fcff49);
+
+    /* MB/12/12 - B - Mb */
+    font-family: var(--font-trip-sans);
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%; /* 0.9rem */
+    letter-spacing: 0.00188rem;
+  }
+
+  #guild .guild__item-title {
+    color: var(--White, #fff);
+
+    /* MB/H3/22 */
+    font-family: var(--font-dvn-luckiest-guy);
+    font-size: 1.375rem;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 0.875rem;
+    line-height: 130%; /* 1.7875rem */
+  }
+
+  #guild .guild__item-content--image {
+    display: flex;
+    width: 17.375rem;
+    height: 11.125rem;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 8.0625rem;
+  }
+
+  #guild .guild__button-container {
+    display: none;
+  }
+
+  #guild .guild__top {
+    top: -1.9rem;
+    height: auto;
+  }
+}

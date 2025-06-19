@@ -1,3 +1,4 @@
+import ImageFallback from '@/components/image/ImageFallback'
 import {IDiscoverLocation} from '@/types/discover.interface'
 import Image from 'next/image'
 
@@ -40,7 +41,7 @@ const DiscoverHeader = ({
             }`}
             onClick={() => onLocationChange(loc.slug)}
           >
-            <Image
+            <ImageFallback
               src={loc.map_location}
               alt={loc.name}
               width={64}
