@@ -22,7 +22,10 @@ export default async function TourListPage() {
   )
   return (
     <main className="bg-center bg-no-repeat bg-cover bg-[url('/images/background-page-mobile.webp')] sm:bg-[url('/images/background-page-pc.webp')]">
-      <BannerV2 data={compound_banner} />
+      <BannerV2
+        data={compound_banner}
+        variant='secondary'
+      />
       <SectionBestChoose
         title={best_choose_title}
         tour_list={bestChooseTourList}
