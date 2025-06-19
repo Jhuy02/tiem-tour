@@ -106,9 +106,7 @@ export default function NewsContent({data}: NewsContentProps) {
     container.querySelectorAll('table').forEach((table) => {
       const wrapper = document.createElement('div')
       wrapper.classList.add(styles.tableResponsive)
-      console.log('Wrapper', wrapper)
       table.parentNode?.insertBefore(wrapper, table)
-      console.log('Table', table)
       wrapper.appendChild(table)
     })
   }
