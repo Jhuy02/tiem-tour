@@ -4,6 +4,7 @@ import Mysterious from '@/app/_components/mysterious'
 import fetchData from '@/fetches/fetchData'
 import Discover from '@/app/_components/discover/discover'
 import Customize from '@/app/_components/customize/customize'
+import Customer from '../_components/customer/customer'
 
 export default async function Page() {
   const [dataHome, dataTaxonomies] = await Promise.all([
@@ -29,6 +30,7 @@ export default async function Page() {
       />
       <Mysterious data={dataHome?.acf?.mysterious_beauty} />
       <Customize data={dataHome?.acf?.customize} />
+      <Customer data={dataHome?.acf?.customer} />
     </>
   )
 }
