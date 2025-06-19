@@ -58,3 +58,51 @@ export interface TypeMysteriousItem {
   }
   title: string
 }
+
+export interface TypeOurTour {
+  title: string
+  discover_our_tours: {
+    title: string
+    link: {
+      title: string
+      url: string
+      target: string
+    }
+  }
+}
+export interface TypeOurTourList {
+  img_tour_1: {
+    url: string
+    alt: string
+  }
+  img_tour_2: {
+    url: string
+    alt: string
+  }
+  img_tour_3: {
+    url: string
+    alt: string
+  }
+  tour_1: {
+    title: string
+    price: string
+    link: string
+    duration: string[]
+  }
+  tour_2: {
+    title: string
+    price: string
+    link: string
+    duration: string[]
+  }
+  tour_3: {
+    title: string
+    price: string
+    link: string
+    duration: string[]
+  }
+  imgae_discover_our_tours: {
+    url: string
+    alt: string
+  }
+}
