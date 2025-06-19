@@ -3,6 +3,7 @@ import {Toaster} from '@/components/ui/sonner'
 import fetchData from '@/fetches/fetchData'
 import Header from '@/layout/header'
 import NextTopLoader from 'nextjs-toploader'
+import CTA from '@/app/_components/cta/cta'
 
 export default async function MainLayout({
   children,
@@ -16,6 +17,7 @@ export default async function MainLayout({
       <Header dataOptions={dataOptions} />
       {children}
       <Footer data={dataOptions.footer} />
+      <CTA data={dataOptions.cta_buttons} />
       <Toaster richColors />
       <NextTopLoader
         color='linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%)'
