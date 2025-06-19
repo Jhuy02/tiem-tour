@@ -17,6 +17,12 @@ export default function OurTour({
   total: string
 }) {
   const isMobile = useIsMobile()
+
+  // Kiểm tra dataPostOurTour có phải là array không
+  if (!Array.isArray(dataPostOurTour)) {
+    return null // hoặc return một UI placeholder
+  }
+
   return (
     <section className='ourTour'>
       <Image
@@ -36,13 +42,12 @@ export default function OurTour({
         />
         <h2 className='ourTour-heading__title'>{data?.title}</h2>
       </div>
-      {isMobile && Array.isArray(dataPostOurTour) && (
+      {isMobile ? (
         <OurTourMB
           dataOurTour={data}
           data={dataPostOurTour}
         />
-      )}
-      {!isMobile && Array.isArray(dataPostOurTour) && (
+      ) : (
         <OurTourPC
           dataOurTour={data}
           data={dataPostOurTour}

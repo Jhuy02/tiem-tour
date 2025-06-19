@@ -5,7 +5,6 @@ import Discover from '@/app/_components/discover/discover'
 import Explore from '@/app/_components/explore/explore'
 import Guild from '@/app/_components/guild/guild'
 import Mysterious from '@/app/_components/mysterious'
-import OurTour from '@/app/_components/our-tour'
 import fetchData from '@/fetches/fetchData'
 
 export default async function Page() {
@@ -17,10 +16,12 @@ export default async function Page() {
       fetchData({api: `api/v1/guild-news`}),
     ])
 
-  const {data: discoverTours} = await fetchData({
-    api: `api/v1/get-all/tour?page=1&limit=6&tax=location&location=${dataTaxonomies?.location[0].slug}&order=DESC&orderby=date`,
-  })
+  const defaultLocation = dataTaxonomies?.location?.[0]?.slug || ''
 
+  const {data: discoverTours} = await fetchData({
+    api: `api/v1/get-all/tour?page=1&limit=6&tax=location&location=${defaultLocation}&order=DESC&orderby=date`,
+  })
+  console.log(dataPostOurTour)
   return (
     <>
       <Banner
@@ -30,20 +31,20 @@ export default async function Page() {
       <Explore data={dataHome?.acf?.explore} />
       <OurTour
         data={dataHome?.acf?.our_tour}
-        dataPostOurTour={dataPostOurTour?.our_tour}
-        total={dataPostOurTour?.total}
+        dataPostOurTour={dataPostOurTour?.our_tour || []}
+        total={dataPostOurTour?.total || '0'}
       />
       <Discover
         data={dataHome?.acf?.discover}
-        tours={discoverTours}
-        location={dataTaxonomies?.location}
+        tours={discoverTours || []}
+        location={dataTaxonomies?.location || []}
       />
       <Mysterious data={dataHome?.acf?.mysterious_beauty} />
       <Customize data={dataHome?.acf?.customize} />
       <Customer data={dataHome?.acf?.customer} />
       <Guild
         data={dataHome?.acf?.guild_travel}
-        guild={dataGuildNews}
+        guild={dataGuildNews || []}
       />
     </>
   )
