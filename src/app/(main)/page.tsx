@@ -2,7 +2,8 @@ import Banner from '@/app/_components/banner/Banner'
 import Explore from '@/app/_components/explore/explore'
 import Mysterious from '@/app/_components/mysterious'
 import fetchData from '@/fetches/fetchData'
-import Discover from '../_components/discover/discover'
+import Discover from '@/app/_components/discover/discover'
+import Customize from '@/app/_components/customize/customize'
 
 export default async function Page() {
   const [dataHome, dataTaxonomies] = await Promise.all([
@@ -27,6 +28,7 @@ export default async function Page() {
         location={dataTaxonomies?.location}
       />
       <Mysterious data={dataHome?.acf?.mysterious_beauty} />
+      <Customize data={dataHome?.acf?.customize} />
     </>
   )
 }
