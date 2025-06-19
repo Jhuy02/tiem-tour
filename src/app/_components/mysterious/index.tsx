@@ -1,5 +1,6 @@
 'use client'
 
+import ImageAnimationDeco from '@/components/image/ImageAnimationDeco'
 import ImageFallback from '@/components/image/ImageFallback'
 import useIsMobile from '@/hooks/useIsMobile'
 import {TypeMysterious} from '@/types/home.interface'
@@ -201,6 +202,7 @@ export default function Mysterious({data}: {data: TypeMysterious}) {
 
   return (
     <section className='mysterious'>
+      <ImageAnimationDeco />
       <div className='mysterious-heading'>
         <Image
           className='mysterious-heading__icon'
