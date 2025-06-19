@@ -1,6 +1,7 @@
 import ImageFallback from '@/components/image/ImageFallback'
 import {TypeOurTour, TypeOurTourList} from '@/types/home.interface'
 import Image from 'next/image'
+import Link from 'next/link'
 import {Fragment} from 'react'
 
 export default function OurTourMB({
@@ -10,13 +11,17 @@ export default function OurTourMB({
   data: TypeOurTourList[]
   dataOurTour: TypeOurTour
 }) {
+  if (!Array.isArray(data)) {
+    return null
+  }
+
   return (
     <>
       <div className='ourTour-listmb'>
         {Array.isArray(data) &&
-          data.map((item, index: number) => (
+          data?.map((item, index: number) => (
             <Fragment key={index}>
-              <a
+              <Link
                 href={'/tours/' + item?.tour_1.link}
                 className='ourTour-listmb__item'
               >
@@ -46,8 +51,8 @@ export default function OurTourMB({
                   </div>
                 </div>
                 <div className='ourTour-listmb__itemoverlay'></div>
-              </a>
-              <a
+              </Link>
+              <Link
                 href={'/tours/' + item?.tour_2.link}
                 className='ourTour-listmb__item'
               >
@@ -77,8 +82,8 @@ export default function OurTourMB({
                   </div>
                 </div>
                 <div className='ourTour-listmb__itemoverlay'></div>
-              </a>
-              <a
+              </Link>
+              <Link
                 href={'/tours/' + item?.tour_3.link}
                 className='ourTour-listmb__item'
               >
@@ -108,11 +113,11 @@ export default function OurTourMB({
                   </div>
                 </div>
                 <div className='ourTour-listmb__itemoverlay'></div>
-              </a>
+              </Link>
             </Fragment>
           ))}
       </div>
-      <a
+      <Link
         href={dataOurTour?.discover_our_tours?.link?.url}
         target={dataOurTour?.discover_our_tours?.link?.target}
         className='ourTour-listmb__btn'
@@ -130,7 +135,7 @@ export default function OurTourMB({
             fill='white'
           />
         </svg>
-      </a>
+      </Link>
     </>
   )
 }

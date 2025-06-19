@@ -4,6 +4,7 @@ import ImageFallback from '@/components/image/ImageFallback'
 import {animateTitle} from '@/hooks/useAnimateTitle'
 import {TypeOurTour, TypeOurTourList} from '@/types/home.interface'
 import Image from 'next/image'
+import Link from 'next/link'
 import {useRef, useState} from 'react'
 import type {Swiper as SwiperType} from 'swiper'
 import 'swiper/css'
@@ -89,7 +90,7 @@ export default function OurTourPC({
           {Array.isArray(data) &&
             data?.map((item, index) => (
               <SwiperSlide key={index}>
-                <a
+                <Link
                   href={'/tours/' + item?.tour_1.link}
                   className=''
                 >
@@ -105,56 +106,59 @@ export default function OurTourPC({
                       className='ourTour-item__img'
                     />
                   </div>
-                </a>
+                </Link>
               </SwiperSlide>
             ))}
         </Swiper>
         <div className='ourTour__item-overlay'></div>
         <div className='ourTour__item-infor'>
-          {data?.map((item, index) => (
-            <div
-              key={index}
-              className={`item-infor ${index === activeIndex ? 'active' : ''}`}
-            >
-              <p className='item-infor__title SplitText'>
-                {item?.tour_1.title}
-              </p>
-              <div className='item-infor__warpper'>
-                <Image
-                  src={'/home/our-tour/location.svg'}
-                  alt=''
-                  width={424}
-                  height={594}
-                  className='ourTour-item__img'
-                />
-                <p className='item-infor__price SplitText'>
-                  {item?.tour_1.price} USD
+          {Array.isArray(data) &&
+            data?.map((item, index) => (
+              <div
+                key={index}
+                className={`item-infor ${
+                  index === activeIndex ? 'active' : ''
+                }`}
+              >
+                <p className='item-infor__title SplitText'>
+                  {item?.tour_1.title}
                 </p>
-                <div className='item-infor__dots'></div>
-                <p className='item-infor__term SplitText'>
-                  {item?.tour_1.duration[0]}
-                </p>
-              </div>
-              <div className='ourTour-item__btn'>
-                <p>Detail tour</p>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='19'
-                  height='19'
-                  viewBox='0 0 19 19'
-                  fill='none'
-                >
-                  <path
-                    d='M7.35156 4.16992L12.6016 9.41992L7.35156 14.6699'
-                    stroke='white'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
+                <div className='item-infor__warpper'>
+                  <Image
+                    src={'/home/our-tour/location.svg'}
+                    alt=''
+                    width={424}
+                    height={594}
+                    className='ourTour-item__img'
                   />
-                </svg>
+                  <p className='item-infor__price SplitText'>
+                    {item?.tour_1.price} USD
+                  </p>
+                  <div className='item-infor__dots'></div>
+                  <p className='item-infor__term SplitText'>
+                    {item?.tour_1.duration[0]}
+                  </p>
+                </div>
+                <div className='ourTour-item__btn'>
+                  <p>Detail tour</p>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='19'
+                    height='19'
+                    viewBox='0 0 19 19'
+                    fill='none'
+                  >
+                    <path
+                      d='M7.35156 4.16992L12.6016 9.41992L7.35156 14.6699'
+                      stroke='white'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
 
@@ -173,7 +177,7 @@ export default function OurTourPC({
           {Array.isArray(data) &&
             data?.map((item, index) => (
               <SwiperSlide key={index}>
-                <a
+                <Link
                   href={'/tours/' + item?.tour_2.link}
                   className=''
                 >
@@ -189,56 +193,59 @@ export default function OurTourPC({
                       className='ourTour-item__img'
                     />
                   </div>
-                </a>
+                </Link>
               </SwiperSlide>
             ))}
         </Swiper>
         <div className='ourTour__item-overlay'></div>
         <div className='ourTour__item-infor'>
-          {data?.map((item, index) => (
-            <div
-              key={index}
-              className={`item-infor ${index === activeIndex ? 'active' : ''}`}
-            >
-              <p className='item-infor__title SplitText'>
-                {item?.tour_2.title}
-              </p>
-              <div className='item-infor__warpper'>
-                <Image
-                  src={'/home/our-tour/location.svg'}
-                  alt=''
-                  width={40}
-                  height={40}
-                  className='ourTour-item__img'
-                />
-                <p className='item-infor__price SplitText'>
-                  {item?.tour_2.price} USD
+          {Array.isArray(data) &&
+            data?.map((item, index) => (
+              <div
+                key={index}
+                className={`item-infor ${
+                  index === activeIndex ? 'active' : ''
+                }`}
+              >
+                <p className='item-infor__title SplitText'>
+                  {item?.tour_2.title}
                 </p>
-                <div className='item-infor__dots'></div>
-                <p className='item-infor__term SplitText'>
-                  {item?.tour_2.duration[0]}
-                </p>
-              </div>
-              <div className='ourTour-item__btn'>
-                <p>Detail tour</p>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='19'
-                  height='19'
-                  viewBox='0 0 19 19'
-                  fill='none'
-                >
-                  <path
-                    d='M7.35156 4.16992L12.6016 9.41992L7.35156 14.6699'
-                    stroke='white'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
+                <div className='item-infor__warpper'>
+                  <Image
+                    src={'/home/our-tour/location.svg'}
+                    alt=''
+                    width={40}
+                    height={40}
+                    className='ourTour-item__img'
                   />
-                </svg>
+                  <p className='item-infor__price SplitText'>
+                    {item?.tour_2.price} USD
+                  </p>
+                  <div className='item-infor__dots'></div>
+                  <p className='item-infor__term SplitText'>
+                    {item?.tour_2.duration[0]}
+                  </p>
+                </div>
+                <div className='ourTour-item__btn'>
+                  <p>Detail tour</p>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='19'
+                    height='19'
+                    viewBox='0 0 19 19'
+                    fill='none'
+                  >
+                    <path
+                      d='M7.35156 4.16992L12.6016 9.41992L7.35156 14.6699'
+                      stroke='white'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
 
@@ -257,7 +264,7 @@ export default function OurTourPC({
           {Array.isArray(data) &&
             data?.map((item, index) => (
               <SwiperSlide key={index}>
-                <a
+                <Link
                   href={'/tours/' + item?.tour_3.link}
                   className=''
                 >
@@ -273,59 +280,62 @@ export default function OurTourPC({
                       className='ourTour-item__img'
                     />
                   </div>
-                </a>
+                </Link>
               </SwiperSlide>
             ))}
         </Swiper>
         <div className='ourTour__item-overlay'></div>
         <div className='ourTour__item-infor'>
-          {data?.map((item, index) => (
-            <div
-              key={index}
-              className={`item-infor ${index === activeIndex ? 'active' : ''}`}
-            >
-              <p className='item-infor__title SplitText'>
-                {item?.tour_3.title}
-              </p>
-              <div className='item-infor__warpper'>
-                <Image
-                  src={'/home/our-tour/location.svg'}
-                  alt=''
-                  width={40}
-                  height={40}
-                  className='ourTour-item__img'
-                />
-                <p className='item-infor__price SplitText'>
-                  {item?.tour_3.price} USD
+          {Array.isArray(data) &&
+            data?.map((item, index) => (
+              <div
+                key={index}
+                className={`item-infor ${
+                  index === activeIndex ? 'active' : ''
+                }`}
+              >
+                <p className='item-infor__title SplitText'>
+                  {item?.tour_3.title}
                 </p>
-                <div className='item-infor__dots'></div>
-                <p className='item-infor__term SplitText'>
-                  {item?.tour_3.duration[0]}
-                </p>
-              </div>
-              <div className='ourTour-item__btn'>
-                <p>Detail tour</p>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  width='19'
-                  height='19'
-                  viewBox='0 0 19 19'
-                  fill='none'
-                >
-                  <path
-                    d='M7.35156 4.16992L12.6016 9.41992L7.35156 14.6699'
-                    stroke='white'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
+                <div className='item-infor__warpper'>
+                  <Image
+                    src={'/home/our-tour/location.svg'}
+                    alt=''
+                    width={40}
+                    height={40}
+                    className='ourTour-item__img'
                   />
-                </svg>
+                  <p className='item-infor__price SplitText'>
+                    {item?.tour_3.price} USD
+                  </p>
+                  <div className='item-infor__dots'></div>
+                  <p className='item-infor__term SplitText'>
+                    {item?.tour_3.duration[0]}
+                  </p>
+                </div>
+                <div className='ourTour-item__btn'>
+                  <p>Detail tour</p>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='19'
+                    height='19'
+                    viewBox='0 0 19 19'
+                    fill='none'
+                  >
+                    <path
+                      d='M7.35156 4.16992L12.6016 9.41992L7.35156 14.6699'
+                      stroke='white'
+                      strokeWidth='2'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
-      <a
+      <Link
         href={dataOurTour?.discover_our_tours?.link?.url}
         target={dataOurTour?.discover_our_tours?.link?.target}
         className='ourTour-list__item ourTour__item4'
@@ -341,22 +351,23 @@ export default function OurTourPC({
           modules={[Parallax]}
           className='swiper-ourTour__item4 swiper-ourTour__item'
         >
-          {data?.map((item, index) => (
-            <SwiperSlide key={index}>
-              <div
-                className='ourTour__item'
-                data-swiper-parallax='90%'
-              >
-                <ImageFallback
-                  src={item?.imgae_discover_our_tours?.url}
-                  alt={item?.imgae_discover_our_tours?.alt}
-                  width={250}
-                  height={310}
-                  className='ourTour-item__img'
-                />
-              </div>
-            </SwiperSlide>
-          ))}
+          {Array.isArray(data) &&
+            data?.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  className='ourTour__item'
+                  data-swiper-parallax='90%'
+                >
+                  <ImageFallback
+                    src={item?.imgae_discover_our_tours?.url}
+                    alt={item?.imgae_discover_our_tours?.alt}
+                    width={250}
+                    height={310}
+                    className='ourTour-item__img'
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
         </Swiper>
         <div className='discoverourtours'>
           <p className='discoverourtours__title'>
@@ -364,7 +375,7 @@ export default function OurTourPC({
           </p>
           <p className='discoverourtours__total'>{total} + tour for you</p>
         </div>
-      </a>
+      </Link>
       <div className='ourTour-deco2'>
         <Image
           src={'/home/our-tour/khan.webp'}

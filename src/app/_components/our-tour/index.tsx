@@ -36,12 +36,13 @@ export default function OurTour({
         />
         <h2 className='ourTour-heading__title'>{data?.title}</h2>
       </div>
-      {isMobile ? (
+      {isMobile && Array.isArray(dataPostOurTour) && (
         <OurTourMB
           dataOurTour={data}
           data={dataPostOurTour}
         />
-      ) : (
+      )}
+      {!isMobile && Array.isArray(dataPostOurTour) && (
         <OurTourPC
           dataOurTour={data}
           data={dataPostOurTour}
