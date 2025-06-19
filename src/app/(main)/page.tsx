@@ -5,6 +5,7 @@ import Discover from '@/app/_components/discover/discover'
 import Explore from '@/app/_components/explore/explore'
 import Guild from '@/app/_components/guild/guild'
 import Mysterious from '@/app/_components/mysterious'
+import OurTour from '@/app/_components/our-tour'
 import fetchData from '@/fetches/fetchData'
 
 export default async function Page() {
