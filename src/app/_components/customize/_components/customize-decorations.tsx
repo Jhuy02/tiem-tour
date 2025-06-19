@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import {ICustomize} from '@/types/customize.interface'
+import ImageFallback from '@/components/image/ImageFallback'
 
 interface CustomizeDecorationsProps {
   data: ICustomize
@@ -8,21 +9,21 @@ interface CustomizeDecorationsProps {
 const CustomizeDecorations = ({data}: CustomizeDecorationsProps) => {
   return (
     <>
-      <Image
+      <ImageFallback
         src={'/home/customize/rock.webp'}
         alt='rock'
         width={332}
         height={332}
         className='customize__image-rock'
       />
-      <Image
+      <ImageFallback
         src={data.image_decor_1.url}
         alt={data.image_decor_1.alt}
         width={data.image_decor_1.width}
         height={data.image_decor_1.height}
         className='customize__image-flower'
       />
-      <Image
+      <ImageFallback
         src={data.image_decor_2.url}
         alt={data.image_decor_2.alt}
         width={data.image_decor_2.width}
