@@ -14,6 +14,7 @@ import SearchPopup from '@/layout/header/header-mb/SearchPopup'
 import {DataLocation, HeaderMobile} from '@/types/options.interface'
 import Link from 'next/link'
 import './Header-mb.css'
+
 export default function HeaderMb({
   HeaderMobile,
   Location,

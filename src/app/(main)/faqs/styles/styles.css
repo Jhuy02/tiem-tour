@@ -24,7 +24,7 @@
   color: var(--Text-Body-80, rgba(48, 48, 48, 0.8));
 
   /* PC/16/16-R */
-  font-family: 'Trip Sans';
+  font-family: var(--font-trip-sans);
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
@@ -78,8 +78,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url('https://tiem-tour.okhub-tech.com/wp-content/uploads/2025/06/media-11.webp')
-    center no-repeat;
+  background: url('/faqs/faq-card.webp') center no-repeat;
   overflow: hidden;
   transition: all 0.5s ease;
 }
@@ -99,7 +98,7 @@
   font-feature-settings: 'liga' off, 'clig' off;
 
   /* PC/H4/24-R- Upper */
-  font-family: 'DVN - Luckiest Guy';
+  font-family: var(--font-dvn-luckiest-guy);
   font-size: 1.625rem;
   font-style: normal;
   font-weight: 400;
@@ -114,7 +113,7 @@
   color: var(--Text-Body-80, rgba(48, 48, 48, 0.8));
 
   /* PC/16/16-R */
-  font-family: 'Trip Sans';
+  font-family: var(--font-trip-sans);
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
@@ -180,7 +179,7 @@
     color: var(--Text-Tittle-1, #3b3943);
 
     /* MB/H2/25-L */
-    font-family: 'DVN - Luckiest Guy';
+    font-family: var(--font-dvn-luckiest-guy);
     font-size: 1.5625rem;
     font-style: normal;
     font-weight: 400;
@@ -192,7 +191,7 @@
     color: var(--Text-Body-80, rgba(48, 48, 48, 0.8));
 
     /* PC/16/16-R */
-    font-family: 'Trip Sans';
+    font-family: var(--font-trip-sans);
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
@@ -238,7 +237,7 @@
   #faq-mobile .faq-mobile__content-item-name {
     color: var(--Text-Tittle-1, #3b3943);
     font-feature-settings: 'liga' off, 'clig' off;
-    font-family: 'DVN - Luckiest Guy';
+    font-family: var(--font-dvn-luckiest-guy);
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
@@ -261,7 +260,7 @@
     color: var(--Text-Body-80, rgba(48, 48, 48, 0.8));
 
     /* PC/16/16-R */
-    font-family: 'Trip Sans';
+    font-family: var(--font-trip-sans);
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;

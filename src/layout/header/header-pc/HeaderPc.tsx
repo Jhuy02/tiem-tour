@@ -13,6 +13,24 @@ import Image from 'next/image'
 import Link from 'next/link'
 import './Header-pc.css'
 
+const decodeHtmlEntities = (text: string): string => {
+  if (typeof text !== 'string') return text
+  if (typeof window === 'undefined') return text
+  const textarea = document.createElement('textarea')
+  textarea.innerHTML = text
+  return textarea.value
+}
+
+const getPathFromUrl = (url: string): string => {
+  if (!url || url === '#') return url
+  try {
+    const urlObj = new URL(url)
+    return urlObj.pathname
+  } catch {
+    return url
+  }
+}
+
 export default function HeaderPc({
   HeaderOption,
   ImgLocation,
@@ -65,7 +83,9 @@ export default function HeaderPc({
                             height={40}
                           />
                         </div>
-                        <p className='tours-trigger'>{item?.page?.title}</p>
+                        <p className='tours-trigger'>
+                          {decodeHtmlEntities(item?.page?.title)}
+                        </p>
                         <IconArrowHeader />
                         <div className='tours-dropdown'>
                           <ul>
@@ -130,9 +150,9 @@ export default function HeaderPc({
                       <li key={index}>
                         <Link
                           target={item?.page?.target}
-                          href={item?.page?.url}
+                          href={getPathFromUrl(item?.page?.url)}
                         >
-                          {item?.page?.title}
+                          {decodeHtmlEntities(item?.page?.title)}
                         </Link>
                       </li>
                     )

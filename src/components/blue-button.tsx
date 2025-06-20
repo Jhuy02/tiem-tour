@@ -23,22 +23,22 @@ export function BlueButton({
   return (
     <Link
       href={href}
-      className={`flex justify-center items-center gap-2.5 rounded-[3.125rem] border-4 shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)] w-fit relative overflow-hidden transition-all duration-700 ease-in-out z-10 bg-transparent no-underline  lg:group ${className}`}
+      className={`flex justify-center items-center gap-2.5 rounded-[3.125rem] border-4 shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)] w-fit relative overflow-hidden transition-all duration-700 ease-in-out z-10 bg-transparent no-underline group ${className}`}
       style={{borderColor}}
     >
       <p
-        className={`text-center font-dvn-luckiest-guy font-normal leading-[120%] mb-0 transition-colors duration-500 ease-in-out group-hover:text-white! sm:text-lg text-[1.125rem]`}
+        className={`text-center font-dvn-luckiest-guy font-normal leading-[120%] mb-0 transition-colors duration-500 ease-in-out lg:group-hover:text-white! sm:text-lg text-[1.125rem]`}
         style={{color: textColor}}
       >
         {children}
       </p>
 
-      <div className='group-hover:[&>svg>path]:fill-white transition-all duration-500 ease-in-out'>
+      <div className='lg:group-hover:[&>svg>path]:fill-white transition-all duration-500 ease-in-out'>
         <Arrow color={arrowColor} />
       </div>
 
-      {/* Hover effect background circle */}
-      <div className='absolute inset-0 bg-[#19c2c2] w-[18.41494rem] h-[10.85244rem] rounded-full scale-0 translate-y-full -translate-x-[32%] transition-all duration-500 ease-in-out -z-10 group-hover:scale-100 group-hover:-translate-y-[20%] group-hover:-translate-x-[5%]' />
+      {/* Hover effect background circle - only on desktop */}
+      <div className='absolute inset-0 bg-[#19c2c2] w-[18.41494rem] h-[10.85244rem] rounded-full scale-0 translate-y-full -translate-x-[32%] transition-all duration-500 ease-in-out -z-10 lg:group-hover:scale-100 lg:group-hover:-translate-y-[20%] lg:group-hover:-translate-x-[5%]' />
     </Link>
   )
 }

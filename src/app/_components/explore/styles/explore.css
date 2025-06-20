@@ -226,7 +226,7 @@
   .explore__contentspacemb {
     display: block;
     height: 11rem;
-    background-image: url(/wp-content/uploads/2025/06/frame_2147258942-3.webp);
+    background-image: url('/background.webp');
   }
   #explore {
     height: 61rem;
@@ -237,11 +237,11 @@
   }
 
   #explore .explore__container-top--mobile {
-    width: 100%;
+    width: 200%;
     height: 1.9375rem;
     flex-shrink: 0;
-    object-fit: cover;
     position: absolute;
+    object-fit: cover;
     transform: translateY(-98%);
     left: 0;
     z-index: 1;

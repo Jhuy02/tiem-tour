@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import {ChevronDownIcon} from 'lucide-react'
+import {ChevronDownIcon, X} from 'lucide-react'
 
 import {cn} from '@/lib/utils'
 
@@ -30,6 +30,19 @@ function AccordionItem({
   )
 }
 
+function AccordionItemV2({
+  className,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
+  return (
+    <AccordionPrimitive.Item
+      data-slot='accordion-item'
+      className={cn('', className)}
+      {...props}
+    />
+  )
+}
+
 function AccordionTrigger({
   className,
   children,
@@ -52,6 +65,30 @@ function AccordionTrigger({
   )
 }
 
+function AccordionTriggerV2({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+  return (
+    <AccordionPrimitive.Header className='flex'>
+      <AccordionPrimitive.Trigger
+        data-slot='accordion-trigger'
+        className={cn(
+          'focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-center space-x-[0.75rem] gap-[0.75rem] rounded-md pt-[1.5rem] text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[0px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>div]:rotate-90',
+          className,
+        )}
+        {...props}
+      >
+        <div className='size-[1.25rem] p-[0.375rem] rounded-full bg-[#25ACAB] flex-center transform transition-transform ease-in-out duration-300 rotate-45'>
+          <X className='size-[0.5rem] text-white shrink-0' />
+        </div>
+        {children}
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  )
+}
+
 function AccordionContent({
   className,
   children,
@@ -68,4 +105,11 @@ function AccordionContent({
   )
 }
 
-export {Accordion, AccordionItem, AccordionTrigger, AccordionContent}
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionTriggerV2,
+  AccordionContent,
+  AccordionItemV2,
+}

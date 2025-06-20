@@ -14,7 +14,7 @@
 }
 
 .header__wrapper.hidden {
-  transform: translate(-50%, -125%) !important;
+  transform: translate(-50%, -155%) !important;
 }
 
 #header .header__left-nav {
