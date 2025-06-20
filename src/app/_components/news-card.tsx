@@ -37,7 +37,10 @@ export default function NewsCard({
               {date}
             </p>
           </div>
-          <h3 className='min-sm:opacity-80 font-dvn-luckiest-guy text-[rgba(255, 255, 255, 0.80)] text-[1.625rem] font-normal leading-[120%] tracking-[0.01563rem] uppercase line-clamp-3'>
+          <h3
+            dangerouslySetInnerHTML={{__html: title}}
+            className='min-sm:opacity-80 font-dvn-luckiest-guy text-[rgba(255, 255, 255, 0.80)] text-[1.625rem] font-normal leading-[120%] tracking-[0.01563rem] uppercase line-clamp-3'
+          >
             {title}
           </h3>
         </div>

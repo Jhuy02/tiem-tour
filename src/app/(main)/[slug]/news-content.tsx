@@ -166,9 +166,10 @@ export default function NewsContent({data}: NewsContentProps) {
           </div>
         </div>
         <div className='max-w-[100%] sm:max-w-[75rem] lg:max-w-[60rem] flex-1 py-[2rem] sm:pt-[12.1875rem] sm:ml-[8.44rem]'>
-          <h1 className='text-[#3B3943] font-dvn-luckiest-guy text-[1.375rem] sm:text-[2.25rem] font-normal leading-[130%] sm:leading-[120%] tracking-[0.01563rem] uppercase mb-[1.5rem] sm:mb-[2.5rem]'>
-            {data.title}
-          </h1>
+          <h1
+            dangerouslySetInnerHTML={{__html: data.title}}
+            className='text-[#3B3943] font-dvn-luckiest-guy text-[1.375rem] sm:text-[2.25rem] font-normal leading-[130%] sm:leading-[120%] tracking-[0.01563rem] uppercase mb-[1.5rem] sm:mb-[2.5rem]'
+          ></h1>
           <div className='p-[1rem] sm:p-[1.875rem] bg-[rgba(72,48,13,0.20)] mb-[1.5rem] sm:mb-[2.5rem]'>
             <p className='text-[#303030] font-trip-sans text-[1.125rem] font-bold sm:font-extrabold leading-[130%] tracking-[0.00281rem] mb-[1rem]'>
               Summary of content
