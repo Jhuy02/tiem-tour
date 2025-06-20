@@ -44,13 +44,13 @@ export default function OurTour({
       </div>
       {isMobile ? (
         <OurTourMB
-          dataOurTour={data}
-          data={dataPostOurTour}
+          data={data}
+          dataOurTour={dataPostOurTour}
         />
       ) : (
         <OurTourPC
-          dataOurTour={data}
-          data={dataPostOurTour}
+          data={data}
+          dataOurTour={dataPostOurTour}
           total={total}
         />
       )}

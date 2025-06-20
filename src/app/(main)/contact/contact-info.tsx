@@ -1,10 +1,6 @@
-import IconArrowRightV1 from '@/components/icon/IconArrowRightV1'
-import clsx from 'clsx'
+import {IContactPageACF} from '@/app/(main)/contact/page'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
-import styles from './contact-info.module.css'
-import {IContactPageACF} from '@/app/(main)/contact/page'
 
 export default function ContactInfo({data}: IContactPageACF) {
   return (
@@ -112,7 +108,7 @@ export default function ContactInfo({data}: IContactPageACF) {
           </div>
         </div>
       </div>
-      <div className='w-full relative'>
+      {/* <div className='w-full relative'>
         <div className='flex flex-col relative w-full h-auto bg-[#25acab] shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)]'>
           <div
             className={clsx(styles.googleMap)}
@@ -131,7 +127,7 @@ export default function ContactInfo({data}: IContactPageACF) {
             </Link>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

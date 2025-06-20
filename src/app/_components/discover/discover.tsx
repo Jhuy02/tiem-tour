@@ -6,17 +6,17 @@ import {
   IDiscoverTour,
 } from '@/types/discover.interface'
 import Image from 'next/image'
-import './styles/style.css'
 import type {Swiper as SwiperType} from 'swiper'
+import './styles/style.css'
 
-import {useMemo, useState, useEffect, useRef} from 'react'
-import useSWR from 'swr'
-import {fetcherCMS} from '@/lib/swr'
 import useIsMobile from '@/hooks/useIsMobile'
-import DiscoverHeader from './_components/discover-header'
-import MobileTourList from './_components/mobile-tour-list'
+import {fetcherCMS} from '@/lib/swr'
+import {useEffect, useMemo, useRef, useState} from 'react'
+import useSWR from 'swr'
 import DesktopTourSwiper from './_components/desktop-tour-swiper'
 import DiscoverButton from './_components/discover-button'
+import DiscoverHeader from './_components/discover-header'
+import MobileTourList from './_components/mobile-tour-list'
 
 const Discover = ({
   data,
@@ -31,11 +31,11 @@ const Discover = ({
   const swiperRef = useRef<SwiperType | null>(null)
   const isMobile = useIsMobile()
 
-  useEffect(() => {
-    if (location && location.length > 0 && !activeLocation) {
-      setActiveLocation(location[0].slug)
-    }
-  }, [location, activeLocation])
+  // useEffect(() => {
+  //   if (location && location.length > 0 && !activeLocation) {
+  //     setActiveLocation(location[0].slug)
+  //   }
+  // }, [location, activeLocation])
 
   useEffect(() => {
     if (swiperRef.current && activeLocation) {
@@ -44,6 +44,7 @@ const Discover = ({
   }, [activeLocation])
 
   const query = useMemo(() => {
+    if (!activeLocation) return null
     return `/wp-json/api/v1/get-all/tour?page=1&limit=6&tax=location&location=${activeLocation}&order=DESC&orderby=date`
   }, [activeLocation])
 

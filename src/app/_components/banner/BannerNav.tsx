@@ -142,28 +142,29 @@ export default function BannerNav({
                     openDuration ? 'open' : ''
                   }`}
                 >
-                  {dataTaxonomies.duration.map((term) => (
-                    <div
-                      key={term.slug}
-                      className='fillter-itempopup__item'
-                      onClick={() => {
-                        setSelectedDuration(
-                          selectedDuration?.slug === term.slug
-                            ? null
-                            : {name: term.name, slug: term.slug},
-                        )
-                      }}
-                    >
+                  {Array.isArray(dataTaxonomies?.duration) &&
+                    dataTaxonomies?.duration?.map((term) => (
                       <div
-                        className={`itempopup-item__check duration-item ${
-                          selectedDuration?.slug === term.slug ? 'active' : ''
-                        }`}
+                        key={term.slug}
+                        className='fillter-itempopup__item'
+                        onClick={() => {
+                          setSelectedDuration(
+                            selectedDuration?.slug === term.slug
+                              ? null
+                              : {name: term.name, slug: term.slug},
+                          )
+                        }}
                       >
-                        <IconCheck />
+                        <div
+                          className={`itempopup-item__check duration-item ${
+                            selectedDuration?.slug === term.slug ? 'active' : ''
+                          }`}
+                        >
+                          <IconCheck />
+                        </div>
+                        <p>{term.name}</p>
                       </div>
-                      <p>{term.name}</p>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               )}
             </div>
@@ -227,60 +228,63 @@ export default function BannerNav({
                 spaceBetween={10}
               >
                 <div className='swiper-wrapper'>
-                  {dataTaxonomies.location.map((term) => (
-                    <SwiperSlide
-                      key={term.slug}
-                      className='swiper-slide'
-                      onClick={() => {
-                        setSelectedLocation(
-                          selectedLocation.some(
-                            (location) => location.slug === term.slug,
+                  {Array.isArray(dataTaxonomies?.location) &&
+                    dataTaxonomies?.location?.map((term) => (
+                      <SwiperSlide
+                        key={term.slug}
+                        className='swiper-slide'
+                        onClick={() => {
+                          setSelectedLocation(
+                            selectedLocation.some(
+                              (location) => location.slug === term.slug,
+                            )
+                              ? selectedLocation.filter(
+                                  (location) => location.slug !== term.slug,
+                                )
+                              : [
+                                  ...selectedLocation,
+                                  {name: term.name, slug: term.slug},
+                                ],
                           )
-                            ? selectedLocation.filter(
-                                (location) => location.slug !== term.slug,
-                              )
-                            : [
-                                ...selectedLocation,
-                                {name: term.name, slug: term.slug},
-                              ],
-                        )
-                      }}
-                    >
-                      <div
-                        className={`popuplocation-item__checkbox ${
-                          selectedLocation.some(
-                            (location) => location.slug === term.slug,
-                          )
-                            ? 'active'
-                            : ''
-                        }`}
-                        data-tax={term.slug}
+                        }}
                       >
-                        <div className='item__checkbox'>
-                          <IconCheck />
+                        <div
+                          className={`popuplocation-item__checkbox ${
+                            selectedLocation.some(
+                              (location) => location.slug === term.slug,
+                            )
+                              ? 'active'
+                              : ''
+                          }`}
+                          data-tax={term.slug}
+                        >
+                          <div className='item__checkbox'>
+                            <IconCheck />
+                          </div>
                         </div>
-                      </div>
-                      <Image
-                        className={`popuplocation-item__imglocation ${
-                          selectedLocation.some(
-                            (location) => location.slug === term.slug,
-                          )
-                            ? 'active'
-                            : ''
-                        }`}
-                        src={term.img_location || ''}
-                        width={100}
-                        height={100}
-                        alt=''
-                      />
-                      <div className='popuplocation-item__titlewapper'>
-                        <p className='popuplocation-item__title'>{term.name}</p>
-                        {term?.hot_location && (
-                          <div className='popuplocation-item__tag'>Hot</div>
-                        )}
-                      </div>
-                    </SwiperSlide>
-                  ))}
+                        <Image
+                          className={`popuplocation-item__imglocation ${
+                            selectedLocation.some(
+                              (location) => location.slug === term.slug,
+                            )
+                              ? 'active'
+                              : ''
+                          }`}
+                          src={term.img_location || ''}
+                          width={100}
+                          height={100}
+                          alt=''
+                        />
+                        <div className='popuplocation-item__titlewapper'>
+                          <p className='popuplocation-item__title'>
+                            {term.name}
+                          </p>
+                          {term?.hot_location && (
+                            <div className='popuplocation-item__tag'>Hot</div>
+                          )}
+                        </div>
+                      </SwiperSlide>
+                    ))}
                 </div>
                 <div className='popuplocationlocation-button-next'>
                   <IconArrow />
@@ -297,24 +301,27 @@ export default function BannerNav({
                 <p className='proposedbudget-content__title'>
                   Proposed budget :
                 </p>
-                {dataBudget.map((item) => (
-                  <div
-                    key={item.slug}
-                    className='proposedbudget-content__item'
-                    onClick={() => {
-                      setSelectedBudget({name: item.name, slug: item.slug})
-                    }}
-                  >
+                {Array.isArray(dataBudget) &&
+                  dataBudget?.map((item) => (
                     <div
-                      className={`proposedbudget-content__radio ${
-                        selectedBudget?.slug === item.slug ? 'active' : ''
-                      }`}
+                      key={item.slug}
+                      className='proposedbudget-content__item'
+                      onClick={() => {
+                        setSelectedBudget({name: item.name, slug: item.slug})
+                      }}
                     >
-                      <IconCheck className='[&>path]:stroke-white' />
+                      <div
+                        className={`proposedbudget-content__radio ${
+                          selectedBudget?.slug === item.slug ? 'active' : ''
+                        }`}
+                      >
+                        <IconCheck className='[&>path]:stroke-white' />
+                      </div>
+                      <p className='proposedbudget-content__text'>
+                        {item.name}
+                      </p>
                     </div>
-                    <p className='proposedbudget-content__text'>{item.name}</p>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           )}

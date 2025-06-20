@@ -1,7 +1,17 @@
-import BlogContent from '@/app/(main)/[slug]/news-content'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import BlogContent from '@/app/(main)/news/[slug]/news-content'
 import RelatedNewsList from '@/app/_components/related-news'
 import fetchData from '@/fetches/fetchData'
-import React from 'react'
+
+export async function generateStaticParams() {
+  const posts = await fetchData({
+    api: 'api/v1/slugs?post_type=post',
+  })
+
+  return posts.map((post: any) => ({
+    slug: post.slug,
+  }))
+}
 
 export default async function BlogDetail({
   params,
