@@ -11,48 +11,23 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 
 // import required modules
-import {Navigation, Pagination} from 'swiper/modules'
-import {convertRemToPx} from '@/lib/utils'
 import TourCard from '@/app/(main)/tours/_components/tour-card'
 import useIsMobile from '@/hooks/useIsMobile'
+import {convertRemToPx} from '@/lib/utils'
 import Link from 'next/link'
+import {Navigation, Pagination} from 'swiper/modules'
+import {TourItemResponse} from '@/types/tours.interface'
 
-export interface IDuration {
-  id: number
-  name: string
-  slug: string
-}
-export interface ILocation {
-  id: number
-  name: string
-  slug: string
-}
-interface ITourItem {
-  id: string
-  link: string
+interface IBestChooseTour {
   title: string
-  image: {
-    url: string
-    alt?: string
-  }
-  price: string
-  location: ILocation[]
-  duration: IDuration[]
+  tour_list: TourItemResponse[]
 }
 
-interface ISectionBestChoose {
-  title: string
-  tour_list: ITourItem[]
-}
-
-export default function SectionBestChoose({
-  title,
-  tour_list,
-}: ISectionBestChoose) {
+export default function SectionBestChoose({title, tour_list}: IBestChooseTour) {
   const isMobile = useIsMobile()
   return (
     <section className='relative best-choose'>
-      <div className='max-w-[87.5rem] mx-auto pt-[1.875rem]'>
+      <div className='max-w-[87.5rem] mx-auto max-sm:py-[2rem] pt-[1.875rem]'>
         <div className='flex items-center justify-between w-full pb-[2.5rem] max-sm:pb-0 mb-[2rem] max-sm:mb-[0.75rem] max-sm:px-[1rem]'>
           <h2 className='text-[#3b3943] font-dvn-luckiest-guy text-[3rem] font-normal leading-[130%] max-sm:text-[1.5625rem]'>
             {title ?? ''}
@@ -65,12 +40,12 @@ export default function SectionBestChoose({
 
         {isMobile ? (
           <div className='flex overflow-x-auto scrollbar-hidden'>
-            {tour_list?.map((tour) => {
+            {tour_list?.map((tour, index) => {
               return (
                 <Link
                   href={tour.link}
                   className='w-[19.625rem] ml-[1rem] last:mr-[1rem] block shrink-0'
-                  key={tour.id}
+                  key={index}
                 >
                   <TourCard
                     title={tour.title}
@@ -99,9 +74,9 @@ export default function SectionBestChoose({
               }}
               className='best-choose-swiper'
             >
-              {tour_list.map((tour) => {
+              {tour_list.map((tour, index) => {
                 return (
-                  <SwiperSlide key={tour.id}>
+                  <SwiperSlide key={index}>
                     <Link
                       href={tour.link}
                       className='shrink-0'

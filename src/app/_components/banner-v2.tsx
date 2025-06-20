@@ -25,9 +25,10 @@ export interface IBannerV2 {
     title: string
     banner_image: IBannerImage[]
   }
+  variant?: 'primary' | 'secondary'
 }
 
-export default function BannerV2({data}: IBannerV2) {
+export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
   const isMobile = useIsMobile()
   const bannerRef = useRef<HTMLDivElement>(null)
   const handleScrollDown = () => {
@@ -41,7 +42,13 @@ export default function BannerV2({data}: IBannerV2) {
   return (
     <section
       ref={bannerRef}
-      className='relative h-[37rem] overflow-hidden max-sm:h-[28.125rem]'
+      className={clsx(
+        'relative h-[37rem] overflow-hidden max-sm:h-[28.125rem]',
+        {
+          [styles.bannerPrimary]: variant === 'primary',
+          [styles.bannerSecondary]: variant === 'secondary',
+        },
+      )}
     >
       <div className='absolute top-0 left-0 w-full h-[13.4375rem] opacity-40 bg-[linear-gradient(180deg,#131f31_0%,rgba(19,31,49,0)_100%)] z-[1] pointer-events-none'></div>
       <div className='absolute bottom-0 left-0 h-[41.625rem] w-full bg-[linear-gradient(0deg,rgba(0,0,0,0.20)_0%,rgba(0,0,0,0.20)_100%),linear-gradient(180deg,rgba(0,0,0,0.00)_58.09%,rgba(0,0,0,0.35)_82.98%)] z-[1] pointer-events-none'></div>

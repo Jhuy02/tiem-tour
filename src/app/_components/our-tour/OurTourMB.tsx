@@ -8,18 +8,18 @@ export default function OurTourMB({
   data,
   dataOurTour,
 }: {
-  data: TypeOurTourList[]
-  dataOurTour: TypeOurTour
+  data: TypeOurTour
+  dataOurTour: TypeOurTourList[]
 }) {
-  if (!Array.isArray(data)) {
+  if (!Array.isArray(dataOurTour)) {
     return null
   }
 
   return (
     <>
       <div className='ourTour-listmb'>
-        {Array.isArray(data) &&
-          data?.map((item, index: number) => (
+        {Array.isArray(dataOurTour) &&
+          dataOurTour?.map((item, index: number) => (
             <Fragment key={index}>
               <Link
                 href={'/tours/' + item?.tour_1.link}
@@ -118,8 +118,8 @@ export default function OurTourMB({
           ))}
       </div>
       <Link
-        href={dataOurTour?.discover_our_tours?.link?.url}
-        target={dataOurTour?.discover_our_tours?.link?.target}
+        href={data?.discover_our_tours?.link?.url}
+        target={data?.discover_our_tours?.link?.target}
         className='ourTour-listmb__btn'
       >
         <p>ALL tour</p>
