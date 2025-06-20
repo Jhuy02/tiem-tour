@@ -139,7 +139,7 @@ export default function DiscoveryTour({
     >
       <section
         ref={containerRef}
-        className='relative max-sm:px-[1rem] max-sm:py-[2rem] pt-[2.5rem]'
+        className='relative max-sm:px-[1rem] max-sm:py-[2rem] pt-[2.5rem] pb-[6.25rem]'
       >
         <div className='flex flex-col sm:space-y-[3rem] max-w-[87.5rem] mx-auto'>
           <div className='self-stretch w-full mb-[0.75rem] max-sm:flex max-sm:justify-between max-sm:items-center'>
