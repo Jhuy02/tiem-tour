@@ -36,6 +36,7 @@
   transform: translateY(-0.25rem);
   position: relative;
   z-index: -1;
+  line-height: 87%;
   text-shadow: 5.218px 7.826px 0px rgba(0, 0, 0, 0.25);
 }
 
