@@ -15,12 +15,12 @@ import 'swiper/css'
 import 'swiper/css/effect-fade'
 import {Autoplay, EffectFade} from 'swiper/modules'
 
-interface IBannerImage {
+export interface IBannerImage {
   image_pc: {url: string; alt?: string}
   image_mobile: {url: string; alt?: string}
 }
 
-interface IBannerV2 {
+export interface IBannerV2 {
   data: {
     title: string
     banner_image: IBannerImage[]
