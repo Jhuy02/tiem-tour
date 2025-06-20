@@ -2,6 +2,7 @@
 
 import ImageFallback from '@/components/image/ImageFallback'
 import {animateTitle} from '@/hooks/useAnimateTitle'
+import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
 import {TypeOurTour, TypeOurTourList} from '@/types/home.interface'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -336,7 +337,7 @@ export default function OurTourPC({
         </div>
       </div>
       <Link
-        href={data?.discover_our_tours?.link?.url}
+        href={getPathFromUrl(data?.discover_our_tours?.link?.url)}
         target={data?.discover_our_tours?.link?.target}
         className='ourTour-list__item ourTour__item4'
       >

@@ -31,12 +31,6 @@ const Discover = ({
   const swiperRef = useRef<SwiperType | null>(null)
   const isMobile = useIsMobile()
 
-  // useEffect(() => {
-  //   if (location && location.length > 0 && !activeLocation) {
-  //     setActiveLocation(location[0].slug)
-  //   }
-  // }, [location, activeLocation])
-
   useEffect(() => {
     if (swiperRef.current && activeLocation) {
       swiperRef.current.slideTo(0)

@@ -1,5 +1,6 @@
 import IconArrow from '@/components/icon/IconArrow'
 import ImageFallback from '@/components/image/ImageFallback'
+import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
 import IconArrowHeader from '@/layout/header/header-pc/IconArrowHeader'
 import {
   DataLocation,
@@ -26,15 +27,6 @@ export default function MenuPopup({
   Location: DataLocation
   HeaderMobile: HeaderMobile
 }) {
-  const getPathFromUrl = (url: string): string => {
-    if (!url || url === '#') return url
-    try {
-      const urlObj = new URL(url)
-      return urlObj.pathname
-    } catch {
-      return url
-    }
-  }
   return (
     <div className='mobile-menu-popup active'>
       <div className='mobile-menu-popup__header'>

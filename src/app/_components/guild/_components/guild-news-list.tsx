@@ -4,6 +4,8 @@ import {Fragment} from 'react'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import {convertRemToPx} from '@/lib/utils'
 import 'swiper/css'
+import Link from 'next/link'
+import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
 
 const BACKGROUND_CARD_BY_INDEX = [
   '#115A46',
@@ -27,14 +29,16 @@ const GuildNewsList = ({
           const backgroundColor = BACKGROUND_CARD_BY_INDEX[index % 5]
           return (
             <Fragment key={item.permalink}>
-              <NewsCard
-                style={{backgroundColor}}
-                category={item.categories[0].name}
-                date={item.date}
-                title={item.title}
-                thumbSrc={item.thumbnail}
-                className='w-[18.625rem] h-[24rem] shrink-0'
-              />
+              <Link href={getPathFromUrl(item.permalink)}>
+                <NewsCard
+                  style={{backgroundColor}}
+                  category={item.categories[0].name}
+                  date={item.date}
+                  title={item.title}
+                  thumbSrc={item.thumbnail}
+                  className='w-[18.625rem] h-[24rem] shrink-0'
+                />
+              </Link>
             </Fragment>
           )
         })}
@@ -53,14 +57,16 @@ const GuildNewsList = ({
         const backgroundColor = BACKGROUND_CARD_BY_INDEX[index % 5]
         return (
           <SwiperSlide key={item.permalink}>
-            <NewsCard
-              style={{backgroundColor}}
-              category={item.categories[0].name}
-              date={item.date}
-              title={item.title}
-              thumbSrc={item.thumbnail}
-              className='w-[20.9375rem] h-[27.3125rem]'
-            />
+            <Link href={getPathFromUrl(item.permalink)}>
+              <NewsCard
+                style={{backgroundColor}}
+                category={item.categories[0].name}
+                date={item.date}
+                title={item.title}
+                thumbSrc={item.thumbnail}
+                className='w-[20.9375rem] h-[27.3125rem]'
+              />
+            </Link>
           </SwiperSlide>
         )
       })}

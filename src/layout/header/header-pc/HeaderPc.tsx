@@ -12,6 +12,7 @@ import {DataLocation, HeaderOption, PageLink} from '@/types/options.interface'
 import Image from 'next/image'
 import Link from 'next/link'
 import './Header-pc.css'
+import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
 
 const decodeHtmlEntities = (text: string): string => {
   if (typeof text !== 'string') return text
@@ -19,16 +20,6 @@ const decodeHtmlEntities = (text: string): string => {
   const textarea = document.createElement('textarea')
   textarea.innerHTML = text
   return textarea.value
-}
-
-const getPathFromUrl = (url: string): string => {
-  if (!url || url === '#') return url
-  try {
-    const urlObj = new URL(url)
-    return urlObj.pathname
-  } catch {
-    return url
-  }
 }
 
 export default function HeaderPc({

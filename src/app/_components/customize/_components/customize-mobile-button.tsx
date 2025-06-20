@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Arrow from '@/components/icon/arrow'
 import {ICustomize} from '@/types/customize.interface'
+import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
 
 interface CustomizeMobileButtonProps {
   data: ICustomize
@@ -9,7 +10,7 @@ interface CustomizeMobileButtonProps {
 const CustomizeMobileButton = ({data}: CustomizeMobileButtonProps) => {
   return (
     <div className='customize__button-mobile'>
-      <Link href={data.button.url}>
+      <Link href={getPathFromUrl(data.button.url)}>
         <p>{data.button.title}</p>
         <Arrow
           color='#fff'
