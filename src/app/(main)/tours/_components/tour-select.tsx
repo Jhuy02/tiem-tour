@@ -10,6 +10,7 @@ interface SelectedOption {
   id: number
   name: string
   slug: string
+  hot?: boolean | null
 }
 
 export default function FilterSelectOption({
@@ -131,7 +132,7 @@ export default function FilterSelectOption({
                 >
                   <p
                     onClick={() => handleSelectOption(option)}
-                    className='flex items-center cursor-pointer'
+                    className='flex items-center cursor-pointer hover:bg-gray-100 rounded-[0.25rem] transition-all  duration-300'
                   >
                     <span
                       className={clsx(
@@ -169,9 +170,14 @@ export default function FilterSelectOption({
                         />
                       )}
                     </span>
-                    <span className='line-clamp-1 font-trip-sans text-[1rem] font-medium leading-[120%] tracking-[0.0025rem]'>
+                    <span className='relative line-clamp-1 font-trip-sans text-[1rem] font-medium leading-[120%] tracking-[0.0025rem]'>
                       {option.name}
                     </span>
+                    {option.hot && (
+                      <span className='ml-[1rem] rounded-[2rem] bg-[#C83E21] inline-block py-[0.25rem] px-[0.75rem] text-white font-trip-sans text-[0.75rem] font-medium leading-[120%] tracking-[0.00188rem]'>
+                        Hot
+                      </span>
+                    )}
                   </p>
                 </li>
               )

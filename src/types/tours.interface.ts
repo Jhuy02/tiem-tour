@@ -2,6 +2,7 @@ export interface TourTaxonomy {
   id: number
   name: string
   slug: string
+  hot?: null | boolean
 }
 export interface TourImage {
   url: string

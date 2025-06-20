@@ -61,7 +61,7 @@ export default function TourViewer() {
     handleFilterChange(key, updatedFilter)
   }
   return (
-    <div className='flex flex-wrap space-x-[0.75rem] space-y-[0.75rem]'>
+    <div className='flex flex-wrap space-x-[0.75rem] space-y-[0.75rem] mt-[0.8125rem]'>
       {filters.location.map((item) => (
         <ChipFilter
           key={item.id}

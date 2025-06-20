@@ -119,7 +119,7 @@ export default function DiscoveryTour({
       }
     })
 
-    query['page'] = '1' // reset page về 1
+    query['page'] = '1'
 
     router.push(`?${new URLSearchParams(query).toString()}`, {scroll: false})
     setCurrentPage(1)
@@ -155,7 +155,7 @@ export default function DiscoveryTour({
             )}
           </div>
           {!isMobile && (
-            <div className='hidden self-stretch w-full sm:flex flex-col space-y-[0.8125rem]'>
+            <div className='hidden self-stretch w-full sm:flex flex-col'>
               <TourFilter
                 tourLocation={tourLocationTax}
                 tourDuration={tourDurationTax}

@@ -11,7 +11,7 @@ interface TourListProps {
 export default function TourList({isLoading, data}: TourListProps) {
   if (isLoading) {
     return (
-      <div className='grid grid-cols-12 space-y-[1rem] sm:space-x-[1.25rem] sm:space-y-[1.25rem]'>
+      <div className='grid grid-cols-12 gap-[1rem] sm:gap-[1.25rem]'>
         {[...Array(12)].map((_, index) => (
           <Skeleton
             key={index}
@@ -22,10 +22,14 @@ export default function TourList({isLoading, data}: TourListProps) {
     )
   }
   if (!data?.length) {
-    return <p>No suitable tour found</p>
+    return (
+      <p className='mt-[0.5rem] text-center text-[1.5rem] font-semibold leading-[160%] uppercase tracking-[-0.01563rem] font-trip-sans text-[#FF7A00]'>
+        No suitable tour found. Please try again!
+      </p>
+    )
   }
   return (
-    <div className='grid grid-cols-12 space-y-[1rem] sm:space-x-[1.25rem] sm:space-y-[1.25rem]'>
+    <div className='grid grid-cols-12 gap-[1rem] sm:gap-[1.25rem]'>
       {data.map((item) => {
         return (
           <Link
