@@ -12,7 +12,10 @@ export interface ICustomerSay {
 
 export interface ICustomer {
   title: string
-  background: IMedia
+  background: {
+    desktop: IMedia
+    mobile: IMedia
+  }
   custom_say: ICustomerSay[]
   tripadventure: {
     icon: IMedia

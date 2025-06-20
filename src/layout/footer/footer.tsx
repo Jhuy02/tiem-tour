@@ -4,14 +4,16 @@ import FooterBottom from './components/footer-bottom'
 import './style/footer.css'
 import Image from 'next/image'
 import FooterMobile from './components/mobile/footer-mobile'
+import ImageAnimationFooter from '@/components/image/ImageAnimationFooter'
 
 const Footer = ({data}: {data: IFooter}) => {
   return (
     <>
       <footer
         id='footer'
-        className='block relative xsm:h-auto!'
+        className='block relative xsm:h-auto! z-1'
       >
+        <ImageAnimationFooter />
         <Image
           src={'/footer/footer-bg.svg'}
           width={1000}

@@ -34,6 +34,7 @@ export interface NewsIdDetail {
 export interface News {
   id: NewsIdDetail
   title: string
+  slug: string
   excerpt: string
   thumbnail: string
   permalink: string
@@ -44,6 +45,7 @@ export interface News {
 
 export interface NewsList {
   link: string
+  slug: string
   title: string
   date: string
   image: {

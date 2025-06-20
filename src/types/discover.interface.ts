@@ -8,6 +8,7 @@ export interface IDiscover {
 
 export interface IDiscoverTour {
   link: string
+  slug: string
   title: string
   image: {
     url: string

@@ -12,6 +12,7 @@ import 'swiper/css'
 import 'swiper/css/parallax'
 import 'swiper/css/pagination'
 import ImageFallback from '@/components/image/ImageFallback'
+import Link from 'next/link'
 
 const Featured = ({featured}: {featured: News[]}) => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -123,12 +124,14 @@ const Featured = ({featured}: {featured: News[]}) => {
               {featured[displayIndex].date || ''}
             </span>
           </p>
-          <h2
-            ref={titleRef}
-            className='text-[#3B3943] text-[2.25rem] leading-[2.7rem] tracking-[0.01563rem] uppercase font-dvn-luckiest-guy line-clamp-4 mt-[1.5rem] mb-[1rem] xsm:text-[1.375rem] xsm:leading-[1.7875rem] xsm:mt-[0.5rem]'
-          >
-            {featured[displayIndex].title}
-          </h2>
+          <Link href={`/${featured[displayIndex].slug}`}>
+            <h2
+              ref={titleRef}
+              className='text-[#3B3943] text-[2.25rem] leading-[2.7rem] tracking-[0.01563rem] uppercase font-dvn-luckiest-guy line-clamp-4 mt-[1.5rem] mb-[1rem] xsm:text-[1.375rem] xsm:leading-[1.7875rem] xsm:mt-[0.5rem]'
+            >
+              {featured[displayIndex].title}
+            </h2>
+          </Link>
           <p
             ref={descRef}
             className='text-[#303030CC] leading-[1.6rem] tracking-[0.0025rem] xsm:leading-[1.5rem]'

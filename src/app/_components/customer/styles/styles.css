@@ -219,7 +219,7 @@
 
 @media screen and (max-width: 639.98px) {
   #customer {
-    height: 44.0625rem;
+    height: 40.0625rem !important;
     width: 100%;
   }
 

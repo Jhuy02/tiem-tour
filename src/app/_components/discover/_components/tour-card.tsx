@@ -10,7 +10,7 @@ const TourCard = ({tour}: TourCardProps) => {
   return (
     <div className='h-[34.75rem]! p-[1.25rem]! xsm:w-[19.6275rem]! xsm:h-[30.3125rem]! overflow-hidden shrink-0 relative xsm:p-[1rem]!'>
       <Link
-        href={tour.link}
+        href={`/tours/${tour.slug}`}
         className='group xsm:group-none'
       >
         <ImageFallback

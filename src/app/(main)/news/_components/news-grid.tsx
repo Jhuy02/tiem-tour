@@ -41,7 +41,7 @@ const NewsGrid = ({randomColors, isLoading, data}: NewsGridProps) => {
     <div className='grid grid-cols-4 xsm:grid-cols-1 gap-[1.25rem] mt-[1.75rem]'>
       {data?.data?.map((item: NewsList, index: number) => (
         <NewsCard
-          key={item.link}
+          key={item.slug}
           item={item}
           backgroundColor={randomColors[index]}
         />
