@@ -206,7 +206,7 @@ export default function Mysterious({data}: {data: TypeMysterious}) {
       <div className='mysterious-heading'>
         <Image
           className='mysterious-heading__icon'
-          src={'/home/mysterious/Pattern-Brand.svg'}
+          src={'/pattern.svg'}
           alt=''
           width={40}
           height={40}
