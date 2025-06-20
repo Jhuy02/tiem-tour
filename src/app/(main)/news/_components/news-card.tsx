@@ -10,7 +10,7 @@ interface NewsCardProps {
 
 const NewsCard = ({item, backgroundColor}: NewsCardProps) => {
   return (
-    <Link href={item.link}>
+    <Link href={`/${item.slug}`}>
       <div className='relative w-[21.4375rem] h-[27.3125rem] group'>
         <Image
           src={'/news/card-bg.webp'}

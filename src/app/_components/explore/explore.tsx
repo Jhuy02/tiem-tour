@@ -122,7 +122,7 @@ const Explore = ({data}: {data: IExplore}) => {
           className='explore__container-top'
         />
         <Image
-          src={'/home/explore/explore-top-mb.webp'}
+          src={'/home/explore/explore-top-mb.svg'}
           alt='explore-top-mobile'
           width={1920}
           height={1080}

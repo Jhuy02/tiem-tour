@@ -41,14 +41,14 @@ const MobileTourList = ({
       ) : tours && !toursData ? (
         tours.map((tour) => (
           <TourCard
-            key={tour.link}
+            key={tour.slug}
             tour={tour}
           />
         ))
       ) : toursData ? (
         toursData?.data?.map((tour: IDiscoverTour) => (
           <TourCard
-            key={tour.link}
+            key={tour.slug}
             tour={tour}
           />
         ))

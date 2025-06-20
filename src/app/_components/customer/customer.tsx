@@ -13,13 +13,23 @@ const Customer = ({data}: {data: ICustomer}) => {
 
   return (
     <section id='customer'>
-      <Image
-        src={data.background.url}
-        alt={data.background.alt}
-        width={data.background.width}
-        height={data.background.height}
-        className='customer__bg'
-      />
+      {isMobile ? (
+        <Image
+          src={data.background.mobile.url}
+          alt={data.background.mobile.alt}
+          width={data.background.mobile.width}
+          height={data.background.mobile.height}
+          className='w-full h-full object-contain absolute bottom-[-4rem] left-0'
+        />
+      ) : (
+        <Image
+          src={data.background.desktop.url}
+          alt={data.background.desktop.alt}
+          width={data.background.desktop.width}
+          height={data.background.desktop.height}
+          className='customer__bg xsm:hidden!'
+        />
+      )}
       <Image
         src={'/home/customer/top.webp'}
         alt='customer-top'

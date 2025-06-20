@@ -6,7 +6,9 @@ const config: Config = {
   theme: {
     screens: {
       sm: '640px',
-      lg: '1025px',
+      lg: {
+        min: '1024px',
+      },
       xlg: {
         max: '1024px',
       },

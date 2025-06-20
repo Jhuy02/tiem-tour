@@ -9,6 +9,14 @@ import {
 } from '@/types/options.interface'
 import Link from 'next/link'
 
+// Utility function to decode HTML entities
+const decodeHtmlEntities = (text: string): string => {
+  if (typeof text !== 'string') return text
+  const textarea = document.createElement('textarea')
+  textarea.innerHTML = text
+  return textarea.value
+}
+
 export default function MenuPopup({
   page_link,
   Location,
@@ -18,6 +26,15 @@ export default function MenuPopup({
   Location: DataLocation
   HeaderMobile: HeaderMobile
 }) {
+  const getPathFromUrl = (url: string): string => {
+    if (!url || url === '#') return url
+    try {
+      const urlObj = new URL(url)
+      return urlObj.pathname
+    } catch {
+      return url
+    }
+  }
   return (
     <div className='mobile-menu-popup active'>
       <div className='mobile-menu-popup__header'>
@@ -35,7 +52,7 @@ export default function MenuPopup({
                   return (
                     <li key={index}>
                       <p>
-                        {item?.page?.title}
+                        {decodeHtmlEntities(item?.page?.title)}
                         <IconArrowHeader />
                       </p>
                       <ul className='mobile-menu-popup__sub-nav'>
@@ -68,9 +85,9 @@ export default function MenuPopup({
                     <li key={index}>
                       <Link
                         target={item?.page?.target}
-                        href={item?.page?.url}
+                        href={getPathFromUrl(item?.page?.url)}
                       >
-                        {item?.page?.title}
+                        {decodeHtmlEntities(item?.page?.title)}
                       </Link>
                     </li>
                   )
