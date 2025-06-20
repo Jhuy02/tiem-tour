@@ -1,10 +1,10 @@
 'use client'
 
-import {IDiscoverTour} from '@/types/discover.interface'
 import {Skeleton} from '@/components/ui/skeleton'
-import {Swiper, SwiperSlide} from 'swiper/react'
-import type {Swiper as SwiperType} from 'swiper'
 import {convertRemToPx} from '@/lib/utils'
+import {IDiscoverTour} from '@/types/discover.interface'
+import type {Swiper as SwiperType} from 'swiper'
+import {Swiper, SwiperSlide} from 'swiper/react'
 import TourCard from './tour-card'
 
 import 'swiper/css'
@@ -50,7 +50,10 @@ const DesktopTourSwiper = ({
           ))
         ) : toursData ? (
           toursData?.data?.map((tour: IDiscoverTour) => (
-            <SwiperSlide key={tour.link}>
+            <SwiperSlide
+              key={tour.link}
+              className='test'
+            >
               <TourCard tour={tour} />
             </SwiperSlide>
           ))

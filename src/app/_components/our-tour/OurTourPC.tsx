@@ -18,8 +18,8 @@ export default function OurTourPC({
   dataOurTour,
   total,
 }: {
-  data: TypeOurTourList[]
-  dataOurTour: TypeOurTour
+  data: TypeOurTour
+  dataOurTour: TypeOurTourList[]
   total: string
 }) {
   const swiperRef = useRef<SwiperType | null>(null)
@@ -31,34 +31,34 @@ export default function OurTourPC({
 
   // Xử lý slide change
   const handleSlideChange = (swiper: SwiperType) => {
-    const realIndex = swiper.realIndex
+    const realIndex = swiper?.realIndex
 
     // Cập nhật active index
     setActiveIndex(realIndex)
 
-    if (warperRef.current) {
-      const list__item = warperRef.current.querySelectorAll(
+    if (warperRef?.current) {
+      const list__item = warperRef?.current?.querySelectorAll(
         '.ourTour-list__item_animation',
       )
-      list__item.forEach((item) => {
-        const activeItem = item.querySelectorAll('.item-infor')
+      list__item?.forEach((item) => {
+        const activeItem = item?.querySelectorAll('.item-infor')
         if (activeItem) {
           const splitTextEls =
-            activeItem[realIndex].querySelectorAll('.SplitText')
-          splitTextEls.forEach((el) => {
+            activeItem[realIndex]?.querySelectorAll('.SplitText')
+          splitTextEls?.forEach((el) => {
             animateTitle(el as HTMLElement)
           })
         }
       })
     }
 
-    if (swiperRef2.current) {
+    if (swiperRef2?.current) {
       swiperRef2?.current?.slideTo(realIndex)
     }
-    if (swiperRef3.current) {
+    if (swiperRef3?.current) {
       swiperRef3?.current?.slideTo(realIndex)
     }
-    if (swiperRef4.current) {
+    if (swiperRef4?.current) {
       swiperRef4?.current?.slideTo(realIndex)
     }
   }
@@ -87,8 +87,8 @@ export default function OurTourPC({
           className='swiper-ourTour__item1 swiper-ourTour__item'
           onSlideChange={handleSlideChange}
         >
-          {Array.isArray(data) &&
-            data?.map((item, index) => (
+          {Array.isArray(dataOurTour) &&
+            dataOurTour?.map((item, index) => (
               <SwiperSlide key={index}>
                 <Link
                   href={'/tours/' + item?.tour_1.link}
@@ -112,8 +112,8 @@ export default function OurTourPC({
         </Swiper>
         <div className='ourTour__item-overlay'></div>
         <div className='ourTour__item-infor'>
-          {Array.isArray(data) &&
-            data?.map((item, index) => (
+          {Array.isArray(dataOurTour) &&
+            dataOurTour?.map((item, index) => (
               <div
                 key={index}
                 className={`item-infor ${
@@ -174,8 +174,8 @@ export default function OurTourPC({
           modules={[Parallax]}
           className='swiper-ourTour__item2 swiper-ourTour__item'
         >
-          {Array.isArray(data) &&
-            data?.map((item, index) => (
+          {Array.isArray(dataOurTour) &&
+            dataOurTour?.map((item, index) => (
               <SwiperSlide key={index}>
                 <Link
                   href={'/tours/' + item?.tour_2.link}
@@ -199,8 +199,8 @@ export default function OurTourPC({
         </Swiper>
         <div className='ourTour__item-overlay'></div>
         <div className='ourTour__item-infor'>
-          {Array.isArray(data) &&
-            data?.map((item, index) => (
+          {Array.isArray(dataOurTour) &&
+            dataOurTour?.map((item, index) => (
               <div
                 key={index}
                 className={`item-infor ${
@@ -261,8 +261,8 @@ export default function OurTourPC({
           modules={[Parallax]}
           className='swiper-ourTour__item3 swiper-ourTour__item'
         >
-          {Array.isArray(data) &&
-            data?.map((item, index) => (
+          {Array.isArray(dataOurTour) &&
+            dataOurTour?.map((item, index) => (
               <SwiperSlide key={index}>
                 <Link
                   href={'/tours/' + item?.tour_3.link}
@@ -286,8 +286,8 @@ export default function OurTourPC({
         </Swiper>
         <div className='ourTour__item-overlay'></div>
         <div className='ourTour__item-infor'>
-          {Array.isArray(data) &&
-            data?.map((item, index) => (
+          {Array.isArray(dataOurTour) &&
+            dataOurTour?.map((item, index) => (
               <div
                 key={index}
                 className={`item-infor ${
@@ -336,8 +336,8 @@ export default function OurTourPC({
         </div>
       </div>
       <Link
-        href={dataOurTour?.discover_our_tours?.link?.url}
-        target={dataOurTour?.discover_our_tours?.link?.target}
+        href={data?.discover_our_tours?.link?.url}
+        target={data?.discover_our_tours?.link?.target}
         className='ourTour-list__item ourTour__item4'
       >
         <Swiper
@@ -351,8 +351,8 @@ export default function OurTourPC({
           modules={[Parallax]}
           className='swiper-ourTour__item4 swiper-ourTour__item'
         >
-          {Array.isArray(data) &&
-            data?.map((item, index) => (
+          {Array.isArray(dataOurTour) &&
+            dataOurTour?.map((item, index) => (
               <SwiperSlide key={index}>
                 <div
                   className='ourTour__item'
@@ -371,7 +371,7 @@ export default function OurTourPC({
         </Swiper>
         <div className='discoverourtours'>
           <p className='discoverourtours__title'>
-            {dataOurTour?.discover_our_tours?.title}
+            {data?.discover_our_tours?.title}
           </p>
           <p className='discoverourtours__total'>{total} + tour for you</p>
         </div>

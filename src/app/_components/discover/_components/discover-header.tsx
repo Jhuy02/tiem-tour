@@ -34,11 +34,13 @@ const DiscoverHeader = ({
       </article>
       <article className='discover__header-right'>
         {Array.isArray(location) &&
-          location.map((loc) => (
+          location.map((loc, index) => (
             <div
               key={loc.id}
               className={`discover__header-right-item ${
-                activeLocation === loc.slug ? 'active' : ''
+                activeLocation === loc.slug || (!activeLocation && index === 0)
+                  ? 'active'
+                  : ''
               }`}
               onClick={() => onLocationChange(loc.slug)}
             >
