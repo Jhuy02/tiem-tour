@@ -124,7 +124,7 @@ const Featured = ({featured}: {featured: News[]}) => {
               {featured[displayIndex].date || ''}
             </span>
           </p>
-          <Link href={`/${featured[displayIndex].slug}`}>
+          <Link href={`/news/${featured[displayIndex].slug}`}>
             <h2
               ref={titleRef}
               className='text-[#3B3943] text-[2.25rem] leading-[2.7rem] tracking-[0.01563rem] uppercase font-dvn-luckiest-guy line-clamp-4 mt-[1.5rem] mb-[1rem] xsm:text-[1.375rem] xsm:leading-[1.7875rem] xsm:mt-[0.5rem]'
@@ -140,7 +140,7 @@ const Featured = ({featured}: {featured: News[]}) => {
           </p>
           <div className='flex items-start justify-start xsm:hidden'>
             <BlueButton
-              href={featured[displayIndex].permalink}
+              href={`/news/${featured[displayIndex].slug}`}
               textColor='#3B3943'
               arrowColor='#3B3943'
               borderColor='rgba(0, 0,0, 0.12)'
