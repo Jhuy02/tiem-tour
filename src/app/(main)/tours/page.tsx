@@ -32,7 +32,7 @@ export default async function TourListPage({searchParams}: Props) {
       }),
     ])
   const {compound_banner, tour_hots} = acfRes.acf
-
+  console.log(tourTaxonomyRes)
   return (
     <main className="bg-center bg-no-repeat bg-cover bg-[url('/images/background-page-mobile.webp')] sm:bg-[url('/images/background-page-pc.webp')] pb-[12rem] max-sm:pb-0">
       <BannerV2
