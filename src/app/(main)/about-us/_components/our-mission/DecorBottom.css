@@ -1,0 +1,39 @@
+.our-mission-animation__bottom img {
+  transition: all 1.3s cubic-bezier(0.6, 0.01, 0.3, 0.89);
+}
+.our-mission-animation__bottom img:nth-child(1) {
+  bottom: 5.3rem;
+}
+.our-mission-animation__bottom img:nth-child(2) {
+  bottom: 4.63rem;
+}
+.our-mission-animation__bottom img:nth-child(3) {
+  bottom: 4.12rem;
+}
+.our-mission-animation__bottom img:nth-child(4) {
+  bottom: 6.07rem;
+}
+.our-mission-animation__bottom img:nth-child(5) {
+  bottom: 6.51rem;
+}
+.our-mission-animation__bottom img:nth-child(6) {
+  bottom: 6.37rem;
+}
+.our-mission-animation__bottom.active img:nth-child(1) {
+  bottom: 7.9rem;
+}
+.our-mission-animation__bottom.active img:nth-child(2) {
+  bottom: 6rem;
+}
+.our-mission-animation__bottom.active img:nth-child(3) {
+  bottom: 4.25rem;
+}
+.our-mission-animation__bottom.active img:nth-child(4) {
+  bottom: 9.83rem;
+}
+.our-mission-animation__bottom.active img:nth-child(5) {
+  bottom: 12.23rem;
+}
+.our-mission-animation__bottom.active img:nth-child(6) {
+  bottom: 11.13rem;
+}
