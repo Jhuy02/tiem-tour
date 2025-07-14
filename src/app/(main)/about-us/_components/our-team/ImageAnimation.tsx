@@ -41,14 +41,14 @@ export default function ImageAnimation({image}: {image: IMedia}) {
         width={1600}
         height={200}
         src={'/about-us/section-team/frame-top-img-animation.webp'}
-        className='absolute top-0 left-0 z-1 h-auto w-full'
+        className='xsm:top-[-1px] absolute top-0 left-0 z-1 h-auto w-full'
       />
       <Image
         alt=''
         width={1600}
         height={200}
         src={'/about-us/section-team/frame-bottom-img-animation.webp'}
-        className='absolute bottom-0 left-0 z-1 h-auto w-full'
+        className='xsm:bottom-[-1px] absolute bottom-0 left-0 z-1 h-auto w-full'
       />
       <Image
         ref={imageRef}
