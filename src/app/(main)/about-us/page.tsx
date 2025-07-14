@@ -13,7 +13,7 @@ export default async function AboutUsPage() {
     ])
   console.log(aboutUsPageACFDataResponse)
   return (
-    <main className='xsm:pb-[4.87rem] relative overflow-hidden bg-[#F9F4EB] bg-[url("/common/common-background-pc.webp")] bg-cover bg-center bg-no-repeat pb-[12rem]'>
+    <main className='xsm:pb-[5rem] relative overflow-hidden bg-[#F9F4EB] bg-[url("/common/common-background-pc.webp")] bg-cover bg-center bg-no-repeat pb-[12rem]'>
       <BannerV2 data={aboutUsPageACFDataResponse?.acf?.compound_banner} />
       <AboutUs data={aboutUsPageACFDataResponse?.acf?.about_content} />
       <OurMission data={aboutUsPageACFDataResponse?.acf?.our_mission} />
