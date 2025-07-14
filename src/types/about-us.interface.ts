@@ -31,11 +31,14 @@ export interface MeetOurTeamItem {
   position: string
 }
 export interface MeetOurTeam {
-  title: string
-  desc: string
-  button_link: ILink
+  title_pc: string
+  title_mobile: string
+  subtitle: string
+  booking_link: ILink
+  image: IMedia
   team: MeetOurTeamItem[]
 }
+
 export interface AboutUsPageACFDataResponse {
   acf: {
     compound_banner: AboutUsBanner
