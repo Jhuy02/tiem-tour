@@ -34,7 +34,7 @@ export default async function TourListPage({searchParams}: Props) {
   const {compound_banner, tour_hots} = acfRes.acf
 
   return (
-    <main className="bg-[url('/images/background-page-mobile.webp')] bg-cover bg-center bg-no-repeat pb-[12rem] max-sm:pb-0 sm:bg-[url('/images/background-page-pc.webp')]">
+    <main className="xsm:pb-[5rem] bg-[url('/images/background-page-mobile.webp')] bg-cover bg-center bg-no-repeat pb-[12rem] max-sm:pb-0 sm:bg-[url('/images/background-page-pc.webp')]">
       <BannerV2
         data={compound_banner}
         variant='secondary'

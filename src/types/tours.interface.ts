@@ -14,6 +14,7 @@ export interface TourImage {
 export interface TourItemResponse {
   title: string
   link: string
+  slug: string
   price: string
   image: TourImage
   duration: TourTaxonomy[]
