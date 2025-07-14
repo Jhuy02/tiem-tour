@@ -332,3 +332,31 @@ input[type='number'] {
     transform: rotate(360deg);
   }
 }
+@keyframes spin-reverse-animate {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: -360deg;
+  }
+}
+@utility animate-spin-reverse {
+  animation: spin-reverse-animate 4s linear infinite;
+}
+@utility text-decor-v1 {
+  -webkit-text-stroke-width: 0.5rem;
+  -webkit-text-stroke-color: rgba(37, 172, 171, 0.17);
+  font-family: var(--font-nvn-motherland);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@utility text-decor-red {
+  -webkit-text-stroke-width: 0.5rem;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.16);
+  font-family: var(--font-nvn-motherland);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

@@ -73,34 +73,37 @@ export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
         </React.Fragment>
       )}
 
-      <div className='max-sm:hidden absolute left-1/2 -translate-x-1/2 top-[27.8125rem] w-[12.5rem] z-[2] flex flex-col items-center'>
-        <p className='text-[#fff] text-center font-trip-sans text-[0.875rem] font-medium leading-[120%] tracking-[0.00219rem] mb-[0.5rem] self-stretch pb-[0.625rem]'>
-          Scroll down
-        </p>
-        <button
-          onClick={handleScrollDown}
-          className='cursor-pointer bg-transparent'
-        >
-          <IconScrollDown className='h-[3.125rem] w-auto' />
-        </button>
-      </div>
-
-      <div className='absolute top-[9.5625rem] max-sm:top-[8.0875rem] max-sm:min-h-[10.5rem] max-sm:justify-end max-sm:w-[19.79144rem] left-1/2 -translate-x-1/2 flex flex-col items-center z-[2]'>
-        <Image
-          alt=''
-          width={300}
-          height={150}
-          src='/banner/bg-title.png'
-          className='w-[19.79156rem] h-auto pointer-events-none max-sm:absolute max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:bottom-[0.5rem]'
-        />
-        <h1
-          className={clsx(
-            'relative z-[1] w-full top-[-3rem] max-sm:top-0',
-            styles.bannerTitle,
-          )}
-          dangerouslySetInnerHTML={{__html: data?.title ?? ''}}
-        ></h1>
-      </div>
+      {data?.title && (
+        <>
+          <div className='max-sm:hidden absolute left-1/2 -translate-x-1/2 top-[27.8125rem] w-[12.5rem] z-[2] flex flex-col items-center'>
+            <p className='text-[#fff] text-center font-trip-sans text-[0.875rem] font-medium leading-[120%] tracking-[0.00219rem] mb-[0.5rem] self-stretch pb-[0.625rem]'>
+              Scroll down
+            </p>
+            <button
+              onClick={handleScrollDown}
+              className='cursor-pointer bg-transparent'
+            >
+              <IconScrollDown className='h-[3.125rem] w-auto' />
+            </button>
+          </div>
+          <div className='absolute top-[9.5625rem] max-sm:top-[8.0875rem] max-sm:min-h-[10.5rem] max-sm:justify-end max-sm:w-[19.79144rem] left-1/2 -translate-x-1/2 flex flex-col items-center z-[2]'>
+            <Image
+              alt=''
+              width={300}
+              height={150}
+              src='/banner/bg-title.png'
+              className='w-[19.79156rem] h-auto pointer-events-none max-sm:absolute max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:bottom-[0.5rem]'
+            />
+            <h1
+              className={clsx(
+                'relative z-[1] w-full top-[-3rem] max-sm:top-0',
+                styles.bannerTitle,
+              )}
+              dangerouslySetInnerHTML={{__html: data?.title ?? ''}}
+            ></h1>
+          </div>
+        </>
+      )}
 
       <Swiper
         className='absolute top-0 left-0 w-full h-full z-0! swiper-fade'
