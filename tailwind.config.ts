@@ -1,4 +1,4 @@
-import type {Config} from 'tailwindcss'
+import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
@@ -25,6 +25,9 @@ const config: Config = {
         dvnLuckiestGuy: ['var(--font-dvn-luckiest-guy)'],
         nvnMotherland: ['var(--font-nvn-motherland)'],
         tripSans: ['var(--font-trip-sans)'],
+      },
+      colors: {
+        tittleGreen: '#092F1A',
       },
     },
   },

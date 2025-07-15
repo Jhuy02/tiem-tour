@@ -4,6 +4,7 @@ import Customize from '@/app/_components/customize/customize'
 import Discover from '@/app/_components/discover/discover'
 import Explore from '@/app/_components/explore/explore'
 import Guild from '@/app/_components/guild/guild'
+// import Map from '@/app/_components/map'
 import Mysterious from '@/app/_components/mysterious'
 import OurTour from '@/app/_components/our-tour'
 import fetchData from '@/fetches/fetchData'
@@ -34,6 +35,7 @@ export default async function Page() {
         dataPostOurTour={dataPostOurTour?.our_tour || []}
         total={dataPostOurTour?.total || '0'}
       />
+      {/* <Map /> */}
       <Discover
         data={dataHome?.acf?.discover}
         tours={discoverTours || []}

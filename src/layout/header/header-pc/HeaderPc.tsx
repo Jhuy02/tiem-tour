@@ -1,18 +1,18 @@
 'use client'
 
 import ImageFallback from '@/components/image/ImageFallback'
-import {useHeaderScroll} from '@/hooks/useHeaderScroll'
+import { getPathFromUrl } from '@/hooks/useGetPathFromUrl'
+import { useHeaderScroll } from '@/hooks/useHeaderScroll'
 import IconArrowHeader from '@/layout/header/header-pc/IconArrowHeader'
 import IconLocation from '@/layout/header/header-pc/IconLocation'
 import IconSearch from '@/layout/header/header-pc/IconSearch'
 import SvgBacKan from '@/layout/header/header-pc/SvgBacKan'
 import SvgCaoBang from '@/layout/header/header-pc/SvgCaoBang'
 import SvgHaGiang from '@/layout/header/header-pc/SvgHaGiang'
-import {DataLocation, HeaderOption, PageLink} from '@/types/options.interface'
+import { DataLocation, HeaderOption, PageLink } from '@/types/options.interface'
 import Image from 'next/image'
 import Link from 'next/link'
 import './Header-pc.css'
-import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
 
 const decodeHtmlEntities = (text: string): string => {
   if (typeof text !== 'string') return text
@@ -74,9 +74,12 @@ export default function HeaderPc({
                             height={40}
                           />
                         </div>
-                        <p className='tours-trigger'>
-                          {decodeHtmlEntities(item?.page?.title)}
-                        </p>
+                        <p
+                          className='tours-trigger'
+                          dangerouslySetInnerHTML={{
+                            __html: decodeHtmlEntities(item?.page?.title),
+                          }}
+                        />
                         <IconArrowHeader />
                         <div className='tours-dropdown'>
                           <ul>
