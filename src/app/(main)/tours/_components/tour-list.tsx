@@ -15,7 +15,7 @@ export default function TourList({isLoading, data}: TourListProps) {
         {[...Array(12)].map((_, index) => (
           <Skeleton
             key={index}
-            className='h-[25.8125rem] rounded-none col-span-3 bg-[#fff] max-sm:col-span-full'
+            className='col-span-3 h-[25.8125rem] rounded-none bg-[#fff] max-sm:col-span-full'
           />
         ))}
       </div>
@@ -23,7 +23,7 @@ export default function TourList({isLoading, data}: TourListProps) {
   }
   if (!data?.length) {
     return (
-      <p className='mt-[0.5rem] text-center text-[1.5rem] font-semibold leading-[160%] uppercase tracking-[-0.01563rem] font-trip-sans text-[#FF7A00]'>
+      <p className='font-trip-sans mt-[0.5rem] text-center text-[1.5rem] leading-[160%] font-semibold tracking-[-0.01563rem] text-[#FF7A00] uppercase'>
         No suitable tour found. Please try again!
       </p>
     )
@@ -33,8 +33,8 @@ export default function TourList({isLoading, data}: TourListProps) {
       {data.map((item) => {
         return (
           <Link
-            key={item.link}
-            href={item.link}
+            key={item.slug}
+            href={`/tours/${item.slug}`}
             className='relative col-span-3 max-sm:col-span-full'
           >
             <TourCard

@@ -26,10 +26,10 @@ interface IBestChooseTour {
 export default function SectionBestChoose({title, tour_list}: IBestChooseTour) {
   const isMobile = useIsMobile()
   return (
-    <section className='relative best-choose'>
-      <div className='max-w-[87.5rem] mx-auto max-sm:py-[2rem] pt-[1.875rem]'>
-        <div className='flex items-center justify-between w-full pb-[2.5rem] max-sm:pb-0 mb-[2rem] max-sm:mb-[0.75rem] max-sm:px-[1rem]'>
-          <h2 className='text-[#3b3943] font-dvn-luckiest-guy text-[3rem] font-normal leading-[130%] max-sm:text-[1.5625rem]'>
+    <section className='best-choose relative'>
+      <div className='mx-auto max-w-[87.5rem] pt-[1.875rem] max-sm:py-[2rem]'>
+        <div className='mb-[2rem] flex w-full items-center justify-between pb-[2.5rem] max-sm:mb-[0.75rem] max-sm:px-[1rem] max-sm:pb-0'>
+          <h2 className='font-dvn-luckiest-guy text-[3rem] leading-[130%] font-normal text-[#3b3943] max-sm:text-[1.5625rem]'>
             {title ?? ''}
           </h2>
           <div className='flex items-center space-x-[1rem] max-sm:hidden'>
@@ -39,12 +39,12 @@ export default function SectionBestChoose({title, tour_list}: IBestChooseTour) {
         </div>
 
         {isMobile ? (
-          <div className='flex overflow-x-auto scrollbar-hidden'>
+          <div className='scrollbar-hidden flex overflow-x-auto'>
             {tour_list?.map((tour, index) => {
               return (
                 <Link
                   href={tour.link}
-                  className='w-[19.625rem] ml-[1rem] last:mr-[1rem] block shrink-0'
+                  className='ml-[1rem] block w-[19.625rem] shrink-0 last:mr-[1rem]'
                   key={index}
                 >
                   <TourCard

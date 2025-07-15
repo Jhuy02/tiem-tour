@@ -5,11 +5,11 @@ import useIsMobile from '@/hooks/useIsMobile'
 import {useSwiperBanner} from '@/hooks/useSwiperBanner'
 import {DataBanner} from '@/types/home.interface'
 import {TaxonomyResponse} from '@/types/taxonomies.interface'
-import 'swiper/css'
 import {Autoplay, EffectFade} from 'swiper/modules'
 import {Swiper, SwiperSlide} from 'swiper/react'
-import './Banner.css'
 import BannerNav from './BannerNav'
+import './Banner.css'
+import 'swiper/css'
 
 export default function Banner({
   dataBanner,

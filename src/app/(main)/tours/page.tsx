@@ -32,9 +32,9 @@ export default async function TourListPage({searchParams}: Props) {
       }),
     ])
   const {compound_banner, tour_hots} = acfRes.acf
-  console.log(tourTaxonomyRes)
+
   return (
-    <main className="bg-center bg-no-repeat bg-cover bg-[url('/images/background-page-mobile.webp')] sm:bg-[url('/images/background-page-pc.webp')] pb-[12rem] max-sm:pb-0">
+    <main className="xsm:pb-[5rem] bg-[url('/images/background-page-mobile.webp')] bg-cover bg-center bg-no-repeat pb-[12rem] max-sm:pb-0 sm:bg-[url('/images/background-page-pc.webp')]">
       <BannerV2
         data={compound_banner}
         variant='secondary'
@@ -44,8 +44,9 @@ export default async function TourListPage({searchParams}: Props) {
         tour_list={bestChooseTourRes}
       />
       <SectionDiscovery
-        page={discoveryTourRes.page}
-        totalPages={discoveryTourRes.totalPages}
+        initialQueryParams={queryStr}
+        initialPage={discoveryTourRes.page}
+        initialTotalPages={discoveryTourRes.totalPages}
         initialTours={discoveryTourRes.data}
         tourLocationTax={tourTaxonomyRes.location}
         tourDurationTax={tourTaxonomyRes.duration}

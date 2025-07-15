@@ -1,0 +1,30 @@
+.tourIncludedContent li,
+.tourExcludesContent li {
+  position: relative;
+  padding-left: 2rem;
+}
+.tourIncludedContent li::before,
+.tourExcludesContent li::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.tourIncludedContent li::before {
+  background-image: url('/icons/tour-include.svg');
+}
+.tourExcludesContent li::before {
+  background-image: url('/icons/tour-exclude.svg');
+}
+
+.tourIncludedContent strong,
+.tourExcludesContent strong {
+  font-weight: 800;
+}
