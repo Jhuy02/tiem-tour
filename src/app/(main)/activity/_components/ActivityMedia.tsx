@@ -1,3 +1,5 @@
+'use client'
+import {useGSAPAnimation} from '@/hooks/useGSAPAnimation'
 import {IMedia} from '@/types/media.interface'
 import Image from 'next/image'
 
@@ -11,48 +13,57 @@ type ActivityMediaProps = {
 }
 
 const ActivityMedia = ({data}: ActivityMediaProps) => {
+  const titleRef = useGSAPAnimation<HTMLHeadingElement>('fadeUp')
+  const bgRef = useGSAPAnimation<HTMLImageElement>('image-zoom-out')
+  const bgMbRef = useGSAPAnimation<HTMLImageElement>('image-zoom-out')
+
   return (
-    <section className='w-full h-[49.1875rem] xsm:h-[18rem] xsm:pb-[1.15869rem] relative'>
+    <section className='xsm:h-[18rem] xsm:pb-[1.15869rem] relative h-[49.1875rem] w-full'>
       <Image
+        ref={bgRef}
         alt=''
         width={2000}
         height={1000}
         src={data?.background_pc?.url || '/activity/media-pc.webp'}
-        className='xsm:hidden w-full h-full object-cover'
+        className='xsm:hidden h-full w-full object-cover'
       />
       <Image
+        ref={bgMbRef}
         alt=''
         width={600}
         height={800}
         src={data?.background_mb?.url || '/activity/media-mb.webp'}
-        className='sm:hidden w-full h-full object-cover'
+        className='h-full w-full object-cover sm:hidden'
       />
 
-      <div className='absolute top-16 left-[55%] xsm:top-0 transform -translate-x-1/2'>
+      <div className='xsm:top-0 absolute top-16 left-[55%] -translate-x-1/2 transform'>
         <Image
           alt=''
           width={300}
           height={300}
           src={'/images/round.svg'}
-          className='size-[32.7rem] xsm:size-[11.7rem] object-cover'
+          className='xsm:size-[11.7rem] size-[32.7rem] object-cover'
         />
         <Image
           alt=''
           width={300}
           height={300}
           src={'/images/man.svg'}
-          className='xsm:top-[2.65rem] xsm:left-12 xsm:w-[4.42956rem] xsm:h-[4.7975rem] w-[12.38563rem] h-[13.41444rem] object-cover absolute top-[7rem] left-[10rem]'
+          className='xsm:top-[2.65rem] xsm:left-12 xsm:w-[4.42956rem] xsm:h-[4.7975rem] absolute top-[7rem] left-[10rem] h-[13.41444rem] w-[12.38563rem] object-cover'
         />
-        <h2 className='xsm:top-[6rem] xsm:left-[2rem] flex w-[20rem] xsm:w-[7rem] flex-col absolute top-[17rem] left-[7rem]'>
+        <h2
+          ref={titleRef}
+          className='xsm:top-[6rem] xsm:left-[2rem] xsm:w-[7rem] absolute top-[17rem] left-[7rem] flex w-[20rem] flex-col'
+        >
           <span className='title-activity-media-top font-dvn-luckiest-guy'>
             {data?.title_top}
           </span>
-          <span className='-mt-1 xsm:mt-0 title-activity-media-bottom font-dvn-luckiest-guy'>
+          <span className='xsm:mt-0 title-activity-media-bottom font-dvn-luckiest-guy -mt-1'>
             {data?.title_bottom}
           </span>
         </h2>
 
-        <div className='size-16 xsm:size-10 xsm:top-[8rem] xsm:left-[3.85rem] rounded-full bg-[#25ACAB] absolute top-[22rem] left-[14.25rem] flex items-center justify-center cursor-pointer'>
+        <div className='xsm:size-10 xsm:top-[8rem] xsm:left-[3.85rem] absolute top-[22rem] left-[14.25rem] flex size-16 cursor-pointer items-center justify-center rounded-full bg-[#25ACAB]'>
           <IconArrow />
         </div>
       </div>

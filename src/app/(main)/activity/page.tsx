@@ -20,7 +20,7 @@ export default async function ActivityPage() {
   ])
 
   return (
-    <main className="bg-repeat bg-cover bg-[url('/images/background-page-mobile.webp')] sm:bg-[url('/images/background-page-pc.webp')] pb-[12rem] max-sm:pb-0">
+    <main className="xsm:pb-[5rem] bg-[#F9F4EB] bg-[url('/common/common-background-pc.webp')] bg-auto bg-center bg-repeat pb-[12rem]">
       <BannerV2
         data={acfRes?.acf?.compound_banner}
         variant='primary'

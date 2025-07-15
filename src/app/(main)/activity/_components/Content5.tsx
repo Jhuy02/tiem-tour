@@ -1,5 +1,7 @@
+'use client'
 import ContentText from '@/app/(main)/activity/_components/ContentText'
 import TitleContentText from '@/app/(main)/activity/_components/TitleContentText'
+import {useGSAPAnimation} from '@/hooks/useGSAPAnimation'
 import {IMedia} from '@/types/media.interface'
 import Image from 'next/image'
 
@@ -15,35 +17,41 @@ type Content5Props = {
 }
 
 const Content5 = ({data}: Content5Props) => {
+  const img1Ref = useGSAPAnimation<HTMLImageElement>('image-clip-bottom')
+  const img2Ref = useGSAPAnimation<HTMLImageElement>('image-clip-top')
+  const img3Ref = useGSAPAnimation<HTMLImageElement>('image-clip-bottom')
   return (
     <section>
-      <div className='p-[3.125rem_24.6875rem] xsm:p-[2.5rem_0.75rem]'>
+      <div className='xsm:p-[2.5rem_0.75rem] p-[3.125rem_24.6875rem]'>
         <TitleContentText>{data?.title}</TitleContentText>
-        <div className='grid grid-cols-2 gap-[2.3125rem] mt-[1.5625rem] xsm:mt-[0.625rem] xsm:grid-cols-1 xsm:gap-4'>
+        <div className='xsm:mt-[0.625rem] xsm:grid-cols-1 xsm:gap-4 mt-[1.5625rem] grid grid-cols-2 gap-[2.3125rem]'>
           <ContentText className=''>{data?.content_left}</ContentText>
           <ContentText className=''>{data?.content_right}</ContentText>
         </div>
       </div>
-      <div className='p-[4.8125rem_19.4375rem] grid grid-cols-3 h-[36.4rem] gap-[0.3125rem] xsm:p-[1.625rem_0.75rem] xsm:h-[22.3125rem] xsm:grid-cols-2 xsm:grid-rows-2'>
+      <div className='xsm:p-[1.625rem_0.75rem] xsm:h-[22.3125rem] xsm:grid-cols-2 xsm:grid-rows-2 grid h-[36.4rem] grid-cols-3 gap-[0.3125rem] p-[4.8125rem_19.4375rem]'>
         <Image
+          ref={img1Ref}
           alt=''
           width={500}
           height={500}
-          className='w-full h-full object-cover xsm:row-span-2'
+          className='xsm:row-span-2 h-full w-full object-cover'
           src={data?.image_1?.url || ''}
         />
         <Image
+          ref={img2Ref}
           alt=''
           width={500}
           height={500}
-          className='w-full h-full object-cover'
+          className='h-full w-full object-cover'
           src={data?.image_2?.url || ''}
         />
         <Image
+          ref={img3Ref}
           alt=''
           width={500}
           height={500}
-          className='w-full h-full object-cover'
+          className='h-full w-full object-cover'
           src={data?.image_3?.url || ''}
         />
       </div>
