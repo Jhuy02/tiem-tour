@@ -40,12 +40,12 @@ export default function OurMission({data}: OurMissionProps) {
             </p>
           </div>
           <div className='xsm:w-full w-[29.8125rem] shrink-0'>
-            {data?.image?.url && (
+            {data?.certification_image?.url && (
               <Image
                 width={477}
                 height={655}
-                alt={data?.image?.alt ?? ''}
-                src={data?.image?.url}
+                alt={data?.certification_image?.alt ?? ''}
+                src={data?.certification_image?.url}
                 className='h-auto w-full'
               />
             )}
@@ -54,12 +54,12 @@ export default function OurMission({data}: OurMissionProps) {
       </div>
       <div className='xsm:h-auto xsm:pt-[6.94rem] xsm:pb-[34.5rem] relative h-[66.5625rem] bg-[url("/common/common-background-green-pc.webp")] bg-cover bg-center bg-no-repeat'>
         <DividerImage />
-        {data?.second_image?.url && (
+        {data?.team_image?.url && (
           <Image
             alt=''
             width={1600}
             height={461}
-            src={data?.second_image?.url}
+            src={data?.team_image?.url}
             className='xsm:left-[0.5rem] xsm:w-[22rem] xsm:bottom-[7.79rem] xsm:top-[unset] absolute top-[19.7rem] left-[39.45rem] z-2 h-auto w-[27.65819rem]'
           />
         )}

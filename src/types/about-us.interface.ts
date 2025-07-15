@@ -21,9 +21,9 @@ export interface OurMission {
   title: string
   desc: string
   sub_title: string
-  image: IMedia
   second_desc: string
-  second_image: IMedia
+  certification_image: IMedia
+  team_image: IMedia
 }
 export interface MeetOurTeamItem {
   image: IMedia
