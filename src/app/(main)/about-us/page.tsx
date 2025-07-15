@@ -11,7 +11,7 @@ export default async function AboutUsPage() {
     await Promise.all([
       fetchData({api: `wp/v2/pages/21?_fields=acf&acf_format=standard`}),
     ])
-  console.log(aboutUsPageACFDataResponse)
+
   return (
     <main className='xsm:pb-[5rem] relative overflow-hidden bg-[#F9F4EB] bg-[url("/common/common-background-pc.webp")] bg-cover bg-center bg-no-repeat pb-[12rem]'>
       <BannerV2 data={aboutUsPageACFDataResponse?.acf?.compound_banner} />
