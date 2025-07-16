@@ -1,16 +1,17 @@
 'use client'
-import TourFilter from '@/app/(main)/tours/_components/tour-filter'
-import TourFilterMobile from '@/app/(main)/tours/_components/tour-filter-mobile'
-import TourList from '@/app/(main)/tours/_components/tour-list'
-import TourViewer from '@/app/(main)/tours/_components/tour-viewer'
+
+import TourFilter from '@/app/(main)/tours/_components/tour-discovery-trip/TourFilterDesktop'
+import TourFilterMobile from '@/app/(main)/tours/_components/tour-discovery-trip/TourFilterMobile'
+import TourList from '@/app/(main)/tours/_components/tour-discovery-trip/TourList'
+import TourViewer from '@/app/(main)/tours/_components/tour-discovery-trip/TourViewer'
 import PaginationV3 from '@/components/pagination/PaginationV3'
 import {TAXONOMY} from '@/constants/taxonomy'
 import {useDiscoveryTour} from '@/hooks/useDiscoveryTour'
 import useIsMobile from '@/hooks/useIsMobile'
 import {DiscoveryTourProps, TourTaxonomy} from '@/types/tours.interface'
-import React, {createContext} from 'react'
+import {createContext} from 'react'
 
-export interface IDiscoveryTourContext {
+export interface TourDiscoveryTripType {
   handleFilterChange: (key: string, value: {slug: string}[]) => void
   handleFilterOnMobile: () => void
   filters: {
@@ -27,11 +28,10 @@ export interface IDiscoveryTourContext {
   >
 }
 
-export const DiscoveryTourContext = createContext<IDiscoveryTourContext | null>(
-  null,
-)
+export const TourDiscoveryTripContext =
+  createContext<TourDiscoveryTripType | null>(null)
 
-export default function DiscoveryTour({
+export default function TourDiscoveryTrip({
   initialQueryParams,
   initialTours,
   initialPage = 1,
@@ -61,7 +61,7 @@ export default function DiscoveryTour({
   })
 
   return (
-    <DiscoveryTourContext.Provider
+    <TourDiscoveryTripContext.Provider
       value={{
         handleFilterChange,
         filters,
@@ -114,6 +114,6 @@ export default function DiscoveryTour({
           </div>
         </div>
       </section>
-    </DiscoveryTourContext.Provider>
+    </TourDiscoveryTripContext.Provider>
   )
 }

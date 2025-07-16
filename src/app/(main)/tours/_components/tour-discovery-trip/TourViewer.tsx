@@ -1,19 +1,56 @@
 'use client'
-import TourViewerItem from '@/app/(main)/tours/_components/tour-viewer-item'
-import {
-  DiscoveryTourContext,
-  IDiscoveryTourContext,
-} from '@/app/(main)/tours/section-discovery'
 import React, {useContext} from 'react'
+import IconCloseFilterChip from '@/components/icon/IconCloseFilterChip'
+import {
+  TourDiscoveryTripContext,
+  TourDiscoveryTripType,
+} from '@/app/(main)/tours/_components/tour-discovery-trip'
+
+interface TourViewerItemProps {
+  keyParam: 'location' | 'duration' | 'orderby'
+  label: string
+  slug: string
+  name: string
+  onRemove: (
+    key: 'location' | 'duration' | 'orderby',
+    value: {slug: string},
+  ) => void
+}
+function TourViewerItem({
+  keyParam,
+  label,
+  slug,
+  name,
+  onRemove,
+}: TourViewerItemProps) {
+  return (
+    <div
+      data-slug={slug}
+      data-key-param={keyParam}
+      className='inline-flex h-[2rem] max-w-fit items-center justify-center space-x-[0.75rem] bg-[rgba(170,170,170,0.32)] px-[0.75rem]'
+    >
+      <div className='font-trip-sans flex items-center space-x-[0.25rem] text-[1rem] leading-[160%] tracking-[0.0025rem]'>
+        <p className='text-[rgba(48,48,48,0.40)]'>{label}:</p>
+        <span className='text-[#303030]'>{name}</span>
+      </div>
+      <button
+        onClick={() => onRemove(keyParam, {slug})}
+        className='h-[1.25rem] w-[1.25rem] cursor-pointer rounded-full'
+      >
+        <IconCloseFilterChip className='h-auto w-full rounded-full' />
+      </button>
+    </div>
+  )
+}
 
 export default function TourViewer() {
-  const context = useContext(DiscoveryTourContext)
+  const context = useContext(TourDiscoveryTripContext)
   if (!context) {
     throw new Error(
       'TourFilter must be used within DiscoveryTourContext.Provider',
     )
   }
-  const {filters, setFilters, handleFilterChange}: IDiscoveryTourContext =
+  const {filters, setFilters, handleFilterChange}: TourDiscoveryTripType =
     context
   const handleRemoveChip = (key: string, value: {slug: string}) => {
     // Lọc lại danh sách filters với key tương ứng để loại bỏ item có slug bị xóa

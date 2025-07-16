@@ -1,9 +1,10 @@
 'use client'
-import FilterSelectOption from '@/app/(main)/tours/_components/tour-select'
 import {
-  DiscoveryTourContext,
-  IDiscoveryTourContext,
-} from '@/app/(main)/tours/section-discovery'
+  TourDiscoveryTripContext,
+  TourDiscoveryTripType,
+} from '@/app/(main)/tours/_components/tour-discovery-trip'
+import FilterSelectOption from '@/app/(main)/tours/_components/tour-discovery-trip/TourSelect'
+
 import {TourFilterProps} from '@/types/tours.interface'
 import React, {useContext} from 'react'
 
@@ -12,16 +13,16 @@ export default function TourFilter({
   tourLocation,
   tourBudget,
 }: TourFilterProps) {
-  const context = useContext(DiscoveryTourContext)
+  const context = useContext(TourDiscoveryTripContext)
   if (!context) {
     throw new Error(
-      'TourFilter must be used within DiscoveryTourContext.Provider',
+      'TourFilter must be used within TourDiscoveryTripContext.Provider',
     )
   }
-  const {handleFilterChange, filters}: IDiscoveryTourContext = context
+  const {handleFilterChange, filters}: TourDiscoveryTripType = context
 
   return (
-    <div className='flex h-[5.1875rem] p-[0.5rem] items-end self-stretch bg-white'>
+    <div className='flex h-[5.1875rem] items-end self-stretch bg-white p-[0.5rem]'>
       <FilterSelectOption
         keyParam='location'
         icon='./tours/compass.svg'
@@ -29,7 +30,7 @@ export default function TourFilter({
         select='multiple'
         value={filters.location}
         options={tourLocation}
-        className='flex-1 h-[4.1875rem]'
+        className='h-[4.1875rem] flex-1'
         onChange={handleFilterChange}
       />
       <FilterSelectOption
@@ -39,7 +40,7 @@ export default function TourFilter({
         select='multiple'
         value={filters.duration}
         options={tourDuration}
-        className='flex-1 h-[4.1875rem]'
+        className='h-[4.1875rem] flex-1'
         onChange={handleFilterChange}
       />
       <FilterSelectOption
@@ -49,7 +50,7 @@ export default function TourFilter({
         select='single'
         value={filters.orderby}
         options={tourBudget}
-        className='flex-1 h-[4.1875rem]'
+        className='h-[4.1875rem] flex-1'
         onChange={handleFilterChange}
       />
     </div>

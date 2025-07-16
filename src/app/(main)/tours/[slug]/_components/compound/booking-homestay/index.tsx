@@ -1,18 +1,14 @@
-'use client'
-import Image from 'next/image'
-import React from 'react'
-// Import Swiper React components
+import {useFormContext, useWatch} from 'react-hook-form'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import {Tabs, TabsContent} from '@/components/ui/tabs'
-// Import Swiper styles
-import 'swiper/css'
-// import required modules
-import {convertRemToPx} from '@/lib/utils'
-import Caution from '@/app/(main)/tours/[slug]/_components/common/Caution'
-import {useFormContext, useWatch} from 'react-hook-form'
-import {BookingFormValues} from '@/schemas/booking.schema'
 import {TourPackageList} from '@/constants/mockApi'
-export default function Homestay() {
+import {convertRemToPx} from '@/lib/utils'
+import {BookingFormValues} from '@/schemas/booking.schema'
+import Image from 'next/image'
+import Caution from '@/app/(main)/tours/[slug]/_components/common/Caution'
+import 'swiper/css'
+
+export default function BookingHomestay() {
   const {control} = useFormContext<BookingFormValues>()
   const tourPackage = useWatch({
     control,

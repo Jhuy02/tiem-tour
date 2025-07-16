@@ -71,3 +71,295 @@ export const TransportVehicleList = [
     price: 350000,
   },
 ]
+export const TourTypeList: {slug: string; name: string; popular: boolean}[] = [
+  {
+    name: 'Motorbike Tour',
+    slug: 'motorbike_tour',
+    popular: true,
+  },
+  {
+    name: 'Car Tour',
+    slug: 'car_tour',
+    popular: false,
+  },
+]
+
+export const CITY_LIST = [
+  {id: 1, name: 'Hanoi', slug: 'hanoi'},
+  {id: 2, name: 'Danang', slug: 'danang'},
+  {id: 3, name: 'Haiphong', slug: 'haiphong'},
+]
+export const PickupAndDropOffBusServiceData = [
+  {
+    pickUpLocation: 'Hanoi',
+    dropOffLocation: 'Hagiang',
+    name: 'HaNoi city and airport',
+    slug: 'hanoi_city_and_airport',
+    data: [
+      {
+        route: 'Ha Noi → Ha Giang',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: true,
+        })),
+      },
+      {
+        route: 'Ha Giang → Ha Noi',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: false,
+        })),
+      },
+    ],
+  },
+  {
+    pickUpLocation: 'Sapa',
+    dropOffLocation: 'Hagiang',
+    name: 'Sapa',
+    slug: 'sapa',
+    data: [
+      {
+        route: 'Ha Noi → Ha Giang',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: true,
+        })),
+      },
+      {
+        route: 'Ha Giang → Ha Noi',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: false,
+        })),
+      },
+    ],
+  },
+  {
+    pickUpLocation: 'Ninhbinh',
+    dropOffLocation: 'Hagiang',
+    name: 'NinhBinh',
+    slug: 'ninhbinh',
+    data: [
+      {
+        route: 'Ha Noi → Ha Giang',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: true,
+        })),
+      },
+      {
+        route: 'Ha Giang → Ha Noi',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: false,
+        })),
+      },
+    ],
+  },
+  {
+    pickUpLocation: 'CatBa',
+    dropOffLocation: 'Hagiang',
+    name: 'CatBa',
+    slug: 'catba',
+    data: [
+      {
+        route: 'Ha Noi → Ha Giang',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: true,
+        })),
+      },
+      {
+        route: 'Ha Giang → Ha Noi',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: false,
+        })),
+      },
+    ],
+  },
+  {
+    pickUpLocation: 'HaLong',
+    dropOffLocation: 'Hagiang',
+    name: 'HaLong',
+    slug: 'halong',
+    data: [
+      {
+        route: 'Ha Noi → Ha Giang',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: true,
+        })),
+      },
+      {
+        route: 'Ha Giang → Ha Noi',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: false,
+        })),
+      },
+    ],
+  },
+  {
+    pickUpLocation: 'CaoBang',
+    dropOffLocation: 'Hagiang',
+    name: 'CaoBang',
+    slug: 'caobang',
+    data: [
+      {
+        route: 'Cao Bang → Ha Giang',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: true,
+        })),
+      },
+      {
+        route: 'Cao Bang → Ha Noi',
+        rows: [...Array(5)].map(() => ({
+          pickUpTime: '6:15',
+          departureTime: '6:30',
+          arrivalTime: '13:00',
+          vehicleType: 'Limousine bus',
+          pickUpPoint: '<p>Tran Nhat Duat street</p>',
+          dropOffPoint: `
+          <p>1. TiemTours office 92i Nguyễn Trãi</p>
+          <p>2. Hà Giang bus station</p>
+          <p>3. Homestays, hostels, hotels in downtown Hà Giang</p>
+          `,
+          price: 300000,
+          recommend: false,
+        })),
+      },
+    ],
+  },
+]
+export const PickupAndDropOffPrivateServiceData = [
+  {
+    pickUpLocation: 'Hanoi',
+    dropOffLocation: 'Hagiang',
+    name: 'Ha Noi → Ha Giang',
+    slug: 'hanoi_hagiang',
+    data: [
+      {
+        route: 'Ha Noi → Ha Giang',
+        rows: [...Array(2)].map(() => ({
+          departureTime: 'Anytime',
+          arrivalTime: 'Anytime',
+          vehicleType: 'SUV 8 SEATS CAR (MAXIMUM 7 PERSON)',
+          pickUpPoint: '<p>3.000,000 VND</p>',
+          dropOffPoint: '<p>3.000,000 VND</p>',
+        })),
+      },
+    ],
+  },
+]
