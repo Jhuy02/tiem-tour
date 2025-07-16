@@ -13,6 +13,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import './Header-pc.css'
 import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
+import { useEffect, useState } from 'react'
 
 const decodeHtmlEntities = (text: string): string => {
   if (typeof text !== 'string') return text
@@ -30,6 +31,12 @@ export default function HeaderPc({
   ImgLocation: DataLocation
 }) {
   const {isHeaderHidden, isToursActive, setIsToursActive} = useHeaderScroll()
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
 
   return (
     <header
@@ -75,7 +82,7 @@ export default function HeaderPc({
                           />
                         </div>
                         <p className='tours-trigger'>
-                          {decodeHtmlEntities(item?.page?.title)}
+                          {isMounted && decodeHtmlEntities(item?.page?.title)}
                         </p>
                         <IconArrowHeader />
                         <div className='tours-dropdown'>

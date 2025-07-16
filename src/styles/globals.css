@@ -368,3 +368,29 @@ input[type='number'] {
   font-weight: 400;
   line-height: normal;
 }
+
+.tripadvisor-tab-swiper .swiper-slide-thumb-active {
+  background: linear-gradient(180deg, #f4f5e6 0%, #b2dfdc 100%);
+}
+
+.landscape-destination {
+  list-style: none;
+  padding: 0;
+}
+
+.landscape-destination li {
+  position: relative;
+  padding-left: 1.75rem; /* space for the marker */
+}
+
+.landscape-destination li::before {
+  content: '';
+  position: absolute;
+  top: 0rem;
+  left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMSIgdmlld0JveD0iMCAwIDIwIDIxIiBmaWxsPSJub25lIj4KICA8cGF0aCBkPSJNMTYuNjY2NiA1LjY5OTIyTDcuNDk5OTIgMTQuODY1OUwzLjMzMzI1IDEwLjY5OTIiIHN0cm9rZT0iIzE5QzJDMiIgc3Ryb2tlLXdpZHRoPSIxLjY2NjY3IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
