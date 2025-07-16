@@ -31,16 +31,22 @@ const bookingSchema = z
     seatBehindYourFriendQuantity: z
       .number({invalid_type_error: 'Seat behind your friend must be a number'})
       .min(0, 'Seat behind your friend must be 0 or more'),
-    // tourType: z
-    //   .string({
-    //     required_error: 'Tour type is required',
-    //     invalid_type_error: 'Tour type must be a string',
-    //   })
-    //   .min(1, 'Tour type is required'),
     tourType: z.string(),
     tourPackage: z.string(),
-    pickUpLocation: z.string(),
-    pickUpVehicle: z.string(),
+
+    // Outbound trip information
+    outboundTripPickupLocation: z.string(),
+    outboundTripPickupVehicle: z.string(),
+    outboundTripPickupAddress: z.string(),
+    outboundTripArrivalLocation: z.string(),
+    outboundTripArrivalTime: z.string(),
+
+    // Return trip information
+    returnTripPickupLocation: z.string(),
+    returnTripPickupVehicle: z.string(),
+    returnTripPickupAddress: z.string(),
+    returnTripArrivalLocation: z.string(),
+    returnTripArrivalTime: z.string(),
   })
   .refine((data) => data.endDay >= data.startDay, {
     path: ['end_day'],

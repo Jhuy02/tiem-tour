@@ -1,11 +1,11 @@
 'use client'
+
 import {BookingFormValues} from '@/schemas/booking.schema'
-import {differenceInCalendarDays, format, isValid} from 'date-fns'
+import {format} from 'date-fns'
 import Image from 'next/image'
-import React from 'react'
 import {useFormContext} from 'react-hook-form'
 
-export default function Subtotal() {
+export default function BookingCheckout() {
   const {watch} = useFormContext<BookingFormValues>()
 
   // Lấy dữ liệu từ form
@@ -14,12 +14,6 @@ export default function Subtotal() {
   const adultQuantity = watch('adultQuantity')
   const childQuantity = watch('childQuantity')
   const infantQuantity = watch('infantQuantity')
-
-  // Tính duration
-  const duration =
-    startDay && endDay && isValid(startDay) && isValid(endDay)
-      ? differenceInCalendarDays(endDay, startDay) + 1
-      : null
 
   return (
     <div className='font-trip-sans sticky top-[2rem] h-fit rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.25rem]'>
@@ -36,7 +30,7 @@ export default function Subtotal() {
               Duration
             </p>
             <span className='text-[0.875rem] font-medium text-[#006CE4]'>
-              {duration ? `${duration} Days ${duration - 1} Nights` : '---'}
+              3 Days 2 Nights
             </span>
           </div>
           <div className='flex flex-1 flex-col space-y-[0.375rem] pl-[1.25rem] leading-[120%] font-medium'>
@@ -108,6 +102,56 @@ export default function Subtotal() {
             </div>
           </div>
           <div className='h-[1px] w-full bg-[#EDEDED]'></div>
+          <div className=''>
+            {/* Easyrider Quantity */}
+            <div className='flex items-center space-x-[0.375rem]'>
+              <div className='flex-1'>
+                <p className='text-left text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[rgba(48,48,48,0.80)]'>
+                  <span className='font-extrabold tracking-[0.01563rem]'>
+                    {adultQuantity?.toString()?.padStart(2, '0')}
+                  </span>{' '}
+                  Easyrider
+                </p>
+              </div>
+              <div className='flex-1'>
+                <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
+                  <span className=''>0</span> đ
+                </p>
+              </div>
+            </div>
+            {/* Ride by yourself Quantity */}
+            <div className='flex items-center space-x-[0.375rem]'>
+              <div className='flex-1'>
+                <p className='text-left text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[rgba(48,48,48,0.80)]'>
+                  <span className='font-extrabold tracking-[0.01563rem]'>
+                    {childQuantity?.toString()?.padStart(2, '0')}
+                  </span>{' '}
+                  Ride by yourself
+                </p>
+              </div>
+              <div className='flex-1'>
+                <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
+                  <span className=''>0</span> đ
+                </p>
+              </div>
+            </div>
+            {/* Seat behind your friend Quantity */}
+            <div className='flex items-center space-x-[0.375rem]'>
+              <div className='flex-1'>
+                <p className='text-left text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[rgba(48,48,48,0.80)]'>
+                  <span className='font-extrabold tracking-[0.01563rem]'>
+                    {infantQuantity?.toString()?.padStart(2, '0')}
+                  </span>{' '}
+                  Seat behind your friend
+                </p>
+              </div>
+              <div className='flex-1'>
+                <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
+                  <span className=''>0</span> đ
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <button type='submit'>Submit button</button>

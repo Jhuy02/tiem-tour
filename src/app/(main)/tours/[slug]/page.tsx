@@ -1,10 +1,11 @@
+import BookingForm from '@/app/(main)/tours/[slug]/_components/compound/booking-form'
 import {Banner} from '@/app/(main)/tours/[slug]/_components/overview-compound/banner'
 import {Content} from '@/app/(main)/tours/[slug]/_components/overview-compound/content'
 import {Tab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tab'
 import {Tripadvisor} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
 import {TripadvisorTab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
+import PageProvider from '@/app/(main)/tours/[slug]/context/PageProvider'
 
-import BookTourNow from '@/app/(main)/tours/[slug]/BookTourNow'
 import NotFound from '@/components/NotFound'
 import fetchData from '@/fetches/fetchData'
 import {TourDetailContent} from '@/types/tours.interface'
@@ -54,7 +55,9 @@ export default async function TourDetail({
         </div>
       </div>
 
-      {/* <BookTourNow /> */}
+      <PageProvider>
+        <BookingForm />
+      </PageProvider>
     </main>
   )
 }

@@ -19,9 +19,9 @@ import IconTickOption from '@/components/icon/IconTickOption'
 import clsx from 'clsx'
 import Image from 'next/image'
 import {
-  DiscoveryTourContext,
-  IDiscoveryTourContext,
-} from '@/app/(main)/tours/section-discovery'
+  TourDiscoveryTripContext,
+  TourDiscoveryTripType,
+} from '@/app/(main)/tours/_components/tour-discovery-trip'
 
 type FilterKey = 'location' | 'duration' | 'orderby'
 type FilterType = 'single' | 'multiple'
@@ -31,13 +31,13 @@ export default function TourFilterMobile({
   tourDuration,
   tourBudget,
 }: TourFilterProps) {
-  const context = useContext(DiscoveryTourContext)
+  const context = useContext(TourDiscoveryTripContext)
   if (!context) {
     throw new Error(
       'TourFilter must be used within DiscoveryTourContext.Provider',
     )
   }
-  const {filters, setFilters, handleFilterOnMobile}: IDiscoveryTourContext =
+  const {filters, setFilters, handleFilterOnMobile}: TourDiscoveryTripType =
     context
 
   const getSelectedStatus = (key: FilterKey, slug: string) => {
@@ -79,8 +79,8 @@ export default function TourFilterMobile({
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <button className='flex sm:hidden size-[3rem] items-center justify-center p-[0.75rem] bg-white'>
-          <IconMenuV1 className='w-full h-auto' />
+        <button className='flex size-[3rem] items-center justify-center bg-white p-[0.75rem] sm:hidden'>
+          <IconMenuV1 className='h-auto w-full' />
         </button>
       </DrawerTrigger>
       <DrawerContent className='rounded-t-[1.5rem]'>
@@ -89,24 +89,24 @@ export default function TourFilterMobile({
           <DrawerTitle></DrawerTitle>
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
-        <div className='relative bg-white rounded-t-[1.5rem]'>
-          <div className='relative w-full rounded-t-[1.5rem] px-[1rem] pt-[0.5rem] pb-[0.75rem] flex flex-col items-center bg-[#25ACAB] shadow-[2px_6px_12px_0px_rgba(0,0,0,0.08)]'>
-            <div className='w-[3rem] h-[3px] bg-[rgba(255,255,255,0.36)] rounded-full mb-[1rem]'></div>
-            <div className='text-white text-center font-trip-sans text-[0.875rem] font-bold leading-[120%] tracking-[0.00875rem]'>
+        <div className='relative rounded-t-[1.5rem] bg-white'>
+          <div className='relative flex w-full flex-col items-center rounded-t-[1.5rem] bg-[#25ACAB] px-[1rem] pt-[0.5rem] pb-[0.75rem] shadow-[2px_6px_12px_0px_rgba(0,0,0,0.08)]'>
+            <div className='mb-[1rem] h-[3px] w-[3rem] rounded-full bg-[rgba(255,255,255,0.36)]'></div>
+            <div className='font-trip-sans text-center text-[0.875rem] leading-[120%] font-bold tracking-[0.00875rem] text-white'>
               Filter
             </div>
             <DrawerClose asChild>
-              <button className='absolute w-[1.25rem] h-[1.25rem] right-[1rem] bottom-[0.625rem]'>
+              <button className='absolute right-[1rem] bottom-[0.625rem] h-[1.25rem] w-[1.25rem]'>
                 <IconCloseDrawerV1 />
               </button>
             </DrawerClose>
           </div>
-          <div className='pt-[1.5rem] px-[1.25rem] overflow-y-auto max-h-[50vh]!'>
+          <div className='max-h-[50vh]! overflow-y-auto px-[1.25rem] pt-[1.5rem]'>
             <div className='py-[0.5rem]'>
-              <p className='p-[0.25rem] font-bold text-[1rem] text-[#303030] leading-[120%] tracking-[0.0025rem] mb-[0.5rem]'>
+              <p className='mb-[0.5rem] p-[0.25rem] text-[1rem] leading-[120%] font-bold tracking-[0.0025rem] text-[#303030]'>
                 Location
               </p>
-              <ul className='flex flex-wrap space-x-[0.5rem] space-y-[0.5rem]'>
+              <ul className='flex flex-wrap space-y-[0.5rem] space-x-[0.5rem]'>
                 {tourLocation?.map((item) => {
                   const selectedStatus = getSelectedStatus(
                     'location',
@@ -123,7 +123,7 @@ export default function TourFilterMobile({
                     >
                       <p
                         className={clsx(
-                          'relative overflow-hidden px-[1rem] py-[0.5rem] rounded-[1.5rem] bg-white shadow-[0px_-24px_75.4px_3px_rgba(251,251,251,0.25)] border-[1.5px] border-transparent border-solid',
+                          'relative overflow-hidden rounded-[1.5rem] border-[1.5px] border-solid border-transparent bg-white px-[1rem] py-[0.5rem] shadow-[0px_-24px_75.4px_3px_rgba(251,251,251,0.25)]',
                           {
                             'border-[#25ACAB]!': selectedStatus,
                           },
@@ -131,7 +131,7 @@ export default function TourFilterMobile({
                       >
                         <span
                           className={clsx(
-                            'z-[2] relative text-[#303030] font-trip-sans font-normal text-[1rem] leading-[125%]',
+                            'font-trip-sans relative z-[2] text-[1rem] leading-[125%] font-normal text-[#303030]',
                             {
                               'font-bold!': selectedStatus,
                             },
@@ -141,14 +141,14 @@ export default function TourFilterMobile({
                         </span>
                         <span
                           className={clsx(
-                            'opacity-0 invisible z-[1] absolute top-0 left-0 w-full h-full bg-[linear-gradient(180deg,#F4F5E6_0%,#B2DFDC_100%)]',
+                            'invisible absolute top-0 left-0 z-[1] h-full w-full bg-[linear-gradient(180deg,#F4F5E6_0%,#B2DFDC_100%)] opacity-0',
                             {
-                              'opacity-100! visible!': selectedStatus,
+                              'visible! opacity-100!': selectedStatus,
                             },
                           )}
                         ></span>
                         {selectedStatus && (
-                          <IconTickOption className='absolute z-[5] top-0 right-[0.125rem] w-[1.1875rem] h-auto' />
+                          <IconTickOption className='absolute top-0 right-[0.125rem] z-[5] h-auto w-[1.1875rem]' />
                         )}
                       </p>
                     </li>
@@ -156,9 +156,9 @@ export default function TourFilterMobile({
                 })}
               </ul>
             </div>
-            <div className='w-full h-[1px] bg-[#EDEDED] my-[1.25rem]'></div>
+            <div className='my-[1.25rem] h-[1px] w-full bg-[#EDEDED]'></div>
             <div className=''>
-              <p className='p-[0.25rem] font-bold text-[1rem] text-[#303030] leading-[120%] tracking-[0.0025rem] mb-[0.5rem]'>
+              <p className='mb-[0.5rem] p-[0.25rem] text-[1rem] leading-[120%] font-bold tracking-[0.0025rem] text-[#303030]'>
                 Duration
               </p>
               <ul>
@@ -171,12 +171,12 @@ export default function TourFilterMobile({
                       }
                       key={item.id}
                       data-slug={item.slug}
-                      className='self-stretch w-full'
+                      className='w-full self-stretch'
                     >
-                      <p className='flex items-center cursor-pointer'>
+                      <p className='flex cursor-pointer items-center'>
                         <span
                           className={clsx(
-                            'p-[0.5rem] inline-flex items-center justify-center size-[2.5rem]',
+                            'inline-flex size-[2.5rem] items-center justify-center p-[0.5rem]',
                           )}
                         >
                           <Image
@@ -188,10 +188,10 @@ export default function TourFilterMobile({
                                 ? '/tours/checkbox-multiple-active.svg'
                                 : '/tours/checkbox-multiple-default.svg'
                             }
-                            className='w-full h-auto shrink-0'
+                            className='h-auto w-full shrink-0'
                           />
                         </span>
-                        <span className='line-clamp-1 font-trip-sans text-[1rem] font-medium leading-[120%] tracking-[0.0025rem]'>
+                        <span className='font-trip-sans line-clamp-1 text-[1rem] leading-[120%] font-medium tracking-[0.0025rem]'>
                           {item.name}
                         </span>
                       </p>
@@ -201,9 +201,9 @@ export default function TourFilterMobile({
               </ul>
             </div>
 
-            <div className='w-full h-[1px] bg-[#EDEDED] my-[1.25rem]'></div>
+            <div className='my-[1.25rem] h-[1px] w-full bg-[#EDEDED]'></div>
             <div className=''>
-              <p className='p-[0.25rem] font-bold text-[1rem] text-[#303030] leading-[120%] tracking-[0.0025rem] mb-[0.5rem]'>
+              <p className='mb-[0.5rem] p-[0.25rem] text-[1rem] leading-[120%] font-bold tracking-[0.0025rem] text-[#303030]'>
                 Duration
               </p>
               <ul>
@@ -216,12 +216,12 @@ export default function TourFilterMobile({
                       }
                       key={item.id}
                       data-slug={item.slug}
-                      className='self-stretch w-full'
+                      className='w-full self-stretch'
                     >
-                      <p className='flex items-center cursor-pointer'>
+                      <p className='flex cursor-pointer items-center'>
                         <span
                           className={clsx(
-                            'p-[0.5rem] inline-flex items-center justify-center size-[2.5rem]',
+                            'inline-flex size-[2.5rem] items-center justify-center p-[0.5rem]',
                           )}
                         >
                           <Image
@@ -233,10 +233,10 @@ export default function TourFilterMobile({
                                 ? '/tours/checkbox-single-active.svg'
                                 : '/tours/checkbox-single-default.svg'
                             }
-                            className='w-full h-auto shrink-0'
+                            className='h-auto w-full shrink-0'
                           />
                         </span>
-                        <span className='line-clamp-1 font-trip-sans text-[1rem] font-medium leading-[120%] tracking-[0.0025rem]'>
+                        <span className='font-trip-sans line-clamp-1 text-[1rem] leading-[120%] font-medium tracking-[0.0025rem]'>
                           {item.name}
                         </span>
                       </p>
@@ -251,12 +251,12 @@ export default function TourFilterMobile({
           <DrawerClose asChild>
             <button
               onClick={handleSearchForTour}
-              className='rounded-[3.125rem] bg-[#C83E21] shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)] flex px-[2.5rem] py-[1.125rem] justify-center items-center space-x-[0.625rem] gap-0 h-auto'
+              className='flex h-auto items-center justify-center gap-0 space-x-[0.625rem] rounded-[3.125rem] bg-[#C83E21] px-[2.5rem] py-[1.125rem] shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)]'
             >
-              <span className='inline-block h-[0.6875rem] text-white text-center font-dvn-luckiest-guy text-[1rem] font-normal leading-[120%]'>
+              <span className='font-dvn-luckiest-guy inline-block h-[0.6875rem] text-center text-[1rem] leading-[120%] font-normal text-white'>
                 Search for a tour
               </span>
-              <IconArrowRightV1 className='w-[1.125rem] h-auto shrink-0' />
+              <IconArrowRightV1 className='h-auto w-[1.125rem] shrink-0' />
             </button>
           </DrawerClose>
         </DrawerFooter>
