@@ -5,13 +5,13 @@ import {useEffect, useMemo, useRef, useState} from 'react'
 import useSWR from 'swr'
 import {fetcher} from '@/utils/swr'
 import endpoints from '@/utils/endpoints'
-import {getSelectedOptionsFromParams} from '@/app/(main)/tours/helper'
 import {TAXONOMY} from '@/constants/taxonomy'
 import {
   TourItemResponse,
   TourListDataResponse,
   TourTaxonomy,
 } from '@/types/tours.interface'
+import {getSelectedOptionsFromParams} from '@/lib/helper'
 
 export function useDiscoveryTour({
   initialQueryParams,
@@ -31,9 +31,6 @@ export function useDiscoveryTour({
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const containerRef = useRef<HTMLDivElement>(null)
-
-  console.log('Search params server', initialQueryParams)
-  console.log('Search params client', searchParams.toString())
 
   const [pagination, setPagination] = useState({
     page: initialPage,

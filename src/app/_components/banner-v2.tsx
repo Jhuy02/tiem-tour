@@ -50,8 +50,8 @@ export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
         },
       )}
     >
-      <div className='absolute top-0 left-0 w-full h-[13.4375rem] opacity-40 bg-[linear-gradient(180deg,#131f31_0%,rgba(19,31,49,0)_100%)] z-[1] pointer-events-none'></div>
-      <div className='absolute bottom-0 left-0 h-[41.625rem] w-full bg-[linear-gradient(0deg,rgba(0,0,0,0.20)_0%,rgba(0,0,0,0.20)_100%),linear-gradient(180deg,rgba(0,0,0,0.00)_58.09%,rgba(0,0,0,0.35)_82.98%)] z-[1] pointer-events-none'></div>
+      <div className='pointer-events-none absolute top-0 left-0 z-[1] h-[13.4375rem] w-full bg-[linear-gradient(180deg,#131f31_0%,rgba(19,31,49,0)_100%)] opacity-40'></div>
+      <div className='pointer-events-none absolute bottom-0 left-0 z-[1] h-[41.625rem] w-full bg-[linear-gradient(0deg,rgba(0,0,0,0.20)_0%,rgba(0,0,0,0.20)_100%),linear-gradient(180deg,rgba(0,0,0,0.00)_58.09%,rgba(0,0,0,0.35)_82.98%)]'></div>
 
       {!isMobile ? (
         <Image
@@ -59,7 +59,7 @@ export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
           width={2000}
           height={1000}
           src='/banner/bg-cloud.webp'
-          className='absolute bottom-[-0.25rem] left-0 w-full h-auto z-5 pointer-events-none'
+          className='pointer-events-none absolute bottom-[-0.25rem] left-0 z-5 h-auto w-full'
         />
       ) : (
         <React.Fragment>
@@ -68,15 +68,15 @@ export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
             width={2000}
             height={1000}
             src='/banner/bg-cloud-mb.webp'
-            className='absolute left-0 w-full h-auto z-5 pointer-events-none bottom-[-0.5rem]'
+            className='pointer-events-none absolute bottom-[-0.5rem] left-0 z-5 h-auto w-full'
           />
         </React.Fragment>
       )}
 
       {data?.title && (
         <>
-          <div className='max-sm:hidden absolute left-1/2 -translate-x-1/2 top-[27.8125rem] w-[12.5rem] z-[2] flex flex-col items-center'>
-            <p className='text-[#fff] text-center font-trip-sans text-[0.875rem] font-medium leading-[120%] tracking-[0.00219rem] mb-[0.5rem] self-stretch pb-[0.625rem]'>
+          <div className='absolute top-[27.8125rem] left-1/2 z-[2] flex w-[12.5rem] -translate-x-1/2 flex-col items-center max-sm:hidden'>
+            <p className='font-trip-sans mb-[0.5rem] self-stretch pb-[0.625rem] text-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#fff]'>
               Scroll down
             </p>
             <button
@@ -86,17 +86,17 @@ export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
               <IconScrollDown className='h-[3.125rem] w-auto' />
             </button>
           </div>
-          <div className='absolute top-[9.5625rem] max-sm:top-[8.0875rem] max-sm:min-h-[10.5rem] max-sm:justify-end max-sm:w-[19.79144rem] left-1/2 -translate-x-1/2 flex flex-col items-center z-[2]'>
+          <div className='absolute top-[9.5625rem] left-1/2 z-[2] flex -translate-x-1/2 flex-col items-center max-sm:top-[8.0875rem] max-sm:min-h-[10.5rem] max-sm:w-[19.79144rem] max-sm:justify-end'>
             <Image
               alt=''
               width={300}
               height={150}
               src='/banner/bg-title.png'
-              className='w-[19.79156rem] h-auto pointer-events-none max-sm:absolute max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:bottom-[0.5rem]'
+              className='pointer-events-none h-auto w-[19.79156rem] max-sm:absolute max-sm:bottom-[0.5rem] max-sm:left-1/2 max-sm:-translate-x-1/2'
             />
             <h1
               className={clsx(
-                'relative z-[1] w-full top-[-3rem] max-sm:top-0',
+                'relative top-[-3rem] z-[1] w-full max-sm:top-0',
                 styles.bannerTitle,
               )}
               dangerouslySetInnerHTML={{__html: data?.title ?? ''}}
@@ -106,7 +106,7 @@ export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
       )}
 
       <Swiper
-        className='absolute top-0 left-0 w-full h-full z-0! swiper-fade'
+        className='swiper-fade absolute top-0 left-0 z-0! h-full w-full'
         loop={true}
         autoplay={{
           delay: 3000,
@@ -121,24 +121,25 @@ export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
           crossFade: true,
         }}
       >
-        {data?.banner_image?.map(({image_pc, image_mobile}, index) => {
-          const imageUrl = isMobile ? image_mobile.url : image_pc.url
-          const altText = isMobile ? image_mobile.alt : image_pc.alt
-          return (
-            <SwiperSlide
-              className='w-full h-full'
-              key={index}
-            >
-              <ImageFallback
-                width={2000}
-                height={1000}
-                alt={altText ?? ''}
-                src={imageUrl ?? '/images/fallback-image.webp'}
-                className='w-full h-full object-cover '
-              />
-            </SwiperSlide>
-          )
-        })}
+        {Array.isArray(data?.banner_image) &&
+          data?.banner_image?.map(({image_pc, image_mobile}, index) => {
+            const imageUrl = isMobile ? image_mobile.url : image_pc.url
+            const altText = isMobile ? image_mobile.alt : image_pc.alt
+            return (
+              <SwiperSlide
+                className='h-full w-full'
+                key={index}
+              >
+                <ImageFallback
+                  width={2000}
+                  height={1000}
+                  alt={altText ?? ''}
+                  src={imageUrl ?? '/images/fallback-image.webp'}
+                  className='h-full w-full object-cover'
+                />
+              </SwiperSlide>
+            )
+          })}
       </Swiper>
     </section>
   )

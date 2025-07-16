@@ -1,4 +1,4 @@
-import TourCard from '@/app/(main)/tours/_components/tour-card'
+import TourCard from '@/app/(main)/tours/_components/common/TourCard'
 import {Skeleton} from '@/components/ui/skeleton'
 import {TourItemResponse} from '@/types/tours.interface'
 import Link from 'next/link'

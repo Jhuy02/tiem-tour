@@ -1,29 +1,25 @@
 'use client'
-import ButtonNavNext from '@/app/_components/button-nav-next'
-import ButtonNavPrev from '@/app/_components/button-nav-prev'
 import React from 'react'
 import {Swiper, SwiperSlide} from 'swiper/react'
+import {TourItemResponse} from '@/types/tours.interface'
+import useIsMobile from '@/hooks/useIsMobile'
+import Link from 'next/link'
+import TourCard from '@/app/(main)/tours/_components/common/TourCard'
+import {Navigation, Pagination} from 'swiper/modules'
+import {convertRemToPx} from '@/lib/utils'
+import ButtonNavNext from '@/app/_components/button-nav-next'
+import ButtonNavPrev from '@/app/_components/button-nav-prev'
 
-import './section-best-choose.css'
-
-// Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
+import './styles.css'
 
-// import required modules
-import TourCard from '@/app/(main)/tours/_components/tour-card'
-import useIsMobile from '@/hooks/useIsMobile'
-import {convertRemToPx} from '@/lib/utils'
-import Link from 'next/link'
-import {Navigation, Pagination} from 'swiper/modules'
-import {TourItemResponse} from '@/types/tours.interface'
-
-interface IBestChooseTour {
+interface TourBestChooseType {
   title: string
   tour_list: TourItemResponse[]
 }
 
-export default function SectionBestChoose({title, tour_list}: IBestChooseTour) {
+export default function TourBestChoose({title, tour_list}: TourBestChooseType) {
   const isMobile = useIsMobile()
   return (
     <section className='best-choose relative'>
@@ -43,9 +39,9 @@ export default function SectionBestChoose({title, tour_list}: IBestChooseTour) {
             {tour_list?.map((tour, index) => {
               return (
                 <Link
-                  href={tour.link}
-                  className='ml-[1rem] block w-[19.625rem] shrink-0 last:mr-[1rem]'
                   key={index}
+                  href={`/tours/${tour.slug}`}
+                  className='ml-[1rem] block w-[19.625rem] shrink-0 last:mr-[1rem]'
                 >
                   <TourCard
                     title={tour.title}
@@ -78,7 +74,7 @@ export default function SectionBestChoose({title, tour_list}: IBestChooseTour) {
                 return (
                   <SwiperSlide key={index}>
                     <Link
-                      href={tour.link}
+                      href={`/tours/${tour.slug}`}
                       className='shrink-0'
                     >
                       <TourCard

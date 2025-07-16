@@ -35,7 +35,10 @@ export default function ImageAnimation({image}: {image: IMedia}) {
   }, [])
 
   return (
-    <div className='xsm:h-[14.9375rem] relative h-[43.1095rem] w-full overflow-hidden'>
+    <div
+      ref={containerRef}
+      className='xsm:h-[14.9375rem] relative h-[43.1095rem] w-full overflow-hidden'
+    >
       <Image
         alt=''
         width={1600}
