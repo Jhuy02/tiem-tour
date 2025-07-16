@@ -1,9 +1,14 @@
 'use client'
-import React, {useState, createContext} from 'react'
+import React, {useState, createContext, Dispatch, SetStateAction} from 'react'
 
-export const PageContext = createContext(null)
+type PageContextType = {
+  showBookingFormMobile: boolean
+  setShowBookingFormMobile: Dispatch<SetStateAction<boolean>>
+}
 
-export default function PageProvider({children}) {
+export const PageContext = createContext<PageContextType | null>(null)
+
+export default function PageProvider({children}: {children: React.ReactNode}) {
   const [showBookingFormMobile, setShowBookingFormMobile] =
     useState<boolean>(false)
   return (
