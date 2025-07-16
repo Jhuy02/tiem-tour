@@ -1,3 +1,4 @@
+import {ILink} from '@/types/link.interface'
 import {IMedia} from '@/types/media.interface'
 
 export interface TourTaxonomy {
@@ -65,4 +66,59 @@ export interface TourListDataResponse {
   total: number
   totalPages: number
   data: TourItemDataResponse[]
+}
+
+export interface TourDetailContent {
+  title: string
+  thumbnail: IMedia
+  acf_fields: {
+    price: string
+    overview: Overview
+    landscape: Landscape[]
+    faq: FAQ[]
+    tripadvisor: Tripadvisor
+  }
+  taxonomies: {
+    duration: TourTaxonomy[]
+    location: TourTaxonomy[]
+  }
+}
+
+export interface Overview {
+  desc: string
+  editor: string
+  glance: {
+    depart_from: string
+    itinerary: string
+    time: string
+  }
+  different: {
+    image: IMedia
+    text: string
+  }
+  gallery: {
+    image: IMedia
+    text: string
+    link: ILink
+  }
+}
+
+export interface Landscape {
+  title: string
+  morning: string
+  destination: string
+  evening: string
+}
+
+export interface FAQ {
+  title: string
+  desc: string
+}
+
+export interface Tripadvisor {
+  gallery: IMedia[]
+  desc: string
+  map: IMedia[]
+  number_of_reviews: string
+  title: string
 }

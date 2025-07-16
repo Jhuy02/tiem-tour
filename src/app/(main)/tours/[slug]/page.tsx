@@ -1,13 +1,63 @@
 import BookingForm from '@/app/(main)/tours/[slug]/_components/compound/booking-form'
+import {Banner} from '@/app/(main)/tours/[slug]/_components/overview-compound/banner'
+import {Content} from '@/app/(main)/tours/[slug]/_components/overview-compound/content'
+import {Tab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tab'
+import {Tripadvisor} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
+import {TripadvisorTab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
 import PageProvider from '@/app/(main)/tours/[slug]/context/PageProvider'
-import React from 'react'
 
-export default function TourDetailPage() {
+import NotFound from '@/components/NotFound'
+import fetchData from '@/fetches/fetchData'
+import {TourDetailContent} from '@/types/tours.interface'
+
+export default async function TourDetail({
+  params,
+}: {
+  params: Promise<{slug: string}>
+}) {
+  const {slug} = await params
+  const data: TourDetailContent = await fetchData({
+    api: `custom/v1/tour-detail/${slug}`,
+    option: {
+      next: {
+        revalidate: 60,
+      },
+    },
+  })
+
+  if (!data || slug === 'undefined') {
+    return <NotFound />
+  }
+
   return (
-    <PageProvider>
-      <main className='my-[50vh] h-screen bg-[linear-gradient(180deg,#FFF_19.92%,#F3F3F0_87.57%)]'>
+    <main className='h-[1000rem]'>
+      <Banner data={data} />
+      <div className='relative h-auto'>
+        <Tab />
+        <div
+          id='tour-detail'
+          className='xsm:px-[1rem] xsm:mt-[0.5rem] xsm:flex-col xsm:space-x-0 relative mx-auto mt-[2rem] flex h-auto max-w-[87.5rem] space-x-[3.75rem]'
+        >
+          <div>
+            <Content data={data} />
+          </div>
+
+          <div className='xsm:hidden sticky top-[6.5rem] h-fit w-[29rem] rounded-[1.5rem] border border-[#EDEDED] bg-white p-[1.25rem]'>
+            <Tripadvisor
+              data={data.acf_fields.tripadvisor}
+              link={data.acf_fields.overview.gallery.link.url}
+            />
+            <TripadvisorTab
+              data={data.acf_fields.tripadvisor}
+              map={data.taxonomies.location[0].name}
+            />
+          </div>
+        </div>
+      </div>
+
+      <PageProvider>
         <BookingForm />
-      </main>
-    </PageProvider>
+      </PageProvider>
+    </main>
   )
 }

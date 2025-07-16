@@ -26,8 +26,10 @@ export default function BookingForm() {
       seatBehindYourFriendQuantity: 0,
     },
   })
-  const {showBookingFormMobile, setShowBookingFormMobile} =
-    useContext(PageContext)
+  const context = useContext(PageContext)
+  if (!context) throw new Error('PageContext not found')
+  const {showBookingFormMobile, setShowBookingFormMobile} = context
+
   function onSubmit(values: BookingFormValues) {
     console.log(values)
   }
@@ -61,7 +63,7 @@ export default function BookingForm() {
           </form>
         </Form>
       </section>
-      <div className='font-trip-sans fixed bottom-0 left-0 z-100 w-full'>
+      <div className='font-trip-sans xsm:block fixed bottom-0 left-0 z-100 hidden w-full'>
         <div className='flex flex-col space-y-[0.625rem] bg-white px-[1.25rem] py-[0.75rem] shadow-[0px_-4px_24px_0px_rgba(0,0,0,0.08)]'>
           <div className='flex items-start justify-between'>
             <div className='flex flex-1 flex-col items-start'>
