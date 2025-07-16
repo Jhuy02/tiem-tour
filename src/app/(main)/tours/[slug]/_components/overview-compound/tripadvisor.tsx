@@ -17,39 +17,49 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import Image from 'next/image'
-import { TripadvisorReviews } from '@/app/(main)/tours/[slug]/_components/icon'
+import {TripadvisorReviews} from '@/app/(main)/tours/[slug]/_components/icon'
+import {Tripadvisor as TripadvisorType} from '@/types/tours.interface'
 
-export const Tripadvisor = () => {
+export const Tripadvisor = ({
+  data,
+  link,
+}: {
+  data: TripadvisorType
+  link: string
+}) => {
   return (
     <Accordion
       type='single'
       collapsible
       defaultValue='tripadvisor'
-      className='p-[1rem] rounded-[1rem]'
+      className='rounded-[1rem] p-[1rem]'
       style={{
         background:
           'linear-gradient(180deg, rgba(244, 245, 230, 0.40) 0%, rgba(178, 223, 220, 0.40) 100%)',
       }}
     >
-      <AccordionItem value='tripadvisor'>
-        <AccordionTrigger className='text-[#2E2E2E] text-[1.125rem] font-extrabold leading-[1.4625rem] tracking-[0.00281rem] p-0 cursor-pointer'>
-          <div className='space-y-[0.5rem] w-full'>
+      <AccordionItem
+        value='tripadvisor'
+        className='border-none'
+      >
+        <AccordionTrigger className='cursor-pointer border-none p-0 text-[1.125rem] leading-[1.4625rem] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
+          <div className='w-full space-y-[0.5rem]'>
             <div className='flex items-center'>
               <Image
                 src={'/tour-detail/trip.svg'}
                 alt='tripadvisor'
                 width={60}
                 height={60}
-                className='object-cover size-[1.42869rem] mr-[0.5rem]'
+                className='mr-[0.5rem] size-[1.42869rem] object-cover'
               />
               <p>Tripadvisor</p>
             </div>
             <div className='flex items-center justify-between'>
-              <p className='text-[0.875rem] font-bold leading-[1.05rem] tracking-[0.01563rem] uppercase text-[#092F1A]'>
-                Tiemtourhagiang
+              <p className='text-[0.875rem] leading-[1.05rem] font-bold tracking-[0.01563rem] text-[#092F1A] uppercase'>
+                {data.title}
               </p>
-              <div className='flex items-center mr-[-2rem] space-x-[0.375rem] xsm:flex-col xsm:items-center xsm:space-x-0'>
-                <div className='space-x-[0.125rem] flex items-center'>
+              <div className='xsm:flex-col xsm:items-center xsm:space-x-0 mr-[-2rem] flex items-center space-x-[0.375rem]'>
+                <div className='flex items-center space-x-[0.125rem]'>
                   {Array.from({length: 5}).map((_, index) => (
                     <TripadvisorReviews
                       key={index}
@@ -57,8 +67,8 @@ export const Tripadvisor = () => {
                     />
                   ))}
                 </div>
-                <p className='text-[#303030] text-[0.875rem] font-medium leading-[1.05rem] tracking-[0.00219rem]'>
-                  407 REVIEWS
+                <p className='text-[0.875rem] leading-[1.05rem] font-medium tracking-[0.00219rem] text-[#303030]'>
+                  {data.number_of_reviews} REVIEWS
                 </p>
               </div>
             </div>
@@ -72,30 +82,33 @@ export const Tripadvisor = () => {
               speed={700}
               grabCursor={true}
             >
-              {Array.from({length: 10}).map((_, index) => (
+              {data.gallery.map((item, index) => (
                 <SwiperSlide
-                  className={`size-[4rem]! xsm:size-[4.125rem]! rounded-[1.5rem] overflow-hidden ${
-                    index === 9 ? 'relative cursor-pointer' : ''
+                  className={`xsm:size-[4.125rem]! size-[4rem]! overflow-hidden rounded-[1.5rem] ${
+                    index === data.gallery.length - 1
+                      ? 'relative cursor-pointer'
+                      : ''
                   }`}
-                  key={index}
+                  key={item.url}
                 >
                   <ImageFallback
-                    src={'/tour-detail/d-image-1.webp'}
-                    alt='tripadvisor'
-                    width={100}
-                    height={100}
-                    className='size-[4rem] object-cover rounded-[1.5rem] border border-[#EDEDED] bg-cover bg-center bg-no-repeat transition-all duration-300'
+                    src={item.url}
+                    alt={item.alt}
+                    width={item.width}
+                    height={item.height}
+                    className='size-[4rem] rounded-[1.5rem] border border-[#EDEDED] bg-cover bg-center bg-no-repeat object-cover transition-all duration-300'
                   />
-                  {index === 9 && (
+                  {index === data.gallery.length - 1 && (
                     <Link
-                      href={'/'}
+                      href={link}
+                      target='_blank'
                       className='absolute inset-0 flex items-center justify-center'
                       style={{
                         backgroundImage:
                           'linear-gradient(0deg, rgba(0, 0, 0, 0.20) 0%, rgba(0, 0, 0, 0.20) 100%)',
                       }}
                     >
-                      <p className='text-white text-[0.875rem] font-medium leading-[1.05rem] tracking-[0.00219rem]'>
+                      <p className='text-[0.875rem] leading-[1.05rem] font-medium tracking-[0.00219rem] text-white'>
                         More
                       </p>
                     </Link>
@@ -104,26 +117,16 @@ export const Tripadvisor = () => {
               ))}
             </Swiper>
 
-            <article className='space-y-[0.5rem] my-[0.5rem] text-[#303030] text-[0.875rem] leading-[1.05rem] tracking-[0.00219rem]'>
-              <p>
-                Everything about this tour was amazing. Our easy riders were so
-                safe and Everything about this tour was amazing. Our easy riders
-                we Our easy riders were so safe and ... more
-              </p>
-              <p>
-                Everything about this tour was amazing. Our easy riders were so
-                safe and Everything about this to Our easy riders we Our easy
-                riders weur was amazing. Our easy riders were so safe and ...
-                more
-              </p>
-              <p>
-                Everything about this tour was amazing. Our easy riders were so
-                safe and ... more
-              </p>
-            </article>
+            <article
+              className='my-[0.5rem] space-y-[0.5rem] text-[0.875rem] leading-[1.05rem] tracking-[0.00219rem] text-[#303030]'
+              dangerouslySetInnerHTML={{
+                __html: data.desc,
+              }}
+            ></article>
             <Link
-              href={'/'}
-              className='text-[#006CE4] text-[0.875rem] underline leading-[1.05rem] tracking-[0.00219rem]'
+              href={link}
+              className='text-[0.875rem] leading-[1.05rem] tracking-[0.00219rem] text-[#006CE4] underline'
+              target='_blank'
             >
               Read more reviews
             </Link>

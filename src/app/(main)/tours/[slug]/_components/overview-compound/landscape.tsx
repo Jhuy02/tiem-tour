@@ -1,107 +1,48 @@
 import {Separator} from '@/components/ui/separator'
+import {cn} from '@/lib/utils'
+import {TourDetailContent} from '@/types/tours.interface'
 
-export const Landscape = () => {
+export const Landscape = ({
+  data,
+}: {
+  data: TourDetailContent['acf_fields']['landscape']
+}) => {
   return (
     <section>
-      <article className='mb-[1.5rem]'>
-        <h4 className='text-[#303030] font-bold leading-[1.3rem] tracking-[0.0025rem] '>
-          Day 1: YEN MINH ( B-L-D included ) (90 km)
-        </h4>
-        <p className='text-[#303030] leading-[1.6] tracking-[0.0025rem] mt-[0.5rem]'>
-          <strong className='font-bold leading-[1.3rem]'>8:00-9:00am: </strong>
-          Have a delicious breakfast at homestay and proceed to get ready to
-          start discovering the mountainous Northern Loop. Start the loop tour.
-        </p>
-        <div className='p-4 rounded-[1.5rem] bg-[#F3F9F9] my-[1rem]'>
-          <p className='text-[#303030] font-extrabold leading-[1.05rem] text-[0.875rem] tracking-[0.01563rem] uppercase'>
-            Destination
-          </p>
-          <Separator className='my-[0.75rem] h-[0.0625rem] bg-[#ededed]' />
-          <ul className='text-[#303030] font-medium leading-[1.2rem] tracking-[0.0025rem] space-y-[0.75rem] list-disc list-inside landscape-destination marker:size-[1.25rem] marker:block'>
-            <li>Bac Xum slope</li>
-            <li>Swimming in Hidden waterfall</li>
-            <li>Quan Ba heaven gate</li>
-            <li>Quan Ba twin mountain</li>
-            <li>Lung Tam linen cooperative</li>
-          </ul>
-        </div>
-        <p className='text-[#303030] leading-[1.6] tracking-[0.0025rem]'>
-          <strong className='font-bold leading-[1.3rem]'>5:00pm: </strong>
-          Finished the day
-        </p>
-        <p className='text-[#303030] leading-[1.6] tracking-[0.0025rem] mt-[0.5rem]'>
-          <strong className='font-bold leading-[1.3rem]'>
-            07:30 - 09:30pm:{' '}
-          </strong>
-          Dinner time
-        </p>
-      </article>
-      <article className='mb-[1.5rem]'>
-        <h4 className='text-[#303030] font-bold leading-[1.3rem] tracking-[0.0025rem] '>
-          Day 2: YEN MINH ( B-L-D included ) (90 km)
-        </h4>
-        <p className='text-[#303030] leading-[1.6] tracking-[0.0025rem] mt-[0.5rem]'>
-          <strong className='font-bold leading-[1.3rem]'>8:00-9:00am: </strong>
-          Have a delicious breakfast at homestay and proceed to get ready to
-          start discovering the mountainous Northern Loop. Start the loop tour.
-        </p>
-        <div className='p-4 rounded-[1.5rem] bg-[#F3F9F9] my-[1rem]'>
-          <p className='text-[#303030] font-extrabold leading-[1.05rem] text-[0.875rem] tracking-[0.01563rem] uppercase'>
-            Destination
-          </p>
-          <Separator className='my-[0.75rem] h-[0.0625rem] bg-[#ededed]' />
-          <ul className='text-[#303030] font-medium leading-[1.2rem] tracking-[0.0025rem] space-y-[0.75rem] list-disc list-inside landscape-destination marker:size-[1.25rem] marker:block'>
-            <li>Bac Xum slope</li>
-            <li>Swimming in Hidden waterfall</li>
-            <li>Quan Ba heaven gate</li>
-            <li>Quan Ba twin mountain</li>
-            <li>Lung Tam linen cooperative</li>
-          </ul>
-        </div>
-        <p className='text-[#303030] leading-[1.6] tracking-[0.0025rem]'>
-          <strong className='font-bold leading-[1.3rem]'>5:00pm: </strong>
-          Finished the day
-        </p>
-        <p className='text-[#303030] leading-[1.6] tracking-[0.0025rem] mt-[0.5rem]'>
-          <strong className='font-bold leading-[1.3rem]'>
-            07:30 - 09:30pm:{' '}
-          </strong>
-          Dinner time
-        </p>
-      </article>
-      <article>
-        <h4 className='text-[#303030] font-bold leading-[1.3rem] tracking-[0.0025rem] '>
-          Day 2: YEN MINH ( B-L-D included ) (90 km)
-        </h4>
-        <p className='text-[#303030] leading-[1.6] tracking-[0.0025rem] mt-[0.5rem]'>
-          <strong className='font-bold leading-[1.3rem]'>8:00-9:00am: </strong>
-          Have a delicious breakfast at homestay and proceed to get ready to
-          start discovering the mountainous Northern Loop. Start the loop tour.
-        </p>
-        <div className='p-4 rounded-[1.5rem] bg-[#F3F9F9] my-[1rem]'>
-          <p className='text-[#303030] font-extrabold leading-[1.05rem] text-[0.875rem] tracking-[0.01563rem] uppercase'>
-            Destination
-          </p>
-          <Separator className='my-[0.75rem] h-[0.0625rem] bg-[#ededed]' />
-          <ul className='text-[#303030] font-medium leading-[1.2rem] tracking-[0.0025rem] space-y-[0.75rem] list-disc list-inside landscape-destination marker:size-[1.25rem] marker:block'>
-            <li>Bac Xum slope</li>
-            <li>Swimming in Hidden waterfall</li>
-            <li>Quan Ba heaven gate</li>
-            <li>Quan Ba twin mountain</li>
-            <li>Lung Tam linen cooperative</li>
-          </ul>
-        </div>
-        <p className='text-[#303030] leading-[1.6] tracking-[0.0025rem]'>
-          <strong className='font-bold leading-[1.3rem]'>5:00pm: </strong>
-          Finished the day
-        </p>
-        <p className='text-[#303030] leading-[1.6] tracking-[0.0025rem] mt-[0.5rem]'>
-          <strong className='font-bold leading-[1.3rem]'>
-            07:30 - 09:30pm:{' '}
-          </strong>
-          Dinner time
-        </p>
-      </article>
+      {data.map((item, index) => (
+        <article
+          className={cn('mb-[1.5rem]', index === data.length - 1 && 'mb-0')}
+          key={index}
+        >
+          <h4 className='leading-[1.3rem] font-bold tracking-[0.0025rem] text-[#303030]'>
+            Day {index + 1}: {item.title}
+          </h4>
+          <p
+            className='mt-[0.5rem] leading-[1.6] tracking-[0.0025rem] text-[#303030] [&_strong]:leading-[1.3rem] [&_strong]:font-bold'
+            dangerouslySetInnerHTML={{
+              __html: item.morning,
+            }}
+          ></p>
+          <div className='my-[1rem] rounded-[1.5rem] bg-[#F3F9F9] p-4'>
+            <p className='text-[0.875rem] leading-[1.05rem] font-extrabold tracking-[0.01563rem] text-[#303030] uppercase'>
+              Destination
+            </p>
+            <Separator className='my-[0.75rem] h-[0.0625rem] bg-[#ededed]' />
+            <article
+              className='landscape-destination list-inside list-disc space-y-[0.75rem] leading-[1.2rem] font-medium tracking-[0.0025rem] text-[#303030] marker:block marker:size-[1.25rem]'
+              dangerouslySetInnerHTML={{
+                __html: item.destination,
+              }}
+            ></article>
+          </div>
+          <article
+            className='leading-[1.6] tracking-[0.0025rem] text-[#303030] [&_strong]:leading-[1.3rem] [&_strong]:font-bold'
+            dangerouslySetInnerHTML={{
+              __html: item.evening,
+            }}
+          ></article>
+        </article>
+      ))}
     </section>
   )
 }

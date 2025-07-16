@@ -28,6 +28,7 @@
     "crypto-browserify": "^3.12.1",
     "date-fns": "^4.1.0",
     "gsap": "^3.13.0",
+    "he": "^1.2.0",
     "lucide-react": "^0.483.0",
     "next": "^15.3.3",
     "next-intl": "^4.0.2",
@@ -52,6 +53,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/he": "^1.2.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

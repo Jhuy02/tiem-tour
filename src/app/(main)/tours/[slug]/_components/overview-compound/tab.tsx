@@ -2,7 +2,8 @@
 
 import {Button} from '@/components/ui/button'
 import scrollToElement from '@/hooks/scrollToElement'
-import {useState, useEffect} from 'react'
+import {useScrollDirection} from '@/hooks/useScrollDirection'
+import {useState, useEffect, useMemo, useRef} from 'react'
 
 const tabs = [
   {label: 'Overview', id: 'overview'},
@@ -12,6 +13,17 @@ const tabs = [
 
 export const Tab = () => {
   const [active, setActive] = useState(0)
+  const [isStickyVisible, setIsStickyVisible] = useState(true)
+  const stickyTabRef = useRef<HTMLDivElement>(null)
+  const scrollDirection = useScrollDirection()
+
+  useEffect(() => {
+    if (scrollDirection === 'up' && stickyTabRef.current) {
+      setIsStickyVisible(false)
+    } else if (scrollDirection === 'down' && stickyTabRef.current) {
+      setIsStickyVisible(true)
+    }
+  }, [scrollDirection])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,14 +51,25 @@ export const Tab = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const stickyClassName = useMemo(
+    () =>
+      `sticky z-50 transition-all duration-300 ${
+        isStickyVisible ? 'top-0 xsm:top-0' : 'top-[-5rem]'
+      }`,
+    [isStickyVisible],
+  )
+
   return (
-    <section className='h-[4.875rem] shadow-[0px_16px_16px_0px_rgba(0,0,0,0.04)] xsm:hidden sticky top-0 z-[1] bg-white'>
-      <div className='max-w-[87.5rem] mx-auto flex items-center justify-between h-full'>
-        <div className='w-[51.1875rem] flex items-center h-full'>
+    <section
+      className={`xsm:hidden ${stickyClassName} h-[4.875rem] bg-white shadow-[0px_16px_16px_0px_rgba(0,0,0,0.04)]`}
+      ref={stickyTabRef}
+    >
+      <div className='mx-auto flex h-full max-w-[87.5rem] items-center justify-between'>
+        <div className='flex h-full w-[51.1875rem] items-center'>
           {tabs.map((tab, idx) => (
             <div
               key={tab.label}
-              className={`flex items-center justify-center relative w-[12.65rem] h-full cursor-pointer after:content-["" ] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[0.125rem] after:bg-[#25ACAB] after:origin-left after:transition-transform after:duration-300 ${
+              className={`after:content-["" ] relative flex h-full w-[12.65rem] cursor-pointer items-center justify-center after:absolute after:bottom-0 after:left-0 after:h-[0.125rem] after:w-full after:origin-left after:bg-[#25ACAB] after:transition-transform after:duration-300 ${
                 active === idx ? 'after:scale-x-100' : 'after:scale-x-0'
               }`}
               onClick={() => {
@@ -54,16 +77,16 @@ export const Tab = () => {
                 scrollToElement(null, tabs[idx].id, 1, 6)
               }}
             >
-              <p className='text-[#303030] font-medium leading-[1.25rem] tracking-[0.0025rem]'>
+              <p className='leading-[1.25rem] font-medium tracking-[0.0025rem] text-[#303030]'>
                 {tab.label}
               </p>
             </div>
           ))}
         </div>
         <div className='flex items-center space-x-[0.6875rem]'>
-          <p className='text-[#303030] leading-[1.6rem] tracking-[0.0025rem]'>
+          <p className='leading-[1.6rem] tracking-[0.0025rem] text-[#303030]'>
             From{' '}
-            <strong className='text-[#19C2C2] text-[1.25rem] leading-[1.875rem] tracking-[0.00313rem] font-dvn-luckiest-guy'>
+            <strong className='font-dvn-luckiest-guy text-[1.25rem] leading-[1.875rem] tracking-[0.00313rem] text-[#19C2C2]'>
               1.100.000
             </strong>
           </p>

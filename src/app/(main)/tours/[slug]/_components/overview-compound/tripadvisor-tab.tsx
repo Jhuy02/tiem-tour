@@ -12,14 +12,19 @@ import {useZoomImageWheel} from '@zoom-image/react'
 
 import 'swiper/css'
 import 'swiper/css/thumbs'
+import {TourDetailContent} from '@/types/tours.interface'
 
 const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
   ssr: false,
 })
 
-const DAY_LENGTH = 6
-
-export const TripadvisorTab = () => {
+export const TripadvisorTab = ({
+  data,
+  map,
+}: {
+  data: TourDetailContent['acf_fields']['tripadvisor']
+  map: string
+}) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null)
   const isMobile = useIsMobile()
@@ -48,8 +53,8 @@ export const TripadvisorTab = () => {
 
   return (
     <div className='mt-4'>
-      <h3 className='text-[#303030] font-dvn-luckiest-guy text-[1.125rem] leading-[1.35rem] tracking-[0.0125rem] uppercase'>
-        HaGiang loop map
+      <h3 className='font-dvn-luckiest-guy text-[1.125rem] leading-[1.35rem] tracking-[0.0125rem] text-[#303030] uppercase'>
+        {map} loop map
       </h3>
 
       <Swiper
@@ -63,12 +68,12 @@ export const TripadvisorTab = () => {
         speed={700}
         grabCursor
       >
-        {Array.from({length: DAY_LENGTH}).map((_, index) => (
+        {data.map.map((_, index) => (
           <SwiperSlide
             key={index}
-            className='px-[1.5rem] py-[0.5rem] rounded-[1.25rem] bg-[#EBEBEB]! border-none cursor-pointer'
+            className='cursor-pointer rounded-[1.25rem] border-none bg-[#EBEBEB]! px-[1.5rem] py-[0.5rem]'
           >
-            <p className='text-[#303030] font-medium leading-[1.2rem] tracking-[0.0025rem] whitespace-nowrap'>
+            <p className='leading-[1.2rem] font-medium tracking-[0.0025rem] whitespace-nowrap text-[#303030]'>
               Day {index + 1}
             </p>
           </SwiperSlide>
@@ -79,28 +84,28 @@ export const TripadvisorTab = () => {
         onSwiper={setMainSwiper}
         thumbs={{swiper: thumbsSwiper}}
         modules={[FreeMode, Navigation, Thumbs]}
-        className='w-full h-full mt-[1.8125rem]'
+        className='mt-[1.8125rem] h-full w-full'
         speed={700}
         grabCursor={false}
         allowTouchMove={false}
       >
-        {Array.from({length: DAY_LENGTH}).map((_, index) => (
+        {data.map.map((item, index) => (
           <SwiperSlide
             key={index}
             className='rounded-[0.75rem]'
           >
             <div
-              className='relative w-full h-full mx-auto rounded-[0.75rem]'
+              className='relative mx-auto h-full w-full rounded-[0.75rem]'
               ref={(el) => {
                 imageRefs.current[index] = el
               }}
             >
               <ImageFallback
-                src={`/tour-detail/d-map-${index + 1}.webp`}
-                alt={`day-${index + 1}`}
-                width={580}
-                height={490}
-                className='object-cover w-full h-full'
+                src={item.url}
+                alt={item.alt}
+                width={item.width}
+                height={item.height}
+                className='h-full w-full object-cover'
               />
             </div>
           </SwiperSlide>

@@ -4,68 +4,36 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import {cn} from '@/lib/utils'
+import {TourDetailContent} from '@/types/tours.interface'
 
-export const FAQ = () => {
-  const faqs = [
-    {
-      title: 'Can I drive myself ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-    {
-      title: 'Where will I sleep on the arrival night ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-    {
-      title: 'How can I pay ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-    {
-      title: 'How can I pay ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-    {
-      title: 'What should I bring during the trip ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-    {
-      title: 'Do you have Vegan/Vegetarian/allergies food options ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-    {
-      title: 'Can I change from 3 days to 4 days during the tour ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-    {
-      title: 'Can I change to EASY RIDER during the tour ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-    {
-      title: 'I’m 60+, can I still do the Ha Giang loop by motorcycle ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-    {
-      title: 'Should I tip for the drivers ?',
-      desc: 'Yes, you can drive yourself if you have a valid motorbike driving license and are confident in handling mountainous roads. However, please note that the roads in Hà Giang are challenging with many steep passes and curves. For your safety, we highly recommend choosing our experienced local drivers (Easy Rider option), especially if it’s your first time traveling in this region',
-    },
-  ]
+export const FAQ = ({data}: {data: TourDetailContent['acf_fields']['faq']}) => {
   return (
     <Accordion
       type='single'
+      defaultValue='faq-0'
       collapsible
     >
-      {faqs.map((faq, index) => (
+      {data.map((faq, index) => (
         <AccordionItem
           key={index}
           value={`faq-${index}`}
           className='space-y-[1.25rem] border-none'
         >
-          <AccordionTrigger className='p-4 rounded-[1.5rem] bg-[#f6f6f6] text-[#303030] text-[0.875rem] leading-[1.05rem] font-medium tracking-[0.00219rem]'>
+          <AccordionTrigger className='w-[15.4375rem] items-center rounded-[1.5rem] bg-[#f6f6f6] p-4 text-[0.875rem] leading-[1.05rem] font-medium tracking-[0.00219rem] text-[#303030]'>
             {faq.title}
           </AccordionTrigger>
-          <AccordionContent className='w-[47.1875rem] mx-auto xsm:w-full'>
-            <p className='text-[#303030]/80 text-[0.875rem] leading-[1.3125rem] tracking-[0.00219rem]'>
-              {faq.desc}
-            </p>
+          <AccordionContent className='xsm:w-full mx-auto w-[47.1875rem]'>
+            <article
+              className={cn(
+                'xsm:overflow-auto text-[0.875rem] leading-[1.3125rem] tracking-[0.00219rem] text-[#303030]/80 [&_table]:p-[1.5rem]',
+                faq.desc.includes('table') &&
+                  'xsm:[&_table]:w-[48rem]! hidden_scroll rounded-[1.5rem] border border-[#ededed] p-[1.5rem] [&_tr]:bg-[#F3F9F9] [&_tr]:text-[#303030] [&_tr:first-child]:bg-white [&_tr:first-child]:py-[0.625rem] [&_tr:first-child]:text-[0.875rem] [&_tr:first-child]:leading-[1.05rem] [&_tr:first-child]:font-medium [&_tr:first-child]:tracking-[0.00219rem] [&_tr:first-child]:text-[#19C2C2] [&_tr:first-child>td]:py-[0.625rem] [&_tr:last-child>td:first-child]:rounded-bl-[0.5rem] [&_tr:last-child>td:last-child]:rounded-br-[0.5rem] [&_tr:nth-child(2)>td]:pt-[1.625rem] [&_tr:nth-child(2)>td]:pb-[0.625rem] [&_tr:nth-child(2)>td:first-child]:rounded-tl-[0.5rem] [&_tr:nth-child(2)>td:last-child]:rounded-tr-[0.5rem] [&_tr>td]:py-[0.625rem] [&_tr>td:first-child]:pl-[1rem]',
+              )}
+              dangerouslySetInnerHTML={{
+                __html: faq.desc,
+              }}
+            ></article>
           </AccordionContent>
         </AccordionItem>
       ))}
