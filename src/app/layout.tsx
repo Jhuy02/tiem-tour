@@ -47,7 +47,7 @@ export default async function RootLayout({
   return (
     <html lang={'en'}>
       <body
-        className={`${dvnLuckiestGuy.variable} ${nvnMotherland.variable} ${tripSans.variable} antialiased`}
+        className={`${tripSans.className} ${tripSans.variable} ${dvnLuckiestGuy.variable} ${nvnMotherland.variable}  antialiased`}
       >
         <WebVitals />
         {children}
