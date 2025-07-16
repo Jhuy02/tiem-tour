@@ -1,4 +1,4 @@
-import {IMedia} from '@/types/media.interface'
+import { IMedia } from '@/types/media.interface'
 
 export interface TourTaxonomy {
   id: number
@@ -65,4 +65,13 @@ export interface TourListDataResponse {
   total: number
   totalPages: number
   data: TourItemDataResponse[]
+}
+
+export interface InterMotorcycle {
+  name: string
+  price: number
+}
+export interface InterGift {
+  name: string
+  price: number
 }

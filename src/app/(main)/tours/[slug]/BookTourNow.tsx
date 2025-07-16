@@ -1,16 +1,25 @@
 'use client'
+import ContactInformation from '@/app/(main)/tours/[slug]/_components/contact'
+import Gift from '@/app/(main)/tours/[slug]/_components/gift'
+import Policy from '@/app/(main)/tours/[slug]/_components/policy'
+import RentMotorcycles from '@/app/(main)/tours/[slug]/_components/rent-motorcycles'
 import Homestay from '@/app/(main)/tours/[slug]/Homestay'
 import OverviewForm from '@/app/(main)/tours/[slug]/OverViewForm'
 import Subtotal from '@/app/(main)/tours/[slug]/Subtotal'
 import TransportService from '@/app/(main)/tours/[slug]/TransportService'
-import {Form} from '@/components/ui/form'
-import bookingSchema, {BookingFormValues} from '@/schemas/booking.schema'
-import {zodResolver} from '@hookform/resolvers/zod'
-import React from 'react'
-import {useForm} from 'react-hook-form'
-import {z} from 'zod'
+import { Form } from '@/components/ui/form'
+import bookingSchema, { BookingFormValues } from '@/schemas/booking.schema'
+import { InterGift, InterMotorcycle } from '@/types/tours.interface'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-export default function BookTourNow() {
+interface BookTourNowProps {
+  motorcycles: InterMotorcycle[]
+  gifts: InterGift[]
+}
+
+export default function BookTourNow({motorcycles, gifts}: BookTourNowProps) {
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -22,6 +31,15 @@ export default function BookTourNow() {
       easyRiderQuantity: 0,
       rideByYourselfQuantity: 0,
       seatBehindYourFriendQuantity: 0,
+      motorcycles: motorcycles.map((motor) => ({
+        name: motor.name,
+        quantity: 0,
+      })),
+      gifts: '',
+      yourName: '',
+      yourPhone: '',
+      yourEmail: '',
+      yourMessage: '',
     },
   })
 
@@ -40,6 +58,10 @@ export default function BookTourNow() {
               <OverviewForm />
               <Homestay />
               <TransportService />
+              <RentMotorcycles motorcycles={motorcycles} />
+              <Gift gifts={gifts} />
+              <ContactInformation />
+              <Policy />
             </div>
             <div className='w-[28.6875rem] shrink-0'>
               <Subtotal />

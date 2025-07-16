@@ -1,13 +1,14 @@
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import React from 'react'
 
 interface CautionProps {
   content: string
+  className?: string
 }
 
-export default function Caution({content}: CautionProps) {
+export default function Caution({content, className}: CautionProps) { 
   return (
-    <div className='relative flex items-center space-x-[0.375rem] rounded-[0.75rem] bg-[#F5F5F5] p-[0.75rem]'>
+    <div className={cn('relative flex items-center space-x-[0.375rem] rounded-[0.75rem] bg-[#F5F5F5] p-[0.75rem]', className)}>
       <Image
         alt=''
         width={24}
