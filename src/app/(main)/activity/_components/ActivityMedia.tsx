@@ -2,6 +2,10 @@
 import {useGSAPAnimation} from '@/hooks/useGSAPAnimation'
 import {IMedia} from '@/types/media.interface'
 import Image from 'next/image'
+import {gsap} from 'gsap'
+import {ScrollToPlugin} from 'gsap/dist/ScrollToPlugin'
+
+gsap.registerPlugin(ScrollToPlugin)
 
 type ActivityMediaProps = {
   data?: {
@@ -16,9 +20,28 @@ const ActivityMedia = ({data}: ActivityMediaProps) => {
   const titleRef = useGSAPAnimation<HTMLHeadingElement>('fadeUp')
   const bgRef = useGSAPAnimation<HTMLImageElement>('image-zoom-out')
   const bgMbRef = useGSAPAnimation<HTMLImageElement>('image-zoom-out')
+  const sectionRef = useGSAPAnimation<HTMLElement>('fadeIn')
+
+  const handleScrollDown = () => {
+    const section = sectionRef.current
+    if (section) {
+      const sectionHeight = section.offsetHeight
+      const currentScrollY = window.scrollY
+      const targetScrollY = currentScrollY + sectionHeight
+
+      gsap.to(window, {
+        duration: 1,
+        scrollTo: {y: targetScrollY, autoKill: true},
+        ease: 'power2.out',
+      })
+    }
+  }
 
   return (
-    <section className='xsm:h-[18rem] xsm:pb-[1.15869rem] relative h-[49.1875rem] w-full'>
+    <section
+      ref={sectionRef}
+      className='xsm:h-[18rem] xsm:pb-[1.15869rem] relative h-[49.1875rem] w-full'
+    >
       <Image
         ref={bgRef}
         alt=''
@@ -63,7 +86,10 @@ const ActivityMedia = ({data}: ActivityMediaProps) => {
           </span>
         </h2>
 
-        <div className='xsm:size-10 xsm:top-[8rem] xsm:left-[3.85rem] absolute top-[22rem] left-[14.25rem] flex size-16 cursor-pointer items-center justify-center rounded-full bg-[#25ACAB]'>
+        <div
+          onClick={handleScrollDown}
+          className='xsm:size-10 xsm:top-[8rem] xsm:left-[3.85rem] absolute top-[22rem] left-[14.25rem] flex size-16 cursor-pointer items-center justify-center rounded-full bg-[#25ACAB] transition-colors duration-300 hover:bg-[#1f8a89]'
+        >
           <IconArrow />
         </div>
       </div>

@@ -1,9 +1,11 @@
 'use client'
 import ContentText from '@/app/(main)/activity/_components/ContentText'
 import TitleContentText from '@/app/(main)/activity/_components/TitleContentText'
-import {useGSAPAnimation} from '@/hooks/useGSAPAnimation'
+import ClipMarkRender from '@/components/clip-mark-render'
+import {useClipRevealAnimation} from '@/hooks/useClipRevealAnimation'
 import {IMedia} from '@/types/media.interface'
 import Image from 'next/image'
+import {useRef} from 'react'
 
 type Content5Props = {
   data?: {
@@ -17,9 +19,14 @@ type Content5Props = {
 }
 
 const Content5 = ({data}: Content5Props) => {
-  const img1Ref = useGSAPAnimation<HTMLImageElement>('image-clip-bottom')
-  const img2Ref = useGSAPAnimation<HTMLImageElement>('image-clip-top')
-  const img3Ref = useGSAPAnimation<HTMLImageElement>('image-clip-bottom')
+  const svgRef1 = useRef<SVGSVGElement>(null!)
+  const svgRef2 = useRef<SVGSVGElement>(null!)
+  const svgRef3 = useRef<SVGSVGElement>(null!)
+
+  useClipRevealAnimation(svgRef1, '.clip-container-1', 'down', 2)
+  useClipRevealAnimation(svgRef2, '.clip-container-2', 'up', 1)
+  useClipRevealAnimation(svgRef3, '.clip-container-3', 'down', 2)
+
   return (
     <section>
       <div className='xsm:p-[2.5rem_0.75rem] p-[3.125rem_24.6875rem]'>
@@ -30,30 +37,54 @@ const Content5 = ({data}: Content5Props) => {
         </div>
       </div>
       <div className='xsm:p-[1.625rem_0.75rem] xsm:h-[22.3125rem] xsm:grid-cols-2 xsm:grid-rows-2 grid h-[36.4rem] grid-cols-3 gap-[0.3125rem] p-[4.8125rem_19.4375rem]'>
-        <Image
-          ref={img1Ref}
-          alt=''
-          width={500}
-          height={500}
-          className='xsm:row-span-2 h-full w-full object-cover'
-          src={data?.image_1?.url || ''}
+        <ClipMarkRender
+          id='clip-mask-1'
+          svgRef={svgRef1}
         />
-        <Image
-          ref={img2Ref}
-          alt=''
-          width={500}
-          height={500}
-          className='h-full w-full object-cover'
-          src={data?.image_2?.url || ''}
+        <div
+          className='clip-container-1'
+          style={{clipPath: 'url(#clip-mask-1)'}}
+        >
+          <Image
+            alt='image-1'
+            width={500}
+            height={500}
+            className='h-full w-full object-cover'
+            src={data?.image_1?.url || ''}
+          />
+        </div>
+        <ClipMarkRender
+          id='clip-mask-2'
+          svgRef={svgRef2}
         />
-        <Image
-          ref={img3Ref}
-          alt=''
-          width={500}
-          height={500}
-          className='h-full w-full object-cover'
-          src={data?.image_3?.url || ''}
+        <div
+          className='clip-container-2'
+          style={{clipPath: 'url(#clip-mask-2)'}}
+        >
+          <Image
+            alt='image-1'
+            width={500}
+            height={500}
+            className='h-full w-full object-cover'
+            src={data?.image_2?.url || ''}
+          />
+        </div>
+        <ClipMarkRender
+          id='clip-mask-3'
+          svgRef={svgRef3}
         />
+        <div
+          className='clip-container-3'
+          style={{clipPath: 'url(#clip-mask-3)'}}
+        >
+          <Image
+            alt='image-1'
+            width={500}
+            height={500}
+            className='h-full w-full object-cover'
+            src={data?.image_3?.url || ''}
+          />
+        </div>
       </div>
     </section>
   )

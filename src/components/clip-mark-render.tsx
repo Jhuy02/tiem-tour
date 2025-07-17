@@ -7,9 +7,9 @@ interface ClipMarkRenderProps {
 }
 
 export default function ClipMarkRender({id, svgRef}: ClipMarkRenderProps) {
-  const rects = Array.from({length: 30}).map((_, i) => {
-    const y = (i * (1 / 30)).toFixed(4)
-    const height = (1 / 30).toFixed(4)
+  const rects = Array.from({length: 25}).map((_, i) => {
+    const y = (i * (1 / 25)).toFixed(4)
+    const height = (1 / 25).toFixed(4)
     return (
       <rect
         key={i}

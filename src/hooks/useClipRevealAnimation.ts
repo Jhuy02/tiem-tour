@@ -9,13 +9,20 @@ gsap.registerPlugin(ScrollTrigger)
 export function useClipRevealAnimation(
   svgRef: React.RefObject<SVGSVGElement>,
   triggerSelector: string,
+  direction: 'up' | 'down' = 'up',
+  duration: number = 1,
 ) {
   useEffect(() => {
     if (!svgRef.current) return
     const rects = svgRef.current.querySelectorAll('rect')
     if (!rects.length) return
 
-    gsap.set(rects, {scaleY: 0, transformOrigin: '50% 100%'})
+    const isUp = direction === 'up'
+
+    gsap.set(rects, {
+      scaleY: 0,
+      transformOrigin: isUp ? '50% 100%' : '50% 0%',
+    })
 
     const animation = gsap.to(rects, {
       scaleY: 1,
@@ -23,7 +30,7 @@ export function useClipRevealAnimation(
         each: 0.03,
         from: 'end',
       },
-      duration: 1,
+      duration: duration,
       ease: 'power2.out',
       scrollTrigger: {
         trigger: triggerSelector,
@@ -36,5 +43,5 @@ export function useClipRevealAnimation(
       animation.kill()
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
     }
-  }, [svgRef, triggerSelector])
+  }, [svgRef, triggerSelector, direction, duration])
 }
