@@ -1,15 +1,26 @@
+'use client'
+
 import DecorBottom from '@/app/(main)/about-us/_components/our-mission/DecorBottom'
 import TextSpinner from '@/app/(main)/about-us/_components/our-mission/TextSpinner'
 import Image from 'next/image'
-import React from 'react'
+import React, {useRef, useEffect} from 'react'
 import {OurMission as IOurMission} from '@/types/about-us.interface'
 import DividerImage from '@/app/(main)/about-us/_components/our-mission/DividerImage'
 import DashedLineImage from '@/app/(main)/about-us/_components/our-mission/DashedLineImage'
+import gsap from 'gsap'
+import {ScrollTrigger} from 'gsap/ScrollTrigger'
+import {useClipRevealAnimation} from '@/hooks/useClipRevealAnimation'
+import ClipMarkRender from '@/components/clip-mark-render'
+
+gsap.registerPlugin(ScrollTrigger)
 
 interface OurMissionProps {
   data: IOurMission
 }
 export default function OurMission({data}: OurMissionProps) {
+  const svgRef = useRef<SVGSVGElement>(null!)
+  useClipRevealAnimation(svgRef, '.clip-container')
+
   return (
     <section className='font-trip-sans relative z-5'>
       <Image
@@ -41,13 +52,24 @@ export default function OurMission({data}: OurMissionProps) {
           </div>
           <div className='xsm:w-full w-[29.8125rem] shrink-0'>
             {data?.certification_image?.url && (
-              <Image
-                width={477}
-                height={655}
-                alt={data?.certification_image?.alt ?? ''}
-                src={data?.certification_image?.url}
-                className='h-auto w-full'
-              />
+              <>
+                <ClipMarkRender
+                  id='clip-mask'
+                  svgRef={svgRef}
+                />
+                <div
+                  className='clip-container'
+                  style={{clipPath: 'url(#clip-mask)'}}
+                >
+                  <Image
+                    width={477}
+                    height={655}
+                    alt={data?.certification_image?.alt ?? ''}
+                    src={data?.certification_image?.url}
+                    className='h-auto w-full'
+                  />
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -60,7 +82,7 @@ export default function OurMission({data}: OurMissionProps) {
             width={1600}
             height={461}
             src={data?.team_image?.url}
-            className='xsm:left-[0.5rem] xsm:w-[22rem] xsm:bottom-[7.79rem] xsm:top-[unset] absolute top-[19.7rem] left-[39.45rem] z-2 h-auto w-[27.65819rem]'
+            className='xsm:left-[0.5rem] xsm:w-[22rem] xsm:bottom-[7.79rem] xsm:top-[unset] absolute top-[19.7rem] left-[43.45rem] z-2 h-auto w-[27.65819rem]'
           />
         )}
         <p className='text-decor-v1 xsm:text-[1.375rem] xsm:leading-[140%] xsm:top-[6.94rem] xsm:left-[1.68rem] xsm:w-[20.3885rem] xsm:static xsm:ml-[1.68rem] absolute top-[16.75rem] left-[6.5rem] w-[30.72075rem] rotate-[-2.013deg] text-[1.875rem] leading-[150%] font-normal text-white'>
@@ -71,7 +93,7 @@ export default function OurMission({data}: OurMissionProps) {
           width={311.8928}
           height={260.1013}
           src={'/about-us/section-mission/decor-flower-basket.webp'}
-          className='xsm:left-[1.125rem] xsm:top-[unset] xsm:bottom-[7rem] xsm:w-[14.5rem] xsm:right-[unset] absolute top-[32.08rem] right-[0.11rem] z-5 h-auto w-[19.49331rem] rotate-[4.3deg]'
+          className='xsm:left-[1.125rem] xsm:top-[unset] xsm:bottom-[7rem] xsm:w-[14.5rem] xsm:right-[unset] absolute top-[32.08rem] right-[0.11rem] z-5 h-auto w-[19.49331rem]'
         />
         <Image
           alt=''

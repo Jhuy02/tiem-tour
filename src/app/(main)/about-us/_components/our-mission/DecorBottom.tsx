@@ -10,13 +10,14 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function DecorBottom() {
   useEffect(() => {
-    // Khởi tạo animation
+    // Khởi tạo animation chỉ chạy 1 lần
     gsap.from('.our-mission-animation__bottom', {
       duration: 1,
       scrollTrigger: {
         trigger: '.our-mission-animation__bottom',
-        start: 'top 90%',
+        start: 'top 50%',
         toggleClass: 'active',
+        once: true, // chỉ chạy 1 lần
       },
     })
   }, [])
