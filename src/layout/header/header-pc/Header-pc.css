@@ -47,10 +47,9 @@
 }
 
 #header .header__left-nav li .header__logo {
-  margin-top: -0.5rem;
   object-fit: cover;
-  width: 10.5rem;
-  height: 2.5rem;
+  width: 11.25rem;
+  height: 2.8125rem;
 }
 
 #header .header__left-nav li a,
