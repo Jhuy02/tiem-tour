@@ -1,9 +1,11 @@
 'use client'
 import ContentText from '@/app/(main)/activity/_components/ContentText'
 import TitleContentText from '@/app/(main)/activity/_components/TitleContentText'
-import {useGSAPAnimation} from '@/hooks/useGSAPAnimation'
+import ClipMarkRender from '@/components/clip-mark-render'
+import {useClipRevealAnimation} from '@/hooks/useClipRevealAnimation'
 import {IMedia} from '@/types/media.interface'
 import Image from 'next/image'
+import {useRef} from 'react'
 
 type Content1Props = {
   data?: {
@@ -16,7 +18,8 @@ type Content1Props = {
 }
 
 const Content1 = ({data}: Content1Props) => {
-  const bgRef = useGSAPAnimation<HTMLImageElement>('image-clip-top')
+  const svgRef = useRef<SVGSVGElement>(null!)
+  useClipRevealAnimation(svgRef, '.clip-container', 'up', 1.5)
 
   return (
     <section>
@@ -30,14 +33,22 @@ const Content1 = ({data}: Content1Props) => {
           <ContentText className=''>{data?.content_right}</ContentText>
         </div>
       </div>
-      <Image
-        ref={bgRef}
-        alt=''
-        width={2000}
-        height={1000}
-        src={data?.image_content?.url || ''}
-        className='h-auto w-full object-cover'
+      <ClipMarkRender
+        id='clip-mask'
+        svgRef={svgRef}
       />
+      <div
+        className='clip-container'
+        style={{clipPath: 'url(#clip-mask)'}}
+      >
+        <Image
+          alt=''
+          width={2000}
+          height={1000}
+          src={data?.image_content?.url || ''}
+          className='h-auto w-full object-cover'
+        />
+      </div>
     </section>
   )
 }

@@ -28,9 +28,9 @@ export default function DecorTop({
           )}
         </div>
         <div className='xsm:w-[9.6875rem] xsm:space-y-[0.125rem] flex w-[17.6875rem] flex-col items-center space-y-[0.6875rem]'>
-          <h2 className='font-dvn-luckiest-guy xsm:text-[1.125rem] xsm:tracking-[0.0075rem] text-center text-[2.25rem] leading-[120%] font-normal tracking-[0.01563rem] text-[#25ACAB] uppercase'>
+          <h1 className='font-dvn-luckiest-guy xsm:text-[1.125rem] xsm:tracking-[0.0075rem] text-center text-[2.25rem] leading-[120%] font-normal tracking-[0.01563rem] text-[#25ACAB] uppercase'>
             {title}
-          </h2>
+          </h1>
           <p className='xsm:text-[0.5rem] text-center text-[0.875rem] leading-[140%] font-normal tracking-[0.00219rem] text-[#3B3943]'>
             {description}
           </p>

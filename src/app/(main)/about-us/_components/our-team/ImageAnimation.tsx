@@ -51,7 +51,7 @@ export default function ImageAnimation({image}: {image: IMedia}) {
         width={1600}
         height={200}
         src={'/about-us/section-team/frame-bottom-img-animation.webp'}
-        className='xsm:bottom-[-1px] absolute bottom-0 left-0 z-1 h-auto w-full'
+        className='absolute bottom-[-0.1rem] left-0 z-1 h-auto w-full'
       />
       <Image
         ref={imageRef}

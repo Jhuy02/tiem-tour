@@ -47,7 +47,7 @@ const CulinaryExperience1 = ({data}: CulinaryExperience1Props) => {
       </div>
       <div
         dangerouslySetInnerHTML={{__html: data?.content || ''}}
-        className='xsm:p-[2.25rem_0.75rem] [&_h3,&_h4]:font-dvn-luckiest-guy [&_p]:font-trip-sans content-culinary-experience-1 w-full p-[3.75rem_24.6875rem_1.875rem_24.6875rem]'
+        className='xsm:p-[2.25rem_0.75rem] [&_h3,&_h4]:font-dvn-luckiest-guy [&_p]:font-trip-sans content-culinary-experience-1 w-full p-[3.75rem_24.6875rem_1.875rem_24.6875rem] [&_h3]:text-[2.25rem]'
       />
     </section>
   )

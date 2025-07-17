@@ -38,7 +38,7 @@ export default function OurTeam({data}: OurTeamProps) {
           target={data?.booking_link?.target ?? '_self'}
           className='xsm:hidden inline-flex h-[4rem] items-center space-x-[0.625rem] rounded-[3.125rem] bg-[#C83E21] px-[2.5rem] transition-colors duration-300 ease-out lg:hover:bg-[#EA6A44]'
         >
-          <span className='font-dvn-luckiest-guy inline-block h-[0.8125rem] text-[1.125rem] leading-[120%] text-white'>
+          <span className='font-dvn-luckiest-guy mb-[0.425rem] inline-block h-[0.8125rem] text-[1.125rem] leading-[120%] text-white'>
             {data?.booking_link?.title ?? 'Booking now'}
           </span>
           <ICArrowLeft className='h-[1.5rem] w-[1.575rem] shrink-0' />
@@ -69,13 +69,13 @@ export default function OurTeam({data}: OurTeamProps) {
             </div>
           ))}
       </div>
-      <div className='xsm:block mb-[0.63rem] hidden w-full px-[1rem]'>
+      <div className='xsm:block mb-[1.875rem] hidden w-full px-[1rem]'>
         <Link
           href={data?.booking_link?.url ?? '#'}
           target={data?.booking_link?.target ?? '_self'}
           className='inline-flex h-[3.375rem] w-full items-center justify-center space-x-[0.625rem] rounded-[3.125rem] bg-[#C83E21] px-[2.5rem]'
         >
-          <span className='font-dvn-luckiest-guy inline-block h-[0.6875rem] text-[1rem] leading-[120%] text-white'>
+          <span className='font-dvn-luckiest-guy xsm:mb-[0.35rem] inline-block h-[0.6875rem] text-[1rem] leading-[120%] text-white'>
             {data?.booking_link?.title ?? 'Booking now'}
           </span>
           <ICArrowLeft className='h-[1.125rem] w-[1.125rem] shrink-0' />

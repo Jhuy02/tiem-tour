@@ -40,7 +40,7 @@ export const useGSAPAnimation = <T extends HTMLElement>(
             scrollTrigger: {
               trigger: element,
               start: 'top 80%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none',
             },
           },
         )
@@ -59,7 +59,7 @@ export const useGSAPAnimation = <T extends HTMLElement>(
             scrollTrigger: {
               trigger: element,
               start: 'top 80%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none',
             },
           },
         )
@@ -80,7 +80,7 @@ export const useGSAPAnimation = <T extends HTMLElement>(
               trigger: element,
               start: 'top 85%',
               end: 'bottom 20%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none',
             },
           },
         )
@@ -101,7 +101,7 @@ export const useGSAPAnimation = <T extends HTMLElement>(
               trigger: element,
               start: 'top 85%',
               end: 'bottom 20%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none',
             },
           },
         )
@@ -122,7 +122,7 @@ export const useGSAPAnimation = <T extends HTMLElement>(
               trigger: element,
               start: 'top 85%',
               end: 'bottom 20%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none',
             },
           },
         )
@@ -143,7 +143,7 @@ export const useGSAPAnimation = <T extends HTMLElement>(
               trigger: element,
               start: 'top 85%',
               end: 'bottom 20%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none',
             },
           },
         )
@@ -162,7 +162,7 @@ export const useGSAPAnimation = <T extends HTMLElement>(
             scrollTrigger: {
               trigger: element,
               start: 'top 80%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none',
             },
           },
         )

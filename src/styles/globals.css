@@ -170,6 +170,11 @@
 html {
   font-size: 1vw;
 }
+html > body[data-scroll-locked] {
+  overflow: auto !important;
+  --removed-body-scroll-bar-size: 0px;
+  margin-right: 0 !important;
+}
 
 body {
   text-rendering: optimizeLegibility;
@@ -187,6 +192,9 @@ body {
   html {
     font-size: 4.267vw;
   }
+}
+* {
+  box-sizing: border-box;
 }
 
 /* Ẩn thanh cuộn */
@@ -353,12 +361,44 @@ input[type='number'] {
 }
 
 @utility text-decor-red {
+  color: #f76942;
+  leading-trim: both;
+  text-edge: cap;
+  text-shadow: 0px 0px 6.4px #fe1f1f;
   -webkit-text-stroke-width: 0.5rem;
-  -webkit-text-stroke-color: rgba(255, 255, 255, 0.16);
+  -webkit-text-stroke-color: rgba(255, 255, 255, 1);
   font-family: var(--font-nvn-motherland);
+  font-size: 2.25rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  paint-order: stroke fill;
+}
+
+.tripadvisor-tab-swiper .swiper-slide-thumb-active {
+  background: linear-gradient(180deg, #f4f5e6 0%, #b2dfdc 100%);
+}
+
+.landscape-destination {
+  list-style: none;
+  padding: 0;
+}
+
+.landscape-destination li {
+  position: relative;
+  padding-left: 1.75rem; /* space for the marker */
+}
+
+.landscape-destination li::before {
+  content: '';
+  position: absolute;
+  top: 0rem;
+  left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMSIgdmlld0JveD0iMCAwIDIwIDIxIiBmaWxsPSJub25lIj4KICA8cGF0aCBkPSJNMTYuNjY2NiA1LjY5OTIyTDcuNDk5OTIgMTQuODY1OUwzLjMzMzI1IDEwLjY5OTIiIHN0cm9rZT0iIzE5QzJDMiIgc3Ryb2tlLXdpZHRoPSIxLjY2NjY3IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 

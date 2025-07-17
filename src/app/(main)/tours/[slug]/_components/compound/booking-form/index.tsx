@@ -3,15 +3,24 @@ import BookingCheckout from '@/app/(main)/tours/[slug]/_components/compound/book
 import BookingHomestay from '@/app/(main)/tours/[slug]/_components/compound/booking-homestay'
 import BookingOverview from '@/app/(main)/tours/[slug]/_components/compound/booking-overview'
 import BookingTransportService from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service'
+import ContactInformation from '@/app/(main)/tours/[slug]/_components/contact'
+import Gift from '@/app/(main)/tours/[slug]/_components/gift'
+import Policy from '@/app/(main)/tours/[slug]/_components/policy'
+import RentMotorcycles from '@/app/(main)/tours/[slug]/_components/rent-motorcycles'
 import {Form} from '@/components/ui/form'
 import useIsMobile from '@/hooks/useIsMobile'
 import bookingSchema, {BookingFormValues} from '@/schemas/booking.schema'
+import {InterGift, InterMotorcycle} from '@/types/tours.interface'
 import {zodResolver} from '@hookform/resolvers/zod'
 import clsx from 'clsx'
-import React from 'react'
 import {useForm} from 'react-hook-form'
 
-export default function BookingForm() {
+interface BookTourNowProps {
+  motorcycles: InterMotorcycle[]
+  gifts: InterGift[]
+}
+
+export default function BookingForm({motorcycles, gifts}: BookTourNowProps) {
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -42,6 +51,16 @@ export default function BookingForm() {
 
       // Deposit and Agree
       deposit: '',
+
+      motorcycles: motorcycles.map((motor) => ({
+        name: motor.name,
+        quantity: 0,
+      })),
+      gifts: '',
+      yourName: '',
+      yourPhone: '',
+      yourEmail: '',
+      yourMessage: '',
     },
   })
   const isMobile = useIsMobile()
@@ -68,6 +87,10 @@ export default function BookingForm() {
                 <BookingOverview />
                 <BookingHomestay />
                 <BookingTransportService />
+                <RentMotorcycles motorcycles={motorcycles} />
+                <Gift gifts={gifts} />
+                <ContactInformation />
+                <Policy />
               </div>
               <div className='w-[28.6875rem] shrink-0'>
                 <BookingCheckout />

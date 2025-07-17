@@ -4,6 +4,7 @@ import fetchData from '@/fetches/fetchData'
 import Header from '@/layout/header'
 import NextTopLoader from 'nextjs-toploader'
 import CTA from '@/app/_components/cta/cta'
+import {Lenis} from '@/utils/lenis'
 
 export default async function MainLayout({
   children,
@@ -15,9 +16,9 @@ export default async function MainLayout({
   return (
     <>
       <Header dataOptions={dataOptions} />
-      {children}
-      <Footer data={dataOptions.footer} />
-      <CTA data={dataOptions.cta_buttons} />
+      <Lenis root>{children}</Lenis>
+      <Footer data={dataOptions?.footer} />
+      <CTA data={dataOptions?.cta_buttons} />
       <Toaster richColors />
       <NextTopLoader
         color='linear-gradient(90deg, #89f7fe 0%, #66a6ff 100%)'
