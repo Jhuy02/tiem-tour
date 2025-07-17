@@ -1,0 +1,185 @@
+.sub-title-activity {
+  color: var(--Text-Tittle-1, #3b3943);
+
+  /* PC/H1/H1 - 2 */
+  -webkit-text-stroke-width: 0.7rem;
+  -webkit-text-stroke-color: var(--BG-5---with-pattern, #f9f4eb);
+  font-size: 3.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 87%; /* 3.045rem */
+  letter-spacing: 0.07rem;
+  paint-order: stroke fill;
+}
+
+.title-activity {
+  color: var(--H1, #fb0);
+  text-shadow: 0.326125rem 0.489125rem 0rem rgba(0, 0, 0, 0.25); /* 5.218px 7.826px */
+  /* PC/H1/H1 - 1 */
+  -webkit-text-stroke-width: 0.7rem; /* 6px */
+  -webkit-text-stroke-color: #432b00;
+  font-size: 4.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 87%; /* 4.1325rem */
+  letter-spacing: 0.095rem;
+  paint-order: stroke fill;
+}
+
+.title-activity-media-top {
+  color: #fb0;
+  text-align: center;
+  text-shadow: 0.326125rem 0.489125rem 0rem rgba(0, 0, 0, 0.25); /* 5.218px 7.826px */
+  -webkit-text-stroke-width: 0.7rem; /* 6.52px */
+  -webkit-text-stroke-color: #432b00;
+  font-size: 3.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 87%; /* 2.71875rem */
+  letter-spacing: 0.0625rem;
+  paint-order: stroke fill;
+}
+.title-activity-media-bottom {
+  color: #fb0;
+  text-align: center;
+  text-shadow: 0.211rem 0.3165rem 0rem rgba(0, 0, 0, 0.25); /* 3.376px 5.064px */
+  -webkit-text-stroke-width: 0.7rem; /* 4.22px */
+  -webkit-text-stroke-color: #432b00;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 87%; /* 1.74rem */
+  letter-spacing: 0.04rem;
+  paint-order: stroke fill;
+}
+
+@media (max-width: 639.98px) {
+  /* 639.98px */
+  .sub-title-activity {
+    color: var(--Text-Tittle-1, #3b3943);
+    -webkit-text-stroke-width: 0.0625rem; /* 1px */
+    -webkit-text-stroke-color: #f9f4eb;
+    font-size: 1.69175rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 87%; /* 1.47181rem */
+    letter-spacing: 0.03381rem;
+  }
+
+  .title-activity {
+    color: var(--H1, #fb0);
+    text-shadow: 0.157625rem 0.2364375rem 0rem rgba(0, 0, 0, 0.25); /* 2.522px 3.783px */
+    -webkit-text-stroke-width: 0.1rem; /* 2.9px */
+    -webkit-text-stroke-color: #432b00;
+    font-size: 2.29594rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 87%; /* 1.99744rem */
+    letter-spacing: 0.04594rem;
+  }
+
+  .title-activity-media-top {
+    color: #fb0;
+    text-align: center;
+    text-shadow: 0.116625rem 0.1749375rem 0rem rgba(0, 0, 0, 0.25); /* 1.866px 2.799px */
+    -webkit-text-stroke-width: 2px; /* 2.33px */
+    -webkit-text-stroke-color: #432b00;
+    font-size: 1.11763rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 87%; /* 0.97231rem */
+    letter-spacing: 0.02238rem;
+  }
+  .title-activity-media-bottom {
+    color: #fb0;
+    text-align: center;
+    text-shadow: 0.0754375rem 0.1131875rem 0rem rgba(0, 0, 0, 0.25); /* 1.207px 1.811px */
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #432b00;
+    font-size: 0.71525rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 87%; /* 0.62231rem */
+    letter-spacing: 0.01431rem;
+  }
+}
+
+/*  */
+.content-culinary-experience-1 h3 {
+  color: var(--stroke, #432b00);
+  font-size: 2.25rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 2.7rem */
+  letter-spacing: 0.01563rem;
+  text-transform: uppercase;
+}
+.content-culinary-experience-1 h4 {
+  color: var(--Text-Body-100, #303030);
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  letter-spacing: 0.00313rem;
+  margin-top: 2.5rem;
+}
+.content-culinary-experience-1 p {
+  color: var(--Text-Body-100, #303030);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: 0.0025rem;
+}
+.content-culinary-experience-2 p {
+  color: var(--Text-Tittle-1, #3b3943);
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 1.6875rem */
+  letter-spacing: 0.00281rem;
+}
+.content-culinary-experience-2 p:not(:last-child) {
+  margin-bottom: 1.125rem;
+}
+.content-rest-conserve h3 {
+  color: var(--Text-Tittle-1, #3b3943);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 1.2rem */
+  margin-bottom: 0.25rem;
+}
+.content-rest-conserve p {
+  color: var(--Text-Tittle-1, #3b3943);
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: 0.0025rem;
+}
+.content-rest-conserve p:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 639.98px) {
+  .content-culinary-experience-1 h3 {
+    font-size: 1.625rem;
+    line-height: 120%; /* 1.95rem */
+    letter-spacing: 0.01563rem;
+    margin-bottom: 2rem;
+  }
+  .content-culinary-experience-1 h4 {
+    margin-top: 1rem;
+  }
+  .content-culinary-experience-2 p {
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%; /* 1.6rem */
+    letter-spacing: 0.0025rem;
+  }
+  .content-culinary-experience-2 p:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}

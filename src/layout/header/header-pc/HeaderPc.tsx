@@ -10,17 +10,10 @@ import SvgBacKan from '@/layout/header/header-pc/SvgBacKan'
 import SvgCaoBang from '@/layout/header/header-pc/SvgCaoBang'
 import SvgHaGiang from '@/layout/header/header-pc/SvgHaGiang'
 import { DataLocation, HeaderOption, PageLink } from '@/types/options.interface'
+import he from 'he'
 import Image from 'next/image'
 import Link from 'next/link'
 import './Header-pc.css'
-
-const decodeHtmlEntities = (text: string): string => {
-  if (typeof text !== 'string') return text
-  if (typeof window === 'undefined') return text
-  const textarea = document.createElement('textarea')
-  textarea.innerHTML = text
-  return textarea.value
-}
 
 export default function HeaderPc({
   HeaderOption,
@@ -34,7 +27,7 @@ export default function HeaderPc({
   return (
     <header
       id='header'
-      className={`header__wrapper ${isHeaderHidden ? 'hidden' : ''}`}
+      className={`header__wrapper xsm:hidden! ${isHeaderHidden ? 'hidden' : ''}`}
     >
       <div className='header__container'>
         <nav className='header__left-nav'>
@@ -74,12 +67,9 @@ export default function HeaderPc({
                             height={40}
                           />
                         </div>
-                        <p
-                          className='tours-trigger'
-                          dangerouslySetInnerHTML={{
-                            __html: decodeHtmlEntities(item?.page?.title),
-                          }}
-                        />
+                        <p className='tours-trigger'>
+                          {he.decode(item?.page?.title)}
+                        </p>
                         <IconArrowHeader />
                         <div className='tours-dropdown'>
                           <ul>
@@ -146,7 +136,7 @@ export default function HeaderPc({
                           target={item?.page?.target}
                           href={getPathFromUrl(item?.page?.url)}
                         >
-                          {decodeHtmlEntities(item?.page?.title)}
+                          {he.decode(item?.page?.title)}
                         </Link>
                       </li>
                     )

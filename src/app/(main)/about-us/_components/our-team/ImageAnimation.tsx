@@ -35,20 +35,23 @@ export default function ImageAnimation({image}: {image: IMedia}) {
   }, [])
 
   return (
-    <div className='xsm:h-[14.9375rem] relative h-[43.1095rem] w-full overflow-hidden'>
+    <div
+      ref={containerRef}
+      className='xsm:h-[14.9375rem] relative h-[43.1095rem] w-full overflow-hidden'
+    >
       <Image
         alt=''
         width={1600}
         height={200}
         src={'/about-us/section-team/frame-top-img-animation.webp'}
-        className='absolute top-0 left-0 z-1 h-auto w-full'
+        className='xsm:top-[-1px] absolute top-0 left-0 z-1 h-auto w-full'
       />
       <Image
         alt=''
         width={1600}
         height={200}
         src={'/about-us/section-team/frame-bottom-img-animation.webp'}
-        className='absolute bottom-0 left-0 z-1 h-auto w-full'
+        className='absolute bottom-[-0.1rem] left-0 z-1 h-auto w-full'
       />
       <Image
         ref={imageRef}

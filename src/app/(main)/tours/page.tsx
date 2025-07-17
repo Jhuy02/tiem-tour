@@ -1,5 +1,5 @@
-import SectionBestChoose from '@/app/(main)/tours/section-best-choose'
-import SectionDiscovery from '@/app/(main)/tours/section-discovery'
+import TourBestChoose from '@/app/(main)/tours/_components/tour-best-choose'
+import TourDiscoveryTrip from '@/app/(main)/tours/_components/tour-discovery-trip'
 import BannerV2 from '@/app/_components/banner-v2'
 import fetchData from '@/fetches/fetchData'
 import queryString from 'query-string'
@@ -39,11 +39,11 @@ export default async function TourListPage({searchParams}: Props) {
         data={compound_banner}
         variant='secondary'
       />
-      <SectionBestChoose
+      <TourBestChoose
         title={tour_hots.title}
         tour_list={bestChooseTourRes}
       />
-      <SectionDiscovery
+      <TourDiscoveryTrip
         initialQueryParams={queryStr}
         initialPage={discoveryTourRes.page}
         initialTotalPages={discoveryTourRes.totalPages}

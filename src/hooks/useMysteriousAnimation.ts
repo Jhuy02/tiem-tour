@@ -22,6 +22,7 @@ export const useMysteriousAnimation = () => {
         trigger: element,
         start: 'top 95%',
         toggleClass: 'active',
+        once: true, // Chỉ chạy hiệu ứng một lần
       },
     })
 

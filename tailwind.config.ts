@@ -47,6 +47,12 @@ const config: Config = {
         '.absolute-y-center': {
           '@apply absolute top-1/2 -translate-y-1/2': {},
         },
+        '.text-edit-pc14': {
+          '@apply font-trip-sans text-[0.875rem] tracking-[0.00219rem] font-normal leading-[1.5] text-[#303030]': {},
+        },
+        '.text-edit-pc16b': {
+          '@apply font-trip-sans text-[1rem] tracking-[0.0025rem] font-extrabold leading-[1.3] text-[#303030]': {},
+        },
       })
     }),
   ],
