@@ -48,7 +48,7 @@ export default function HeaderMb({
               </SheetTrigger>
               <SheetContent
                 side='bottom'
-                className='bg-white z-[100] w-full [&>button]:focus:ring-offset-0 [&>button]:focus:ring-0 [&>button]:focus-visible:ring-offset-0 [&>button]:focus-visible:ring-0 [&>button]:p-[0.6875rem_1rem_0.6875rem_0.75rem] [&>button]:bg-white [&>button]:top-[0.5rem] [&>button]:opacity-[1] [&>button]:right-[1rem] [&>button>svg]:size-[1rem] [&>button]:border-none'
+                className='z-[100] w-full bg-white [&>button]:top-[0.5rem] [&>button]:right-[1rem] [&>button]:border-none [&>button]:bg-white [&>button]:p-[0.6875rem_1rem_0.6875rem_0.75rem] [&>button]:opacity-[1] [&>button]:focus:ring-0 [&>button]:focus:ring-offset-0 [&>button]:focus-visible:ring-0 [&>button]:focus-visible:ring-offset-0 [&>button>svg]:size-[1rem]'
               >
                 <SheetHeader className='hidden'>
                   <SheetTitle>Search</SheetTitle>
@@ -58,11 +58,11 @@ export default function HeaderMb({
             </Sheet>
 
             <Sheet>
-              <SheetTrigger className='flex p-[0.6875rem_1rem_0.6875rem_0.75rem] items-center gap-[0.5rem] rounded-[0rem_0.5rem_0.5rem_0rem] bg-[rgba(255,255,255,0.2)] backdrop-blur-[5px] text-white text-[0.75rem] font-medium leading-[150%] cursor-pointer border-none'>
+              <SheetTrigger className='flex cursor-pointer items-center gap-[0.5rem] rounded-[0rem_0.5rem_0.5rem_0rem] border-none bg-[rgba(255,255,255,0.2)] p-[0.6875rem_1rem_0.6875rem_0.75rem] text-[0.75rem] leading-[150%] font-medium text-white backdrop-blur-[5px]'>
                 <IconMenu />
                 <p>Menu</p>
               </SheetTrigger>
-              <SheetContent className='bg-white z-[100] w-full [&>button]:focus:ring-offset-0 [&>button]:focus:ring-0 [&>button]:focus-visible:ring-offset-0 [&>button]:focus-visible:ring-0 [&>button]:p-[0.6875rem_1rem_0.6875rem_0.75rem] [&>button]:bg-white [&>button]:top-[0.5rem] [&>button]:opacity-[1] [&>button]:right-[1rem] [&>button>svg]:size-[1rem] [&>button]:border-none'>
+              <SheetContent className='z-[100] w-full bg-white [&>button]:top-[0.5rem] [&>button]:right-[1rem] [&>button]:border-none [&>button]:bg-white [&>button]:p-[0.6875rem_1rem_0.6875rem_0.75rem] [&>button]:opacity-[1] [&>button]:focus:ring-0 [&>button]:focus:ring-offset-0 [&>button]:focus-visible:ring-0 [&>button]:focus-visible:ring-offset-0 [&>button>svg]:size-[1rem]'>
                 <SheetHeader className='hidden'>
                   <SheetTitle>Menu</SheetTitle>
                 </SheetHeader>

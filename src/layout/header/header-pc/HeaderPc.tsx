@@ -13,15 +13,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import './Header-pc.css'
 import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
-import { useEffect, useState } from 'react'
-
-const decodeHtmlEntities = (text: string): string => {
-  if (typeof text !== 'string') return text
-  if (typeof window === 'undefined') return text
-  const textarea = document.createElement('textarea')
-  textarea.innerHTML = text
-  return textarea.value
-}
+import he from 'he'
 
 export default function HeaderPc({
   HeaderOption,
@@ -31,17 +23,11 @@ export default function HeaderPc({
   ImgLocation: DataLocation
 }) {
   const {isHeaderHidden, isToursActive, setIsToursActive} = useHeaderScroll()
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
 
   return (
     <header
       id='header'
-      className={`header__wrapper ${isHeaderHidden ? 'hidden' : ''}`}
+      className={`header__wrapper xsm:hidden! ${isHeaderHidden ? 'hidden' : ''}`}
     >
       <div className='header__container'>
         <nav className='header__left-nav'>
@@ -82,7 +68,7 @@ export default function HeaderPc({
                           />
                         </div>
                         <p className='tours-trigger'>
-                          {isMounted && decodeHtmlEntities(item?.page?.title)}
+                          {he.decode(item?.page?.title)}
                         </p>
                         <IconArrowHeader />
                         <div className='tours-dropdown'>
@@ -150,7 +136,7 @@ export default function HeaderPc({
                           target={item?.page?.target}
                           href={getPathFromUrl(item?.page?.url)}
                         >
-                          {decodeHtmlEntities(item?.page?.title)}
+                          {he.decode(item?.page?.title)}
                         </Link>
                       </li>
                     )
