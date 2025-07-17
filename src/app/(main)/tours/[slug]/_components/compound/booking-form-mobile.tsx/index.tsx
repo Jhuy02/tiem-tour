@@ -1,0 +1,103 @@
+'use client'
+import React, {useEffect, useState} from 'react'
+import ICArrowLeft from '@/components/icon/ICArrowLeft'
+import useIsMobile from '@/hooks/useIsMobile'
+import {useForm} from 'react-hook-form'
+import bookingSchema, {BookingFormValues} from '@/schemas/booking.schema'
+import {zodResolver} from '@hookform/resolvers/zod'
+import {Form} from '@/components/ui/form'
+import BookingOverview from '@/app/(main)/tours/[slug]/_components/compound/booking-overview'
+import BookingHomestay from '@/app/(main)/tours/[slug]/_components/compound/booking-homestay'
+import BookingTransportService from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service'
+import clsx from 'clsx'
+
+export default function BookingFormMobile() {
+  const isMobile = useIsMobile()
+  const [showFormBooking, setShowFormBooking] = useState<boolean>(false)
+  const form = useForm<BookingFormValues>({
+    resolver: zodResolver(bookingSchema),
+    defaultValues: {
+      adults: 1,
+      children: 1,
+      infants: 1,
+      tour_type: '',
+      package: '',
+      easy_rider: 0,
+      ride_by_yourself: 0,
+      seatBehindYourFriendQuantity: 0,
+    },
+  })
+  // function handleCloseBookingForm() {
+  //   setShowFormBooking(false)
+  // }
+  function handleOpenBookingForm() {
+    setShowFormBooking(true)
+  }
+  function onSubmit(values: BookingFormValues) {
+    console.log(values)
+  }
+
+  useEffect(() => {
+    if (showFormBooking) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+  }, [showFormBooking])
+
+  return (
+    isMobile && (
+      <>
+        <div className='font-trip-sans fixed bottom-0 left-0 z-50 w-full'>
+          <div className='xsm:flex hidden flex-col space-y-[0.625rem] bg-white px-[1.25rem] py-[0.75rem] shadow-[0px_-4px_24px_0px_rgba(0,0,0,0.08)]'>
+            <div className='flex items-start justify-between'>
+              <div className='flex flex-1 flex-col items-start'>
+                <p className='text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
+                  From 27 Dec - 29 Dec
+                </p>
+                <span className='text-[0.75rem] leading-[130%] font-normal tracking-[0.00188rem] text-[rgba(48,48,48,0.80)]'>
+                  Price for 2 night
+                </span>
+              </div>
+              <div className='flex flex-1 flex-col items-end'>
+                <p className='text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
+                  1.100.000 VNĐ
+                </p>
+                <span className='text-[0.75rem] leading-[130%] font-normal tracking-[0.00188rem] text-[rgba(48,48,48,0.80)]'>
+                  per adult
+                </span>
+              </div>
+            </div>
+            <div
+              onClick={handleOpenBookingForm}
+              className='inline-flex h-[3.125rem] w-full items-center justify-center space-x-[0.625rem] rounded-[3.125rem] bg-[#C83E21]'
+            >
+              <span className='font-dvn-luckiest-guy h-[0.8125rem] text-[1.125rem] leading-[120%] text-white'>
+                Book now
+              </span>
+              <ICArrowLeft className='h-[1.5rem] w-[1.575rem] shrink-0' />
+            </div>
+          </div>
+        </div>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={clsx(
+              'hidden_scroll rounded-0 fixed inset-0 z-100 overflow-y-auto bg-white transition-all duration-300 ease-in-out',
+              {
+                'translate-x-0': showFormBooking,
+                'translate-x-full': !showFormBooking,
+              },
+            )}
+          >
+            <div className='flex w-full shrink-0 flex-col space-y-[0.5rem]'>
+              <BookingOverview />
+              <BookingHomestay />
+              <BookingTransportService />
+            </div>
+          </form>
+        </Form>
+      </>
+    )
+  )
+}

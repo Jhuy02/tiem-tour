@@ -9,7 +9,7 @@ import React from 'react'
 export default async function AboutUsPage() {
   const [aboutUsPageACFDataResponse]: [AboutUsPageACFDataResponse] =
     await Promise.all([
-      fetchData({api: `wp/v2/pages/1230?_fields=acf&acf_format=standard`}),
+      fetchData({api: `wp/v2/pages/21?_fields=acf&acf_format=standard`}),
     ])
 
   return (

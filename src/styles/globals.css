@@ -360,3 +360,10 @@ input[type='number'] {
   font-weight: 400;
   line-height: normal;
 }
+
+
+html > body[data-scroll-locked] {
+  overflow: auto !important;
+  --removed-body-scroll-bar-size: 0px;
+  margin-right: 0 !important;
+}

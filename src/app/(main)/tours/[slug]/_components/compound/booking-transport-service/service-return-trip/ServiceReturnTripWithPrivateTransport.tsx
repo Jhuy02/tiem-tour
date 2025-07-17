@@ -37,7 +37,7 @@ export default function ServiceReturnTripWithPrivateTransport() {
   }, [addedOptionSlug])
   return (
     <>
-      <div className='absolute top-0 right-0'>
+      <div className='xsm:hidden absolute top-0 right-0'>
         <Dialog>
           <DialogTrigger asChild>
             <button
@@ -73,7 +73,8 @@ export default function ServiceReturnTripWithPrivateTransport() {
           </p>
           <FormField
             control={control}
-            name='returnTripPickupVehicle'
+            // name='returnTripPickupVehicle'
+            name='return_trip_pickup_vehicle'
             render={({field}) => (
               <FormItem className='self-stretch'>
                 <RadioGroup
@@ -87,7 +88,7 @@ export default function ServiceReturnTripWithPrivateTransport() {
                       return (
                         <div
                           key={index}
-                          className='col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'
+                          className='xsm:col-span-full xsm:border xsm:border-solid xsm:border-[#EDEDED] xsm:bg-white col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'
                         >
                           <SelectTransportVehicle
                             title={item?.name}
@@ -100,7 +101,7 @@ export default function ServiceReturnTripWithPrivateTransport() {
                     })}
 
                   {addedOtherOptionItem && (
-                    <div className='col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'>
+                    <div className='xsm:col-span-full xsm:border xsm:border-solid xsm:border-[#EDEDED] xsm:bg-white col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'>
                       <SelectTransportVehicle
                         title={addedOtherOptionItem?.name}
                         value={addedOtherOptionItem?.slug}
@@ -109,16 +110,15 @@ export default function ServiceReturnTripWithPrivateTransport() {
                       />
                     </div>
                   )}
-
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                   <div className='col-span-1 col-start-2 flex items-center justify-end'>
                     <OtherTransportVehicle
-                      keySchema='returnTripPickupVehicle'
+                      keySchema='return_trip_pickup_vehicle'
                       optionList={TransportVehicleList}
                       onAddOption={(slug) => setAddedOptionSlug(slug)}
                     />
                   </div>
                 </RadioGroup>
-                <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
               </FormItem>
             )}
           />
