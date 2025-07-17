@@ -1,14 +1,27 @@
 import BookingForm from '@/app/(main)/tours/[slug]/_components/compound/booking-form'
-import {Banner} from '@/app/(main)/tours/[slug]/_components/overview-compound/banner'
-import {Content} from '@/app/(main)/tours/[slug]/_components/overview-compound/content'
-import {Tab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tab'
-import {Tripadvisor} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
-import {TripadvisorTab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
+import { Banner } from '@/app/(main)/tours/[slug]/_components/overview-compound/banner'
+import { Content } from '@/app/(main)/tours/[slug]/_components/overview-compound/content'
+import { Tab } from '@/app/(main)/tours/[slug]/_components/overview-compound/tab'
+import { Tripadvisor } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
+import { TripadvisorTab } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
 import PageProvider from '@/app/(main)/tours/[slug]/context/PageProvider'
 
 import NotFound from '@/components/NotFound'
 import fetchData from '@/fetches/fetchData'
-import {TourDetailContent} from '@/types/tours.interface'
+import { InterGift, InterMotorcycle, TourDetailContent } from '@/types/tours.interface'
+
+const MockMotorcycles: InterMotorcycle[] = [
+  {name: 'Honda 110cc - Semi automatic', price: 250000},
+  {name: 'Honda 111cc - Semi automatic', price: 260000},
+  {name: 'Honda 112cc - Semi automatic', price: 270000},
+  {name: 'Honda 1133cc - Semi automatic', price: 2880000},
+]
+
+const MockGifts: InterGift[] = [
+  {name: 'Ha Giang Loop T-shirt', price: 100000},
+  {name: 'Ha Giang Loop handbag', price: 200000},
+  {name: 'Ha Giang Loop handbag', price: 200000},
+]
 
 export default async function TourDetail({
   params,
@@ -56,7 +69,10 @@ export default async function TourDetail({
       </div>
 
       <PageProvider>
-        <BookingForm />
+        <BookingForm
+          motorcycles={MockMotorcycles}
+          gifts={MockGifts}
+        />
       </PageProvider>
     </main>
   )

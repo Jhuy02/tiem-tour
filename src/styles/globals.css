@@ -170,6 +170,11 @@
 html {
   font-size: 1vw;
 }
+html > body[data-scroll-locked] {
+  overflow: auto !important;
+  --removed-body-scroll-bar-size: 0px;
+  margin-right: 0 !important;
+}
 
 body {
   text-rendering: optimizeLegibility;
@@ -187,6 +192,9 @@ body {
   html {
     font-size: 4.267vw;
   }
+}
+* {
+  box-sizing: border-box;
 }
 
 /* Ẩn thanh cuộn */

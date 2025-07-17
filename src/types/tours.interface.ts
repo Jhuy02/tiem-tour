@@ -1,5 +1,5 @@
-import {ILink} from '@/types/link.interface'
-import {IMedia} from '@/types/media.interface'
+import { ILink } from '@/types/link.interface'
+import { IMedia } from '@/types/media.interface'
 
 export interface TourTaxonomy {
   id: number
@@ -82,6 +82,15 @@ export interface TourDetailContent {
     duration: TourTaxonomy[]
     location: TourTaxonomy[]
   }
+}
+
+export interface InterMotorcycle {
+  name: string
+  price: number
+}
+export interface InterGift {
+  name: string
+  price: number
 }
 
 export interface Overview {
