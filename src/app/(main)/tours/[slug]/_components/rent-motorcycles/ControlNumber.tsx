@@ -7,18 +7,20 @@ import { Fragment } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 interface ControlNumberProps {
-  motorcycles: InMotorbikeRents[]
+  motorcycles: InMotorbikeRents
 }
 
 export default function ControlNumber({ motorcycles }: ControlNumberProps) {
   const { control } = useFormContext<BookingFormValues>()
     return (
       <div className="mt-[2rem] p-[1rem] xsm:space-y-[0.25rem] xsm:p-[0.25rem] rounded-[1.5rem] xsm:rounded-[1rem] bg-[#F3F9F9] xsm:bg-[rgba(205,205,205,0.32)]">
-        {Array.isArray(motorcycles) && motorcycles?.length > 0 && motorcycles.map((motor, index) => (
+        {Array.isArray(motorcycles?.motorbike_rent_list) && motorcycles?.motorbike_rent_list?.length > 0 && motorcycles?.motorbike_rent_list?.map((motor, index) => (
           <Fragment key={index}>
-            <div className="flex justify-between items-center w-full xsm:p-[0.31rem_0.5rem_0.31rem_1rem] xsm:rounded-[0.75rem] xsm:bg-white">
-              <p className="text-[1rem] xsm:text-[0.875rem] xsm:font-medium xsm:leading-[1.5] xsm:tracking-[-0.00438rem] font-trip-sans font-semibold leading-[1.2] tracking-[0.0025rem] text-[#303030]">
-                {motor?.title}
+            <div className="flex justify-between items-center w-full xsm:p-[0.69rem_0.5rem_0.69rem_1rem] xsm:rounded-[0.75rem] xsm:bg-white">
+              <p
+                className="text-[1rem] xsm:text-[0.875rem] xsm:font-medium xsm:leading-[1.5] xsm:tracking-[-0.00438rem] font-trip-sans font-semibold leading-[1.2] tracking-[0.0025rem] text-[#303030]"
+                dangerouslySetInnerHTML={{__html: motor?.title}}
+              >
               </p>
               <FormField
                 control={control}
@@ -34,7 +36,7 @@ export default function ControlNumber({ motorcycles }: ControlNumberProps) {
                 )}
               />
             </div>
-            {motorcycles?.length !== index + 1 && (
+            {motorcycles?.motorbike_rent_list?.length !== index + 1 && (
               <div className="xsm:hidden h-[0.0625rem] w-full bg-[#EDEDED] my-[0.75rem]"></div>
             )}
           </Fragment>

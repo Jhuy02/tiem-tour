@@ -20,7 +20,7 @@ export default async function TourDetail({
     api: `custom/v1/tour-detail/${slug}`,
     option: {
       next: {
-        revalidate: 60,
+        revalidate: 10,
       },
     },
   })
@@ -59,7 +59,9 @@ export default async function TourDetail({
       <BookingForm
         data={data?.package_tour}
       />
-      <BookingFormMobile />
+      <BookingFormMobile
+        data={data?.package_tour}
+      />
     </main>
   )
 }

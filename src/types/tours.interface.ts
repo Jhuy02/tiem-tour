@@ -87,11 +87,47 @@ export interface InPickUpLocation {
   location: string
   detail_location: string
 }
+
 export interface InMotorbikeRents {
+  motorbike_rent_list: InMotorbikeRentsList[]
+  rent_motorcycles_warning: string
+}
+export interface InMotorbikeRentsList {
   id: number
   title: string
   thumbnail: string
   price: number
+  description: string
+  images: {
+    url: string
+    alt: string
+  }[]
+  specifications: {
+    name: string
+    content: string
+  }[]
+  warning: string
+}
+export interface InGift {
+  gift_tour_list: {
+    name: string
+    image: {
+      url: string
+      alt: string
+    }
+  }[]
+  warning: string
+}
+export interface InPolicy {
+  deposit_policy: {
+    title: string
+    content: string
+  }
+  no_refund_policy: {
+    title: string
+    content: string
+  }
+  policy_content: string
 }
 export interface TourDetailPackage {
   price: number
@@ -99,7 +135,9 @@ export interface TourDetailPackage {
   motorbike_package: MotorbikePackage
   car_package: MotorbikePackage
   pick_up_location: InPickUpLocation[]
-  motorbike_rents: InMotorbikeRents[]
+  motorbike_rents: InMotorbikeRents
+  gift: InGift
+  policy: InPolicy
 }
 
 export interface TourDetailContent {
