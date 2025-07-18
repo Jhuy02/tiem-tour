@@ -40,7 +40,7 @@ export default function MenuPopup({
             height={50}
             style={{
               filter:
-                'brightness(0) saturate(100%) invert(18%) sepia(97%) saturate(7492%) hue-rotate(353deg) brightness(97%) contrast(101%)',
+                'brightness(0) saturate(100%) invert(8%) sepia(100%) saturate(7492%) hue-rotate(230deg) brightness(97%) contrast(101%)',
             }}
           />
         </h2>

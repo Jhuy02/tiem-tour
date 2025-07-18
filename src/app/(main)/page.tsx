@@ -1,4 +1,5 @@
 import Banner from '@/app/_components/banner/Banner'
+import Delivers from '@/app/_components/delivers/delivers'
 import Customer from '@/app/_components/customer/customer'
 import Customize from '@/app/_components/customize/customize'
 import Discover from '@/app/_components/discover/discover'
@@ -34,6 +35,7 @@ export default async function Page() {
         dataPostOurTour={dataPostOurTour?.our_tour || []}
         total={dataPostOurTour?.total || '0'}
       />
+      <Delivers />
       <Discover
         data={dataHome?.acf?.discover}
         tours={discoverTours || []}
