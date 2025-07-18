@@ -97,7 +97,7 @@ export default function TourFilterMobile({
             </div>
             <DrawerClose asChild>
               <button className='absolute right-[1rem] bottom-[0.625rem] h-[1.25rem] w-[1.25rem]'>
-                <IconCloseDrawerV1 />
+                <IconCloseDrawerV1 className='stroke-white' />
               </button>
             </DrawerClose>
           </div>

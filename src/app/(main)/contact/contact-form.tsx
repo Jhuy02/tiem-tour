@@ -69,14 +69,14 @@ export default function ContactForm({data}: IContactPageACF) {
   return (
     <ContactFormContext.Provider value={{dialogStatus, setDialogStatus}}>
       <DialogForm />
-      <div className='flex-1 mr-[3.5rem] max-sm:w-full max-sm:mr-0 max-sm:px-[1rem] max-sm:py-[2rem]'>
-        <h2 className='text-[#3B3943] font-dvn-luckiest-guy text-[3rem] font-normal leading-[130%] w-[29.625rem] mb-[2rem] max-sm:text-[1.5625rem] max-sm:w-full'>
+      <div className='mr-[3.5rem] flex-1 max-sm:mr-0 max-sm:w-full max-sm:px-[1rem] max-sm:py-[2rem]'>
+        <h2 className='font-dvn-luckiest-guy mb-[2rem] w-[29.625rem] text-[3rem] leading-[130%] font-normal text-[#3B3943] max-sm:w-full max-sm:text-[1.5625rem]'>
           {data?.contact_title ?? ''}
         </h2>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className='w-full mt-[2rem]'
+            className='mt-[2rem] w-full'
           >
             <FormField
               control={form.control}
@@ -94,7 +94,7 @@ export default function ContactForm({data}: IContactPageACF) {
                     Your name
                     <span>*</span>
                   </FormLabel>
-                  <FormMessage className='pl-[0.125rem] text-[#F64722] font-trip-sans text-[0.75rem] leading-[120%] tracking-[0.00188rem] font-normal' />
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
             />
@@ -114,7 +114,7 @@ export default function ContactForm({data}: IContactPageACF) {
                     Phone number
                     <span>*</span>
                   </FormLabel>
-                  <FormMessage className='pl-[0.125rem] text-[#F64722] font-trip-sans text-[0.75rem] leading-[120%] tracking-[0.00188rem] font-normal' />
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
             />
@@ -134,7 +134,7 @@ export default function ContactForm({data}: IContactPageACF) {
                     Email
                     <span>*</span>
                   </FormLabel>
-                  <FormMessage className='pl-[0.125rem] text-[#F64722] font-trip-sans text-[0.75rem] leading-[120%] tracking-[0.00188rem] font-normal' />
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
             />
@@ -151,14 +151,14 @@ export default function ContactForm({data}: IContactPageACF) {
                     />
                   </FormControl>
                   <FormLabel className={clsx(styles.formLabel)}>Note</FormLabel>
-                  <FormMessage className='pl-[0.125rem] text-[#F64722] font-trip-sans text-[0.75rem] leading-[120%] tracking-[0.00188rem] font-normal' />
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
             />
             <button
               type='submit'
               className={clsx(styles.formSubmit, {
-                'cursor-not-allowed pointer-events-none bg-[#25ACAB]! border-[#25ACAB]! opacity-50':
+                'pointer-events-none cursor-not-allowed border-[#25ACAB]! bg-[#25ACAB]! opacity-50':
                   isPending,
               })}
             >
@@ -174,7 +174,7 @@ export default function ContactForm({data}: IContactPageACF) {
               ) : (
                 <IconArrowRightV2
                   className={clsx(
-                    'w-[1.575rem] h-auto shrink-0',
+                    'h-auto w-[1.575rem] shrink-0',
                     styles.formSubmitIcon,
                   )}
                 />

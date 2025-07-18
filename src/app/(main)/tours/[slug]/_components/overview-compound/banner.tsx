@@ -107,7 +107,7 @@ export const Banner = async ({data}: {data: TourDetailContent}) => {
                 />
               </div>
               <p className='relative text-[2.96rem] leading-[3.26169rem] font-[900] tracking-[0.14825rem] text-[#25ACAB]'>
-                {Math.round(main.temp) || 32}
+                {Math.round(main?.temp) || 32}
                 <Circle className='absolute top-[0.5rem] right-[-0.5rem] size-[0.6rem]' />
               </p>
             </div>
