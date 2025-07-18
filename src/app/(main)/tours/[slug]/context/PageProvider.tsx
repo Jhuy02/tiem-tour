@@ -1,21 +1,19 @@
 'use client'
-import React, {useState, createContext, Dispatch, SetStateAction} from 'react'
+import {TourDetailApiResType} from '@/types/tours.interface'
+import React, {createContext} from 'react'
 
-type PageContextType = {
-  showBookingFormMobile: boolean
-  setShowBookingFormMobile: Dispatch<SetStateAction<boolean>>
+export type PageContextType = {
+  data: TourDetailApiResType
 }
 
 export const PageContext = createContext<PageContextType | null>(null)
 
-export default function PageProvider({children}: {children: React.ReactNode}) {
-  const [showBookingFormMobile, setShowBookingFormMobile] =
-    useState<boolean>(false)
-  return (
-    <PageContext.Provider
-      value={{showBookingFormMobile, setShowBookingFormMobile}}
-    >
-      {children}
-    </PageContext.Provider>
-  )
+export default function PageProvider({
+  data,
+  children,
+}: {
+  data: TourDetailApiResType
+  children: React.ReactNode
+}) {
+  return <PageContext.Provider value={{data}}>{children}</PageContext.Provider>
 }

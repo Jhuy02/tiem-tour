@@ -7,14 +7,14 @@ import SelectTravelerField from '@/app/(main)/tours/[slug]/_components/form-cont
 import {FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Label} from '@/components/ui/label'
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group'
-import {TourPackageList, TourTypeList} from '@/constants/mockApi'
+import {PackageTypeList, TourTypeList} from '@/constants/mockApi'
 import {BookingFormValues} from '@/schemas/booking.schema'
 import clsx from 'clsx'
 import Image from 'next/image'
 import {useFormContext, useWatch} from 'react-hook-form'
 import styles from './styles.module.css'
 import PolicyTourDialog from '@/app/(main)/tours/[slug]/_components/compound/booking-overview/PolicyTourDialog'
-import {useEffect} from 'react'
+import {useContext, useEffect} from 'react'
 import {addDays} from 'date-fns'
 import {
   Dialog,
@@ -25,8 +25,15 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import TriggerDialogButton from '@/app/(main)/tours/[slug]/_components/common/TriggerDialogButton'
+import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
+import {TourDetailApiResType} from '@/types/tours.interface'
+import TourPackageInfo from '@/app/(main)/tours/[slug]/_components/compound/booking-overview/TourPackageInfo'
 
 export default function BookingOverview() {
+  const pageContext = useContext(PageContext)
+  if (!pageContext) throw new Error('Page context is missing')
+  const {data: apiData}: {data: TourDetailApiResType} = pageContext
+
   const {control, setValue} = useFormContext<BookingFormValues>()
   const duration = 3
   const scheduleStart = useWatch({
@@ -36,6 +43,15 @@ export default function BookingOverview() {
   const tourType = useWatch({
     control,
     name: 'tour_type',
+  })
+  const tourPackage = useWatch({
+    control,
+    name: 'package',
+  })
+
+  console.log({
+    tourType,
+    tourPackage,
   })
 
   useEffect(() => {
@@ -169,29 +185,29 @@ export default function BookingOverview() {
               render={({field}) => (
                 <FormItem>
                   <RadioGroup
-                    className='xsm:flex-wrap xsm:space-x-0 xsm:space-y-[0.75rem] flex items-center gap-0 space-x-[0.75rem]'
+                    className=''
                     value={field.value}
                     onValueChange={field.onChange}
                     name={field.name}
                   >
-                    {Array.isArray(TourTypeList) &&
-                      TourTypeList?.map((item, index) => {
+                    <div className='xsm:flex-wrap flex h-auto w-full items-center gap-[0.75rem] bg-transparent shadow-none!'>
+                      {TourTypeList.map((item, index) => {
                         return (
                           <div
                             key={index}
-                            className='xsm:basis-full flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] px-[0.75rem] py-[1rem]'
+                            className='xsm:basis-full flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-[#F6F6F6]! shadow-none!'
                           >
-                            <Label className='inline-flex h-[3.375rem] w-full cursor-pointer items-center justify-between px-[0.75rem] py-[1rem]'>
+                            <Label className='inline-flex h-full w-full cursor-pointer items-center justify-between px-[0.75rem] py-[1rem]'>
                               <p className='inline-flex items-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
-                                {item?.name}
-                                {item?.popular && (
+                                <span>{item.name}</span>
+                                {item.popular && (
                                   <span className='ml-[0.5rem] inline-block rounded-full border-[0.8px] border-solid border-[#25ACAB] bg-[#F3F9F9] px-[0.5rem] py-[0.25rem] text-[0.75rem] tracking-[0.00188rem] text-[#19C2C2]'>
                                     Popular
                                   </span>
                                 )}
                               </p>
                               <RadioGroupItem
-                                value={item?.slug}
+                                value={item.slug}
                                 className='peer sr-only'
                               />
                               <Image
@@ -212,6 +228,7 @@ export default function BookingOverview() {
                           </div>
                         )
                       })}
+                    </div>
                   </RadioGroup>
                   <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
@@ -239,8 +256,8 @@ export default function BookingOverview() {
                     onValueChange={field.onChange}
                     name={field.name}
                   >
-                    {Array.isArray(TourPackageList) &&
-                      TourPackageList?.map((item, index) => {
+                    {Array.isArray(PackageTypeList) &&
+                      PackageTypeList?.map((item, index) => {
                         return (
                           <div
                             key={index}
@@ -281,37 +298,102 @@ export default function BookingOverview() {
         </div>
         <div className='flex flex-col space-y-[0.75rem]'>
           {/* Info Rider */}
-          <div className='xsm:p-0 xsm:bg-transparent xsm:gap-[0.75rem] grid grid-cols-3 items-center gap-[2rem] rounded-[0.5rem] bg-[rgba(235,229,226,0.32)] p-[1.25rem]'>
-            {[...Array(3)].map((_, index) => {
-              return (
-                <div
-                  key={index}
-                  className='xsm:col-span-full xsm:bg-[rgba(235,229,226,0.32)] xsm:px-[0.75rem] xsm:py-[1.25rem] xsm:rounded-[0.75rem] xsm:space-y-[0.75rem] col-span-1 flex flex-col space-y-[1.25rem]'
-                >
-                  <div className='flex flex-col space-y-[0.25rem]'>
-                    <p className='text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[#303030] uppercase'>
-                      Easyrider
-                    </p>
-                    <div className='xsm:flex-row xsm:items-center xsm:space-y-0 xsm:space-x-[0.25rem] flex flex-col space-y-[0.25rem]'>
-                      <span className='text-[1.25rem] leading-[120%] font-extrabold tracking-[-0.025rem] text-[#C83E21] uppercase'>
-                        <span>5.350.000</span>Đ
-                      </span>
-                      <div className='xsm:h-[1.3125rem] flex items-center space-x-[0.25rem]'>
-                        <span className='inline-block text-[0.875rem] leading-[100%] tracking-[0.00219rem] text-[#303030]/80 line-through'>
-                          5.050.000
-                        </span>
-                        <span className='inline-block h-[1.25rem] rounded-[1rem] bg-[#115A46]/60 px-[0.375rem] py-[0.1875rem] text-[0.75rem] leading-[120%] font-bold text-white'>
-                          -27%
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <p className='text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[#303030]/80'>
-                    Note: Highly Recommended
-                  </p>
-                </div>
-              )
-            })}
+          <div className='xsm:p-0 xsm:bg-transparent xsm:gap-[0.75rem] grid grid-cols-3 items-start gap-[2rem] rounded-[0.5rem] bg-[rgba(235,229,226,0.32)] p-[1.25rem]'>
+            {!(tourType && tourPackage) &&
+              apiData?.package_tour?.motorbike_package?.saving?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
+            {tourType === 'motorbike_tour' &&
+              tourPackage === 'saving' &&
+              apiData?.package_tour?.motorbike_package?.saving?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
+            {tourType === 'car_tour' &&
+              tourPackage === 'saving' &&
+              apiData?.package_tour?.car_package?.saving?.map((item, index) => {
+                return (
+                  <TourPackageInfo
+                    key={index}
+                    title={item.title}
+                    price={item.price}
+                    note={item.note}
+                  />
+                )
+              })}
+
+            {tourType === 'motorbike_tour' &&
+              tourPackage === 'budget' &&
+              apiData?.package_tour?.motorbike_package?.budget?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
+            {tourType === 'car_tour' &&
+              tourPackage === 'budget' &&
+              apiData?.package_tour?.car_package?.budget?.map((item, index) => {
+                return (
+                  <TourPackageInfo
+                    key={index}
+                    title={item.title}
+                    price={item.price}
+                    note={item.note}
+                  />
+                )
+              })}
+
+            {tourType === 'motorbike_tour' &&
+              tourPackage === 'premium' &&
+              apiData?.package_tour?.motorbike_package?.premium?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
+            {tourType === 'car_tour' &&
+              tourPackage === 'premium' &&
+              apiData?.package_tour?.car_package?.premium?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
           </div>
           {/* Tour Includes and Tour Excludes */}
           <div className='xsm:space-x-0 xsm:flex-0 xsm:flex-wrap xsm:space-y-[0.75rem] flex items-start space-x-[1rem]'>
