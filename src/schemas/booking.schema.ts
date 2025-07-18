@@ -31,8 +31,14 @@ const bookingSchema = z
     seat_behind: z
       .number({invalid_type_error: 'Seat behind your friend must be a number'})
       .min(0, 'Seat behind your friend must be 0 or more'),
-    tour_type: z.string().min(1, 'Tour type is required'),
-    package: z.string(),
+    tour_type: z.enum(['motorbike_tour', 'car_tour'], {
+      required_error: 'Tour type is required',
+      invalid_type_error: 'Invalid tour type',
+    }),
+    package: z.enum(['saving', 'budget', 'premium'], {
+      required_error: 'Tour package is required',
+      invalid_type_error: 'Invalid tour type',
+    }),
     motorcycles: z.array(
       z.object({
         name: z.string(),
@@ -65,6 +71,7 @@ const bookingSchema = z
     return_trip_pickup_location: z.string().min(1, 'Please select location'),
     return_trip_pickup_vehicle: z.string().min(1, 'Please select vehicle'),
     return_trip_pickup_address: z.string(),
+    return_trip_arrival_address: z.string(),
     return_trip_arrival_location: z.string(),
     return_trip_arrival_time: z.string(),
     deposit: z.string(),

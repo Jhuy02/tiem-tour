@@ -1,5 +1,5 @@
-import { ILink } from '@/types/link.interface'
-import { IMedia } from '@/types/media.interface'
+import {ILink} from '@/types/link.interface'
+import {IMedia} from '@/types/media.interface'
 
 export interface TourTaxonomy {
   id: number
@@ -156,4 +156,96 @@ export interface Tripadvisor {
   map: IMedia[]
   number_of_reviews: string
   title: string
+}
+
+export type TourDetailApiResType = {
+  title: string
+  thumbnail: IMedia
+  acf_fields: {
+    price: string
+    overview: Overview
+    landscape: Landscape[]
+    faq: FAQ[]
+    tripadvisor: Tripadvisor
+  }
+  taxonomies: {
+    duration: TourTaxonomy[]
+    location: TourTaxonomy[]
+  }
+  package_tour: {
+    price: string
+    duration_number: string
+    motorbike_package: {
+      saving: {
+        title: string
+        price: string
+        note: string
+        images: IMedia
+      }[]
+      budget: {
+        title: string
+        price: string
+        note: string
+        image: IMedia
+      }[]
+      premium: {
+        title: string
+        price: string
+        note: string
+        image: IMedia
+      }[]
+    }
+    car_package: {
+      saving: {
+        title: string
+        price: string
+        note: string
+        images: IMedia
+      }[]
+      budget: {
+        title: string
+        price: string
+        note: string
+        image: IMedia
+      }[]
+      premium: {
+        title: string
+        price: string
+        note: string
+        image: IMedia
+      }[]
+    }
+    pick_up_location: {
+      location: string
+      detail_location: string
+    }[]
+    main_car_pick_up_data: {
+      id: number
+      title: string
+      fields: {
+        price_car_pax: string
+        max_number_pax: string
+        start_time: string
+        images_review_car: IMedia[]
+      }
+    }[]
+    motorbike_rents: {
+      id: number
+      title: string
+      thumbnail: string
+      price: string
+    }[]
+    taxonomies: {
+      duration: {
+        id: number
+        name: string
+        slug: string
+      }[]
+      location: {
+        id: number
+        name: string
+        slug: string
+      }[]
+    }
+  }
 }
