@@ -2,12 +2,12 @@
 import SelectTravelerField from '@/app/(main)/tours/[slug]/_components/form-controls/SelectTravelerField'
 import { FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { BookingFormValues } from '@/schemas/booking.schema'
-import { InterMotorcycle } from '@/types/tours.interface'
+import { InMotorbikeRents } from '@/types/tours.interface'
 import { Fragment } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 interface ControlNumberProps {
-  motorcycles: InterMotorcycle[]
+  motorcycles: InMotorbikeRents[]
 }
 
 export default function ControlNumber({ motorcycles }: ControlNumberProps) {
@@ -18,7 +18,7 @@ export default function ControlNumber({ motorcycles }: ControlNumberProps) {
           <Fragment key={index}>
             <div className="flex justify-between items-center w-full xsm:p-[0.31rem_0.5rem_0.31rem_1rem] xsm:rounded-[0.75rem] xsm:bg-white">
               <p className="text-[1rem] xsm:text-[0.875rem] xsm:font-medium xsm:leading-[1.5] xsm:tracking-[-0.00438rem] font-trip-sans font-semibold leading-[1.2] tracking-[0.0025rem] text-[#303030]">
-                {motor?.name}
+                {motor?.title}
               </p>
               <FormField
                 control={control}

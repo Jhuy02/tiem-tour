@@ -68,7 +68,42 @@ export interface TourListDataResponse {
   data: TourItemDataResponse[]
 }
 
+export interface TypePackage {
+  title: string
+  price: number
+  note: string
+  images: {
+    alt: string
+    url: string
+  }[]
+}
+
+export interface MotorbikePackage {
+  saving: TypePackage[]
+  budget: TypePackage[]
+  premium: TypePackage[]
+}
+export interface InPickUpLocation {
+  location: string
+  detail_location: string
+}
+export interface InMotorbikeRents {
+  id: number
+  title: string
+  thumbnail: string
+  price: number
+}
+export interface TourDetailPackage {
+  price: number
+  duration_number: number
+  motorbike_package: MotorbikePackage
+  car_package: MotorbikePackage
+  pick_up_location: InPickUpLocation[]
+  motorbike_rents: InMotorbikeRents[]
+}
+
 export interface TourDetailContent {
+  package_tour: TourDetailPackage
   title: string
   thumbnail: IMedia
   acf_fields: {
@@ -82,15 +117,6 @@ export interface TourDetailContent {
     duration: TourTaxonomy[]
     location: TourTaxonomy[]
   }
-}
-
-export interface InterMotorcycle {
-  name: string
-  price: number
-}
-export interface InterGift {
-  name: string
-  price: number
 }
 
 export interface Overview {
