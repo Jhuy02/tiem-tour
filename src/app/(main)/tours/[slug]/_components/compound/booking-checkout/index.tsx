@@ -302,7 +302,7 @@ export default function BookingCheckout() {
             </span>
           </p>
         </div>
-        <button type='submit'>button submit </button>
+        <button>Submit</button>
         {/* <Dialog
           open={isDialogOpen}
           onOpenChange={setDialogOpen}

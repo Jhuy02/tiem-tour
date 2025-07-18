@@ -28,7 +28,7 @@ export default function CheckoutPolicy() {
   return (
     <div className='relative rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.5rem]'>
       <div className='flex flex-col items-start space-y-[1.25rem]'>
-        <p className='border-b border-solid border-[#EDEDED] pb-[1rem] text-[1.125rem] leading-[130%] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
+        <p className='self-stretch border-b border-solid border-[#EDEDED] pb-[1rem] text-[1.125rem] leading-[130%] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
           Policy
         </p>
         <div className='flex items-start space-x-[1rem]'>

@@ -13,7 +13,7 @@ const bookingSchema = z
     }),
     adults: z
       .number({invalid_type_error: 'Adults quantity must be a number'})
-      .min(0, 'Adults quantity must be 0 or more'),
+      .min(1, 'Adults quantity must be 0 or more'),
     infants: z
       .number({
         invalid_type_error: 'Children under 4 quantity must be a number',
@@ -33,7 +33,6 @@ const bookingSchema = z
       .min(0, 'Seat behind your friend must be 0 or more'),
     tour_type: z.string().min(1, 'Tour type is required'),
     package: z.string(),
-
     motorcycles: z.array(
       z.object({
         name: z.string(),
@@ -56,34 +55,44 @@ const bookingSchema = z
       .min(1, 'Email is required')
       .email('Email is invalid'),
     yourMessage: z.string().optional(),
-
-    // Outbound trip information
+    outbound_trip_transport: z.string().min(1, ''),
+    return_trip_transport: z.string().min(1, ''),
     outbound_trip_pickup_location: z.string().min(1, 'Please select location'),
     outbound_trip_pickup_vehicle: z.string().min(1, 'Please select vehicle'),
     outbound_trip_pickup_address: z.string(),
     outbound_trip_arrival_location: z.string(),
     outbound_trip_arrival_time: z.string(),
-
-    // Return trip information
     return_trip_pickup_location: z.string().min(1, 'Please select location'),
     return_trip_pickup_vehicle: z.string().min(1, 'Please select vehicle'),
     return_trip_pickup_address: z.string(),
     return_trip_arrival_location: z.string(),
     return_trip_arrival_time: z.string(),
-    // Deposit
     deposit: z.string(),
-
-    // Agree with policy
-    // agree_policy: z.literal(true, {
-    //   errorMap: () => ({
-    //     message: 'You must agree to the policy before proceeding',
-    //   }),
-    // }),
+    agree_policy: z.literal(true, {
+      errorMap: () => ({
+        message: 'You must agree to the policy before proceeding',
+      }),
+    }),
   })
   .refine((data) => data.schedule_end >= data.schedule_start, {
     path: ['end_day'],
     message: 'End day must be after or same as Start day',
   })
+  .refine(
+    (data) =>
+      data.easy_rider + data.ride_by_yourself + data.seat_behind <= data.adults,
+    {
+      path: ['easy_rider'], // hoặc dùng path chung như 'motorcycle_total'
+      message: 'Total number of riders must not exceed number of adults',
+    },
+  )
+  .refine(
+    (data) => data.easy_rider + data.ride_by_yourself + data.seat_behind >= 1,
+    {
+      path: ['easy_rider'], // Hoặc tạo field ảo nếu bạn muốn gom chung lỗi
+      message: 'At least one rider is required',
+    },
+  )
 
 export default bookingSchema
 export type BookingFormValues = z.infer<typeof bookingSchema>
