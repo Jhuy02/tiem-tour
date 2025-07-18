@@ -8,14 +8,14 @@ import {
     DialogTrigger
 } from "@/app/(main)/tours/[slug]/_components/rent-motorcycles/DialogCustom"
 import ImageFallback from "@/components/image/ImageFallback"
-import { InterMotorcycle } from "@/types/tours.interface"
+import { InMotorbikeRents } from "@/types/tours.interface"
 import { Fragment } from "react"
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 interface ListMotorcyclesProps {
-    motorcycles: InterMotorcycle[]
+    motorcycles: InMotorbikeRents[]
 }
 
 export default function ListMotorcycles({ motorcycles }: ListMotorcyclesProps) {
@@ -30,7 +30,7 @@ export default function ListMotorcycles({ motorcycles }: ListMotorcyclesProps) {
                                     <ImageFallback className="size-[4rem] rounded-[0.69563rem] bg-[linear-gradient(0deg,rgba(230,230,230,0.05)_0%,rgba(230,230,230,0.05)_100%)]" src={'/card-default.webp'} alt="" width={64} height={64} />
                                     <div className="flex flex-col justify-center items-start">
                                         <p className="text-[#303030] text-[1rem] font-trip-sans font-medium leading-[1.2] tracking-[0.0025rem]">
-                                            {motor?.name}
+                                            {motor?.title}
                                         </p>
                                         <p className="text-[#C83E21] font-trip-sans text-[0.875rem] font-bold leading-[1.2] tracking-[0.01563rem] uppercase">
                                             {motor?.price?.toLocaleString('vi-VN')}₫/Day
@@ -42,7 +42,7 @@ export default function ListMotorcycles({ motorcycles }: ListMotorcyclesProps) {
                                 <DialogHeader className="p-[1.5rem_1.5rem_0rem_1.5rem]">
                                     <div className="flex items-center justify-between">
                                         <DialogTitle className="text-[#303030] text-[1.125rem] font-trip-sans font-[900] leading-[1.3] tracking-[0.00281rem]">
-                                            {motor?.name}
+                                            {motor?.title}
                                         </DialogTitle>
                                         <DialogClose className="cursor-pointer">
                                             <SvgClose />
