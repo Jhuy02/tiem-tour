@@ -9,15 +9,69 @@ import Image from 'next/image'
 import Caution from '@/app/(main)/tours/[slug]/_components/common/Caution'
 import 'swiper/css'
 import useIsMobile from '@/hooks/useIsMobile'
+import {useContext, useMemo} from 'react'
+import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
+import {TourDetailApiResType} from '@/types/tours.interface'
+import {IMedia} from '@/types/media.interface'
 
 export default function BookingHomestay() {
   const isMobile = useIsMobile()
+  const pageContext = useContext(PageContext)
+  if (!pageContext) throw new Error('Page context is missing')
+  const {data: apiData}: {data: TourDetailApiResType} = pageContext
   const {control} = useFormContext<BookingFormValues>()
+  const tourType = useWatch({
+    control,
+    name: 'tour_type',
+  })
   const tourPackage = useWatch({
     control,
     name: 'package',
   })
   const safeTourPackage = tourPackage || TourPackageList[0].slug
+  const homestayImageList = useMemo(() => {
+    let images: IMedia[] = []
+    if (!(tourType && tourPackage)) {
+      apiData?.package_tour?.motorbike_package?.saving?.forEach((item) => {
+        images = [...images, ...item.images]
+      })
+      return images
+    }
+
+    if (tourType === 'motorbike_tour') {
+      if (tourPackage === 'saving') {
+        apiData?.package_tour?.motorbike_package?.saving?.forEach((item) => {
+          images = [...images, ...item.images]
+        })
+      } else if (tourPackage === 'budget') {
+        apiData?.package_tour?.motorbike_package?.budget?.forEach((item) => {
+          images = [...images, ...item.images]
+        })
+      } else if (tourPackage === 'premium') {
+        apiData?.package_tour?.motorbike_package?.premium?.forEach((item) => {
+          images = [...images, ...item.images]
+        })
+      }
+    } else if (tourType === 'car_tour') {
+      if (tourPackage === 'saving') {
+        apiData?.package_tour?.car_package?.saving?.forEach((item) => {
+          images = [...images, ...item.images]
+        })
+      } else if (tourPackage === 'budget') {
+        apiData?.package_tour?.car_package?.budget?.forEach((item) => {
+          images = [...images, ...item.images]
+        })
+      } else if (tourPackage === 'premium') {
+        apiData?.package_tour?.car_package?.premium?.forEach((item) => {
+          images = [...images, ...item.images]
+        })
+      }
+    }
+
+    return images
+  }, [tourType, tourPackage])
+
+  console.log('homestayImageList', homestayImageList)
   return (
     <div className='xsm:border-none font-trip-sans xsm:rounded-0 xsm:py-[1rem] xsm:px-[0.75rem] relative rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white px-[1.75rem] py-[1.875rem]'>
       <Tabs

@@ -41,6 +41,7 @@ export const TransportVehicleList = [
     slug: 'limousine_bus',
     startTime: '16:00',
     price: 300000,
+    maximum: '7',
   },
   {
     id: 2,
@@ -48,6 +49,7 @@ export const TransportVehicleList = [
     slug: 'vip_cabin_bus',
     startTime: '17:00',
     price: 350000,
+    maximum: '7',
   },
   {
     id: 3,
@@ -55,6 +57,7 @@ export const TransportVehicleList = [
     slug: 'luxury_bus',
     startTime: '17:00',
     price: 350000,
+    maximum: '7',
   },
   {
     id: 4,
@@ -62,6 +65,7 @@ export const TransportVehicleList = [
     slug: 'regular_sleeping_bus',
     startTime: '17:00',
     price: 350000,
+    maximum: '7',
   },
   {
     id: 5,
@@ -69,6 +73,7 @@ export const TransportVehicleList = [
     slug: 'vip_cabin_bus2',
     startTime: '17:00',
     price: 350000,
+    maximum: '7',
   },
 ]
 export const TourTypeList: {slug: string; name: string; popular: boolean}[] = [
@@ -362,4 +367,15 @@ export const PickupAndDropOffPrivateServiceData = [
       },
     ],
   },
+]
+
+export const PrivatePickupLocation = [
+  {id: 1, name: 'Noi Bai Airport', slug: 'noibai_airport', price: '3000000'},
+  {id: 1, name: 'Hanoi', slug: 'hanoi', price: '3000000'},
+]
+
+export const PackageTypeList = [
+  {id: 1, name: 'Saving Package', slug: 'saving'},
+  {id: 2, name: 'Budget Package', slug: 'budget'},
+  {id: 3, name: 'Premium Package', slug: 'premium'},
 ]
