@@ -1,14 +1,18 @@
 import BookingForm from '@/app/(main)/tours/[slug]/_components/compound/booking-form'
-import { Banner } from '@/app/(main)/tours/[slug]/_components/overview-compound/banner'
-import { Content } from '@/app/(main)/tours/[slug]/_components/overview-compound/content'
-import { Tab } from '@/app/(main)/tours/[slug]/_components/overview-compound/tab'
-import { Tripadvisor } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
-import { TripadvisorTab } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
-import PageProvider from '@/app/(main)/tours/[slug]/context/PageProvider'
+import BookingFormMobile from '@/app/(main)/tours/[slug]/_components/compound/booking-form-mobile.tsx'
+import {Banner} from '@/app/(main)/tours/[slug]/_components/overview-compound/banner'
+import {Content} from '@/app/(main)/tours/[slug]/_components/overview-compound/content'
+import {Tab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tab'
+import {Tripadvisor} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
+import {TripadvisorTab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
 
 import NotFound from '@/components/NotFound'
 import fetchData from '@/fetches/fetchData'
-import { InterGift, InterMotorcycle, TourDetailContent } from '@/types/tours.interface'
+import {
+  InterGift,
+  InterMotorcycle,
+  TourDetailContent,
+} from '@/types/tours.interface'
 
 const MockMotorcycles: InterMotorcycle[] = [
   {name: 'Honda 110cc - Semi automatic', price: 250000},
@@ -41,6 +45,7 @@ export default async function TourDetail({
   if (!data || slug === 'undefined') {
     return <NotFound />
   }
+  console.log(data)
 
   return (
     <main className='h-[1000rem]'>
@@ -57,23 +62,22 @@ export default async function TourDetail({
 
           <div className='xsm:hidden sticky top-[6.5rem] h-fit w-[29rem] rounded-[1.5rem] border border-[#EDEDED] bg-white p-[1.25rem]'>
             <Tripadvisor
-              data={data.acf_fields.tripadvisor}
-              link={data.acf_fields.overview.gallery.link.url}
+              data={data?.acf_fields?.tripadvisor}
+              link={data?.acf_fields?.overview.gallery.link.url}
             />
             <TripadvisorTab
-              data={data.acf_fields.tripadvisor}
-              map={data.taxonomies.location[0].name}
+              data={data?.acf_fields?.tripadvisor}
+              map={data?.taxonomies?.location[0]?.name}
             />
           </div>
         </div>
       </div>
 
-      <PageProvider>
-        <BookingForm
-          motorcycles={MockMotorcycles}
-          gifts={MockGifts}
-        />
-      </PageProvider>
+      <BookingForm
+        motorcycles={MockMotorcycles}
+        gifts={MockGifts}
+      />
+      <BookingFormMobile />
     </main>
   )
 }

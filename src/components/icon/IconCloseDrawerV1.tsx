@@ -14,7 +14,6 @@ export default function IconCloseDrawerV1(
     >
       <path
         d='M15 5L5 15M5 5L15 15'
-        stroke='white'
         strokeWidth={2}
         strokeLinecap='round'
         strokeLinejoin='round'

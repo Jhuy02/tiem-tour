@@ -15,10 +15,12 @@ import {useFormContext} from 'react-hook-form'
 import {BookingFormValues} from '@/schemas/booking.schema'
 import {TransportVehicleList} from '@/constants/mockApi'
 import {FormField, FormItem, FormMessage} from '@/components/ui/form'
-import {RadioGroup} from '@/components/ui/radio-group'
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group'
 import SelectTransportVehicle from '@/app/(main)/tours/[slug]/_components/form-controls/SelectTransportVehicle'
 import OtherTransportVehicle from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service/_components/OtherTransportVehicle'
 import PickupAndDropOffPrivateService from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service/_components/PickupAndDropOffPrivateService'
+import DatePickerField from '@/app/(main)/tours/[slug]/_components/form-controls/DatePickerField'
+import {Label} from '@/components/ui/label'
 
 export default function ServiceOutboundTripWithPrivateTransport() {
   const {control} = useFormContext<BookingFormValues>()
@@ -37,7 +39,7 @@ export default function ServiceOutboundTripWithPrivateTransport() {
   }, [addedOptionSlug])
   return (
     <>
-      <div className='absolute top-0 right-0'>
+      <div className='xsm:hidden absolute top-0 right-0'>
         <Dialog>
           <DialogTrigger asChild>
             <button
@@ -73,7 +75,7 @@ export default function ServiceOutboundTripWithPrivateTransport() {
           </p>
           <FormField
             control={control}
-            name='outboundTripPickupVehicle'
+            name='outbound_trip_pickup_vehicle'
             render={({field}) => (
               <FormItem className='self-stretch'>
                 <RadioGroup
@@ -87,7 +89,7 @@ export default function ServiceOutboundTripWithPrivateTransport() {
                       return (
                         <div
                           key={index}
-                          className='col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'
+                          className='xsm:col-span-full xsm:border xsm:border-solid xsm:border-[#EDEDED] xsm:bg-white col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'
                         >
                           <SelectTransportVehicle
                             title={item?.name}
@@ -100,7 +102,7 @@ export default function ServiceOutboundTripWithPrivateTransport() {
                     })}
 
                   {addedOtherOptionItem && (
-                    <div className='col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'>
+                    <div className='xsm:col-span-full xsm:border xsm:border-solid xsm:border-[#EDEDED] xsm:bg-white col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'>
                       <SelectTransportVehicle
                         title={addedOtherOptionItem?.name}
                         value={addedOtherOptionItem?.slug}
@@ -109,19 +111,128 @@ export default function ServiceOutboundTripWithPrivateTransport() {
                       />
                     </div>
                   )}
+                  <FormMessage className='font-trip-sans col-span-1 pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
 
                   <div className='col-span-1 col-start-2 flex items-center justify-end'>
                     <OtherTransportVehicle
-                      keySchema='outboundTripPickupVehicle'
+                      keySchema='outbound_trip_pickup_vehicle'
                       optionList={TransportVehicleList}
                       onAddOption={(slug) => setAddedOptionSlug(slug)}
                     />
                   </div>
                 </RadioGroup>
-                <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
               </FormItem>
             )}
           />
+        </div>
+        <div className='flex flex-col space-y-[0.75rem]'>
+          <p>Pick up time</p>
+          <div>
+            <FormField
+              control={control}
+              name={'schedule_start'}
+              render={({field}) => (
+                <FormItem className='xsm:basis-full flex-1'>
+                  <DatePickerField
+                    disabled
+                    {...field}
+                  />
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className='flex items-start space-x-[0.75rem]'>
+            <FormField
+              control={control}
+              name='deposit'
+              render={({field}) => (
+                <FormItem className='flex-1 rounded-[0.75rem] border border-solid border-[#EDEDED] p-[0.75rem]'>
+                  <RadioGroup
+                    className=''
+                    value={'deposit'}
+                    onValueChange={field.onChange}
+                    name={field.name}
+                  >
+                    <Label className='inline-flex w-full cursor-pointer items-center gap-0'>
+                      <RadioGroupItem
+                        value={'deposit'}
+                        className='peer sr-only'
+                      />
+                      <Image
+                        alt=''
+                        width={22}
+                        height={22}
+                        src={'/icons/check_default.svg'}
+                        className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
+                      />
+                      <Image
+                        alt=''
+                        width={22}
+                        height={22}
+                        src={'/icons/check_active-v1.svg'}
+                        className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
+                      />
+                      <div className='flex flex-col space-y-[0.5rem] pl-[0.5rem]'>
+                        <p>Noi Bai Airport</p>
+                        <span>
+                          <span>3.000.000</span>
+                          <span>USD/car</span>
+                        </span>
+                      </div>
+                    </Label>
+
+                    <FormMessage className='font-trip-sans col-span-1 pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
+                  </RadioGroup>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name='deposit'
+              render={({field}) => (
+                <FormItem className='flex-1 rounded-[0.75rem] border border-solid border-[#EDEDED] p-[0.75rem]'>
+                  <RadioGroup
+                    className=''
+                    value={'deposit'}
+                    onValueChange={field.onChange}
+                    name={field.name}
+                  >
+                    <Label className='inline-flex w-full cursor-pointer items-center gap-0'>
+                      <RadioGroupItem
+                        value={'deposit'}
+                        className='peer sr-only'
+                      />
+                      <Image
+                        alt=''
+                        width={22}
+                        height={22}
+                        src={'/icons/check_default.svg'}
+                        className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
+                      />
+                      <Image
+                        alt=''
+                        width={22}
+                        height={22}
+                        src={'/icons/check_active-v1.svg'}
+                        className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
+                      />
+                      <div className='flex flex-col space-y-[0.5rem] pl-[0.5rem]'>
+                        <p>Noi Bai Airport</p>
+                        <span>
+                          <span>3.000.000</span>
+                          <span>USD/car</span>
+                        </span>
+                      </div>
+                    </Label>
+
+                    <FormMessage className='font-trip-sans col-span-1 pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
+                  </RadioGroup>
+                </FormItem>
+              )}
+            />
+          </div>
+          <div></div>
         </div>
       </div>
     </>

@@ -18,7 +18,9 @@ import Image from 'next/image'
 import React, {useState} from 'react'
 import {useFormContext, useWatch} from 'react-hook-form'
 
-type VehicleFieldKey = 'outboundTripPickupVehicle' | 'returnTripPickupVehicle'
+type VehicleFieldKey =
+  | 'outbound_trip_pickup_vehicle'
+  | 'return_trip_pickup_vehicle'
 
 interface OtherTransportVehicleProps {
   keySchema: VehicleFieldKey
