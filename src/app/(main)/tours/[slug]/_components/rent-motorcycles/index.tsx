@@ -1,9 +1,9 @@
 import ControlNumber from "@/app/(main)/tours/[slug]/_components/rent-motorcycles/ControlNumber";
 import ListMotorcycles from "@/app/(main)/tours/[slug]/_components/rent-motorcycles/ListMotorcycles";
-import { InterMotorcycle } from "@/types/tours.interface";
+import { InMotorbikeRents } from "@/types/tours.interface";
 
 interface RentMotorcyclesProps {
-    motorcycles: InterMotorcycle[]
+    motorcycles: InMotorbikeRents[]
 }
 
 export default function RentMotorcycles({ motorcycles }: RentMotorcyclesProps) {

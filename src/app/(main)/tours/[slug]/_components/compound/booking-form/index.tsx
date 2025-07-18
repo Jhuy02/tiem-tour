@@ -4,25 +4,23 @@ import BookingHomestay from '@/app/(main)/tours/[slug]/_components/compound/book
 import BookingOverview from '@/app/(main)/tours/[slug]/_components/compound/booking-overview'
 import BookingTransportService from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service'
 import ContactInformation from '@/app/(main)/tours/[slug]/_components/contact'
-import Gift from '@/app/(main)/tours/[slug]/_components/gift'
 import Policy from '@/app/(main)/tours/[slug]/_components/policy'
 import RentMotorcycles from '@/app/(main)/tours/[slug]/_components/rent-motorcycles'
 import { PageContext } from '@/app/(main)/tours/[slug]/context/PageProvider'
 import ICArrowLeft from '@/components/icon/ICArrowLeft'
 import { Form } from '@/components/ui/form'
 import bookingSchema, { BookingFormValues } from '@/schemas/booking.schema'
-import { InterGift, InterMotorcycle } from '@/types/tours.interface'
+import { TourDetailPackage } from '@/types/tours.interface'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface BookTourNowProps {
-  motorcycles: InterMotorcycle[]
-  gifts: InterGift[]
+  data: TourDetailPackage
 }
 
-export default function BookingForm({motorcycles, gifts}: BookTourNowProps) {
+export default function BookingForm({data}: BookTourNowProps) {
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -34,8 +32,10 @@ export default function BookingForm({motorcycles, gifts}: BookTourNowProps) {
       easyRiderQuantity: 0,
       rideByYourselfQuantity: 0,
       seatBehindYourFriendQuantity: 0,
-      motorcycles: motorcycles.map((motor) => ({
-        name: motor.name,
+      motorcycles: data?.motorbike_rents?.map((motor) => ({
+        name: motor?.title,
+        id: motor?.id,
+        price: motor?.price,
         quantity: 0,
       })),
       gifts: '',
@@ -74,8 +74,8 @@ export default function BookingForm({motorcycles, gifts}: BookTourNowProps) {
                 <BookingOverview />
                 <BookingHomestay />
                 <BookingTransportService />
-                <RentMotorcycles motorcycles={motorcycles} />
-                <Gift gifts={gifts} />
+                <RentMotorcycles motorcycles={data?.motorbike_rents} />
+                {/* <Gift gifts={gifts} /> */}
                 <ContactInformation />
                 <Policy />
               </div>
