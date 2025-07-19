@@ -1,5 +1,5 @@
-import {ILink} from '@/types/link.interface'
-import {IMedia} from '@/types/media.interface'
+import { ILink } from '@/types/link.interface'
+import { IMedia } from '@/types/media.interface'
 
 export interface TourTaxonomy {
   id: number
@@ -68,7 +68,80 @@ export interface TourListDataResponse {
   data: TourItemDataResponse[]
 }
 
+export interface TypePackage {
+  title: string
+  price: number
+  note: string
+  images: {
+    alt: string
+    url: string
+  }[]
+}
+
+export interface MotorbikePackage {
+  saving: TypePackage[]
+  budget: TypePackage[]
+  premium: TypePackage[]
+}
+export interface InPickUpLocation {
+  location: string
+  detail_location: string
+}
+
+export interface InMotorbikeRents {
+  motorbike_rent_list: InMotorbikeRentsList[]
+  rent_motorcycles_warning: string
+}
+export interface InMotorbikeRentsList {
+  id: number
+  title: string
+  thumbnail: string
+  price: number
+  description: string
+  images: {
+    url: string
+    alt: string
+  }[]
+  specifications: {
+    name: string
+    content: string
+  }[]
+  warning: string
+}
+export interface InGift {
+  gift_tour_list: {
+    name: string
+    image: {
+      url: string
+      alt: string
+    }
+  }[]
+  warning: string
+}
+export interface InPolicy {
+  deposit_policy: {
+    title: string
+    content: string
+  }
+  no_refund_policy: {
+    title: string
+    content: string
+  }
+  policy_content: string
+}
+export interface TourDetailPackage {
+  price: number
+  duration_number: number
+  motorbike_package: MotorbikePackage
+  car_package: MotorbikePackage
+  pick_up_location: InPickUpLocation[]
+  motorbike_rents: InMotorbikeRents
+  gift: InGift
+  policy: InPolicy
+}
+
 export interface TourDetailContent {
+  package_tour: TourDetailPackage
   title: string
   thumbnail: IMedia
   acf_fields: {
@@ -121,4 +194,21 @@ export interface Tripadvisor {
   map: IMedia[]
   number_of_reviews: string
   title: string
+}
+
+export type TourDetailApiResType = {
+  title: string
+  thumbnail: IMedia
+  acf_fields: {
+    price: string
+    overview: Overview
+    landscape: Landscape[]
+    faq: FAQ[]
+    tripadvisor: Tripadvisor
+  }
+  taxonomies: {
+    duration: TourTaxonomy[]
+    location: TourTaxonomy[]
+  }
+  package_tour: TourDetailPackage
 }

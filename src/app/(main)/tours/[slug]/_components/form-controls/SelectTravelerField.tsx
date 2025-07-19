@@ -1,6 +1,6 @@
+import { cn } from '@/lib/utils'
 import clsx from 'clsx'
 import Image from 'next/image'
-import React from 'react'
 
 interface SelectTravelerFieldProps {
   label?: string
@@ -8,6 +8,7 @@ interface SelectTravelerFieldProps {
   onChange?: (value: number) => void
   onBlur?: () => void
   name?: string
+  className?: string
 }
 
 export default function SelectTravelerField({
@@ -15,6 +16,7 @@ export default function SelectTravelerField({
   value = 0,
   name,
   onChange,
+  className,
 }: SelectTravelerFieldProps) {
   const handleDecrease = () => {
     if (value > 0) {
@@ -27,10 +29,12 @@ export default function SelectTravelerField({
   }
 
   return (
-    <div className='relative flex h-[3.25rem] items-center justify-between space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#EDEDED] bg-white py-[0.6875rem] pr-[0.5rem] pl-[1rem]'>
-      <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#2E2E2E]'>
-        {label}
-      </p>
+    <div className={cn('relative flex h-[3.25rem] items-center justify-between space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#EDEDED] bg-white py-[0.6875rem] pr-[0.5rem] pl-[1rem]', className)}>
+      {label && (
+        <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#2E2E2E]'>
+          {label}
+        </p>
+      )}
       <div className='flex shrink-0 items-center rounded-[0.5rem] bg-[#F5F5F5]'>
         <button
           type='button'
@@ -53,7 +57,7 @@ export default function SelectTravelerField({
             className='h-auto w-[1.125rem] shrink-0 select-none'
           />
         </button>
-        <div className='inline-flex size-[2.25rem] items-center justify-center'>
+        <div className='inline_text inline-flex size-[2.25rem] items-center justify-center'>
           <span className='text-[0.875rem] leading-[140%] font-bold text-[#2E2E2E]'>
             {value.toString().padStart(2, '0')}
           </span>

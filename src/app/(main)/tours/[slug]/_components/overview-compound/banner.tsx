@@ -5,27 +5,26 @@ import {
   Star,
 } from '@/app/(main)/tours/[slug]/_components/icon'
 import ImageFallback from '@/components/image/ImageFallback'
-import {BreadcrumbDynamic} from '@/components/ui/breadcrumb-dynamic'
-import {Button} from '@/components/ui/button'
-import {cn} from '@/lib/utils'
-import {TourDetailContent} from '@/types/tours.interface'
-import {ArrowUpRight} from 'lucide-react'
+import { BreadcrumbDynamic } from '@/components/ui/breadcrumb-dynamic'
+import { Button } from '@/components/ui/button'
+import { WEATHER_API_KEY } from '@/config-global.env'
+import { cn } from '@/lib/utils'
+import { TourDetailContent } from '@/types/tours.interface'
+import he from 'he'
+import { ArrowUpRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import he from 'he'
-import {WEATHER_API_KEY} from '@/config-global.env'
 
 export const Banner = async ({data}: {data: TourDetailContent}) => {
-  const galleryRandom = data.acf_fields.tripadvisor.gallery.sort(
+  const galleryRandom = data?.acf_fields?.tripadvisor?.gallery?.sort(
     () => Math.random() - 0.5,
   )
-  const galleryRandom3 = galleryRandom.slice(0, 3)
+  const galleryRandom3 = galleryRandom?.slice(0, 3)
 
   const weather = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${data.taxonomies.location[0].name}&units=metric&appid=${WEATHER_API_KEY}`,
+    `https://api.openweathermap.org/data/2.5/weather?q=${data?.taxonomies?.location[0]?.name}&units=metric&appid=${WEATHER_API_KEY}`,
   )
   const {main} = await weather.json()
-
   return (
     <section className='xsm:h-auto relative h-[100vh] w-full'>
       <BreadcrumbDynamic
@@ -40,8 +39,8 @@ export const Banner = async ({data}: {data: TourDetailContent}) => {
         className='xsm:[&_svg]:text-[#303030]/40 xsm:block last hidden'
       />
       <ImageFallback
-        src={data.thumbnail.url}
-        alt={data.thumbnail.alt}
+        src={data.thumbnail?.url}
+        alt={data.thumbnail?.alt}
         width={1920}
         height={512}
         className='xsm:h-[12.785rem] h-[100vh] w-full object-cover object-center'
@@ -74,12 +73,12 @@ export const Banner = async ({data}: {data: TourDetailContent}) => {
       />
       <article className='xsm:w-full xsm:px-[1rem] xsm:py-[0.8375rem] xsm:static absolute bottom-[7.3125rem] left-[6.25rem] w-[52.3125rem] p-[1.125rem]'>
         <h1 className='font-dvn-luckiest-guy xsm:text-[#3B3943] xsm:text-[1.25rem] xsm:leading-[1.625rem] line-clamp-3 text-[3rem] leading-[3.9rem] text-white'>
-          {he.decode(data.title)}
+          {he.decode(data?.title)}
         </h1>
         <div className='mt-[0.5rem] flex items-center space-x-[0.5rem]'>
           <Compass className='xsm:[&_path]:fill-[#FB0] xsm:size-[1.5rem] size-[1.6rem]' />
           <p className='xsm:text-[#FB0] xsm:text-[1.375rem] xsm:leading-[1.7875rem] xsm:font-dvn-luckiest-guy text-[2.25rem] leading-[2.7rem] font-extrabold tracking-[0.01563rem] text-[#FCFF49] uppercase'>
-            {data.acf_fields.price} USD
+            {data?.acf_fields?.price} USD
           </p>
           <span className='xsm:text-[#FB0] text-[#FCFF49]'>•</span>
           <span className='xsm:text-[0.875rem] xsm:leading-[1.3125rem] xsm:tracking-[0.00219rem] xsm:text-[#3B3943] leading-[1.6rem] tracking-[0.0025rem] text-white'>
@@ -107,7 +106,7 @@ export const Banner = async ({data}: {data: TourDetailContent}) => {
                 />
               </div>
               <p className='relative text-[2.96rem] leading-[3.26169rem] font-[900] tracking-[0.14825rem] text-[#25ACAB]'>
-                {Math.round(main.temp) || 32}
+                {Math.round(main?.temp) || 32}
                 <Circle className='absolute top-[0.5rem] right-[-0.5rem] size-[0.6rem]' />
               </p>
             </div>

@@ -1,10 +1,9 @@
-import Footer from '@/layout/footer/footer'
-import {Toaster} from '@/components/ui/sonner'
+import CTA from '@/app/_components/cta/cta'
+import { Toaster } from '@/components/ui/sonner'
 import fetchData from '@/fetches/fetchData'
+import Footer from '@/layout/footer/footer'
 import Header from '@/layout/header'
 import NextTopLoader from 'nextjs-toploader'
-import CTA from '@/app/_components/cta/cta'
-import {Lenis} from '@/utils/lenis'
 
 export default async function MainLayout({
   children,
@@ -16,7 +15,8 @@ export default async function MainLayout({
   return (
     <>
       <Header dataOptions={dataOptions} />
-      <Lenis root>{children}</Lenis>
+      {/* <Lenis root>{children}</Lenis> */}
+      {children}
       <Footer data={dataOptions?.footer} />
       <CTA data={dataOptions?.cta_buttons} />
       <Toaster richColors />

@@ -15,7 +15,7 @@ export default function OtherOptionButton() {
         src={'/icons/add_plus.svg'}
         className='h-auto w-[1.125rem] shrink-0'
       />
-      <p className='text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#25ACAB]'>
+      <p className='xsm:text-[0.875rem] xsm:leading-[150%] xsm:tracking-[-0.00438rem] text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#25ACAB]'>
         Other option
       </p>
     </div>

@@ -41,7 +41,7 @@ export default function ServiceReturnTripWithOurBus() {
 
   return (
     <>
-      <div className='absolute top-0 right-0'>
+      <div className='xsm:hidden absolute top-0 right-0'>
         <Dialog>
           <DialogTrigger asChild>
             <button
@@ -75,31 +75,33 @@ export default function ServiceReturnTripWithOurBus() {
           <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#2E2E2E]'>
             Pick up at
           </p>
-          <div className='flex items-start space-x-[0.75rem]'>
+          <div className='xsm:space-x-0 xsm:flex-wrap xsm:space-y-[0.75rem] flex items-start space-x-[0.75rem]'>
             <FormField
               control={control}
-              name='returnTripPickupLocation'
+              name='return_trip_pickup_location'
               render={({field}) => (
-                <FormItem className='flex-1'>
+                <FormItem className='xsm:basis-full flex-1'>
                   <SelectOptionField
+                    label='Pick up at'
                     placeholder='Select pickup location'
                     options={CITY_LIST}
+                    disabled
                     {...field}
                   />
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-medium tracking-[0.00188rem] text-[#F64722]' />
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
             />
             <FormField
               control={control}
-              name={'endDay'}
+              name={'schedule_end'}
               render={({field}) => (
                 <FormItem className='flex-1'>
                   <DatePickerField
                     disabled
                     {...field}
                   />
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-medium tracking-[0.00188rem] text-[#F64722]' />
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
             />
@@ -107,7 +109,7 @@ export default function ServiceReturnTripWithOurBus() {
           <div className='flex flex-col items-end space-y-[0.75rem]'>
             <FormField
               control={control}
-              name='returnTripPickupVehicle'
+              name='return_trip_pickup_vehicle'
               render={({field}) => (
                 <FormItem className='self-stretch'>
                   <RadioGroup
@@ -121,7 +123,7 @@ export default function ServiceReturnTripWithOurBus() {
                         return (
                           <div
                             key={index}
-                            className='col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'
+                            className='xsm:col-span-full col-span-1 flex items-center justify-between rounded-[0.75rem] border border-solid border-[#EDEDED] bg-white p-[0.75rem]'
                           >
                             <SelectTransportVehicle
                               title={item?.name}
@@ -134,7 +136,7 @@ export default function ServiceReturnTripWithOurBus() {
                       })}
 
                     {addedOtherOptionItem && (
-                      <div className='col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'>
+                      <div className='xsm:col-span-full xsm:border xsm:border-solid xsm:border-[#EDEDED] xsm:bg-white col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'>
                         <SelectTransportVehicle
                           title={addedOtherOptionItem?.name}
                           value={addedOtherOptionItem?.slug}
@@ -146,7 +148,7 @@ export default function ServiceReturnTripWithOurBus() {
                     <FormMessage className='font-trip-sans col-span-1 pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                     <div className='col-span-1 col-start-2 flex items-center justify-end'>
                       <OtherTransportVehicle
-                        keySchema='returnTripPickupVehicle'
+                        keySchema='return_trip_pickup_vehicle'
                         optionList={TransportVehicleList}
                         onAddOption={(slug) => setAddedOptionSlug(slug)}
                       />
@@ -179,34 +181,35 @@ export default function ServiceReturnTripWithOurBus() {
           <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#2E2E2E]'>
             Arrival
           </p>
-          <div className='flex items-start space-x-[0.75rem]'>
+          <div className='xsm:space-y-[0.75rem] xsm:space-x-0 xsm:flex-wrap flex items-start space-x-[0.75rem]'>
             <FormField
               control={control}
-              name='returnTripArrivalLocation'
+              name='return_trip_arrival_location'
               render={({field}) => (
-                <FormItem className='flex-1'>
+                <FormItem className='xsm:basis-full flex-1'>
                   <SelectOptionField
+                    label='Arrival location'
                     placeholder='Select arrival location'
                     options={CITY_LIST}
-                    disabled
                     {...field}
                   />
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-medium tracking-[0.00188rem] text-[#F64722]' />
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
             />
             <FormField
               control={control}
-              name='outboundTripArrivalTime'
+              name='outbound_trip_arrival_time'
               render={({field}) => (
                 <FormItem className='flex-1'>
                   <SelectOptionField
+                    label='Arrival time'
                     placeholder='Select arrival time'
                     options={CITY_LIST}
                     disabled
                     {...field}
                   />
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-medium tracking-[0.00188rem] text-[#F64722]' />
+                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
             />

@@ -7,50 +7,88 @@ import SelectTravelerField from '@/app/(main)/tours/[slug]/_components/form-cont
 import {FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Label} from '@/components/ui/label'
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group'
-import {TourPackageList, TourTypeList} from '@/constants/mockApi'
+import {PackageTypeList, TourTypeList} from '@/constants/mockApi'
 import {BookingFormValues} from '@/schemas/booking.schema'
 import clsx from 'clsx'
 import Image from 'next/image'
 import {useFormContext, useWatch} from 'react-hook-form'
 import styles from './styles.module.css'
 import PolicyTourDialog from '@/app/(main)/tours/[slug]/_components/compound/booking-overview/PolicyTourDialog'
-import {useEffect} from 'react'
+import {useContext, useEffect} from 'react'
 import {addDays} from 'date-fns'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import TriggerDialogButton from '@/app/(main)/tours/[slug]/_components/common/TriggerDialogButton'
+import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
+import {TourDetailApiResType} from '@/types/tours.interface'
+import TourPackageInfo from '@/app/(main)/tours/[slug]/_components/compound/booking-overview/TourPackageInfo'
 
 export default function BookingOverview() {
+  const pageContext = useContext(PageContext)
+  if (!pageContext) throw new Error('Page context is missing')
+  const {data: apiData}: {data: TourDetailApiResType} = pageContext
+
   const {control, setValue} = useFormContext<BookingFormValues>()
   const duration = 3
-  const startDay = useWatch({
+  const scheduleStart = useWatch({
     control,
-    name: 'startDay',
+    name: 'schedule_start',
   })
   const tourType = useWatch({
     control,
-    name: 'tourType',
+    name: 'tour_type',
+  })
+  const tourPackage = useWatch({
+    control,
+    name: 'package',
+  })
+
+  console.log({
+    tourType,
+    tourPackage,
   })
 
   useEffect(() => {
-    if (startDay) {
-      const newEndDay = addDays(new Date(startDay), duration)
-      setValue('endDay', newEndDay)
+    if (scheduleStart) {
+      const scheduleEnd = addDays(new Date(scheduleStart), duration)
+      setValue('schedule_end', scheduleEnd)
     }
-  }, [startDay, duration, setValue])
+  }, [scheduleStart, duration, setValue])
 
   return (
-    <div className='rounded-[1.5rem] border border-solid border-[#ededed] bg-white p-[1.5rem]'>
-      <div className='mb-[1rem] flex items-center justify-between border-b border-solid border-[#EDEDED] pb-[0.625rem]'>
-        <h3 className='font-dvn-luckiest-guy mr-[1rem] text-[1.125rem] leading-[120%] tracking-[0.0125rem] uppercase'>
+    <div className='xsm:border-none xsm:rounded-0 xsm:p-[0.75rem] rounded-[1.5rem] border border-solid border-[#ededed] bg-white p-[1.5rem]'>
+      <div className='xsm:flex-col xsm:py-[1rem] xsm:space-y-[0.625rem] mb-[1rem] flex items-center justify-between border-b border-solid border-[#EDEDED] pb-[0.625rem]'>
+        <h3 className='font-dvn-luckiest-guy xsm:mr-0 mr-[1rem] text-[1.125rem] leading-[120%] tracking-[0.0125rem] uppercase'>
           HaGiang tour Culture 3 days 2 night by Motobike Experience
         </h3>
-        <PolicyTourDialog />
+        <Dialog>
+          <DialogTrigger className='xsm:w-full'>
+            <TriggerDialogButton>Policy tour</TriggerDialogButton>
+          </DialogTrigger>
+          <DialogContent className='z-150 w-[56.0625rem] max-w-[80vw]! overflow-hidden rounded-[1.5rem]! border-none! bg-transparent p-0!'>
+            <DialogHeader className='hidden'>
+              <DialogTitle>
+                TIEM TOURS HA GIANG TERMS AND CONDITIONS
+              </DialogTitle>
+              <DialogDescription></DialogDescription>
+            </DialogHeader>
+            <PolicyTourDialog />
+          </DialogContent>
+        </Dialog>
       </div>
       <div className='font-trip-sans flex flex-col space-y-[1rem]'>
         {/* Date Picker */}
-        <div className='flex items-start space-x-[1rem]'>
-          <div className='flex-1'>
+        <div className='xsm:flex-wrap xsm:space-x-0 xsm:space-y-[0.75rem] flex items-start space-x-[1rem]'>
+          <div className='xsm:w-full xsm:basis-full flex-1'>
             <FormField
               control={control}
-              name='startDay'
+              name='schedule_start'
               render={({field}) => (
                 <FormItem>
                   <DatePickerField
@@ -63,10 +101,10 @@ export default function BookingOverview() {
               )}
             />
           </div>
-          <div className='flex-1'>
+          <div className='xsm:w-full xsm:basis-full flex-1'>
             <FormField
               control={control}
-              name='endDay'
+              name='schedule_end'
               render={({field}) => (
                 <FormItem>
                   <DatePickerField
@@ -86,11 +124,11 @@ export default function BookingOverview() {
           <p className='mb-[0.75rem] text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#2E2E2E]'>
             Select Travelers
           </p>
-          <div className='grid grid-cols-2 gap-[0.75rem]'>
-            <div className='col-span-1'>
+          <div className='xsm:gap-[0.25rem] xsm:p-[0.25rem] xsm:rounded-[1rem] xsm:bg-[rgba(205,205,205,0.32)] grid grid-cols-2 gap-[0.75rem]'>
+            <div className='xsm:col-span-full col-span-1'>
               <FormField
                 control={control}
-                name='adultQuantity'
+                name='adults'
                 render={({field}) => (
                   <FormItem>
                     <SelectTravelerField
@@ -102,10 +140,10 @@ export default function BookingOverview() {
                 )}
               />
             </div>
-            <div className='col-span-1'>
+            <div className='xsm:col-span-full col-span-1'>
               <FormField
                 control={control}
-                name='childQuantity'
+                name='children'
                 render={({field}) => (
                   <FormItem>
                     <SelectTravelerField
@@ -120,7 +158,7 @@ export default function BookingOverview() {
             <div className='col-span-full'>
               <FormField
                 control={control}
-                name='infantQuantity'
+                name='infants'
                 render={({field}) => (
                   <FormItem>
                     <SelectTravelerField
@@ -135,7 +173,7 @@ export default function BookingOverview() {
           </div>
         </div>
         {/* Select Tour Type */}
-        <div className='rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.5rem]'>
+        <div className='xsm:p-[1rem] rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.5rem]'>
           <p className='mb-[1rem] border-b border-solid border-[#EDEDED] pb-[1rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#2E2E2E]'>
             Select tour type
           </p>
@@ -143,33 +181,33 @@ export default function BookingOverview() {
           <div className='mb-[1rem]'>
             <FormField
               control={control}
-              name='tourType'
+              name='tour_type'
               render={({field}) => (
                 <FormItem>
                   <RadioGroup
-                    className='flex items-center gap-0 space-x-[0.75rem]'
+                    className=''
                     value={field.value}
                     onValueChange={field.onChange}
                     name={field.name}
                   >
-                    {Array.isArray(TourTypeList) &&
-                      TourTypeList?.map((item, index) => {
+                    <div className='xsm:flex-wrap flex h-auto w-full items-center gap-[0.75rem] bg-transparent shadow-none!'>
+                      {TourTypeList.map((item, index) => {
                         return (
                           <div
                             key={index}
-                            className='flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] px-[0.75rem] py-[1rem]'
+                            className='xsm:basis-full flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-[#F6F6F6]! shadow-none!'
                           >
-                            <Label className='inline-flex h-[3.375rem] w-full cursor-pointer items-center justify-between px-[0.75rem] py-[1rem]'>
+                            <Label className='inline-flex h-full w-full cursor-pointer items-center justify-between px-[0.75rem] py-[1rem]'>
                               <p className='inline-flex items-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
-                                {item?.name}
-                                {item?.popular && (
+                                <span>{item.name}</span>
+                                {item.popular && (
                                   <span className='ml-[0.5rem] inline-block rounded-full border-[0.8px] border-solid border-[#25ACAB] bg-[#F3F9F9] px-[0.5rem] py-[0.25rem] text-[0.75rem] tracking-[0.00188rem] text-[#19C2C2]'>
                                     Popular
                                   </span>
                                 )}
                               </p>
                               <RadioGroupItem
-                                value={item?.slug}
+                                value={item.slug}
                                 className='peer sr-only'
                               />
                               <Image
@@ -177,19 +215,20 @@ export default function BookingOverview() {
                                 width={22}
                                 height={22}
                                 src={'/icons/check_default.svg'}
-                                className='hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
+                                className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
                               />
                               <Image
                                 alt=''
                                 width={22}
                                 height={22}
                                 src={'/icons/check_active-v1.svg'}
-                                className='hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
+                                className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
                               />
                             </Label>
                           </div>
                         )
                       })}
+                    </div>
                   </RadioGroup>
                   <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
@@ -198,30 +237,33 @@ export default function BookingOverview() {
           </div>
           {/* Tour Package */}
           <div
-            className={clsx('rounded-[0.75rem] bg-[#F3F9F9] p-[1rem]', {
-              'pointer-events-none opacity-40': !tourType,
-              'pointer-events-auto opacity-100': tourType,
-            })}
+            className={clsx(
+              'xsm:p-[0.75rem] rounded-[0.75rem] bg-[#F3F9F9] p-[1rem]',
+              {
+                'pointer-events-none opacity-40': !tourType,
+                'pointer-events-auto opacity-100': tourType,
+              },
+            )}
           >
             <FormField
               control={control}
-              name='tourPackage'
+              name='package'
               render={({field}) => (
                 <FormItem>
                   <RadioGroup
-                    className='flex items-center gap-0 space-x-[0.75rem]'
+                    className='xsm:space-x-0 xsm:space-y-[1.125rem] xsm:flex-wrap flex items-center gap-0 space-x-[0.75rem]'
                     value={field.value}
                     onValueChange={field.onChange}
                     name={field.name}
                   >
-                    {Array.isArray(TourPackageList) &&
-                      TourPackageList?.map((item, index) => {
+                    {Array.isArray(PackageTypeList) &&
+                      PackageTypeList?.map((item, index) => {
                         return (
                           <div
                             key={index}
-                            className='flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] px-[0.75rem] py-[1rem]'
+                            className='xsm:basis-full xsm:p-0 xsm:h-auto flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-transparent px-[0.75rem] py-[1rem]'
                           >
-                            <Label className='inline-flex h-[2.875rem] w-full cursor-pointer items-center space-x-[0.5rem] p-[0.75rem]'>
+                            <Label className='xsm:h-auto xsm:p-0 inline-flex h-[2.875rem] w-full cursor-pointer items-center space-x-[0.5rem] p-[0.75rem]'>
                               <RadioGroupItem
                                 value={item?.slug}
                                 className='peer sr-only'
@@ -231,14 +273,14 @@ export default function BookingOverview() {
                                 width={22}
                                 height={22}
                                 src={'/icons/check_default.svg'}
-                                className='hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
+                                className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
                               />
                               <Image
                                 alt=''
                                 width={22}
                                 height={22}
                                 src={'/icons/check_active-v1.svg'}
-                                className='hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
+                                className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
                               />
                               <p className='inline-flex items-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
                                 {item?.name}
@@ -256,40 +298,107 @@ export default function BookingOverview() {
         </div>
         <div className='flex flex-col space-y-[0.75rem]'>
           {/* Info Rider */}
-          <div className='grid grid-cols-3 items-center gap-[2rem] rounded-[0.5rem] bg-[rgba(235,229,226,0.32)] p-[1.25rem]'>
-            {[...Array(3)].map((_, index) => {
-              return (
-                <div
-                  key={index}
-                  className='col-span-1 flex flex-col space-y-[1.25rem]'
-                >
-                  <div className='flex flex-col space-y-[0.25rem]'>
-                    <p className='text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[#303030] uppercase'>
-                      Easyrider
-                    </p>
-                    <span className='text-[1.25rem] leading-[120%] font-extrabold tracking-[-0.025rem] text-[#C83E21] uppercase'>
-                      <span>5.350.000</span>Đ
-                    </span>
-                    <div className='flex items-center space-x-[0.25rem]'>
-                      <span className='text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[#303030]/80 line-through'>
-                        5.050.000
-                      </span>
-                      <span className='inline-block h-[1.25rem] rounded-[1rem] bg-[#115A46]/60 px-[0.375rem] py-[0.1875rem] text-[0.75rem] leading-[120%] font-bold text-white'>
-                        -27%
-                      </span>
-                    </div>
-                  </div>
-                  <p className='text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[#303030]/80'>
-                    Note: Highly Recommended
-                  </p>
-                </div>
-              )
-            })}
+          <div className='xsm:p-0 xsm:bg-transparent xsm:gap-[0.75rem] grid grid-cols-3 items-start gap-[2rem] rounded-[0.5rem] bg-[rgba(235,229,226,0.32)] p-[1.25rem]'>
+            {!(tourType && tourPackage) &&
+              apiData?.package_tour?.motorbike_package?.saving?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
+            {tourType === 'motorbike_tour' &&
+              tourPackage === 'saving' &&
+              apiData?.package_tour?.motorbike_package?.saving?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
+            {tourType === 'car_tour' &&
+              tourPackage === 'saving' &&
+              apiData?.package_tour?.car_package?.saving?.map((item, index) => {
+                return (
+                  <TourPackageInfo
+                    key={index}
+                    title={item.title}
+                    price={item.price}
+                    note={item.note}
+                  />
+                )
+              })}
+
+            {tourType === 'motorbike_tour' &&
+              tourPackage === 'budget' &&
+              apiData?.package_tour?.motorbike_package?.budget?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
+            {tourType === 'car_tour' &&
+              tourPackage === 'budget' &&
+              apiData?.package_tour?.car_package?.budget?.map((item, index) => {
+                return (
+                  <TourPackageInfo
+                    key={index}
+                    title={item.title}
+                    price={item.price}
+                    note={item.note}
+                  />
+                )
+              })}
+
+            {tourType === 'motorbike_tour' &&
+              tourPackage === 'premium' &&
+              apiData?.package_tour?.motorbike_package?.premium?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
+            {tourType === 'car_tour' &&
+              tourPackage === 'premium' &&
+              apiData?.package_tour?.car_package?.premium?.map(
+                (item, index) => {
+                  return (
+                    <TourPackageInfo
+                      key={index}
+                      title={item.title}
+                      price={item.price}
+                      note={item.note}
+                    />
+                  )
+                },
+              )}
           </div>
           {/* Tour Includes and Tour Excludes */}
-          <div className='flex items-start space-x-[1rem]'>
+          <div className='xsm:space-x-0 xsm:flex-0 xsm:flex-wrap xsm:space-y-[0.75rem] flex items-start space-x-[1rem]'>
             {/* Tour Includes */}
-            <div className='flex-1 self-stretch rounded-[0.75rem] bg-[#F1F8F8] p-[1rem]'>
+            <div className='xsm:basis-full flex-1 self-stretch rounded-[0.75rem] bg-[#F1F8F8] p-[1rem]'>
               <p className='mb-[0.75rem] border-b border-solid border-[#EDEDED] pb-[0.75rem] text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[#303030] uppercase'>
                 Tour included:
               </p>
@@ -335,7 +444,7 @@ export default function BookingOverview() {
             </div>
 
             {/* Tour Exclude */}
-            <div className='flex-1 self-stretch rounded-[0.75rem] bg-[rgba(235,229,226,0.32)] p-[1rem]'>
+            <div className='xsm:basis-full flex-1 self-stretch rounded-[0.75rem] bg-[rgba(235,229,226,0.32)] p-[1rem]'>
               <p className='mb-[0.75rem] border-b border-solid border-[#EDEDED] pb-[0.75rem] text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[#303030] uppercase'>
                 Tour excludes:
               </p>
@@ -375,11 +484,11 @@ export default function BookingOverview() {
             </div>
           </div>
           {/* Select Rider */}
-          <div className='flex flex-col space-y-[1rem]'>
-            <div className='not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'>
+          <div className='xsm:space-y-[0.25rem] xsm:p-[0.25rem] xsm:rounded-[1rem] xsm:bg-[rgba(205,205,205,0.32)] flex flex-col space-y-[1rem]'>
+            <div className='xsm:not-last:pb-0 not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'>
               <FormField
                 control={control}
-                name='easyRiderQuantity'
+                name='easy_rider'
                 render={({field}) => (
                   <FormItem>
                     <SelectRiderField
@@ -392,10 +501,10 @@ export default function BookingOverview() {
                 )}
               />
             </div>
-            <div className='not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'>
+            <div className='xsm:not-last:pb-0 not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'>
               <FormField
                 control={control}
-                name='rideByYourselfQuantity'
+                name='ride_by_yourself'
                 render={({field}) => (
                   <FormItem>
                     <SelectRiderField
@@ -408,10 +517,10 @@ export default function BookingOverview() {
                 )}
               />
             </div>
-            <div className='not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'>
+            <div className='xsm:not-last:pb-0 not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'>
               <FormField
                 control={control}
-                name='seatBehindYourFriendQuantity'
+                name='seat_behind'
                 render={({field}) => (
                   <FormItem>
                     <SelectRiderField

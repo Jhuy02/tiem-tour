@@ -1,4 +1,4 @@
-import type {Config} from 'tailwindcss'
+import type { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
@@ -26,6 +26,20 @@ const config: Config = {
         nvnMotherland: ['var(--font-nvn-motherland)'],
         tripSans: ['var(--font-trip-sans)'],
       },
+      keyframes: {
+        'slide-in-from-bottom': {
+          '0%': { transform: 'translateY(100%)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        'slide-out-to-bottom': {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+      },
+       animation: {
+        'slide-in-from-bottom': 'slide-in-from-bottom 0.5s ease-out',
+        'slide-out-to-bottom': 'slide-out-to-bottom 0.5s ease-in',
+      },
     },
   },
   plugins: [
@@ -43,6 +57,12 @@ const config: Config = {
         },
         '.absolute-y-center': {
           '@apply absolute top-1/2 -translate-y-1/2': {},
+        },
+        '.text-edit-pc14': {
+          '@apply font-trip-sans text-[0.875rem] tracking-[0.00219rem] font-normal leading-[1.5] text-[#303030]': {},
+        },
+        '.text-edit-pc16b': {
+          '@apply font-trip-sans text-[1rem] tracking-[0.0025rem] font-extrabold leading-[1.3] text-[#303030]': {},
         },
       })
     }),
