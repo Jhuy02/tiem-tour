@@ -1,6 +1,7 @@
 .ourTour {
   position: relative;
   background-image: url('/background.webp');
+  padding-bottom: 10rem;
 }
 .ourTour-deco {
   position: absolute;
@@ -36,6 +37,7 @@
   grid-template-rows: 14.28281rem 21.97031rem 2.47656rem;
   gap: 0.87344rem;
   padding-left: 6.25rem;
+  margin-bottom: 3rem;
 }
 .ourTour__item1 {
   grid-row: span 2 / span 2;
@@ -263,7 +265,10 @@
   display: flex;
   width: max-content;
   margin: 0 auto;
-  margin-top: 2.79rem;
+  margin-top: 3.79rem;
+  position: relative;
+  z-index: 20;
+  left: 116%;
 }
 .ourTour .swiper-pagination-ourTour__item .swiper-pagination-bullet {
   transition: all 0.5s;
@@ -273,6 +278,10 @@
   background: #d9d9d9;
   border-radius: 0.25rem;
   margin-right: 0.25rem;
+}
+
+.ourTour .swiper-pagination-ourTour__item .swiper-pagination-bullet:last-child {
+  margin-right: 0;
 }
 .ourTour
   .swiper-pagination-ourTour__item
@@ -294,6 +303,10 @@
   display: none;
 }
 @media (min-width: 1020px) {
+  .ourTour .swiper-pagination-ourTour__item {
+    display: flex;
+  }
+
   .ourTour__item1:hover .item-infor {
     bottom: 1.625rem;
   }
@@ -313,6 +326,12 @@
     opacity: 1;
   }
 }
+@media (min-width: 640px) and (max-width: 1019px) {
+  .ourTour .swiper-pagination-ourTour__item {
+    display: flex;
+  }
+}
+
 @media (max-width: 639px) {
   .ourTour .swiper-pagination-ourTour__item,
   .ourTour-deco2,

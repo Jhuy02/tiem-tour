@@ -23,7 +23,7 @@ const DeliversDesktop = ({locations}: DeliversDesktopProps) => {
   } = useDelivers(locations)
 
   return (
-    <section className='xsm:hidden relative h-[80.875rem] w-full'>
+    <section className='xsm:hidden relative mt-[-30rem] h-[80.875rem] w-full'>
       <DeliversBackground />
       <DeliversHeader />
 

@@ -16,7 +16,7 @@ const DeliversMobile = ({locations}: DeliversMobileProps) => {
   >('hagiang')
 
   return (
-    <section className='relative h-[75.4375rem] w-full overflow-hidden'>
+    <section className='relative mt-[-6rem] h-[75.4375rem] w-full overflow-hidden'>
       <MobileBackground />
       <h3 className='font-dvn-luckiest-guy absolute top-[6rem] left-[0.75rem] w-[21.9375rem] text-[1.5625rem] leading-[2.03125rem] text-[#092F1A]'>
         Tiềm Tours delivers exciting trips while promoting local culture,
