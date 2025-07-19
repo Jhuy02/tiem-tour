@@ -1,5 +1,4 @@
 'use client'
-import ImageFallback from '@/components/image/ImageFallback'
 import {
   Sheet,
   SheetContent,
@@ -13,6 +12,7 @@ import MenuPopup from '@/layout/header/header-mb/MenuPopup'
 import SearchPopup from '@/layout/header/header-mb/SearchPopup'
 import {DataLocation, HeaderMobile} from '@/types/options.interface'
 import Link from 'next/link'
+import Image from 'next/image'
 import './Header-mb.css'
 
 export default function HeaderMb({
@@ -31,7 +31,7 @@ export default function HeaderMb({
         <div className='header-mobile__container'>
           <div className='header-mobile__left'>
             <Link href='/'>
-              <ImageFallback
+              <Image
                 className='header__logo'
                 src={HeaderMobile?.logo?.url}
                 alt={HeaderMobile?.logo?.alt}

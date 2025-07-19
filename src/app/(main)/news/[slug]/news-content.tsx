@@ -119,24 +119,24 @@ export default function NewsContent({data}: NewsContentProps) {
 
   return (
     <section className='relative max-sm:px-[1rem] max-sm:pt-[4.375rem]'>
-      <div className='flex max-w-[95.5625rem] ml-auto'>
-        <div className='hidden sticky top-0 w-[8.125rem] h-[100vh] sm:flex flex-col justify-end pb-[4rem]'>
+      <div className='ml-auto flex max-w-[95.5625rem]'>
+        <div className='sticky top-0 hidden h-[100vh] w-[8.125rem] flex-col justify-end pb-[4rem] sm:flex'>
           <div className='flex flex-col items-center'>
-            <p className='text-[#303030] font-trip-sans text-[1rem] font-extrabold leading-[130%] tracking-[0.0025rem] py-[0.5rem] border-b-[1px] border-solid border-[#202020] mb-[1rem]'>
+            <p className='font-trip-sans mb-[1rem] border-b-[1px] border-solid border-[#202020] py-[0.5rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#303030]'>
               Share
             </p>
             <ul className='flex flex-col items-center'>
-              <li className='flex shrink-0 items-center justify-center size-[3.125rem] not-last:mb-[0.75rem]'>
+              <li className='flex size-[3.125rem] shrink-0 items-center justify-center not-last:mb-[0.75rem]'>
                 <button
                   onClick={handleCopyUrl}
-                  className='flex items-center justify-center cursor-pointer size-full rounded-full'
+                  className='flex size-full cursor-pointer items-center justify-center rounded-full'
                 >
                   <Image
                     alt=''
                     width={50}
                     height={50}
                     src='/images/copy.svg'
-                    className='w-full h-auto'
+                    className='h-auto w-full'
                   />
                 </button>
               </li>
@@ -144,19 +144,19 @@ export default function NewsContent({data}: NewsContentProps) {
                 return (
                   <li
                     key={index}
-                    className='flex shrink-0 items-center justify-center size-[3.125rem] not-last:mb-[0.75rem]'
+                    className='flex size-[3.125rem] shrink-0 items-center justify-center not-last:mb-[0.75rem]'
                   >
                     <Link
                       href={item.href}
                       target='_blank'
-                      className='flex items-center justify-center cursor-pointer size-full rounded-full'
+                      className='flex size-full cursor-pointer items-center justify-center rounded-full'
                     >
                       <Image
                         alt=''
                         width={50}
                         height={50}
                         src={item.icon}
-                        className='w-full h-auto'
+                        className='h-auto w-full'
                       />
                     </Link>
                   </li>
@@ -165,13 +165,13 @@ export default function NewsContent({data}: NewsContentProps) {
             </ul>
           </div>
         </div>
-        <div className='max-w-[100%] sm:max-w-[75rem] lg:max-w-[60rem] flex-1 py-[2rem] sm:pt-[12.1875rem] sm:ml-[8.44rem]'>
+        <div className='max-w-[100%] flex-1 py-[2rem] sm:ml-[8.44rem] sm:max-w-[75rem] sm:pt-[12.1875rem] lg:max-w-[60rem]'>
           <h1
             dangerouslySetInnerHTML={{__html: data.title}}
-            className='text-[#3B3943] font-dvn-luckiest-guy text-[1.375rem] sm:text-[2.25rem] font-normal leading-[130%] sm:leading-[120%] tracking-[0.01563rem] uppercase mb-[1.5rem] sm:mb-[2.5rem]'
+            className='font-dvn-luckiest-guy mb-[1.5rem] text-[1.375rem] leading-[130%] font-normal tracking-[0.01563rem] text-[#3B3943] uppercase sm:mb-[2.5rem] sm:text-[2.25rem] sm:leading-[120%]'
           ></h1>
-          <div className='p-[1rem] sm:p-[1.875rem] bg-[rgba(72,48,13,0.20)] mb-[1.5rem] sm:mb-[2.5rem]'>
-            <p className='text-[#303030] font-trip-sans text-[1.125rem] font-bold sm:font-extrabold leading-[130%] tracking-[0.00281rem] mb-[1rem]'>
+          <div className='mb-[1.5rem] bg-[rgba(72,48,13,0.20)] p-[1rem] sm:mb-[2.5rem] sm:p-[1.875rem]'>
+            <p className='font-trip-sans mb-[1rem] text-[1.125rem] leading-[130%] font-bold tracking-[0.00281rem] text-[#303030] sm:font-extrabold'>
               Summary of content
             </p>
             <ul
@@ -181,7 +181,7 @@ export default function NewsContent({data}: NewsContentProps) {
             {headingCount > MAX_VISIBLE_SUMMARY_ITEMS && (
               <button
                 onClick={handleToggleSummaryContent}
-                className='font-trip-sans text-[#006CE4] text-[1rem] font-normal leading-[150%] sm:leading-[160%] tracking-[0.0025rem] cursor-pointer bg-transparent mt-[0.5rem]'
+                className='font-trip-sans mt-[0.5rem] cursor-pointer bg-transparent text-[1rem] leading-[150%] font-normal tracking-[0.0025rem] text-[#006CE4] sm:leading-[160%]'
               >
                 {expandedSummary ? 'Less' : 'More'}
               </button>
@@ -192,9 +192,9 @@ export default function NewsContent({data}: NewsContentProps) {
             className={clsx(styles.newsContent)}
             dangerouslySetInnerHTML={{__html: data.content}}
           ></div>
-          <div className=' text-[#303030] font-trip-sans text-[1rem] font-normal leading-[160%] tracking-[0.0025rem] flex items-center'>
+          <div className='font-trip-sans flex items-center text-[1rem] leading-[160%] font-normal tracking-[0.0025rem] text-[#303030]'>
             Published by:{' '}
-            <span className='inline-block ml-[0.3125rem] text-[0.875rem] font-bold leading-[120%] tracking-[0.01563rem] uppercase'>
+            <span className='ml-[0.3125rem] inline-block text-[0.875rem] leading-[120%] font-bold tracking-[0.01563rem] uppercase'>
               {data.author}
             </span>
           </div>

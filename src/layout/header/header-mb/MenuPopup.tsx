@@ -8,6 +8,7 @@ import {
   PageLink,
   SocialLink,
 } from '@/types/options.interface'
+import Image from 'next/image'
 import Link from 'next/link'
 
 // Utility function to decode HTML entities
@@ -30,10 +31,19 @@ export default function MenuPopup({
   return (
     <div className='mobile-menu-popup active'>
       <div className='mobile-menu-popup__header'>
-        <h2 className='mobile-menu-popup__header-title'>Tiềm Tours</h2>
-        {/* <button className='mobile-menu-popup__close'>
-          <IconClose />
-        </button> */}
+        <h2 className='mobile-menu-popup__header-title'>
+          <Image
+            className='header__logo'
+            src={HeaderMobile?.logo?.url}
+            alt={HeaderMobile?.logo?.alt}
+            width={135}
+            height={50}
+            style={{
+              filter:
+                'brightness(0) saturate(100%) invert(8%) sepia(100%) saturate(7492%) hue-rotate(230deg) brightness(97%) contrast(101%)',
+            }}
+          />
+        </h2>
       </div>
       <div className='mobile-menu-popup__content'>
         <nav>

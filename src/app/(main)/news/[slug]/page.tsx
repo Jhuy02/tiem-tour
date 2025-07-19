@@ -29,8 +29,12 @@ export default async function BlogDetail({
       method: 'GET',
     }),
   ])
+
+  console.log(detailBlog)
+  console.log(relatedBlog)
+
   return (
-    <main className="relative pb-0 sm:pb-[12rem] bg-center bg-no-repeat bg-cover bg-fixed bg-[url('/images/background-page-mobile.webp')] sm:bg-[url('/images/background-page-pc.webp')]">
+    <main className="relative bg-[url('/images/background-page-mobile.webp')] bg-cover bg-fixed bg-center bg-no-repeat pb-0 sm:bg-[url('/images/background-page-pc.webp')] sm:pb-[12rem]">
       <BlogContent data={detailBlog.data} />
       <RelatedNewsList data={relatedBlog.data} />
     </main>

@@ -1,6 +1,5 @@
 'use client'
 
-import ImageFallback from '@/components/image/ImageFallback'
 import {useHeaderScroll} from '@/hooks/useHeaderScroll'
 import IconArrowHeader from '@/layout/header/header-pc/IconArrowHeader'
 import IconLocation from '@/layout/header/header-pc/IconLocation'
@@ -34,7 +33,7 @@ export default function HeaderPc({
           <ul>
             <li>
               <Link href='/'>
-                <ImageFallback
+                <Image
                   className='header__logo'
                   alt={HeaderOption.logo.alt}
                   src={HeaderOption.logo.url}
@@ -86,7 +85,7 @@ export default function HeaderPc({
                                 />
                                 <div className='minimap-svg__wapper'>
                                   <SvgHaGiang
-                                    src={ImgLocation?.ha_giang?.img}
+                                    src={ImgLocation?.ha_giang?.img.url}
                                   />
                                 </div>
                                 <p>{ImgLocation?.ha_giang?.name}</p>
@@ -104,7 +103,9 @@ export default function HeaderPc({
                                   height={40}
                                 />
 
-                                <SvgCaoBang src={ImgLocation?.cao_bang?.img} />
+                                <SvgCaoBang
+                                  src={ImgLocation?.cao_bang?.img.url}
+                                />
                                 <p>{ImgLocation?.cao_bang?.name}</p>
                               </Link>
                             </li>
@@ -120,7 +121,9 @@ export default function HeaderPc({
                                   height={40}
                                 />
                                 <div className='minimap-svg__wapper'>
-                                  <SvgBacKan src={ImgLocation?.bac_kan?.img} />
+                                  <SvgBacKan
+                                    src={ImgLocation?.bac_kan?.img.url}
+                                  />
                                 </div>
                                 <p>{ImgLocation?.bac_kan?.name}</p>
                               </Link>
@@ -160,7 +163,7 @@ export default function HeaderPc({
             target='__blank'
           >
             <p>{HeaderOption?.let_your_trip?.title}</p>
-            <ImageFallback
+            <Image
               src={HeaderOption?.let_your_trip?.hotline_image?.url}
               alt={HeaderOption?.let_your_trip?.hotline_image?.alt}
               width={40}
