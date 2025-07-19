@@ -52,7 +52,7 @@ type TaxonomyItem = {
   slug: string
 }
 export interface TourItemDataResponse {
-  image: IMedia
+  images: IMedia
   duration: TaxonomyItem[]
   location: TaxonomyItem[]
   price: string
@@ -128,11 +128,11 @@ export interface Overview {
     time: string
   }
   different: {
-    image: IMedia
+    images: IMedia
     text: string
   }
   gallery: {
-    image: IMedia
+    images: IMedia
     text: string
     link: ILink
   }
@@ -167,6 +167,10 @@ export type TourDetailApiResType = {
     landscape: Landscape[]
     faq: FAQ[]
     tripadvisor: Tripadvisor
+    note_tour: {
+      tour_included: string
+      tour_excludes: string
+    }
   }
   taxonomies: {
     duration: TourTaxonomy[]
@@ -186,13 +190,13 @@ export type TourDetailApiResType = {
         title: string
         price: string
         note: string
-        image: IMedia
+        images: IMedia
       }[]
       premium: {
         title: string
         price: string
         note: string
-        image: IMedia
+        images: IMedia
       }[]
     }
     car_package: {
@@ -206,13 +210,13 @@ export type TourDetailApiResType = {
         title: string
         price: string
         note: string
-        image: IMedia
+        images: IMedia
       }[]
       premium: {
         title: string
         price: string
         note: string
-        image: IMedia
+        images: IMedia
       }[]
     }
     pick_up_location: {

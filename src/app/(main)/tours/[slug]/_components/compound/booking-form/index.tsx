@@ -6,13 +6,13 @@ import BookingTransportService from '@/app/(main)/tours/[slug]/_components/compo
 import ContactInformation from '@/app/(main)/tours/[slug]/_components/contact'
 import Policy from '@/app/(main)/tours/[slug]/_components/policy'
 import RentMotorcycles from '@/app/(main)/tours/[slug]/_components/rent-motorcycles'
-import { Form } from '@/components/ui/form'
+import {Form} from '@/components/ui/form'
 import useIsMobile from '@/hooks/useIsMobile'
-import bookingSchema, { BookingFormValues } from '@/schemas/booking.schema'
-import { TourDetailPackage } from '@/types/tours.interface'
-import { zodResolver } from '@hookform/resolvers/zod'
+import bookingSchema, {BookingFormValues} from '@/schemas/booking.schema'
+import {TourDetailPackage} from '@/types/tours.interface'
+import {zodResolver} from '@hookform/resolvers/zod'
 import clsx from 'clsx'
-import { useForm } from 'react-hook-form'
+import {useForm} from 'react-hook-form'
 
 interface BookTourNowProps {
   data: TourDetailPackage
@@ -23,9 +23,9 @@ export default function BookingForm({data}: BookTourNowProps) {
     resolver: zodResolver(bookingSchema),
     defaultValues: {
       // Data customer
-      adults: 1,
-      children: 1,
-      infants: 1,
+      adults: 0,
+      children: 0,
+      infants: 0,
       // Data tour
       tour_type: '',
       package: '',
@@ -49,13 +49,17 @@ export default function BookingForm({data}: BookTourNowProps) {
 
       // Deposit and Agree
       deposit: '',
-
-      motorcycles: data?.motorbike_rents?.map((motor) => ({
-        name: motor?.title,
-        id: motor?.id,
-        price: motor?.price,
+      riders: data?.motorbike_package.saving?.map((item) => ({
+        name: item?.title,
+        price: item?.price,
         quantity: 0,
       })),
+      // motorcycles: data?.motorbike_rents?.map((motor) => ({
+      //   name: motor?.title,
+      //   id: motor?.id,
+      //   price: motor?.price,
+      //   quantity: 0,
+      // })),
       gifts: '',
       yourName: '',
       yourPhone: '',
@@ -63,12 +67,13 @@ export default function BookingForm({data}: BookTourNowProps) {
       yourMessage: '',
     },
   })
+
   const isMobile = useIsMobile()
 
   function onSubmit(values: BookingFormValues) {
-    console.log(values)
+    console.log('FORM: ', values)
   }
-  console.log(form.formState.errors)
+  console.log('ERR: ', form.formState.errors)
 
   return (
     !isMobile && (
@@ -87,7 +92,7 @@ export default function BookingForm({data}: BookTourNowProps) {
                 <BookingOverview />
                 <BookingHomestay />
                 <BookingTransportService />
-                <RentMotorcycles motorcycles={data?.motorbike_rents} />
+                {/* <RentMotorcycles motorcycles={data?.motorbike_rents} /> */}
                 {/* <Gift gifts={gifts} /> */}
                 <ContactInformation />
                 <Policy />

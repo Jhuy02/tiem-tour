@@ -1,7 +1,7 @@
 import React from 'react'
 interface TourPackageInfoProps {
   title: string
-  price: string
+  price: number
   note: string
 }
 export default function TourPackageInfo({
@@ -17,7 +17,7 @@ export default function TourPackageInfo({
         </p>
         <div className='xsm:flex-row xsm:items-center xsm:space-y-0 xsm:space-x-[0.25rem] flex flex-col space-y-[0.25rem]'>
           <span className='text-[1.25rem] leading-[120%] font-extrabold tracking-[-0.025rem] text-[#C83E21] uppercase'>
-            <span>{price} </span> USD
+            <span>{price.toLocaleString('en-US')} USD</span>
           </span>
           {/* <div className='xsm:h-[1.3125rem] flex items-center space-x-[0.25rem]'>
             <span className='inline-block text-[0.875rem] leading-[100%] tracking-[0.00219rem] text-[#303030]/80 line-through'>

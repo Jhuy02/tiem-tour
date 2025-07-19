@@ -14,7 +14,7 @@ import Image from 'next/image'
 import {useFormContext, useWatch} from 'react-hook-form'
 import styles from './styles.module.css'
 import PolicyTourDialog from '@/app/(main)/tours/[slug]/_components/compound/booking-overview/PolicyTourDialog'
-import {useContext, useEffect} from 'react'
+import {useContext, useEffect, useMemo} from 'react'
 import {addDays} from 'date-fns'
 import {
   Dialog,
@@ -35,38 +35,40 @@ export default function BookingOverview() {
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
 
   const {control, setValue} = useFormContext<BookingFormValues>()
-  const duration = 3
-  const scheduleStart = useWatch({
-    control,
-    name: 'schedule_start',
-  })
-  const tourType = useWatch({
-    control,
-    name: 'tour_type',
-  })
-  const tourPackage = useWatch({
-    control,
-    name: 'package',
-  })
+  const scheduleStart = useWatch({control, name: 'schedule_start'})
+  const tourType = useWatch({control, name: 'tour_type'})
+  const tourPackage = useWatch({control, name: 'package'})
 
-  console.log({
-    tourType,
-    tourPackage,
-  })
+  const packageInfo = useMemo(() => {
+    if (tourType === 'motorbike_tour' && tourPackage) {
+      return apiData.package_tour.motorbike_package[tourPackage]
+    } else if (tourType === 'car_tour' && tourPackage) {
+      return apiData.package_tour.car_package[tourPackage]
+    } else {
+      return apiData.package_tour.motorbike_package.saving
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tourType, tourPackage])
 
   useEffect(() => {
     if (scheduleStart) {
+      const duration = parseInt(apiData.package_tour.duration_number)
       const scheduleEnd = addDays(new Date(scheduleStart), duration)
       setValue('schedule_end', scheduleEnd)
     }
-  }, [scheduleStart, duration, setValue])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scheduleStart, setValue])
 
   return (
     <div className='xsm:border-none xsm:rounded-0 xsm:p-[0.75rem] rounded-[1.5rem] border border-solid border-[#ededed] bg-white p-[1.5rem]'>
       <div className='xsm:flex-col xsm:py-[1rem] xsm:space-y-[0.625rem] mb-[1rem] flex items-center justify-between border-b border-solid border-[#EDEDED] pb-[0.625rem]'>
-        <h3 className='font-dvn-luckiest-guy xsm:mr-0 mr-[1rem] text-[1.125rem] leading-[120%] tracking-[0.0125rem] uppercase'>
-          HaGiang tour Culture 3 days 2 night by Motobike Experience
-        </h3>
+        {apiData?.title && (
+          <h3
+            dangerouslySetInnerHTML={{__html: apiData?.title}}
+            className='font-dvn-luckiest-guy xsm:mr-0 mr-[1rem] text-[1.125rem] leading-[120%] tracking-[0.0125rem] uppercase'
+          ></h3>
+        )}
+
         <Dialog>
           <DialogTrigger className='xsm:w-full'>
             <TriggerDialogButton>Policy tour</TriggerDialogButton>
@@ -78,7 +80,7 @@ export default function BookingOverview() {
               </DialogTitle>
               <DialogDescription></DialogDescription>
             </DialogHeader>
-            <PolicyTourDialog />
+            <PolicyTourDialog policy={apiData?.package_tour?.policy} />
           </DialogContent>
         </Dialog>
       </div>
@@ -306,7 +308,7 @@ export default function BookingOverview() {
                     <TourPackageInfo
                       key={index}
                       title={item.title}
-                      price={item.price}
+                      price={Number(item.price)}
                       note={item.note}
                     />
                   )
@@ -320,7 +322,7 @@ export default function BookingOverview() {
                     <TourPackageInfo
                       key={index}
                       title={item.title}
-                      price={item.price}
+                      price={Number(item.price)}
                       note={item.note}
                     />
                   )
@@ -333,7 +335,7 @@ export default function BookingOverview() {
                   <TourPackageInfo
                     key={index}
                     title={item.title}
-                    price={item.price}
+                    price={Number(item.price)}
                     note={item.note}
                   />
                 )
@@ -347,7 +349,7 @@ export default function BookingOverview() {
                     <TourPackageInfo
                       key={index}
                       title={item.title}
-                      price={item.price}
+                      price={Number(item.price)}
                       note={item.note}
                     />
                   )
@@ -360,7 +362,7 @@ export default function BookingOverview() {
                   <TourPackageInfo
                     key={index}
                     title={item.title}
-                    price={item.price}
+                    price={Number(item.price)}
                     note={item.note}
                   />
                 )
@@ -374,7 +376,7 @@ export default function BookingOverview() {
                     <TourPackageInfo
                       key={index}
                       title={item.title}
-                      price={item.price}
+                      price={Number(item.price)}
                       note={item.note}
                     />
                   )
@@ -388,7 +390,7 @@ export default function BookingOverview() {
                     <TourPackageInfo
                       key={index}
                       title={item.title}
-                      price={item.price}
+                      price={Number(item.price)}
                       note={item.note}
                     />
                   )
@@ -403,44 +405,14 @@ export default function BookingOverview() {
                 Tour included:
               </p>
               <div
+                dangerouslySetInnerHTML={{
+                  __html: apiData?.acf_fields?.note_tour?.tour_included ?? '',
+                }}
                 className={clsx(
                   'text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[#303030]',
                   styles.tourIncludedContent,
                 )}
-              >
-                <ul>
-                  <li>
-                    Accommodations :{' '}
-                    <strong>luxurious private homestay rooms</strong>, included
-                    one dormitory on arrival night (can be upraded with small
-                    fee)
-                  </li>
-                  <li>
-                    Accommodations :{' '}
-                    <strong>luxurious private homestay rooms</strong>, included
-                    one dormitory on arrival night (can be upraded with small
-                    fee)
-                  </li>
-                  <li>
-                    Accommodations :{' '}
-                    <strong>luxurious private homestay rooms</strong>, included
-                    one dormitory on arrival night (can be upraded with small
-                    fee)
-                  </li>
-                  <li>
-                    Accommodations :{' '}
-                    <strong>luxurious private homestay rooms</strong>, included
-                    one dormitory on arrival night (can be upraded with small
-                    fee)
-                  </li>
-                  <li>
-                    Accommodations :{' '}
-                    <strong>luxurious private homestay rooms</strong>, included
-                    one dormitory on arrival night (can be upraded with small
-                    fee)
-                  </li>
-                </ul>
-              </div>
+              ></div>
             </div>
 
             {/* Tour Exclude */}
@@ -449,90 +421,41 @@ export default function BookingOverview() {
                 Tour excludes:
               </p>
               <div
+                dangerouslySetInnerHTML={{
+                  __html: apiData?.acf_fields?.note_tour?.tour_excludes ?? '',
+                }}
                 className={clsx(
                   'text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[#303030]',
                   styles.tourExcludesContent,
                 )}
-              >
-                <ul>
-                  <li>
-                    Accommodations :{' '}
-                    <strong>luxurious private homestay rooms</strong>, included
-                    one dormitory on arrival night (can be upraded with small
-                    fee)
-                  </li>
-                  <li>
-                    Accommodations :{' '}
-                    <strong>luxurious private homestay rooms</strong>, included
-                    one dormitory on arrival night (can be upraded with small
-                    fee)
-                  </li>
-                  <li>
-                    Accommodations :{' '}
-                    <strong>luxurious private homestay rooms</strong>, included
-                    one dormitory on arrival night (can be upraded with small
-                    fee)
-                  </li>
-                  <li>
-                    Accommodations :{' '}
-                    <strong>luxurious private homestay rooms</strong>, included
-                    one dormitory on arrival night (can be upraded with small
-                    fee)
-                  </li>
-                </ul>
-              </div>
+              ></div>
             </div>
           </div>
           {/* Select Rider */}
           <div className='xsm:space-y-[0.25rem] xsm:p-[0.25rem] xsm:rounded-[1rem] xsm:bg-[rgba(205,205,205,0.32)] flex flex-col space-y-[1rem]'>
-            <div className='xsm:not-last:pb-0 not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'>
-              <FormField
-                control={control}
-                name='easy_rider'
-                render={({field}) => (
-                  <FormItem>
-                    <SelectRiderField
-                      label='Easyrider'
-                      unitPrice={5350000}
-                      {...field}
-                    />
-                    <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className='xsm:not-last:pb-0 not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'>
-              <FormField
-                control={control}
-                name='ride_by_yourself'
-                render={({field}) => (
-                  <FormItem>
-                    <SelectRiderField
-                      label='Ride by yourself'
-                      unitPrice={5350000}
-                      {...field}
-                    />
-                    <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className='xsm:not-last:pb-0 not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'>
-              <FormField
-                control={control}
-                name='seat_behind'
-                render={({field}) => (
-                  <FormItem>
-                    <SelectRiderField
-                      label='Seat behind your friend'
-                      unitPrice={5350000}
-                      {...field}
-                    />
-                    <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                  </FormItem>
-                )}
-              />
-            </div>
+            {packageInfo.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className='xsm:not-last:pb-0 not-last:border-b not-last:border-solid not-last:border-[#EDEDED] not-last:pb-[1rem]'
+                >
+                  <FormField
+                    control={control}
+                    name={`riders.${index}.quantity`}
+                    render={({field}) => (
+                      <FormItem>
+                        <SelectRiderField
+                          label={item?.title}
+                          unitPrice={Number(item?.price)}
+                          {...field}
+                        />
+                        <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )
+            })}
           </div>
           {/* Caution */}
           <Caution content='NOTE: if you’re traveling alone, you have to pay 200K extra to get your own room' />

@@ -24,7 +24,6 @@ export default function CheckoutPolicy() {
     control,
     name: 'agree_policy',
   })
-  console.log(agreePolicyStatus)
   return (
     <div className='relative rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.5rem]'>
       <div className='flex flex-col items-start space-y-[1.25rem]'>

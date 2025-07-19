@@ -24,7 +24,7 @@ export default function BookingFormMobile() {
       package: '',
       easy_rider: 0,
       ride_by_yourself: 0,
-      seatBehindYourFriendQuantity: 0,
+      seat_behind: 0,
     },
   })
   // function handleCloseBookingForm() {
@@ -34,7 +34,7 @@ export default function BookingFormMobile() {
     setShowFormBooking(true)
   }
   function onSubmit(values: BookingFormValues) {
-    console.log(values)
+    console.log('Form', values)
   }
 
   useEffect(() => {

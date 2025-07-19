@@ -56,7 +56,16 @@ export default function SelectOptionField({
             if (!disabled) setIsOpen(open)
           }}
         >
-          <PopoverTrigger asChild>
+          <PopoverTrigger
+            onClick={(e) => {
+              if (disabled) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+              }
+            }}
+            asChild
+          >
             <div
               className={clsx(
                 'font-trip-sans relative h-[3rem] rounded-[0.75rem] border border-solid border-[#EDEDED]',
@@ -145,7 +154,16 @@ export default function SelectOptionField({
 
       {isMobile && (
         <Drawer>
-          <DrawerTrigger asChild>
+          <DrawerTrigger
+            onClick={(e) => {
+              if (disabled) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+              }
+            }}
+            asChild
+          >
             <div
               className={clsx(
                 'font-trip-sans relative h-[3rem] rounded-[0.75rem] border border-solid border-[#EDEDED]',

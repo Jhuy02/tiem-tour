@@ -153,7 +153,7 @@ export default function ServiceReturnTripWithPrivateTransport() {
               <FormItem className=''>
                 <FormControl>
                   <Input
-                    className='h-auto rounded-[0.75rem] border border-solid border-[#EDEDED]! bg-white px-[1rem] py-[0.875rem] text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#2E2E2E] shadow-none ring-0! outline-0! placeholder:text-[rgba(48,48,48,0.40)]'
+                    className='h-auto rounded-[0.75rem] border border-solid border-[#EDEDED] bg-white px-[1rem] py-[0.875rem] text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#2E2E2E] shadow-none ring-0! outline-0! placeholder:text-[rgba(48,48,48,0.40)] focus-visible:border-[#25ACAB]'
                     placeholder='Enter your pick up point information or you can notify the driver during the trip.'
                     {...field}
                   />
@@ -269,7 +269,7 @@ export default function ServiceReturnTripWithPrivateTransport() {
                 <FormItem className=''>
                   <FormControl>
                     <Input
-                      className='h-auto rounded-[0.75rem] border border-solid border-[#EDEDED]! bg-white px-[1rem] py-[0.875rem] text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#2E2E2E] shadow-none ring-0! outline-0! placeholder:text-[rgba(48,48,48,0.40)]'
+                      className='h-auto rounded-[0.75rem] border border-solid border-[#EDEDED] bg-white px-[1rem] py-[0.875rem] text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#2E2E2E] shadow-none ring-0! outline-0! placeholder:text-[rgba(48,48,48,0.40)] focus-visible:border-[#25ACAB]'
                       placeholder='Enter your drop off point information or you can notify the driver during the trip.'
                       {...field}
                     />

@@ -56,7 +56,16 @@ export default function DatePickerField({
             if (!disabled) setOpenCalendar(open)
           }}
         >
-          <PopoverTrigger asChild>
+          <PopoverTrigger
+            onClick={(e) => {
+              if (disabled) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+              }
+            }}
+            asChild
+          >
             <div className='relative flex flex-col'>
               {label && (
                 <label

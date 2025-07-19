@@ -1,48 +1,57 @@
 'use client'
 
 import Caution from '@/app/(main)/tours/[slug]/_components/common/Caution'
+import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
 import {FormField, FormItem, FormMessage} from '@/components/ui/form'
 import {Label} from '@/components/ui/label'
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group'
 import {BookingFormValues} from '@/schemas/booking.schema'
+import {TourDetailApiResType} from '@/types/tours.interface'
 import {format} from 'date-fns'
 import Image from 'next/image'
-import {useFormContext} from 'react-hook-form'
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import CheckoutPolicy from '@/app/(main)/tours/[slug]/_components/compound/booking-checkout/CheckoutPolicy'
-import {useState} from 'react'
+import {useContext, useMemo} from 'react'
+import {useFormContext, useWatch} from 'react-hook-form'
 
 export default function BookingCheckout() {
+  const pageContext = useContext(PageContext)
+  if (!pageContext) throw new Error('Page context is missing')
+  const {data: apiData}: {data: TourDetailApiResType} = pageContext
   const {watch, control} = useFormContext<BookingFormValues>()
-  const [isDialogOpen, setDialogOpen] = useState<boolean>(false)
 
   // Lấy dữ liệu từ form
   const scheduleStart: Date | null = watch('schedule_start')
   const scheduleEnd: Date | null = watch('schedule_end')
 
-  const adults = watch('adults')
-  const children = watch('children')
-  const infants = watch('infants')
+  const adults = useWatch({control, name: 'adults'})
+  const children = useWatch({control, name: 'children'})
+  const infants = useWatch({control, name: 'infants'})
 
-  const easyRider = watch('easy_rider')
-  const riderByYourself = watch('ride_by_yourself')
+  const tourType = useWatch({control, name: 'tour_type'})
+  const tourPackage = useWatch({control, name: 'package'})
+
+  const packageInfo = useMemo(() => {
+    if (tourType === 'motorbike_tour' && tourPackage) {
+      return apiData.package_tour.motorbike_package[tourPackage]
+    } else if (tourType === 'car_tour' && tourPackage) {
+      return apiData.package_tour.car_package[tourPackage]
+    } else {
+      return apiData.package_tour.motorbike_package.saving
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tourType, tourPackage])
 
   return (
     <div className='font-trip-sans sticky top-[0.5rem] h-fit rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.25rem]'>
       <h3 className='mb-[1.25rem] border-b border-solid border-[#EDEDED] pb-[0.75rem] text-[1.125rem] leading-[130%] font-black tracking-[0.0025rem] text-[#303030]'>
         Subtotal
       </h3>
-      <p className='mb-[0.5rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#3B3943]'>
-        HaGiang tour Culture 3 days 2 nights by Motobike Experience
-      </p>
+      {apiData?.title && (
+        <p
+          dangerouslySetInnerHTML={{__html: apiData?.title}}
+          className='mb-[0.5rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#3B3943]'
+        ></p>
+      )}
+
       <div className='mb-[1rem] flex flex-col space-y-[0.5rem]'>
         <div className='flex items-center space-x-[0.375rem] rounded-[1rem] bg-[#F5F5F5] p-[0.75rem]'>
           <div className='flex w-[8.0625rem] shrink-0 flex-col space-y-[0.375rem] leading-[120%] font-medium'>
@@ -50,7 +59,7 @@ export default function BookingCheckout() {
               Duration
             </p>
             <span className='text-[0.875rem] font-medium text-[#006CE4]'>
-              3 Days 2 Nights
+              {apiData?.taxonomies?.duration[0]?.name}
             </span>
           </div>
           <div className='flex flex-1 flex-col space-y-[0.375rem] pl-[1.25rem] leading-[120%] font-medium'>
@@ -88,7 +97,7 @@ export default function BookingCheckout() {
               </div>
               <div className='flex-1'>
                 <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
-                  <span className=''>0</span> đ
+                  <span className=''>0</span> USD
                 </p>
               </div>
             </div>
@@ -102,11 +111,6 @@ export default function BookingCheckout() {
                   Child
                 </p>
               </div>
-              <div className='flex-1'>
-                <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
-                  <span className=''>0</span> đ
-                </p>
-              </div>
             </div>
             {/* Infant Quantity */}
             <div className='flex items-center space-x-[0.375rem]'>
@@ -118,63 +122,43 @@ export default function BookingCheckout() {
                   Infant
                 </p>
               </div>
-              <div className='flex-1'>
-                <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
-                  <span className=''>0</span> đ
-                </p>
-              </div>
             </div>
           </div>
           <div className='h-[1px] w-full bg-[#EDEDED]'></div>
           <div className=''>
-            {/* Easyrider Quantity */}
-            <div className='flex items-center space-x-[0.375rem]'>
-              <div className='flex-1'>
-                <p className='text-left text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[rgba(48,48,48,0.80)]'>
-                  <span className='font-extrabold tracking-[0.01563rem]'>
-                    {easyRider?.toString()?.padStart(2, '0')}
-                  </span>{' '}
-                  Easyrider
-                </p>
-              </div>
-              <div className='flex-1'>
-                <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
-                  <span className=''>0</span> đ
-                </p>
-              </div>
-            </div>
-            {/* Ride by yourself Quantity */}
-            <div className='flex items-center space-x-[0.375rem]'>
-              <div className='flex-1'>
-                <p className='text-left text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[rgba(48,48,48,0.80)]'>
-                  <span className='font-extrabold tracking-[0.01563rem]'>
-                    {riderByYourself?.toString()?.padStart(2, '0')}
-                  </span>{' '}
-                  Ride by yourself
-                </p>
-              </div>
-              <div className='flex-1'>
-                <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
-                  <span className=''>0</span> đ
-                </p>
-              </div>
-            </div>
-            {/* Seat behind your friend Quantity */}
-            <div className='flex items-center space-x-[0.375rem]'>
-              <div className='flex-1'>
-                <p className='text-left text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[rgba(48,48,48,0.80)]'>
-                  <span className='font-extrabold tracking-[0.01563rem]'>
-                    {riderByYourself?.toString()?.padStart(2, '0')}
-                  </span>{' '}
-                  Seat behind your friend
-                </p>
-              </div>
-              <div className='flex-1'>
-                <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
-                  <span className=''>0</span> đ
-                </p>
-              </div>
-            </div>
+            {packageInfo.map((item, index) => {
+              return (
+                <FormField
+                  key={index}
+                  control={control}
+                  name={`riders.${index}.quantity`}
+                  render={({field}) => (
+                    <FormItem>
+                      <div className='flex items-center space-x-[0.375rem]'>
+                        <div className='flex-1'>
+                          <p className='text-left text-[0.875rem] leading-[150%] tracking-[0.00219rem] text-[rgba(48,48,48,0.80)]'>
+                            <span className='font-extrabold tracking-[0.01563rem]'>
+                              {field.value?.toString()?.padStart(2, '0')}{' '}
+                            </span>
+                            {item.title}
+                          </p>
+                        </div>
+                        <div className='flex-1'>
+                          <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
+                            <span className=''>
+                              {(
+                                Number(item.price) * Number(field.value)
+                              ).toLocaleString('en-US')}{' '}
+                              USD
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              )
+            })}
           </div>
         </div>
         <div className='flex flex-col space-y-[0.625rem] pt-[0.5rem]'>

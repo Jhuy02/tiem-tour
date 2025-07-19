@@ -15,7 +15,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import {FormField, FormItem, FormMessage} from '@/components/ui/form'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form'
 import {RadioGroup} from '@/components/ui/radio-group'
 import {CITY_LIST, TransportVehicleList} from '@/constants/mockApi'
 import {BookingFormValues} from '@/schemas/booking.schema'
@@ -81,12 +86,14 @@ export default function ServiceOutboundTripWithOurBus() {
               name='outbound_trip_pickup_location'
               render={({field}) => (
                 <FormItem className='xsm:basis-full flex-1'>
-                  <SelectOptionField
-                    label='Pick up at'
-                    placeholder='Select pickup location'
-                    options={CITY_LIST}
-                    {...field}
-                  />
+                  <FormControl>
+                    <SelectOptionField
+                      label='Pick up at'
+                      placeholder='Select pickup location'
+                      options={CITY_LIST}
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
