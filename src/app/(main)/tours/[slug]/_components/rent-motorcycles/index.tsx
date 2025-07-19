@@ -3,7 +3,7 @@ import ListMotorcycles from "@/app/(main)/tours/[slug]/_components/rent-motorcyc
 import { InMotorbikeRents } from "@/types/tours.interface";
 
 interface RentMotorcyclesProps {
-    motorcycles: InMotorbikeRents[]
+    motorcycles: InMotorbikeRents
 }
 
 export default function RentMotorcycles({ motorcycles }: RentMotorcyclesProps) {

@@ -1,7 +1,8 @@
 'use client'
-import {ICta} from '@/types/cta.interface'
+import { ICta } from '@/types/cta.interface'
 import Image from 'next/image'
-import {useEffect, useRef} from 'react'
+import Link from 'next/link'
+import { useEffect, useRef } from 'react'
 import './styles/styles.css'
 
 const CTA = ({data}: {data: ICta}) => {
@@ -80,7 +81,7 @@ const CTA = ({data}: {data: ICta}) => {
       >
         <ScrollToTopIcon circleRef={circleRef} />
       </button>
-      <a
+      <Link
         href={`https://wa.me/${data.whatsapp}`}
         className='fab__whatsapp'
         target='_blank'
@@ -103,15 +104,15 @@ const CTA = ({data}: {data: ICta}) => {
         <div className='fab__whatsapp__animation'>
           <div className='animation__ping__3'></div>
         </div>
-      </a>
-      <a
-        href={data.messenger.url}
+      </Link>
+      <Link
+        href={data.messenger.url || ''}
         className='messenger cursor-pointer'
         target='_blank'
         rel='noopener noreferrer'
       >
         <MessengerIcon />
-      </a>
+      </Link>
     </div>
   )
 }

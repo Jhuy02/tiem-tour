@@ -1,17 +1,25 @@
 'use client'
-import React, {useEffect, useState} from 'react'
-import ICArrowLeft from '@/components/icon/ICArrowLeft'
-import useIsMobile from '@/hooks/useIsMobile'
-import {useForm} from 'react-hook-form'
-import bookingSchema, {BookingFormValues} from '@/schemas/booking.schema'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {Form} from '@/components/ui/form'
-import BookingOverview from '@/app/(main)/tours/[slug]/_components/compound/booking-overview'
 import BookingHomestay from '@/app/(main)/tours/[slug]/_components/compound/booking-homestay'
+import BookingOverview from '@/app/(main)/tours/[slug]/_components/compound/booking-overview'
 import BookingTransportService from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service'
+import ContactInformation from '@/app/(main)/tours/[slug]/_components/contact'
+import Gift from '@/app/(main)/tours/[slug]/_components/gift'
+import RentMotorcycles from '@/app/(main)/tours/[slug]/_components/rent-motorcycles'
+import ICArrowLeft from '@/components/icon/ICArrowLeft'
+import { Form } from '@/components/ui/form'
+import useIsMobile from '@/hooks/useIsMobile'
+import bookingSchema, { BookingFormValues } from '@/schemas/booking.schema'
+import { TourDetailPackage } from '@/types/tours.interface'
+import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-export default function BookingFormMobile() {
+interface BookTourNowProps {
+  data: TourDetailPackage
+}
+
+export default function BookingFormMobile({data}: BookTourNowProps) {
   const isMobile = useIsMobile()
   const [showFormBooking, setShowFormBooking] = useState<boolean>(false)
   const form = useForm<BookingFormValues>({
@@ -25,6 +33,18 @@ export default function BookingFormMobile() {
       easy_rider: 0,
       ride_by_yourself: 0,
       seatBehindYourFriendQuantity: 0,
+
+      motorcycles: data?.motorbike_rents?.motorbike_rent_list?.map((motor) => ({
+        name: motor?.title,
+        id: motor?.id,
+        price: motor?.price,
+        quantity: 0,
+      })),
+      gifts: '',
+      yourName: '',
+      yourPhone: '',
+      yourEmail: '',
+      yourMessage: '',
     },
   })
   // function handleCloseBookingForm() {
@@ -94,6 +114,9 @@ export default function BookingFormMobile() {
               <BookingOverview />
               <BookingHomestay />
               <BookingTransportService />
+              <RentMotorcycles motorcycles={data?.motorbike_rents} />
+              <Gift gifts={data?.gift} />
+              <ContactInformation />
             </div>
           </form>
         </Form>

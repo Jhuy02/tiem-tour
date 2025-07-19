@@ -401,9 +401,3 @@ input[type='number'] {
   background-repeat: no-repeat;
 }
 
-
-html > body[data-scroll-locked] {
-  overflow: auto !important;
-  --removed-body-scroll-bar-size: 0px;
-  margin-right: 0 !important;
-}

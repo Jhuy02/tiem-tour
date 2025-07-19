@@ -1,6 +1,6 @@
-import {IFooter} from '@/types/footer.interface'
-import Link from 'next/link'
+import { IFooter } from '@/types/footer.interface'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface FooterMobileContactProps {
   data: IFooter
@@ -24,18 +24,18 @@ const FooterMobileContact = ({data}: FooterMobileContactProps) => {
         <p className='footer__mb-two--item-title'>
           {data.footer_contact.title}
         </p>
-        <a
+        <Link
           href={`tel:${data.footer_contact.hotline_1}`}
           className='footer__mb-two--item-content'
         >
           {data.footer_contact.hotline_1}
-        </a>
-        <a
+        </Link>
+        <Link
           href={`tel:${data.footer_contact.hotline_2}`}
           className='footer__mb-two--item-content'
         >
           {data.footer_contact.hotline_2}
-        </a>
+        </Link>
         <div className='footer__mb-two--item-social'>
           {data.footer_contact.social_links.map((item, index) => (
             <Link

@@ -4,6 +4,7 @@ import BookingHomestay from '@/app/(main)/tours/[slug]/_components/compound/book
 import BookingOverview from '@/app/(main)/tours/[slug]/_components/compound/booking-overview'
 import BookingTransportService from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service'
 import ContactInformation from '@/app/(main)/tours/[slug]/_components/contact'
+import Gift from '@/app/(main)/tours/[slug]/_components/gift'
 import Policy from '@/app/(main)/tours/[slug]/_components/policy'
 import RentMotorcycles from '@/app/(main)/tours/[slug]/_components/rent-motorcycles'
 import { Form } from '@/components/ui/form'
@@ -18,7 +19,8 @@ interface BookTourNowProps {
   data: TourDetailPackage
 }
 
-export default function BookingForm({data}: BookTourNowProps) {
+export default function BookingForm({ data }: BookTourNowProps) {
+  const isMobile = useIsMobile()
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -50,7 +52,7 @@ export default function BookingForm({data}: BookTourNowProps) {
       // Deposit and Agree
       deposit: '',
 
-      motorcycles: data?.motorbike_rents?.map((motor) => ({
+      motorcycles: data?.motorbike_rents?.motorbike_rent_list?.map((motor) => ({
         name: motor?.title,
         id: motor?.id,
         price: motor?.price,
@@ -63,15 +65,15 @@ export default function BookingForm({data}: BookTourNowProps) {
       yourMessage: '',
     },
   })
-  const isMobile = useIsMobile()
 
   function onSubmit(values: BookingFormValues) {
+    console.log('...');
     console.log(values)
   }
   console.log(form.formState.errors)
 
   return (
-    !isMobile && (
+    !isMobile ? (
       <section
         className={clsx(
           'xsm:fixed xsm:inset-0 xsm:z-150 xsm:transition-transform xsm:duration-300 xsm:ease-in-out xsm:bg-white xsm:hidden mx-auto flex max-w-[87.5rem] flex-col space-y-[1.5rem] px-0 py-[3.125rem]',
@@ -88,9 +90,9 @@ export default function BookingForm({data}: BookTourNowProps) {
                 <BookingHomestay />
                 <BookingTransportService />
                 <RentMotorcycles motorcycles={data?.motorbike_rents} />
-                {/* <Gift gifts={gifts} /> */}
+                <Gift gifts={data?.gift} />
                 <ContactInformation />
-                <Policy />
+                <Policy policy={data?.policy} />
               </div>
               <div className='w-[28.6875rem] shrink-0'>
                 <BookingCheckout />
@@ -99,6 +101,6 @@ export default function BookingForm({data}: BookTourNowProps) {
           </form>
         </Form>
       </section>
-    )
+    ) : (<></>)
   )
 }

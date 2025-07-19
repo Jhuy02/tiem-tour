@@ -1,12 +1,12 @@
 'use client'
 
-import {ICustomer} from '@/types/customer.interface'
-import './styles/styles.css'
-import Image from 'next/image'
 import useIsMobile from '@/hooks/useIsMobile'
-import {CustomerSwiper} from './_components/customer-swiper'
-import {CustomerList} from './_components/customer-list'
-import {CustomerButtonGroup} from './_components/customer-button-group'
+import { ICustomer } from '@/types/customer.interface'
+import Image from 'next/image'
+import { CustomerButtonGroup } from './_components/customer-button-group'
+import { CustomerList } from './_components/customer-list'
+import { CustomerSwiper } from './_components/customer-swiper'
+import './styles/styles.css'
 
 const Customer = ({data}: {data: ICustomer}) => {
   const isMobile = useIsMobile()
@@ -15,7 +15,7 @@ const Customer = ({data}: {data: ICustomer}) => {
     <section id='customer'>
       {isMobile ? (
         <Image
-          src={data.background.mobile.url}
+          src={data.background.mobile.url || ''}
           alt={data.background.mobile.alt}
           width={data.background.mobile.width}
           height={data.background.mobile.height}
@@ -23,7 +23,7 @@ const Customer = ({data}: {data: ICustomer}) => {
         />
       ) : (
         <Image
-          src={data.background.desktop.url}
+          src={data.background.desktop.url || ''}
           alt={data.background.desktop.alt}
           width={data.background.desktop.width}
           height={data.background.desktop.height}

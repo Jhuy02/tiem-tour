@@ -1,5 +1,6 @@
+import { ICustomer } from '@/types/customer.interface'
 import Image from 'next/image'
-import {ICustomer} from '@/types/customer.interface'
+import Link from 'next/link'
 
 interface ButtonGroupProps {
   tripadventure: ICustomer['tripadventure']
@@ -11,8 +12,8 @@ export const CustomerButtonGroup = ({
   google,
 }: ButtonGroupProps) => (
   <div className='customer__button'>
-    <a
-      href={tripadventure.link.url}
+    <Link
+      href={tripadventure.link.url || ''}
       target='_blank'
     >
       <p>{tripadventure.link.title}</p>
@@ -23,9 +24,9 @@ export const CustomerButtonGroup = ({
         height={tripadventure.icon.height}
         className='customer__button-icon'
       />
-    </a>
-    <a
-      href={google.link.url}
+    </Link>
+    <Link
+      href={google.link.url || ''}
       target='_blank'
     >
       <p>{google.link.title}</p>
@@ -36,6 +37,6 @@ export const CustomerButtonGroup = ({
         height={google.icon.height}
         className='customer__button-icon'
       />
-    </a>
+    </Link>
   </div>
 )

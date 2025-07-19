@@ -1,5 +1,5 @@
-import {ILink} from '@/types/link.interface'
-import {IMedia} from '@/types/media.interface'
+import { ILink } from '@/types/link.interface'
+import { IMedia } from '@/types/media.interface'
 
 export interface TourTaxonomy {
   id: number
@@ -87,11 +87,47 @@ export interface InPickUpLocation {
   location: string
   detail_location: string
 }
+
 export interface InMotorbikeRents {
+  motorbike_rent_list: InMotorbikeRentsList[]
+  rent_motorcycles_warning: string
+}
+export interface InMotorbikeRentsList {
   id: number
   title: string
   thumbnail: string
   price: number
+  description: string
+  images: {
+    url: string
+    alt: string
+  }[]
+  specifications: {
+    name: string
+    content: string
+  }[]
+  warning: string
+}
+export interface InGift {
+  gift_tour_list: {
+    name: string
+    image: {
+      url: string
+      alt: string
+    }
+  }[]
+  warning: string
+}
+export interface InPolicy {
+  deposit_policy: {
+    title: string
+    content: string
+  }
+  no_refund_policy: {
+    title: string
+    content: string
+  }
+  policy_content: string
 }
 export interface TourDetailPackage {
   price: number
@@ -99,7 +135,9 @@ export interface TourDetailPackage {
   motorbike_package: MotorbikePackage
   car_package: MotorbikePackage
   pick_up_location: InPickUpLocation[]
-  motorbike_rents: InMotorbikeRents[]
+  motorbike_rents: InMotorbikeRents
+  gift: InGift
+  policy: InPolicy
 }
 
 export interface TourDetailContent {
@@ -172,80 +210,5 @@ export type TourDetailApiResType = {
     duration: TourTaxonomy[]
     location: TourTaxonomy[]
   }
-  package_tour: {
-    price: string
-    duration_number: string
-    motorbike_package: {
-      saving: {
-        title: string
-        price: string
-        note: string
-        images: IMedia
-      }[]
-      budget: {
-        title: string
-        price: string
-        note: string
-        image: IMedia
-      }[]
-      premium: {
-        title: string
-        price: string
-        note: string
-        image: IMedia
-      }[]
-    }
-    car_package: {
-      saving: {
-        title: string
-        price: string
-        note: string
-        images: IMedia
-      }[]
-      budget: {
-        title: string
-        price: string
-        note: string
-        image: IMedia
-      }[]
-      premium: {
-        title: string
-        price: string
-        note: string
-        image: IMedia
-      }[]
-    }
-    pick_up_location: {
-      location: string
-      detail_location: string
-    }[]
-    main_car_pick_up_data: {
-      id: number
-      title: string
-      fields: {
-        price_car_pax: string
-        max_number_pax: string
-        start_time: string
-        images_review_car: IMedia[]
-      }
-    }[]
-    motorbike_rents: {
-      id: number
-      title: string
-      thumbnail: string
-      price: string
-    }[]
-    taxonomies: {
-      duration: {
-        id: number
-        name: string
-        slug: string
-      }[]
-      location: {
-        id: number
-        name: string
-        slug: string
-      }[]
-    }
-  }
+  package_tour: TourDetailPackage
 }

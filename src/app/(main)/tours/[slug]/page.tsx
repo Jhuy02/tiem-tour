@@ -1,15 +1,15 @@
 import BookingForm from '@/app/(main)/tours/[slug]/_components/compound/booking-form'
 import BookingFormMobile from '@/app/(main)/tours/[slug]/_components/compound/booking-form-mobile.tsx'
-import {Banner} from '@/app/(main)/tours/[slug]/_components/overview-compound/banner'
-import {Content} from '@/app/(main)/tours/[slug]/_components/overview-compound/content'
-import {Tab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tab'
-import {Tripadvisor} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
-import {TripadvisorTab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
+import { Banner } from '@/app/(main)/tours/[slug]/_components/overview-compound/banner'
+import { Content } from '@/app/(main)/tours/[slug]/_components/overview-compound/content'
+import { Tab } from '@/app/(main)/tours/[slug]/_components/overview-compound/tab'
+import { Tripadvisor } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
+import { TripadvisorTab } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
 import PageProvider from '@/app/(main)/tours/[slug]/context/PageProvider'
 
 import NotFound from '@/components/NotFound'
 import fetchData from '@/fetches/fetchData'
-import {TourDetailApiResType, TourDetailContent} from '@/types/tours.interface'
+import { TourDetailApiResType } from '@/types/tours.interface'
 
 export default async function TourDetail({
   params,
@@ -21,7 +21,7 @@ export default async function TourDetail({
     api: `custom/v1/tour-detail/${slug}`,
     option: {
       next: {
-        revalidate: 60,
+        revalidate: 10,
       },
     },
   })
@@ -29,7 +29,7 @@ export default async function TourDetail({
   if (!data || slug === 'undefined') {
     return <NotFound />
   }
-  console.log(data)
+  // console.log(data)
 
   return (
     <PageProvider data={data}>
@@ -59,7 +59,7 @@ export default async function TourDetail({
         </div>
 
         <BookingForm data={data?.package_tour} />
-        <BookingFormMobile />
+        <BookingFormMobile data={data?.package_tour} />
       </main>
     </PageProvider>
   )
