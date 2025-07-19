@@ -72,7 +72,7 @@ const CaoBangMarkers = ({setHoveredPlace}: CaoBangMarkersProps) => {
       </div>
       <div
         className='absolute top-[4.25rem] left-[15rem] flex cursor-pointer flex-col items-center space-y-[0.25rem]'
-        onMouseEnter={() => setHoveredPlace('nui-thung-pha-piot')}
+        onMouseEnter={() => setHoveredPlace('nui-thung-phja-piot')}
         onMouseLeave={() => setHoveredPlace(null)}
       >
         <p className='mr-[2rem] w-[3.8125rem] text-center text-[0.75rem] leading-[0.9rem] font-extrabold tracking-[0.00375rem] text-white'>

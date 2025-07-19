@@ -38,7 +38,7 @@ const DesktopTourSwiper = ({
             {Array.from({length: 4}).map((_, index) => (
               <Skeleton
                 key={index}
-                className='w-[22.1875rem] h-[34.75rem] rounded-lg overflow-hidden animate-pulse'
+                className='h-[34.75rem] w-[22.1875rem] animate-pulse overflow-hidden rounded-lg'
               />
             ))}
           </div>

@@ -2,7 +2,7 @@ import {cn} from '@/lib/utils'
 import {ILocations} from '@/types/delivers.interface'
 import Image from 'next/image'
 import Link from 'next/link'
-import {ArrowRight} from './icons'
+import {ArrowRight} from '../icons'
 
 interface DeliversCardProps {
   province: ILocations | undefined

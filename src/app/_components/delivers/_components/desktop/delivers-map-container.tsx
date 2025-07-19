@@ -1,23 +1,22 @@
 import {cn} from '@/lib/utils'
-import {BacKanMap, Bed3, Pickup3} from './bac-kan-map'
-import {Bed2, CaoBangMap, Pickup2} from './cao-bang-map'
-import {Bed, HaGiangMap, Pickup, PickupStar} from './ha-giang-map'
-import {Compass} from './icons'
+
 import HaGiangMarkers from '@/app/_components/delivers/_components/map-markers/ha-giang-markers'
 import CaoBangMarkers from '@/app/_components/delivers/_components/map-markers/cao-bang-markers'
 import BacKanMarkers from '@/app/_components/delivers/_components/map-markers/bac-kan-markers'
+import {HaGiangMap} from '@/app/_components/delivers/_components/ha-giang-map'
+import {CaoBangMap} from '@/app/_components/delivers/_components/cao-bang-map'
+import {BacKanMap} from '@/app/_components/delivers/_components/bac-kan-map'
+import {Compass} from '@/app/_components/delivers/_components/icons'
 
 interface DeliversMapContainerProps {
   activeMap: 'hagiang' | 'caobang' | 'backan'
   setActiveMap: (map: 'hagiang' | 'caobang' | 'backan') => void
-  hoveredPlace: string | null
   setHoveredPlace: (place: string | null) => void
 }
 
 const DeliversMapContainer = ({
   activeMap,
   setActiveMap,
-  hoveredPlace,
   setHoveredPlace,
 }: DeliversMapContainerProps) => {
   return (
@@ -39,7 +38,7 @@ const DeliversMapContainer = ({
             'z-[20] transition-all duration-300',
             activeMap === 'hagiang'
               ? 'pointer-events-auto opacity-100'
-              : 'opacity-80',
+              : 'opacity-50',
           )}
         >
           <HaGiangMarkers setHoveredPlace={setHoveredPlace} />
@@ -58,7 +57,7 @@ const DeliversMapContainer = ({
             'z-[20] transition-all duration-300',
             activeMap === 'caobang'
               ? 'pointer-events-auto opacity-100'
-              : 'opacity-80',
+              : 'opacity-50',
           )}
         >
           <CaoBangMarkers setHoveredPlace={setHoveredPlace} />
@@ -77,7 +76,7 @@ const DeliversMapContainer = ({
             'z-[20] transition-all duration-300',
             activeMap === 'backan'
               ? 'pointer-events-auto opacity-100'
-              : 'opacity-80',
+              : 'opacity-50',
           )}
         >
           <BacKanMarkers setHoveredPlace={setHoveredPlace} />

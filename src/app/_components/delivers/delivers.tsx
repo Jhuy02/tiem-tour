@@ -1,44 +1,22 @@
 'use client'
 
 import {ILocations} from '@/types/delivers.interface'
-import DeliversBackground from './_components/delivers-background'
-import DeliversCard from './_components/delivers-card'
-import DeliversHeader from './_components/delivers-header'
-import DeliversMapContainer from './_components/delivers-map-container'
-import {useDelivers} from './_components/use-delivers'
+import useIsMobile from '@/hooks/useIsMobile'
+import DeliversMobile from '@/app/_components/delivers/_components/mobile/delivers-mobile'
+import DeliversDesktop from '@/app/_components/delivers/_components/desktop/delivers-desktop'
 
-const Delivers = ({locations}: {locations: ILocations[]}) => {
-  const {
-    activeMap,
-    setActiveMap,
-    hoveredPlace,
-    setHoveredPlace,
-    currentImage,
-    isImageChanging,
-    province,
-    tour,
-  } = useDelivers(locations)
+interface DeliversProps {
+  locations: ILocations[]
+}
 
-  return (
-    <section className='relative h-[80.875rem] w-full'>
-      <DeliversBackground />
-      <DeliversHeader />
+const Delivers = ({locations}: DeliversProps) => {
+  const isMobile = useIsMobile()
 
-      <DeliversMapContainer
-        activeMap={activeMap}
-        setActiveMap={setActiveMap}
-        hoveredPlace={hoveredPlace}
-        setHoveredPlace={setHoveredPlace}
-      />
+  if (isMobile) {
+    return <DeliversMobile locations={locations} />
+  }
 
-      <DeliversCard
-        province={province}
-        tour={tour}
-        currentImage={currentImage}
-        isImageChanging={isImageChanging}
-      />
-    </section>
-  )
+  return <DeliversDesktop locations={locations} />
 }
 
 export default Delivers
