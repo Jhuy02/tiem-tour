@@ -29,7 +29,7 @@ export default async function TourDetail({
   if (!data || slug === 'undefined') {
     return <NotFound />
   }
-  console.log(data)
+  // console.log(data)
 
   return (
     <PageProvider data={data}>

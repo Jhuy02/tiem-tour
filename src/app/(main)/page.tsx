@@ -1,5 +1,4 @@
 import Banner from '@/app/_components/banner/Banner'
-import Customer from '@/app/_components/customer/customer'
 import Customize from '@/app/_components/customize/customize'
 import Discover from '@/app/_components/discover/discover'
 import Explore from '@/app/_components/explore/explore'
@@ -41,7 +40,7 @@ export default async function Page() {
       />
       <Mysterious data={dataHome?.acf?.mysterious_beauty} />
       <Customize data={dataHome?.acf?.customize} />
-      <Customer data={dataHome?.acf?.customer} />
+      {/* <Customer data={dataHome?.acf?.customer} /> */}
       <Guild
         data={dataHome?.acf?.guild_travel}
         guild={dataGuildNews || []}

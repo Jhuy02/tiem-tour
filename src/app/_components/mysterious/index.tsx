@@ -3,9 +3,10 @@
 import ImageAnimationDeco from '@/components/image/ImageAnimationDeco'
 import ImageFallback from '@/components/image/ImageFallback'
 import useIsMobile from '@/hooks/useIsMobile'
-import {TypeMysterious} from '@/types/home.interface'
+import { TypeMysterious } from '@/types/home.interface'
 import Image from 'next/image'
-import {useEffect, useRef} from 'react'
+import Link from 'next/link'
+import { useEffect, useRef } from 'react'
 import './mysterious.css'
 
 export default function Mysterious({data}: {data: TypeMysterious}) {
@@ -241,8 +242,8 @@ export default function Mysterious({data}: {data: TypeMysterious}) {
                 />
               </div>
               <p className='mysterious-main__desc'>{data?.more?.desc}</p>
-              <a
-                href={data?.more?.link?.url}
+              <Link
+                href={data?.more?.link?.url || ''}
                 target={data?.more?.link?.target}
                 className='mysterious-main__btn'
               >
@@ -254,7 +255,7 @@ export default function Mysterious({data}: {data: TypeMysterious}) {
                   height={40}
                   className=''
                 />
-              </a>
+              </Link>
               <Image
                 src={'/home/mysterious/line.svg'}
                 alt='line'
@@ -420,8 +421,8 @@ export default function Mysterious({data}: {data: TypeMysterious}) {
             className='mysteriousmb-content__imgdeco2'
           />
 
-          <a
-            href={data?.more?.link?.url}
+          <Link
+            href={data?.more?.link?.url || ''}
             target={data?.more?.link?.target}
             className='mysteriousmb-btn'
           >
@@ -495,7 +496,7 @@ export default function Mysterious({data}: {data: TypeMysterious}) {
                 </clipPath>
               </defs>
             </svg>
-          </a>
+          </Link>
           <article
             dangerouslySetInnerHTML={{__html: data?.desc}}
             className='customize__desc'
