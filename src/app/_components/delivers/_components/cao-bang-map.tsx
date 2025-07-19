@@ -19,7 +19,7 @@ export const CaoBangMap = ({
       className={cn(
         'pointer-events-none transition-all duration-500',
         className,
-        isActive ? 'z-[10]' : 'z-[4]',
+        isActive ? 'z-[10]' : 'z-[2]',
       )}
       opacity={isActive ? 1 : 0.8}
     >

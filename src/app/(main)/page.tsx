@@ -10,12 +10,13 @@ import OurTour from '@/app/_components/our-tour'
 import fetchData from '@/fetches/fetchData'
 
 export default async function Page() {
-  const [dataHome, dataTaxonomies, dataPostOurTour, dataGuildNews] =
+  const [dataHome, dataTaxonomies, dataPostOurTour, dataGuildNews, {location}] =
     await Promise.all([
       fetchData({api: `wp/v2/pages/19?_fields=acf&acf_format=standard`}),
       fetchData({api: `api/v1/taxonomies?taxonomies=location,duration`}),
       fetchData({api: `api/v1/home-our-tour`}),
       fetchData({api: `custom/v1/guild-news`}),
+      fetchData({api: `api/v1/locations`}),
     ])
 
   const defaultLocation = dataTaxonomies?.location?.[0]?.slug || ''
@@ -35,7 +36,7 @@ export default async function Page() {
         dataPostOurTour={dataPostOurTour?.our_tour || []}
         total={dataPostOurTour?.total || '0'}
       />
-      <Delivers />
+      <Delivers locations={location || []} />
       <Discover
         data={dataHome?.acf?.discover}
         tours={discoverTours || []}
