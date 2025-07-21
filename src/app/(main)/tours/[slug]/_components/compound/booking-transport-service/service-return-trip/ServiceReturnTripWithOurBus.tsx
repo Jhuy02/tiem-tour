@@ -7,6 +7,7 @@ import PickupAndDropOffBusService from '@/app/(main)/tours/[slug]/_components/co
 import DatePickerField from '@/app/(main)/tours/[slug]/_components/form-controls/DatePickerField'
 import SelectOptionField from '@/app/(main)/tours/[slug]/_components/form-controls/SelectOptionField'
 import SelectTransportVehicle from '@/app/(main)/tours/[slug]/_components/form-controls/SelectTransportVehicle'
+import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
 import {
   Dialog,
   DialogContent,
@@ -14,40 +15,102 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import {FormField, FormItem, FormMessage} from '@/components/ui/form'
+} from '@/components/ui/dialog-v2'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form'
 import {RadioGroup} from '@/components/ui/radio-group'
-import {CITY_LIST, TransportVehicleList} from '@/constants/mockApi'
 import {BookingFormValues} from '@/schemas/booking.schema'
+import {TourDetailApiResType} from '@/types/tours.interface'
+import clsx from 'clsx'
 import Image from 'next/image'
-import {useMemo, useState} from 'react'
-import {useFormContext} from 'react-hook-form'
+import {useContext, useEffect, useMemo, useState} from 'react'
+import {useFormContext, useWatch} from 'react-hook-form'
 
 export default function ServiceReturnTripWithOurBus() {
-  const {control} = useFormContext<BookingFormValues>()
+  const pageContext = useContext(PageContext)
+  if (!pageContext) throw new Error('Page context is missing')
+  const {data: apiData}: {data: TourDetailApiResType} = pageContext
+
+  const {control, setValue} = useFormContext<BookingFormValues>()
   const [addedOptionSlug, setAddedOptionSlug] = useState<string | null>(null)
+
+  const returnTripPickupLocation = useWatch({
+    control,
+    name: 'returnTrip.data.pickUpLocation',
+  })
+  const returnTripPickupAddress = useWatch({
+    control,
+    name: 'returnTrip.data.pickUpAddress',
+  })
+  const returnTripArrivalLocation = useWatch({
+    control,
+    name: 'returnTrip.data.arrivalLocation',
+  })
+  const returnTripArrivalAddress = useWatch({
+    control,
+    name: 'returnTrip.data.arrivalAddress',
+  })
+  const returnTripArrivalTime = useWatch({
+    control,
+    name: 'returnTrip.data.arrivalTime',
+  })
+
+  const arrivalLocation = apiData?.package_tour?.arrival_use_bus?.map(
+    ({arrival_city}) => ({name: arrival_city, slug: arrival_city}),
+  )
+
+  const pickupVehicleList = useMemo(() => {
+    const vehicles = apiData?.package_tour?.main_car_pick_up_data.map(
+      (item) => {
+        return {
+          id: item.id,
+          name: item.title,
+          slug: item.id.toString(),
+          startTime: item.fields.start_time,
+          price: Number(item.fields.price_car_pax),
+          maximum: Number(item.fields.max_number_pax),
+        }
+      },
+    )
+    return vehicles || []
+  }, [apiData?.package_tour?.main_car_pick_up_data])
 
   const addedOtherOptionItem = useMemo(() => {
     if (!addedOptionSlug) return null
 
-    const item = TransportVehicleList.find((i) => i.slug === addedOptionSlug)
+    const item = pickupVehicleList.find((i) => i.slug === addedOptionSlug)
     if (!item) return null
 
-    const isInTop2 = TransportVehicleList.slice(0, 2).some(
-      (i) => i.slug === item.slug,
-    )
+    const isInTop2 = pickupVehicleList
+      .slice(0, 2)
+      .some((i) => i.slug === item.slug)
     return isInTop2 ? null : item
-  }, [addedOptionSlug])
+  }, [addedOptionSlug, pickupVehicleList])
+
+  useEffect(() => {
+    const arrivalInfo = apiData?.package_tour?.arrival_use_bus?.find(
+      (item) => item.arrival_city === returnTripArrivalLocation,
+    )
+    if (arrivalInfo) {
+      setValue('returnTrip.data.arrivalAddress', arrivalInfo.arrival_address_)
+      setValue('returnTrip.data.arrivalTime', arrivalInfo.arrival_time)
+    }
+  }, [
+    apiData?.package_tour?.arrival_use_bus,
+    returnTripArrivalLocation,
+    setValue,
+  ])
 
   return (
     <>
       <div className='xsm:hidden absolute top-0 right-0'>
         <Dialog>
-          <DialogTrigger asChild>
-            <button
-              type='button'
-              className='flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC] px-[1rem] py-[0.5rem]'
-            >
+          <DialogTrigger>
+            <div className='flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC] px-[1rem] py-[0.5rem]'>
               <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#303030]'>
                 Bus schedule
               </span>
@@ -58,9 +121,9 @@ export default function ServiceReturnTripWithOurBus() {
                 src={'/icons/chevron-right-double.svg'}
                 className='h-auto w-[1.25rem] shrink-0'
               />
-            </button>
+            </div>
           </DialogTrigger>
-          <DialogContent className='z-150 max-h-[95vh]! max-w-fit! rounded-none! border-none! bg-transparent! p-0! duration-500'>
+          <DialogContent className='max-h-[95vh]! max-w-fit! rounded-none! border-none! bg-transparent! p-0! duration-500'>
             <DialogHeader className='hidden'>
               <DialogTitle>Other Option</DialogTitle>
               <DialogDescription></DialogDescription>
@@ -76,22 +139,32 @@ export default function ServiceReturnTripWithOurBus() {
             Pick up at
           </p>
           <div className='xsm:space-x-0 xsm:flex-wrap xsm:space-y-[0.75rem] flex items-start space-x-[0.75rem]'>
-            <FormField
-              control={control}
-              name='return_trip_pickup_location'
-              render={({field}) => (
-                <FormItem className='xsm:basis-full flex-1'>
-                  <SelectOptionField
-                    label='Pick up at'
-                    placeholder='Select pickup location'
-                    options={CITY_LIST}
-                    disabled
-                    {...field}
+            <div className='xsm:basis-full flex-1'>
+              <div
+                className={clsx(
+                  'font-trip-sans pointer-events-none relative h-[3rem] cursor-not-allowed rounded-[0.75rem] border border-solid border-[#EDEDED] bg-[#F6F6F6]',
+                )}
+              >
+                <div className='flex h-full w-full cursor-pointer items-center justify-between space-x-[1rem] px-[1rem] py-[0.875rem]'>
+                  <p
+                    className={clsx(
+                      'text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]',
+                    )}
+                  >
+                    {returnTripPickupLocation}
+                  </p>
+                  <Image
+                    alt=''
+                    width={20}
+                    height={20}
+                    src='/icons/arrow-down.svg'
+                    className={clsx(
+                      'h-auto w-[1.25rem] shrink-0 transition-transform duration-300',
+                    )}
                   />
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                </FormItem>
-              )}
-            />
+                </div>
+              </div>
+            </div>
             <FormField
               control={control}
               name={'schedule_end'}
@@ -109,17 +182,17 @@ export default function ServiceReturnTripWithOurBus() {
           <div className='flex flex-col items-end space-y-[0.75rem]'>
             <FormField
               control={control}
-              name='return_trip_pickup_vehicle'
+              name='returnTrip.data.pickUpVehicle'
               render={({field}) => (
                 <FormItem className='self-stretch'>
                   <RadioGroup
                     className='grid grid-cols-2 gap-[0.75rem]'
-                    value={field.value}
+                    value={field.value.toString()}
                     onValueChange={field.onChange}
                     name={field.name}
                   >
-                    {Array.isArray(TransportVehicleList) &&
-                      TransportVehicleList?.slice(0, 2)?.map((item, index) => {
+                    {Array.isArray(pickupVehicleList) &&
+                      pickupVehicleList?.slice(0, 2)?.map((item, index) => {
                         return (
                           <div
                             key={index}
@@ -148,9 +221,16 @@ export default function ServiceReturnTripWithOurBus() {
                     <FormMessage className='font-trip-sans col-span-1 pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                     <div className='col-span-1 col-start-2 flex items-center justify-end'>
                       <OtherTransportVehicle
-                        keySchema='return_trip_pickup_vehicle'
-                        optionList={TransportVehicleList}
-                        onAddOption={(slug) => setAddedOptionSlug(slug)}
+                        keySchema='returnTrip.data.pickUpVehicle'
+                        optionList={pickupVehicleList}
+                        onAddOption={(slug) => {
+                          const isInTop2 = pickupVehicleList
+                            .slice(0, 2)
+                            .some((i) => i.slug === slug)
+                          if (!isInTop2) {
+                            setAddedOptionSlug(slug)
+                          }
+                        }}
                       />
                     </div>
                   </RadioGroup>
@@ -169,7 +249,7 @@ export default function ServiceReturnTripWithOurBus() {
                 className='h-auto w-[1.25rem]'
               />
               <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'>
-                Pick up at 94 Tran nhat duat street, BaDinh
+                {returnTripPickupAddress}
               </p>
             </div>
             <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'>
@@ -184,35 +264,48 @@ export default function ServiceReturnTripWithOurBus() {
           <div className='xsm:space-y-[0.75rem] xsm:space-x-0 xsm:flex-wrap flex items-start space-x-[0.75rem]'>
             <FormField
               control={control}
-              name='return_trip_arrival_location'
+              name='returnTrip.data.arrivalLocation'
               render={({field}) => (
                 <FormItem className='xsm:basis-full flex-1'>
-                  <SelectOptionField
-                    label='Arrival location'
-                    placeholder='Select arrival location'
-                    options={CITY_LIST}
-                    {...field}
-                  />
+                  <FormControl>
+                    <SelectOptionField
+                      label='Arrival location'
+                      placeholder='Select arrival location'
+                      options={arrivalLocation}
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
             />
-            <FormField
-              control={control}
-              name='outbound_trip_arrival_time'
-              render={({field}) => (
-                <FormItem className='flex-1'>
-                  <SelectOptionField
-                    label='Arrival time'
-                    placeholder='Select arrival time'
-                    options={CITY_LIST}
-                    disabled
-                    {...field}
+
+            <div className='flex-1'>
+              <div
+                className={clsx(
+                  'font-trip-sans pointer-events-none relative h-[3rem] cursor-not-allowed rounded-[0.75rem] border border-solid border-[#EDEDED] bg-[#F6F6F6]',
+                )}
+              >
+                <div className='flex h-full w-full cursor-pointer items-center justify-between space-x-[1rem] px-[1rem] py-[0.875rem]'>
+                  <p
+                    className={clsx(
+                      'text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]',
+                    )}
+                  >
+                    {returnTripArrivalTime}
+                  </p>
+                  <Image
+                    alt=''
+                    width={20}
+                    height={20}
+                    src='/icons/arrow-down.svg'
+                    className={clsx(
+                      'h-auto w-[1.25rem] shrink-0 opacity-40 transition-transform duration-300',
+                    )}
                   />
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                </FormItem>
-              )}
-            />
+                </div>
+              </div>
+            </div>
           </div>
           <div className='flex items-start space-x-[1rem] rounded-[0.75rem] border border-solid border-[#ECECEC] bg-[#F6F6F6] px-[1rem] py-[0.875rem]'>
             <Image
@@ -222,9 +315,9 @@ export default function ServiceReturnTripWithOurBus() {
               src={'/icons/marker-pin.svg'}
               className='h-auto w-[1.25rem] shrink-0'
             />
-            <div className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'>
-              <p>Stop at 01 Cho Gao Street</p>
-            </div>
+            <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'>
+              {returnTripArrivalAddress}
+            </p>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
-import { ILink } from '@/types/link.interface'
-import { IMedia } from '@/types/media.interface'
+import {ILink} from '@/types/link.interface'
+import {IMedia} from '@/types/media.interface'
 
 export interface TourTaxonomy {
   id: number
@@ -52,7 +52,7 @@ type TaxonomyItem = {
   slug: string
 }
 export interface TourItemDataResponse {
-  image: IMedia
+  images: IMedia
   duration: TaxonomyItem[]
   location: TaxonomyItem[]
   price: string
@@ -129,6 +129,70 @@ export interface InPolicy {
   }
   policy_content: string
 }
+
+export interface ArrivalUseBus {
+  arrival_city: string
+  arrival_address_: string
+  arrival_time: string
+}
+export interface ArrivalPrivate {
+  arrival_city: string
+  arrival_address_: string
+  arrival_time: string
+}
+
+export interface PrivateTransport {
+  id: number
+  name: string
+  maximum_person: string
+  pick_up_location: {
+    id: number
+    title: string
+    price: string
+  }[]
+}
+export interface MainCarPickup {
+  id: number
+  title: string
+  fields: {
+    price_car_pax: string
+    max_number_pax: string
+    start_time: string
+    images_review_car: IMedia[]
+  }
+}
+export interface ScheduleBus {
+  name: string
+  pickuplocation: string
+  dropofflocation: string
+  data: {
+    route: string
+    rows: {
+      pickuptime: string
+      departuretime: string
+      arrivaltime: string
+      vehicle_type: string
+      pickuppoint: string
+      dropoffpoint: string
+      price: string
+      recommend: boolean
+    }[]
+  }[]
+}
+
+export interface SchedulePrivateHanoiHagiang {
+  route_name: string
+  note: string
+  contact: ILink
+  items: {
+    vehicle_type: string
+    depart_time: string
+    arrival_time: string
+    price_noi_bai_airport_: string
+    hanoi_price: string
+  }[]
+}
+
 export interface TourDetailPackage {
   price: number
   duration_number: number
@@ -138,6 +202,12 @@ export interface TourDetailPackage {
   motorbike_rents: InMotorbikeRents
   gift: InGift
   policy: InPolicy
+  private_transport: PrivateTransport[]
+  main_car_pick_up_data: MainCarPickup[]
+  arrival_use_bus: ArrivalUseBus[]
+  arrival_private: ArrivalPrivate[]
+  pick_up_and_drop_off_bus_service: ScheduleBus[]
+  schedule_private_hanoi_hagiang: SchedulePrivateHanoiHagiang
 }
 
 export interface TourDetailContent {
@@ -166,11 +236,11 @@ export interface Overview {
     time: string
   }
   different: {
-    image: IMedia
+    images: IMedia
     text: string
   }
   gallery: {
-    image: IMedia
+    images: IMedia
     text: string
     link: ILink
   }
@@ -195,8 +265,8 @@ export interface Tripadvisor {
   number_of_reviews: string
   title: string
 }
-
 export type TourDetailApiResType = {
+  id: number
   title: string
   thumbnail: IMedia
   acf_fields: {
@@ -205,6 +275,39 @@ export type TourDetailApiResType = {
     landscape: Landscape[]
     faq: FAQ[]
     tripadvisor: Tripadvisor
+    note_tour: {
+      tour_included: string
+      tour_excludes: string
+    }
+    transport_service: {
+      outbound_trip: {
+        use_our_bus_service: {
+          title: string
+          arrival_location: string
+          arrival_time: string
+          arrival_address: string
+        }
+        private_transport: {
+          title: string
+          arrival_location: string
+          arrival_time: string
+        }
+      }
+      return_trip: {
+        use_our_bus_service: {
+          title: string
+          pickup_location: string
+          pickup_address: string
+          arrival_time: string
+        }
+        private_transport: {
+          title: string
+          arrival_location: string
+          arrival_time: string
+        }
+      }
+    }
+    tour_sale_percent: number | string
   }
   taxonomies: {
     duration: TourTaxonomy[]
