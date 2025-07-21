@@ -1,18 +1,18 @@
 'use client'
 
-import {useHeaderScroll} from '@/hooks/useHeaderScroll'
+import { getPathFromUrl } from '@/hooks/useGetPathFromUrl'
+import { useHeaderScroll } from '@/hooks/useHeaderScroll'
 import IconArrowHeader from '@/layout/header/header-pc/IconArrowHeader'
 import IconLocation from '@/layout/header/header-pc/IconLocation'
 import IconSearch from '@/layout/header/header-pc/IconSearch'
 import SvgBacKan from '@/layout/header/header-pc/SvgBacKan'
 import SvgCaoBang from '@/layout/header/header-pc/SvgCaoBang'
 import SvgHaGiang from '@/layout/header/header-pc/SvgHaGiang'
-import {DataLocation, HeaderOption, PageLink} from '@/types/options.interface'
+import { DataLocation, HeaderOption, PageLink } from '@/types/options.interface'
+import he from 'he'
 import Image from 'next/image'
 import Link from 'next/link'
 import './Header-pc.css'
-import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
-import he from 'he'
 
 export default function HeaderPc({
   HeaderOption,
@@ -22,7 +22,6 @@ export default function HeaderPc({
   ImgLocation: DataLocation
 }) {
   const {isHeaderHidden, isToursActive, setIsToursActive} = useHeaderScroll()
-
   return (
     <header
       id='header'
@@ -85,7 +84,7 @@ export default function HeaderPc({
                                 />
                                 <div className='minimap-svg__wapper'>
                                   <SvgHaGiang
-                                    src={ImgLocation?.ha_giang?.img.url}
+                                    src={ImgLocation?.ha_giang?.img?.url}
                                   />
                                 </div>
                                 <p>{ImgLocation?.ha_giang?.name}</p>
@@ -103,9 +102,7 @@ export default function HeaderPc({
                                   height={40}
                                 />
 
-                                <SvgCaoBang
-                                  src={ImgLocation?.cao_bang?.img.url}
-                                />
+                                <SvgCaoBang src={ImgLocation?.cao_bang?.img?.url} />
                                 <p>{ImgLocation?.cao_bang?.name}</p>
                               </Link>
                             </li>
@@ -121,9 +118,7 @@ export default function HeaderPc({
                                   height={40}
                                 />
                                 <div className='minimap-svg__wapper'>
-                                  <SvgBacKan
-                                    src={ImgLocation?.bac_kan?.img.url}
-                                  />
+                                  <SvgBacKan src={ImgLocation?.bac_kan?.img?.url} />
                                 </div>
                                 <p>{ImgLocation?.bac_kan?.name}</p>
                               </Link>

@@ -1,4 +1,4 @@
-import {IMedia} from './media.interface'
+import { IMedia } from './media.interface'
 
 export interface PageLink {
   id: number
