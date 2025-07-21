@@ -44,30 +44,16 @@ export default function BookingOverview() {
   const tourPackage = useWatch({control, name: 'package'})
 
   const packageInfo = useMemo(() => {
-    const salePercent = Number(apiData.acf_fields.tour_sale_percent)
     const pkg = apiData.package_tour
     if (tourType && tourPackage) {
       return (
         pkg[`${tourType === 'car_tour' ? 'car' : 'motorbike'}_package`]?.[
           tourPackage
-        ]?.map((item) => ({
-          ...item,
-          price: (1 - salePercent / 100) * item.price,
-        })) || []
+        ] || []
       )
     }
-    return (
-      pkg.motorbike_package.saving?.map((item) => ({
-        ...item,
-        price: (1 - salePercent / 100) * item.price,
-      })) || []
-    )
-  }, [
-    apiData.acf_fields.tour_sale_percent,
-    apiData.package_tour,
-    tourType,
-    tourPackage,
-  ])
+    return pkg.motorbike_package.saving || []
+  }, [apiData.package_tour, tourType, tourPackage])
 
   useEffect(() => {
     if (scheduleStart) {
@@ -85,7 +71,7 @@ export default function BookingOverview() {
 
   return (
     <div className='xsm:border-none xsm:rounded-0 xsm:p-[0.75rem] rounded-[1.5rem] border border-solid border-[#ededed] bg-white p-[1.5rem]'>
-      <div className='xsm:flex-col xsm:py-[1rem] xsm:space-y-[0.625rem] mb-[1rem] flex items-center justify-between border-b border-solid border-[#EDEDED] pb-[0.625rem]'>
+      <div className='xsm:flex-col xsm:py-[1rem] xsm:gap-[0.625rem] mb-[1rem] flex items-center justify-between border-b border-solid border-[#EDEDED] pb-[0.625rem]'>
         {apiData?.title && (
           <h3
             dangerouslySetInnerHTML={{__html: apiData?.title}}
@@ -337,7 +323,7 @@ export default function BookingOverview() {
             />
           </div>
         </div>
-        <div className='flex flex-col space-y-[0.75rem]'>
+        <div className='flex flex-col gap-[0.75rem]'>
           {/* Info Rider */}
           <div className='xsm:p-0 xsm:bg-transparent xsm:gap-[0.75rem] grid grid-cols-3 items-start gap-[2rem] rounded-[0.5rem] bg-[rgba(235,229,226,0.32)] p-[1.25rem]'>
             {!(tourType && tourPackage) &&
@@ -349,9 +335,6 @@ export default function BookingOverview() {
                       title={item.title}
                       price={Number(item.price)}
                       note={item.note}
-                      tour_sale_percent={
-                        Number(apiData?.acf_fields?.tour_sale_percent) ?? 0
-                      }
                     />
                   )
                 },
@@ -366,9 +349,6 @@ export default function BookingOverview() {
                       title={item.title}
                       price={Number(item.price)}
                       note={item.note}
-                      tour_sale_percent={
-                        Number(apiData?.acf_fields?.tour_sale_percent) ?? 0
-                      }
                     />
                   )
                 },
@@ -383,9 +363,6 @@ export default function BookingOverview() {
                       title={item.title}
                       price={Number(item.price)}
                       note={item.note}
-                      tour_sale_percent={
-                        Number(apiData?.acf_fields?.tour_sale_percent) ?? 0
-                      }
                     />
                   )
                 },
@@ -452,7 +429,9 @@ export default function BookingOverview() {
             })}
           </div>
           {/* Caution */}
-          <Caution content='NOTE: if you’re traveling alone, you have to pay 200K extra to get your own room' />
+          <div className='xsm:hidden'>
+            <Caution content='NOTE: if you’re traveling alone, you have to pay 200K extra to get your own room' />
+          </div>
         </div>
       </div>
     </div>

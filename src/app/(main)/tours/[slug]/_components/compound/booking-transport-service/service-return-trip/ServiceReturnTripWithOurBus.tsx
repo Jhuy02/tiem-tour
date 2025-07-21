@@ -15,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
+} from '@/components/ui/dialog-v2'
 import {
   FormControl,
   FormField,
@@ -123,7 +123,7 @@ export default function ServiceReturnTripWithOurBus() {
               />
             </div>
           </DialogTrigger>
-          <DialogContent className='z-150 max-h-[95vh]! max-w-fit! rounded-none! border-none! bg-transparent! p-0! duration-500'>
+          <DialogContent className='max-h-[95vh]! max-w-fit! rounded-none! border-none! bg-transparent! p-0! duration-500'>
             <DialogHeader className='hidden'>
               <DialogTitle>Other Option</DialogTitle>
               <DialogDescription></DialogDescription>
@@ -223,7 +223,14 @@ export default function ServiceReturnTripWithOurBus() {
                       <OtherTransportVehicle
                         keySchema='returnTrip.data.pickUpVehicle'
                         optionList={pickupVehicleList}
-                        onAddOption={(slug) => setAddedOptionSlug(slug)}
+                        onAddOption={(slug) => {
+                          const isInTop2 = pickupVehicleList
+                            .slice(0, 2)
+                            .some((i) => i.slug === slug)
+                          if (!isInTop2) {
+                            setAddedOptionSlug(slug)
+                          }
+                        }}
                       />
                     </div>
                   </RadioGroup>

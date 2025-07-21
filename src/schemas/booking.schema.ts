@@ -71,8 +71,10 @@ const bookingSchema = z
 
     motorcycles: z.array(
       z.object({
+        id: z.number(),
         name: z.string(),
         quantity: z.number().min(0, 'Quantity must be 0 or more'),
+        price: z.string(),
       }),
     ),
     riders: z.array(

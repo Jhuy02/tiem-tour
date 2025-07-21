@@ -1,4 +1,5 @@
 'use client'
+import LoadingSpinner from '@/app/(main)/tours/[slug]/_components/common/LoadingSpinner'
 import CheckoutDrawer from '@/app/(main)/tours/[slug]/_components/compound/booking-form-mobile.tsx/CheckoutDrawer'
 import ConfirmDrawer from '@/app/(main)/tours/[slug]/_components/compound/booking-form-mobile.tsx/ConfirmDrawer'
 import BookingHomestay from '@/app/(main)/tours/[slug]/_components/compound/booking-homestay'
@@ -13,13 +14,14 @@ import ICArrowLeftV2 from '@/components/icon/ICArrowLeftV2'
 import IconArrowRightV1 from '@/components/icon/IconArrowRightV1'
 import {BreadcrumbDynamic} from '@/components/ui/breadcrumb-dynamic'
 import {Form} from '@/components/ui/form'
+import fetchData from '@/fetches/fetchData'
 import useIsMobile from '@/hooks/useIsMobile'
 import bookingSchema, {BookingFormValues} from '@/schemas/booking.schema'
 import {TourDetailApiResType, TourDetailPackage} from '@/types/tours.interface'
 import {zodResolver} from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import {format} from 'date-fns'
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useState, useTransition} from 'react'
 import {useForm, useWatch} from 'react-hook-form'
 
 interface BookTourNowProps {
@@ -30,11 +32,12 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
   const pageContext = useContext(PageContext)
   if (!pageContext) throw new Error('Page context is missing')
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
-
+  const [isPending, setTransition] = useTransition()
   const isMobile = useIsMobile()
   const [showFormBooking, setShowFormBooking] = useState<boolean>(false)
   const [openCheckout, setOpenCheckout] = useState<boolean>(false)
   const [openConfirm, setOpenConfirm] = useState<boolean>(false)
+  const [totalPayment, setTotalPayment] = useState<number>(0)
 
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
@@ -101,8 +104,71 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
   function handleOpenBookingForm() {
     setShowFormBooking(true)
   }
-  function onSubmit(values: BookingFormValues) {
-    console.log('Form', values)
+  const onSubmit = async (values: BookingFormValues) => {
+    const formData = {
+      tour_id: apiData?.id,
+      tour_type: values?.tour_type === 'motorbike_tour' ? 'motorbike' : 'car',
+      package: values?.package,
+      riders: [
+        {
+          type: 'easy_rider',
+          quantity: Number(values?.riders[0].quantity),
+        },
+        {
+          type: 'ride_by_yourself',
+          quantity: Number(values?.riders[1].quantity),
+        },
+        {
+          type: 'behind_after',
+          quantity: Number(values?.riders[2].quantity),
+        },
+      ],
+      adults: values?.adults,
+      children: values?.children,
+      infants: values?.infants,
+      homestay_package: values?.package,
+      outbound_trip:
+        values?.outboundTrip?.data &&
+        'pickUpVehicle' in values.outboundTrip.data
+          ? Number(
+              (values.outboundTrip.data as {pickUpVehicle: string})
+                .pickUpVehicle,
+            )
+          : undefined,
+      return_trip:
+        values?.returnTrip?.data && 'pickUpVehicle' in values.returnTrip.data
+          ? Number(
+              (values.returnTrip.data as {pickUpVehicle: string}).pickUpVehicle,
+            )
+          : undefined,
+      rent_motorcycles: values.motorcycles.map(({id, quantity}) => ({
+        motorcycle_id: id,
+        quantity: quantity,
+      })),
+      deposit: values?.deposit === 'deposit',
+      schedule_start: format(values.schedule_start, 'yyyy-MM-dd'),
+      schedule_end: format(values.schedule_end, 'yyyy-MM-dd'),
+      duration: apiData?.taxonomies?.duration[0]?.name,
+      email: values?.yourEmail,
+      customer_name: values?.yourName,
+      phone: values?.yourPhone,
+      note: values?.yourMessage,
+    }
+
+    setTransition(async () => {
+      const response = await fetchData({
+        method: 'POST',
+        api: 'custom/v1/create-order',
+        option: {
+          body: JSON.stringify(formData),
+        },
+      })
+      if (response?.redirect_url) {
+        window.location.href = response.redirect_url
+      } else {
+        console.error('Không nhận được đường dẫn thanh toán từ server')
+      }
+    })
   }
 
   console.log('ERRORS: ', form.formState.errors)
@@ -116,6 +182,17 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
     name: 'schedule_end',
   })
 
+  const handleUpdateTotalPayment = (total: number) => {
+    setTotalPayment(total)
+  }
+
+  const handleClickCheckout = async () => {
+    const isValid = await form.trigger() // validate toàn bộ form
+    if (isValid) {
+      setOpenConfirm(true)
+    }
+  }
+
   useEffect(() => {
     if (showFormBooking) {
       document.body.style.overflow = 'hidden'
@@ -127,6 +204,7 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
   return (
     isMobile && (
       <>
+        <LoadingSpinner loading={isPending} />
         <div className='font-trip-sans fixed bottom-0 left-0 z-50 w-full'>
           <div className='xsm:flex hidden flex-col space-y-[0.625rem] bg-white px-[1.25rem] py-[0.75rem] shadow-[0px_-4px_24px_0px_rgba(0,0,0,0.08)]'>
             <div className='flex items-start justify-between'>
@@ -142,7 +220,7 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
               </div>
               <div className='flex flex-1 flex-col items-end'>
                 <p className='text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
-                  1.100.000 VNĐ
+                  {totalPayment.toLocaleString('en-US')} USD
                 </p>
                 <span className='text-[0.75rem] leading-[130%] font-normal tracking-[0.00188rem] text-[rgba(48,48,48,0.80)]'>
                   per adult
@@ -206,9 +284,7 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
               <div className='mt-[0.75rem] p-[1rem]'>
                 <button
                   type='button'
-                  onClick={() => {
-                    setOpenCheckout(true)
-                  }}
+                  onClick={handleClickCheckout}
                   className='flex h-[3.125rem] w-full items-center justify-center gap-[0.625rem] rounded-[3.125rem] bg-[#C83E21] px-[2.5rem] py-[1.5rem] hover:bg-[#C83E21]'
                 >
                   <p className='font-dvn-luckiest-guy h-[0.8125rem] text-[1.125rem] leading-[120%] text-white'>
@@ -238,6 +314,7 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
               )}
             >
               <CheckoutDrawer
+                onUpdateTotalPayment={handleUpdateTotalPayment}
                 onOpenConfirmDrawer={() => setOpenConfirm(true)}
                 onCloseCheckoutDrawer={() => setOpenCheckout(false)}
               />

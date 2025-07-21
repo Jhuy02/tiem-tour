@@ -348,24 +348,28 @@ export default function ServiceOutboundTripWithPrivateTransport() {
           </div>
         </div>
         {/* Caution */}
-        <div className='relative flex items-center space-x-[0.375rem] rounded-[0.75rem] bg-[#F5F5F5] p-[0.75rem]'>
-          <Image
-            alt=''
-            width={24}
-            height={24}
-            src={'/icons/caution.svg'}
-            className='h-auto w-[1.5rem] shrink-0'
-          />
-          <p className='flex-1 text-[0.75rem] leading-[130%] tracking-[0.00188rem] text-[rgba(48,48,48,0.80)]'>
-            NOTE: If you want to use this service to travel to other locations
-            such as <br /> SaPa, NinhBinh, CaoBang, BaBe. Please contact us
-          </p>
-          <Link
-            href={'/contact'}
-            className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#006CE4] underline'
-          >
-            Contact us
-          </Link>
+        <div className='xsm:flex-wrap relative flex items-center gap-[0.375rem] rounded-[0.75rem] bg-[#F5F5F5] p-[0.75rem]'>
+          <div className='flex flex-1 items-center gap-[0.375rem]'>
+            <Image
+              alt=''
+              width={24}
+              height={24}
+              src={'/icons/caution.svg'}
+              className='h-auto w-[1.5rem] shrink-0'
+            />
+            <p className='flex-1 text-[0.75rem] leading-[130%] tracking-[0.00188rem] text-[rgba(48,48,48,0.80)]'>
+              NOTE: If you want to use this service to travel to other locations
+              such as SaPa, NinhBinh, CaoBang, BaBe. Please contact us
+            </p>
+          </div>
+          <div className='xsm:basis-full xsm:flex xsm:justify-end shrink-0'>
+            <Link
+              href={'/contact'}
+              className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#006CE4] underline'
+            >
+              Contact us
+            </Link>
+          </div>
         </div>
       </div>
     </>

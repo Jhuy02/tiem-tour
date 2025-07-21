@@ -1,5 +1,5 @@
 'use client'
-import React, {useContext, useMemo} from 'react'
+import React, {useContext, useEffect, useMemo} from 'react'
 import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
 import {TourDetailApiResType} from '@/types/tours.interface'
 import {useFormContext, useWatch} from 'react-hook-form'
@@ -13,9 +13,11 @@ import {Label} from '@/components/ui/label'
 interface CheckoutDrawerProps {
   onCloseCheckoutDrawer: () => void
   onOpenConfirmDrawer: () => void
+  onUpdateTotalPayment: (price: number) => void
 }
 
 export default function CheckoutDrawer({
+  onUpdateTotalPayment,
   onCloseCheckoutDrawer,
   onOpenConfirmDrawer,
 }: CheckoutDrawerProps) {
@@ -24,8 +26,11 @@ export default function CheckoutDrawer({
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
   const {control} = useFormContext<BookingFormValues>()
 
-  const scheduleStart = useWatch({control, name: 'schedule_start'})
-  const scheduleEnd = useWatch({control, name: 'schedule_end'})
+  const tourSalePercent = Number(apiData.acf_fields.tour_sale_percent) / 100
+  // Lấy dữ liệu từ form
+  const scheduleStart: Date | null = useWatch({control, name: 'schedule_start'})
+  const scheduleEnd: Date | null = useWatch({control, name: 'schedule_end'})
+
   const adults = useWatch({control, name: 'adults'})
   const children = useWatch({control, name: 'children'})
   const infants = useWatch({control, name: 'infants'})
@@ -63,6 +68,8 @@ export default function CheckoutDrawer({
     name: 'returnTrip.data.pickUpVehicle',
   })
 
+  const rentMotorcycleList = useWatch({control, name: 'motorcycles'})
+
   const packageInfo = useMemo(() => {
     if (tourType === 'motorbike_tour' && tourPackage) {
       return apiData.package_tour.motorbike_package[tourPackage]
@@ -81,7 +88,7 @@ export default function CheckoutDrawer({
     const seatBehindPrice =
       Number(packageInfo[2].price) * Number(seatBehind) || 0
     return easyRiderPrice + rideByYourselfPrice + seatBehindPrice
-  }, [easyRider, rideByYourself, seatBehind, packageInfo])
+  }, [packageInfo, easyRider, rideByYourself, seatBehind])
 
   const transportVehicle = useMemo(() => {
     let outboundTripVehicle = null
@@ -155,8 +162,39 @@ export default function CheckoutDrawer({
   ])
 
   const totalPaymentPrice = useMemo(() => {
-    return totalRiderPrice
-  }, [totalRiderPrice])
+    const outboundTripTransportPrice =
+      outboundTripTransportType === 'personal_vehicle'
+        ? 0
+        : Number(transportVehicle.outboundTripVehicle?.price)
+    const returnTripTransportPrice =
+      returnTripTransportType === 'personal_vehicle'
+        ? 0
+        : Number(transportVehicle.returnTripVehicle?.price)
+    const totalRentMotorbikePrice = rentMotorcycleList.reduce(
+      (total, {price, quantity}) => {
+        return total + Number(price) * Number(quantity)
+      },
+      0,
+    )
+    return (
+      totalRiderPrice +
+      totalRentMotorbikePrice +
+      outboundTripTransportPrice +
+      returnTripTransportPrice
+    )
+  }, [
+    outboundTripTransportType,
+    rentMotorcycleList,
+    returnTripTransportType,
+    totalRiderPrice,
+    transportVehicle.outboundTripVehicle?.price,
+    transportVehicle.returnTripVehicle?.price,
+  ])
+
+  useEffect(() => {
+    onUpdateTotalPayment(totalPaymentPrice)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPaymentPrice])
 
   return (
     <div className='font-trip-sans relative rounded-t-[1.5rem] bg-white px-[1rem] pt-[1rem]'>
@@ -412,9 +450,29 @@ export default function CheckoutDrawer({
         </div>
         <div className="mb-[0.5rem] flex items-center justify-between rounded-[1rem] bg-[url('/common/common-background-pc.webp')] bg-cover bg-center bg-no-repeat p-[0.75rem]">
           <div className='flex flex-col space-y-[0.25rem] px-[0.75rem]'>
-            <p className='text-[1.125rem] font-extrabold tracking-[0.00281rem] text-[#303030]'>
-              {totalPaymentPrice.toLocaleString('en-US')} USD
-            </p>
+            {!tourSalePercent ? (
+              <p className='text-[1.125rem] font-extrabold tracking-[0.00281rem] text-[#303030]'>
+                {totalPaymentPrice.toLocaleString('en-US')} USD
+              </p>
+            ) : (
+              <>
+                <p className='text-[1.125rem] font-extrabold tracking-[0.00281rem] text-[#303030]'>
+                  {(
+                    Number(totalPaymentPrice) *
+                    (1 - tourSalePercent)
+                  ).toLocaleString('en-US')}{' '}
+                  USD
+                </p>
+                <p className='flex items-center space-x-[0.25rem]'>
+                  <span className='text-[0.875rem] leading-[150%] font-normal tracking-[0.00219rem] text-[rgba(48,48,48,0.80)] line-through'>
+                    {Number(totalPaymentPrice).toLocaleString('en-US')} USD
+                  </span>
+                  <span className='flex h-[1.25rem] w-fit items-center justify-center rounded-[1rem] bg-[#115A46]/60 px-[0.375rem] py-[0.1875rem] text-[0.75rem] font-bold text-white'>
+                    -27%
+                  </span>
+                </p>
+              </>
+            )}
           </div>
 
           <button
@@ -425,6 +483,15 @@ export default function CheckoutDrawer({
             <span className='text-[1.125rem] leading-[120%] font-extrabold tracking-[-0.0025rem] uppercase'>
               Check out
             </span>
+            {tourSalePercent && (
+              <span className='text-[0.75rem] leading-[130%] tracking-[0.00188rem]'>
+                Save{' '}
+                {Number(totalPaymentPrice * tourSalePercent).toLocaleString(
+                  'en-US',
+                )}{' '}
+                USD
+              </span>
+            )}
           </button>
         </div>
       </div>

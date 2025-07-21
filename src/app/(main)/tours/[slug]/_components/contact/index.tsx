@@ -13,7 +13,7 @@ import {useFormContext} from 'react-hook-form'
 export default function ContactInformation() {
   const {control} = useFormContext<BookingFormValues>()
   return (
-    <div className='xsm:p-[0rem_1rem_0rem_1rem] rounded-[1.5rem] bg-white p-[1.875rem_1.75rem] sm:border-[1px] sm:border-solid sm:border-[#EDEDED]'>
+    <div className='xsm:p-[1rem_1rem_0rem_1rem] rounded-[1.5rem] bg-white p-[1.875rem_1.75rem] sm:border-[1px] sm:border-solid sm:border-[#EDEDED]'>
       <p className='xsm:mb-[0.5rem] mb-[1.5rem] pb-[1rem] text-[1.125rem] leading-[1.3] font-[900] tracking-[0.00281rem] text-[#303030] sm:border-b-[0.0625rem] sm:border-solid sm:border-b-[#EDEDED]'>
         Contact information
       </p>

@@ -180,6 +180,19 @@ export interface ScheduleBus {
   }[]
 }
 
+export interface SchedulePrivateHanoiHagiang {
+  route_name: string
+  note: string
+  contact: ILink
+  items: {
+    vehicle_type: string
+    depart_time: string
+    arrival_time: string
+    price_noi_bai_airport_: string
+    hanoi_price: string
+  }[]
+}
+
 export interface TourDetailPackage {
   price: number
   duration_number: number
@@ -194,6 +207,7 @@ export interface TourDetailPackage {
   arrival_use_bus: ArrivalUseBus[]
   arrival_private: ArrivalPrivate[]
   pick_up_and_drop_off_bus_service: ScheduleBus[]
+  schedule_private_hanoi_hagiang: SchedulePrivateHanoiHagiang
 }
 
 export interface TourDetailContent {
@@ -251,8 +265,8 @@ export interface Tripadvisor {
   number_of_reviews: string
   title: string
 }
-
 export type TourDetailApiResType = {
+  id: number
   title: string
   thumbnail: IMedia
   acf_fields: {
@@ -271,6 +285,7 @@ export type TourDetailApiResType = {
           title: string
           arrival_location: string
           arrival_time: string
+          arrival_address: string
         }
         private_transport: {
           title: string
@@ -292,6 +307,7 @@ export type TourDetailApiResType = {
         }
       }
     }
+    tour_sale_percent: number | string
   }
   taxonomies: {
     duration: TourTaxonomy[]

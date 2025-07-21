@@ -1,6 +1,5 @@
 'use client'
 import Caution from '@/app/(main)/tours/[slug]/_components/common/Caution'
-import OtherOptionButton from '@/app/(main)/tours/[slug]/_components/common/OtherOptionButton'
 import IconArrowRightV1 from '@/components/icon/IconArrowRightV1'
 import {
   Dialog,
@@ -10,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
+} from '@/components/ui/dialog-v2'
 import {Label} from '@/components/ui/label'
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group'
 import {BookingFormValues} from '@/schemas/booking.schema'
@@ -63,13 +62,13 @@ export default function OtherTransportVehicle({
           </p>
         </div>
       </DialogTrigger>
-      <DialogContent className='max-h-[80vh]! w-[54.6875rem] max-w-[80vw]! rounded-none! border-none! bg-transparent! p-0! duration-500'>
+      <DialogContent className='xsm:w-full w-[54.6875rem] rounded-none! border-none! bg-transparent! p-0! duration-500'>
         <DialogHeader className='hidden'>
           <DialogTitle>Other Option</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <div className='font-trip-sans relative z-2 rounded-[2.25rem] bg-[#FAFAFA]'>
-          <div className='relative z-1 flex flex-col space-y-[1.5rem] px-[1.5rem] py-[1.875rem]'>
+        <div className='font-trip-sans xsm:overflow-y-auto xsm:rounded-b-none xsm:rounded-t-[1rem] relative z-2 max-h-[80vh]! rounded-[2.25rem] bg-[#FAFAFA]'>
+          <div className='xsm:p-[1rem] relative z-1 flex flex-col space-y-[1.5rem] px-[1.5rem] py-[1.875rem]'>
             <DialogClose asChild>
               <div className='absolute top-[1.5rem] right-[1.5rem] cursor-pointer'>
                 <Image
@@ -81,21 +80,21 @@ export default function OtherTransportVehicle({
                 />
               </div>
             </DialogClose>
-            <h3 className='font-trip-sans border-b border-solid border-[#EDEDED] pb-[1rem] text-left text-[1.125rem] leading-[130%] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
+            <h3 className='font-trip-sans xsm:border-none xsm:mb-0 border-b border-solid border-[#EDEDED] pb-[1rem] text-left text-[1.125rem] leading-[130%] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
               Other option
             </h3>
 
             <RadioGroup
               value={selectedVehicle}
               onValueChange={setSelectedVehicle}
-              className='grid grid-cols-2 gap-[0.75rem]'
+              className='xsm:gap-[0.5rem] grid grid-cols-2 gap-[0.75rem]'
             >
               {Array.isArray(optionList) &&
                 optionList?.map((item, index) => {
                   return (
                     <div
                       key={index}
-                      className='col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'
+                      className='xsm:col-span-full xsm:bg-white xsm:border xsm:border-solid xsm:border-[#EDEDED] col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'
                     >
                       <Label className='inline-flex w-full cursor-pointer items-center gap-0'>
                         <RadioGroupItem
@@ -152,7 +151,7 @@ export default function OtherTransportVehicle({
             <DialogClose asChild>
               <div
                 onClick={handleAddOtherOption}
-                className='inline-flex cursor-pointer items-center justify-center space-x-[0.625rem] rounded-[3.125rem] bg-[#C83E21] px-[2.5rem] py-[1.25rem] transition-colors duration-300 ease-out lg:hover:bg-[#EA6A44]'
+                className='xsm:h-[3.5rem] xsm:py-[1rem] inline-flex cursor-pointer items-center justify-center space-x-[0.625rem] rounded-[3.125rem] bg-[#C83E21] px-[2.5rem] py-[1.25rem] transition-colors duration-300 ease-out lg:hover:bg-[#EA6A44]'
               >
                 <span className='font-dvn-luckiest-guy inline-block h-[0.8125rem] text-[1.125rem] leading-[120%] text-white'>
                   Add other option

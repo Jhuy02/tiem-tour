@@ -9,10 +9,7 @@ export default function PickupAndDropOffBusService() {
   const pageContext = useContext(PageContext)
   if (!pageContext) throw new Error('Page context is missing')
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
-
   const scheduleList = apiData.package_tour?.pick_up_and_drop_off_bus_service
-
-  console.log(scheduleList)
 
   return (
     <div className='font-trip-sans xsm:pt-[1rem] xsm:px-[1rem] xsm:rounded-b-none xsm:w-full xsm:space-y-[1rem] flex w-fit flex-col space-y-[1.5rem] rounded-[1.5rem] bg-white px-[3.75rem] pt-[3.75rem]'>
@@ -21,7 +18,7 @@ export default function PickupAndDropOffBusService() {
       </p>
       <Tabs
         defaultValue={scheduleList[0]?.name}
-        className='relative flex w-full flex-col items-center gap-0 space-y-[1.5rem]'
+        className='xsm:items-start relative flex w-full flex-col items-center gap-0 space-y-[1.5rem]'
       >
         <TabsList className='xsm:justify-start xsm:self-stretch hidden_scroll flex h-auto items-center justify-center space-x-[0.5rem] overflow-x-auto border-none bg-transparent p-0'>
           {Array.isArray(scheduleList) &&
@@ -48,9 +45,10 @@ export default function PickupAndDropOffBusService() {
                 <TabsContent
                   value={name}
                   key={index}
+                  className='self-stretch'
                 >
-                  <div className='xsm:w-full xsm:pb-[1rem] relative max-h-[35rem] w-[76.9375rem] self-stretch overflow-auto! pb-[3.75rem]'>
-                    <table className='xsm:w-max max-h-full w-full border border-solid border-[#EDEDED]'>
+                  <div className='xsm:pb-[1rem] xsm:max-h-[50vh] relative max-h-[35rem] max-w-full self-stretch overflow-auto! pb-[3.75rem]'>
+                    <table className='xsm:table-fixed xsm:w-full max-h-full w-[76.9375rem] border border-solid border-[#EDEDED]'>
                       <thead className='border border-solid border-[#EDEDED] text-[0.875rem] leading-[120%] font-bold tracking-[0.00219rem] text-[#303030]'>
                         <tr>
                           <th

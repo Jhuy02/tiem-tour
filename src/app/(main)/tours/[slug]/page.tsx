@@ -43,7 +43,7 @@ export default async function TourDetail({
 
   return (
     <PageProvider data={data}>
-      <main>
+      <main className='xsm:pb-[5rem]'>
         <Banner data={data} />
         <div className='relative h-auto'>
           <Tab />

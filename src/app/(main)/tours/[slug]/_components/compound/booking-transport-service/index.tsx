@@ -1,5 +1,5 @@
 'use client'
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import ServiceReturnTripWithOurBus from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service/service-return-trip/ServiceReturnTripWithOurBus'
 import ServiceReturnTripWithPrivateTransport from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service/service-return-trip/ServiceReturnTripWithPrivateTransport'
 import ServiceReturnTripWithPersonalVehicle from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service/service-return-trip/ServiceReturnTripWithPersonalVehicle'
@@ -16,14 +16,6 @@ import {TRANSPORT_TOUR_SERVICE} from '@/constants/booking'
 import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
 import {TourDetailApiResType} from '@/types/tours.interface'
 import clsx from 'clsx'
-import {
-  DialogHeader,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog-v2'
 import Image from 'next/image'
 import PickupAndDropOffBusService from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service/_components/PickupAndDropOffBusService'
 import PickupAndDropOffPrivateService from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service/_components/PickupAndDropOffPrivateService'
@@ -32,6 +24,8 @@ export default function BookingTransportService() {
   const pageContext = useContext(PageContext)
   if (!pageContext) throw new Error('Page context is missing')
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
+  const [openBusSchedule, setOpenBusSchedule] = useState<boolean>(false)
+  const [openPrivateSchedule, setOpenPrivateSchedule] = useState<boolean>(false)
 
   const {control, setValue, clearErrors} = useFormContext<BookingFormValues>()
   const outboundType = useWatch({name: 'outboundTrip.type', control})
@@ -42,27 +36,30 @@ export default function BookingTransportService() {
     const outboundTrip = apiData?.acf_fields?.transport_service?.outbound_trip
 
     if (val === 'use_our_bus') {
-      const defaultVehicleType =
+      const defaultVehicle =
         apiData?.package_tour?.main_car_pick_up_data?.[0]?.id?.toString()
+      const defaultPickup = apiData?.package_tour?.pick_up_location[0]
+      const defaultArrival = outboundTrip?.use_our_bus_service
       setValue('outboundTrip.data', {
+        pickUpAddress: defaultPickup?.detail_location,
+        pickUpLocation: defaultPickup?.location,
+        pickUpVehicle: defaultVehicle,
+        arrivalLocation: defaultArrival?.arrival_location,
+        arrivalTime: defaultArrival?.arrival_time,
         arrivalAddress: '',
-        pickUpAddress:
-          apiData?.package_tour?.pick_up_location[0]?.detail_location,
-        pickUpLocation: apiData?.package_tour?.pick_up_location[0]?.location,
-        pickUpVehicle: defaultVehicleType,
-        arrivalLocation: outboundTrip?.use_our_bus_service?.arrival_location,
-        arrivalTime: outboundTrip?.use_our_bus_service?.arrival_time,
       })
     } else if (val === 'private_transport') {
-      const defaultVehicleType =
+      const defaultVehicle =
         apiData?.package_tour?.private_transport?.[0]?.id?.toString()
       const defaultPickupLocation =
         apiData?.package_tour?.private_transport?.[0]?.pick_up_location?.[0]?.id?.toString()
       setValue('outboundTrip.data', {
-        arrivalAddress: '',
+        arrivalAddress:
+          apiData?.acf_fields?.transport_service?.outbound_trip
+            ?.private_transport?.arrival_location,
         pickUpAddress: '',
         pickUpLocation: defaultPickupLocation,
-        pickUpVehicle: defaultVehicleType,
+        pickUpVehicle: defaultVehicle,
         arrivalLocation: outboundTrip?.private_transport?.arrival_location,
         arrivalTime: outboundTrip?.private_transport?.arrival_time,
       })
@@ -104,165 +101,225 @@ export default function BookingTransportService() {
   }
 
   return (
-    <div className='font-trip-sans xsm:rounded-0 xsm:border-none xsm:px-[0.75rem] xsm:py-[1rem] xsm:space-y-[1rem] flex flex-col space-y-[1.5rem] rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white px-[1.75rem] py-[1.875rem]'>
-      <div className='xsm:border-none xsm:pb-0 border-b border-solid border-[#EDEDED] pb-[1.5rem]'>
-        <p className='text-[1.125rem] leading-[130%] font-black tracking-[0.00281rem] text-[#303030]'>
-          Transport service
-        </p>
+    <>
+      <div
+        onClick={() => {
+          if (openBusSchedule) setOpenBusSchedule(false)
+          if (openPrivateSchedule) setOpenPrivateSchedule(false)
+        }}
+        className={clsx(
+          'fixed inset-0 z-9998 bg-black/25 transition-all duration-400 ease-out',
+          {
+            'visible opacity-100': openBusSchedule || openPrivateSchedule,
+            'invisible opacity-0': !(openBusSchedule || openPrivateSchedule),
+          },
+        )}
+      ></div>
+      <div
+        className={clsx(
+          'fixed right-0 bottom-0 left-0 z-9999 mb-0 w-full transition-all duration-400 ease-out',
+          {
+            'visible translate-y-0': openBusSchedule,
+            'invisible translate-y-full': !openBusSchedule,
+          },
+        )}
+      >
+        <PickupAndDropOffBusService />
+      </div>
+      <div
+        className={clsx(
+          'fixed right-0 bottom-0 left-0 z-9999 mb-0 w-full transition-all duration-400 ease-out',
+          {
+            'visible translate-y-0': openPrivateSchedule,
+            'invisible translate-y-full': !openPrivateSchedule,
+          },
+        )}
+      >
+        <PickupAndDropOffPrivateService />
       </div>
 
-      <div className='flex flex-col space-y-[1rem]'>
-        <div className='xsm:flex xsm:self-stretch xsm:items-center xsm:justify-between rounded-[0.75rem] bg-[rgba(235,229,226,0.32)] px-[1rem] py-[0.5rem]'>
-          <p className='xsm:text-[0.875rem] xsm:leading-[120%] xsm:tracking-[0.00875rem] py-[0.625rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#303030]'>
-            Outbound trip
+      <div className='font-trip-sans xsm:rounded-0 xsm:border-none xsm:px-[0.75rem] xsm:py-[1rem] xsm:space-y-[1rem] flex flex-col space-y-[1.5rem] rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white px-[1.75rem] py-[1.875rem]'>
+        <div className='xsm:border-none xsm:pb-0 border-b border-solid border-[#EDEDED] pb-[1.5rem]'>
+          <p className='text-[1.125rem] leading-[130%] font-black tracking-[0.00281rem] text-[#303030]'>
+            Transport service
           </p>
-          {outboundType !== 'personal_vehicle' && (
-            <Dialog>
-              <DialogTrigger asChild>
-                <div className='flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC] px-[1rem] py-[0.5rem]'>
-                  <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#303030]'>
-                    {outboundType === 'use_our_bus' && 'Bus schedule'}
-                    {outboundType === 'private_transport' && 'Private schedule'}
-                  </span>
-                  <Image
-                    alt=''
-                    width={20}
-                    height={20}
-                    src={'/icons/chevron-right-double.svg'}
-                    className='h-auto w-[1.25rem] shrink-0'
-                  />
-                </div>
-              </DialogTrigger>
-              <DialogContent className='xsm:w-full xsm:max-w-full max-h-[95vh]! max-w-fit rounded-none! border-none! bg-transparent! p-0! duration-500'>
-                <DialogHeader className='hidden'>
-                  <DialogTitle>Schedule Bus Service</DialogTitle>
-                  <DialogDescription></DialogDescription>
-                </DialogHeader>
+        </div>
 
-                {outboundType === 'use_our_bus' && (
-                  <PickupAndDropOffBusService />
-                )}
-                {outboundType === 'private_transport' && (
-                  <PickupAndDropOffPrivateService />
-                )}
-              </DialogContent>
-            </Dialog>
-          )}
-        </div>
-        <div className='relative mb-0 flex w-full flex-col gap-0 space-y-[0.75rem]'>
-          <div className='border-none bg-transparent p-0'>
-            <FormField
-              control={control}
-              name='outboundTrip.type'
-              render={({field}) => (
-                <FormItem className='block'>
-                  <RadioGroup
-                    className='xsm:w-full xsm:flex-nowrap xsm:overflow-x-auto hidden_scroll flex max-w-[40rem] flex-wrap gap-0 space-x-[0.5rem]'
-                    onValueChange={(val) => {
-                      field.onChange(val)
-                      handleOutboundTripChange(val)
-                    }}
-                    value={field.value}
-                    name={field.name}
-                  >
-                    {Array.isArray(TRANSPORT_TOUR_SERVICE) &&
-                      TRANSPORT_TOUR_SERVICE?.map(({name, slug}, index) => {
-                        return (
-                          <label
-                            key={index}
-                            className={clsx(
-                              'relative flex h-auto shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-[1.25rem] bg-[#EBEBEB] px-[1.5rem] py-[0.5rem] shadow-none! before:absolute before:inset-0 before:z-0 before:rounded-[1.25rem] before:bg-[linear-gradient(180deg,#F4F5E6_0%,#B2DFDC_100%)] before:opacity-0',
-                              {
-                                'before:opacity-100': field.value === slug,
-                              },
-                            )}
-                          >
-                            <RadioGroupItem
-                              value={slug}
-                              className='peer sr-only'
-                            />
-                            <span className='xsm:text-[0.75rem] xsm:leading-[130%] relative z-1 text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
-                              {name}
-                            </span>
-                          </label>
-                        )
-                      })}
-                  </RadioGroup>
-                </FormItem>
-              )}
-            ></FormField>
+        <div className='flex flex-col space-y-[1rem]'>
+          <div className='xsm:flex xsm:self-stretch xsm:items-center xsm:justify-between rounded-[0.75rem] bg-[rgba(235,229,226,0.32)] px-[1rem] py-[0.5rem]'>
+            <p className='xsm:text-[0.875rem] xsm:leading-[120%] xsm:tracking-[0.00875rem] py-[0.625rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#303030]'>
+              Outbound trip
+            </p>
+            <div className='xsm:block hidden'>
+              <button
+                type='button'
+                onClick={() => {
+                  if (outboundType === 'use_our_bus') {
+                    setOpenBusSchedule(true)
+                  }
+                  if (outboundType === 'private_transport') {
+                    setOpenPrivateSchedule(true)
+                  }
+                }}
+                className='flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.5rem] border border-solid border-[#ECECEC] bg-white px-[0.75rem] py-[0.375rem]'
+              >
+                <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#303030]'>
+                  {outboundType === 'use_our_bus' && 'Bus schedule'}
+                  {outboundType === 'private_transport' && 'Private schedule'}
+                </span>
+                <Image
+                  alt=''
+                  width={20}
+                  height={20}
+                  src={'/icons/chevron-right-double.svg'}
+                  className='h-auto w-[1.25rem] shrink-0'
+                />
+              </button>
+            </div>
           </div>
-          {outboundType === 'use_our_bus' && <ServiceOutboundTripWithOurBus />}
-          {outboundType === 'private_transport' && (
-            <ServiceOutboundTripWithPrivateTransport />
-          )}
-          {outboundType === 'personal_vehicle' && (
-            <ServiceOutboundTripWithPersonalVehicle />
-          )}
-        </div>
-      </div>
-      <div className='flex flex-col space-y-[1rem]'>
-        <div className='rounded-[0.75rem] bg-[rgba(235,229,226,0.32)] px-[1rem] py-[0.5rem]'>
-          <p className='xsm:font-extrabold xsm:text-[0.875rem] xsm:leading-[120%] xsm:tracking-[0.00875rem] py-[0.625rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#303030]'>
-            Return trip
-          </p>
-        </div>
-        <div className='relative mb-0 flex w-full flex-col gap-0 space-y-[0.75rem]'>
-          <div className='border-none bg-transparent p-0'>
-            <FormField
-              control={control}
-              name='returnTrip.type'
-              render={({field}) => (
-                <FormItem className='block'>
-                  <RadioGroup
-                    className='xsm:w-full xsm:flex-nowrap xsm:overflow-x-auto hidden_scroll flex max-w-[40rem] flex-wrap gap-0 space-x-[0.5rem]'
-                    onValueChange={(val) => {
-                      field.onChange(val)
-                      handleReturnTripChange(val)
-                    }}
-                    value={field.value}
-                    name={field.name}
-                  >
-                    {Array.isArray(TRANSPORT_TOUR_SERVICE) &&
-                      TRANSPORT_TOUR_SERVICE?.map(({name, slug}, index) => {
-                        return (
-                          <label
-                            key={index}
-                            className={clsx(
-                              'relative flex h-auto shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-[1.25rem] bg-[#EBEBEB] px-[1.5rem] py-[0.5rem] shadow-none! before:absolute before:inset-0 before:z-0 before:rounded-[1.25rem] before:bg-[linear-gradient(180deg,#F4F5E6_0%,#B2DFDC_100%)] before:opacity-0',
-                              {
-                                'before:opacity-100': field.value === slug,
-                              },
-                            )}
-                          >
-                            <RadioGroupItem
-                              value={slug}
-                              className='peer sr-only'
-                            />
-                            <span className='xsm:text-[0.75rem] xsm:leading-[130%] relative z-1 text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
-                              {name}
-                            </span>
-                          </label>
-                        )
-                      })}
-                  </RadioGroup>
-                </FormItem>
-              )}
-            ></FormField>
+          <div className='relative mb-0 flex w-full flex-col gap-0 space-y-[0.75rem]'>
+            <div className='border-none bg-transparent p-0'>
+              <FormField
+                control={control}
+                name='outboundTrip.type'
+                render={({field}) => (
+                  <FormItem className='block'>
+                    <RadioGroup
+                      className='xsm:w-full xsm:flex-nowrap xsm:overflow-x-auto hidden_scroll flex max-w-[40rem] flex-wrap gap-0 space-x-[0.5rem]'
+                      onValueChange={(val) => {
+                        field.onChange(val)
+                        handleOutboundTripChange(val)
+                      }}
+                      value={field.value}
+                      name={field.name}
+                    >
+                      {Array.isArray(TRANSPORT_TOUR_SERVICE) &&
+                        TRANSPORT_TOUR_SERVICE?.map(({name, slug}, index) => {
+                          return (
+                            <label
+                              key={index}
+                              className={clsx(
+                                'relative flex h-auto shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-[1.25rem] bg-[#EBEBEB] px-[1.5rem] py-[0.5rem] shadow-none! before:absolute before:inset-0 before:z-0 before:rounded-[1.25rem] before:bg-[linear-gradient(180deg,#F4F5E6_0%,#B2DFDC_100%)] before:opacity-0',
+                                {
+                                  'before:opacity-100': field.value === slug,
+                                },
+                              )}
+                            >
+                              <RadioGroupItem
+                                value={slug}
+                                className='peer sr-only'
+                              />
+                              <span className='xsm:text-[0.75rem] xsm:leading-[130%] relative z-1 text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
+                                {name}
+                              </span>
+                            </label>
+                          )
+                        })}
+                    </RadioGroup>
+                  </FormItem>
+                )}
+              ></FormField>
+            </div>
+            {outboundType === 'use_our_bus' && (
+              <ServiceOutboundTripWithOurBus />
+            )}
+            {outboundType === 'private_transport' && (
+              <ServiceOutboundTripWithPrivateTransport />
+            )}
+            {outboundType === 'personal_vehicle' && (
+              <ServiceOutboundTripWithPersonalVehicle />
+            )}
           </div>
-          {returnType === 'use_our_bus' && <ServiceReturnTripWithOurBus />}
-          {returnType === 'private_transport' && (
-            <ServiceReturnTripWithPrivateTransport />
-          )}
-          {returnType === 'personal_vehicle' && (
-            <ServiceReturnTripWithPersonalVehicle />
-          )}
         </div>
+        <div className='flex flex-col space-y-[1rem]'>
+          <div className='flex items-center justify-between rounded-[0.75rem] bg-[rgba(235,229,226,0.32)] px-[1rem] py-[0.5rem]'>
+            <p className='xsm:font-extrabold xsm:text-[0.875rem] xsm:leading-[120%] xsm:tracking-[0.00875rem] py-[0.625rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#303030]'>
+              Return trip
+            </p>
+            <div className='xsm:block hidden'>
+              <button
+                type='button'
+                onClick={() => {
+                  if (returnType === 'use_our_bus') {
+                    setOpenBusSchedule(true)
+                  }
+                  if (returnType === 'private_transport') {
+                    setOpenPrivateSchedule(true)
+                  }
+                }}
+                className='flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.5rem] border border-solid border-[#ECECEC] bg-white px-[0.75rem] py-[0.375rem]'
+              >
+                <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#303030]'>
+                  {returnType === 'use_our_bus' && 'Bus schedule'}
+                  {returnType === 'private_transport' && 'Private schedule'}
+                </span>
+                <Image
+                  alt=''
+                  width={20}
+                  height={20}
+                  src={'/icons/chevron-right-double.svg'}
+                  className='h-auto w-[1.25rem] shrink-0'
+                />
+              </button>
+            </div>
+          </div>
+          <div className='relative mb-0 flex w-full flex-col gap-0 space-y-[0.75rem]'>
+            <div className='border-none bg-transparent p-0'>
+              <FormField
+                control={control}
+                name='returnTrip.type'
+                render={({field}) => (
+                  <FormItem className='block'>
+                    <RadioGroup
+                      className='xsm:w-full xsm:flex-nowrap xsm:overflow-x-auto hidden_scroll flex max-w-[40rem] flex-wrap gap-0 space-x-[0.5rem]'
+                      onValueChange={(val) => {
+                        field.onChange(val)
+                        handleReturnTripChange(val)
+                      }}
+                      value={field.value}
+                      name={field.name}
+                    >
+                      {Array.isArray(TRANSPORT_TOUR_SERVICE) &&
+                        TRANSPORT_TOUR_SERVICE?.map(({name, slug}, index) => {
+                          return (
+                            <label
+                              key={index}
+                              className={clsx(
+                                'relative flex h-auto shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-[1.25rem] bg-[#EBEBEB] px-[1.5rem] py-[0.5rem] shadow-none! before:absolute before:inset-0 before:z-0 before:rounded-[1.25rem] before:bg-[linear-gradient(180deg,#F4F5E6_0%,#B2DFDC_100%)] before:opacity-0',
+                                {
+                                  'before:opacity-100': field.value === slug,
+                                },
+                              )}
+                            >
+                              <RadioGroupItem
+                                value={slug}
+                                className='peer sr-only'
+                              />
+                              <span className='xsm:text-[0.75rem] xsm:leading-[130%] relative z-1 text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
+                                {name}
+                              </span>
+                            </label>
+                          )
+                        })}
+                    </RadioGroup>
+                  </FormItem>
+                )}
+              ></FormField>
+            </div>
+            {returnType === 'use_our_bus' && <ServiceReturnTripWithOurBus />}
+            {returnType === 'private_transport' && (
+              <ServiceReturnTripWithPrivateTransport />
+            )}
+            {returnType === 'personal_vehicle' && (
+              <ServiceReturnTripWithPersonalVehicle />
+            )}
+          </div>
+        </div>
+        <div className='xsm:hidden'>
+          <Caution content='We will call you back to confirm the pickup date and location.' />
+        </div>
+        <TransportVehicleGallery />
       </div>
-      <div className='xsm:hidden'>
-        <Caution content='We will call you back to confirm the pickup date and location.' />
-      </div>
-      <TransportVehicleGallery />
-    </div>
+    </>
   )
 }

@@ -15,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
+} from '@/components/ui/dialog-v2'
 import {
   FormControl,
   FormField,
@@ -111,7 +111,7 @@ export default function ServiceOutboundTripWithOurBus() {
               />
             </div>
           </DialogTrigger>
-          <DialogContent className='z-150 max-h-[95vh]! max-w-fit! rounded-none! border-none! bg-transparent! p-0! duration-500'>
+          <DialogContent className='max-h-[95vh]! max-w-fit! rounded-none! border-none! bg-transparent! p-0! duration-500'>
             <DialogHeader className='hidden'>
               <DialogTitle>Schedule Bus Service</DialogTitle>
               <DialogDescription></DialogDescription>

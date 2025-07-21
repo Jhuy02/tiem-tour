@@ -113,7 +113,10 @@ export default function SelectOptionField({
             <RadioGroup
               className='flex flex-col gap-0 space-y-[0.25rem]'
               value={value}
-              onValueChange={onChange}
+              onValueChange={(val) => {
+                onChange?.(val)
+                setIsOpen(false)
+              }}
               name={name}
             >
               {Array.isArray(options) &&

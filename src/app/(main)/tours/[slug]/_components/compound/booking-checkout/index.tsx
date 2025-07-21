@@ -36,7 +36,7 @@ export default function BookingCheckout() {
   const pageContext = useContext(PageContext)
   if (!pageContext) throw new Error('Page context is missing')
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
-  const {watch, control} = useFormContext<BookingFormValues>()
+  const {watch, control, trigger} = useFormContext<BookingFormValues>()
   const [agreePolicyStatus, setAgreePolicyStatus] = useState<boolean>(false)
   const [openConfirmPayment, setOpenConfirmPayment] = useState<boolean>(false)
   const tourSalePercent = Number(apiData.acf_fields.tour_sale_percent) / 100
@@ -97,16 +97,13 @@ export default function BookingCheckout() {
   }, [tourType, tourPackage])
 
   const totalRiderPrice = useMemo(() => {
-    const easyRiderPrice =
-      Number(packageInfo[0].price) *
-        Number(easyRider) *
-        (1 - tourSalePercent) || 0
+    const easyRiderPrice = Number(packageInfo[0].price) * Number(easyRider) || 0
     const rideByYourselfPrice =
       Number(packageInfo[1].price) * Number(rideByYourself) || 0
     const seatBehindPrice =
       Number(packageInfo[2].price) * Number(seatBehind) || 0
     return easyRiderPrice + rideByYourselfPrice + seatBehindPrice
-  }, [packageInfo, easyRider, rideByYourself, seatBehind, tourSalePercent])
+  }, [packageInfo, easyRider, rideByYourself, seatBehind])
 
   const transportVehicle = useMemo(() => {
     let outboundTripVehicle = null
@@ -208,6 +205,13 @@ export default function BookingCheckout() {
     transportVehicle.outboundTripVehicle?.price,
     transportVehicle.returnTripVehicle?.price,
   ])
+
+  const handleClickCheckout = async () => {
+    const isValid = await trigger() // validate toàn bộ form
+    if (isValid) {
+      setOpenConfirmPayment(true)
+    }
+  }
 
   return (
     <>
@@ -320,8 +324,7 @@ export default function BookingCheckout() {
                             <p className='text-right text-[0.875rem] leading-[150%] font-medium tracking-[0.00219rem] text-[#303030]'>
                               <span className=''>
                                 {(
-                                  Number(item.price * (1 - tourSalePercent)) *
-                                  Number(field.value)
+                                  Number(item.price) * Number(field.value)
                                 ).toLocaleString('en-US')}{' '}
                                 USD
                               </span>
@@ -480,29 +483,47 @@ export default function BookingCheckout() {
         </div>
         <div className="mb-[0.5rem] flex items-center justify-between rounded-[1rem] bg-[url('/common/common-background-pc.webp')] bg-cover bg-center bg-no-repeat p-[0.75rem]">
           <div className='flex flex-col space-y-[0.25rem] px-[0.75rem]'>
-            <p className='text-[1.125rem] font-extrabold tracking-[0.00281rem] text-[#303030]'>
-              {totalPaymentPrice.toLocaleString('en-US')} USD
-            </p>
-            {/* <p className='flex items-center space-x-[0.25rem]'>
-              <span className='text-[0.875rem] leading-[150%] font-normal tracking-[0.00219rem] text-[rgba(48,48,48,0.80)] line-through'>
-                29.200.000
-              </span>
-              <span className='flex h-[1.25rem] w-fit items-center justify-center rounded-[1rem] bg-[#115A46]/60 px-[0.375rem] py-[0.1875rem] text-[0.75rem] font-bold text-white'>
-                -27%
-              </span> 
-            </p> */}
+            {!tourSalePercent ? (
+              <p className='text-[1.125rem] font-extrabold tracking-[0.00281rem] text-[#303030]'>
+                {totalPaymentPrice.toLocaleString('en-US')} USD
+              </p>
+            ) : (
+              <>
+                <p className='text-[1.125rem] font-extrabold tracking-[0.00281rem] text-[#303030]'>
+                  {(
+                    Number(totalPaymentPrice) *
+                    (1 - tourSalePercent)
+                  ).toLocaleString('en-US')}{' '}
+                  USD
+                </p>
+                <p className='flex items-center space-x-[0.25rem]'>
+                  <span className='text-[0.875rem] leading-[150%] font-normal tracking-[0.00219rem] text-[rgba(48,48,48,0.80)] line-through'>
+                    {Number(totalPaymentPrice).toLocaleString('en-US')} USD
+                  </span>
+                  <span className='flex h-[1.25rem] w-fit items-center justify-center rounded-[1rem] bg-[#115A46]/60 px-[0.375rem] py-[0.1875rem] text-[0.75rem] font-bold text-white'>
+                    -27%
+                  </span>
+                </p>
+              </>
+            )}
           </div>
           <Button
             type='button'
-            onClick={() => setOpenConfirmPayment(true)}
+            onClick={handleClickCheckout}
             className='flex h-[4.375rem] w-[10.40625rem] cursor-pointer flex-col items-center justify-center rounded-[0.75rem] bg-[#C83E21] text-white duration-300 ease-out hover:bg-[#EA6A44]'
           >
             <span className='text-[1.125rem] leading-[120%] font-extrabold tracking-[-0.0025rem] uppercase'>
               Check out
             </span>
-            {/* <span className='text-[0.75rem] leading-[130%] tracking-[0.00188rem]'>
-                Save 3.078.000 USD
-              </span> */}
+            {tourSalePercent && (
+              <span className='text-[0.75rem] leading-[130%] tracking-[0.00188rem]'>
+                Save{' '}
+                {Number(totalPaymentPrice * tourSalePercent).toLocaleString(
+                  'en-US',
+                )}{' '}
+                USD
+              </span>
+            )}
           </Button>
         </div>
         <div>
