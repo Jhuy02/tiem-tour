@@ -68,7 +68,7 @@ export default function OurTourPC({
   return (
     <div
       ref={warperRef}
-      className='ourTour-list'
+      className='ourTour-list pb-[30rem]!'
     >
       <div className='ourTour-list__item ourTour__item1 ourTour-list__item_animation'>
         <Swiper
@@ -389,6 +389,7 @@ export default function OurTourPC({
           height={120}
         />
       </div>
+      <div className='swiper-pagination-ourTour__item'></div>
     </div>
   )
 }

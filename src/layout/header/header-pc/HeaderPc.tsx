@@ -1,6 +1,5 @@
 'use client'
 
-import ImageFallback from '@/components/image/ImageFallback'
 import { getPathFromUrl } from '@/hooks/useGetPathFromUrl'
 import { useHeaderScroll } from '@/hooks/useHeaderScroll'
 import IconArrowHeader from '@/layout/header/header-pc/IconArrowHeader'
@@ -33,7 +32,7 @@ export default function HeaderPc({
           <ul>
             <li>
               <Link href='/'>
-                <ImageFallback
+                <Image
                   className='header__logo'
                   alt={HeaderOption.logo.alt}
                   src={HeaderOption.logo.url}
@@ -159,7 +158,7 @@ export default function HeaderPc({
             target='__blank'
           >
             <p>{HeaderOption?.let_your_trip?.title}</p>
-            <ImageFallback
+            <Image
               src={HeaderOption?.let_your_trip?.hotline_image?.url}
               alt={HeaderOption?.let_your_trip?.hotline_image?.alt}
               width={40}

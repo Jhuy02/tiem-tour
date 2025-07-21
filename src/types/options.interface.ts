@@ -82,26 +82,17 @@ export interface CtaButtons {
 export interface DataLocation {
   ha_giang: {
     name: string
-    img: {
-      url: string
-      alt: string
-    }
+    img: IMedia
     slug: string
   }
   cao_bang: {
     name: string
-    img: {
-      url: string
-      alt: string
-    }
+    img: IMedia
     slug: string
   }
   bac_kan: {
     name: string
-    img: {
-      url: string
-      alt: string
-    }
+    img: IMedia
     slug: string
   }
 }
