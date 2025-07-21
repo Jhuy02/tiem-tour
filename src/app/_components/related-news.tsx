@@ -34,12 +34,12 @@ export default function RelatedNewsList({data}: RelatedNewsList) {
 
   return (
     <section className='relative w-full overflow-hidden py-[2rem] sm:py-[6.25rem]'>
-      <div className='relative max-w-[87.5rem] mx-auto'>
-        <div className='flex items-center justify-between mb-[0.75rem] sm:mb-[1.75rem] px-[1rem]'>
-          <h2 className='text-[#3b3943] font-dvn-luckiest-guy text-[1.5625rem] sm:text-[3rem] font-normal leading-[130%] flex-1 mr-[1.5rem]'>
+      <div className='relative mx-auto max-w-[87.5rem]'>
+        <div className='mb-[0.75rem] flex items-center justify-between px-[1rem] sm:mb-[1.75rem]'>
+          <h2 className='font-dvn-luckiest-guy mr-[1.5rem] flex-1 text-[1.5625rem] leading-[130%] font-normal text-[#3b3943] sm:text-[3rem]'>
             Related Blog
           </h2>
-          <div className='hidden sm:flex items-center shrink-0 space-x-[1rem]'>
+          <div className='hidden shrink-0 items-center space-x-[1rem] sm:flex'>
             <ButtonNavPrev className='related-swiper-prev-btn' />
             <ButtonNavNext className='related-swiper-next-btn' />
           </div>
@@ -80,14 +80,14 @@ export default function RelatedNewsList({data}: RelatedNewsList) {
             })}
           </Swiper>
         </div>
-        <div className='sm:hidden flex w-full overflow-x-auto scrollbar-hidden'>
+        <div className='scrollbar-hidden flex w-full overflow-x-auto sm:hidden'>
           {data?.map((blog, index) => {
             const backgroundColor = BACKGROUND_CARD_BY_INDEX[index % 5]
             return (
               <Link
                 key={index}
                 href={blog.link}
-                className='w-[19.625rem] shrink-0 last:mr-[1rem] first:ml-[1rem] not-first:ml-[0.75rem]'
+                className='w-[19.625rem] shrink-0 not-first:ml-[0.75rem] first:ml-[1rem] last:mr-[1rem]'
               >
                 <NewsCard
                   style={{backgroundColor}}

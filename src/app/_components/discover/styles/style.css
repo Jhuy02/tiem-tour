@@ -2,7 +2,6 @@
   height: 83.0625rem;
   width: 100%;
   background: #093137;
-  margin-top: 10rem;
   position: relative;
   padding-top: 4.4875rem;
 }
@@ -212,7 +211,9 @@
 
 #discover .discover__slide-content-title {
   color: var(--Text-Tittle-1, #3b3943);
-  font-feature-settings: 'liga' off, 'clig' off;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
   font-family: 'DVN - Luckiest Guy';
   font-size: 1.25rem;
   font-style: normal;
@@ -245,7 +246,9 @@
 
 #discover .discover__slide-content-price-number {
   color: var(--Red, #c83e21);
-  font-feature-settings: 'liga' off, 'clig' off;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
 
   /* PC/H4/24-R- Upper */
   font-family: 'DVN - Luckiest Guy';
@@ -468,7 +471,9 @@
 
   #discover .discover__slide-content-title {
     color: var(--Text-Tittle-1, #3b3943);
-    font-feature-settings: 'liga' off, 'clig' off;
+    font-feature-settings:
+      'liga' off,
+      'clig' off;
 
     /* MB/18/18 - DVN - mb */
     font-family: var(--font-dvn-luckiest-guy);
@@ -488,7 +493,9 @@
 
   #discover .discover__slide-content-price-number {
     color: var(--Red, #c83e21);
-    font-feature-settings: 'liga' off, 'clig' off;
+    font-feature-settings:
+      'liga' off,
+      'clig' off;
 
     /* MB/18/18 - DVN - mb */
     font-family: var(--font-dvn-luckiest-guy);

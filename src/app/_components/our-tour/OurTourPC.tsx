@@ -1,18 +1,19 @@
 'use client'
 
+import ICBtnArrow from '@/app/_components/our-tour/ICBtnArrow'
 import ImageFallback from '@/components/image/ImageFallback'
-import {animateTitle} from '@/hooks/useAnimateTitle'
-import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
-import {TypeOurTour, TypeOurTourList} from '@/types/home.interface'
+import { animateTitle } from '@/hooks/useAnimateTitle'
+import { getPathFromUrl } from '@/hooks/useGetPathFromUrl'
+import { TypeOurTour, TypeOurTourList } from '@/types/home.interface'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useRef, useState} from 'react'
-import type {Swiper as SwiperType} from 'swiper'
+import { useRef, useState } from 'react'
+import type { Swiper as SwiperType } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/parallax'
-import {Autoplay, Pagination, Parallax} from 'swiper/modules'
-import {Swiper, SwiperRef, SwiperSlide} from 'swiper/react'
+import { Autoplay, Pagination, Parallax } from 'swiper/modules'
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
 
 export default function OurTourPC({
   data,
@@ -67,7 +68,7 @@ export default function OurTourPC({
   return (
     <div
       ref={warperRef}
-      className='ourTour-list'
+      className='ourTour-list pb-[30rem]!'
     >
       <div className='ourTour-list__item ourTour__item1 ourTour-list__item_animation'>
         <Swiper
@@ -376,6 +377,9 @@ export default function OurTourPC({
           </p>
           <p className='discoverourtours__total'>{total} + tour for you</p>
         </div>
+        <div className='absolute top-0 left-[50%] translate-x-[-50%] size-[4rem] z-10'>
+          <ICBtnArrow className='size-[4rem]'/>
+        </div>
       </Link>
       <div className='ourTour-deco2'>
         <Image
@@ -385,6 +389,7 @@ export default function OurTourPC({
           height={120}
         />
       </div>
+      <div className='swiper-pagination-ourTour__item'></div>
     </div>
   )
 }

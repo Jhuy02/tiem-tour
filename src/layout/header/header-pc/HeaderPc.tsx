@@ -1,19 +1,18 @@
 'use client'
 
-import ImageFallback from '@/components/image/ImageFallback'
-import {useHeaderScroll} from '@/hooks/useHeaderScroll'
+import { getPathFromUrl } from '@/hooks/useGetPathFromUrl'
+import { useHeaderScroll } from '@/hooks/useHeaderScroll'
 import IconArrowHeader from '@/layout/header/header-pc/IconArrowHeader'
 import IconLocation from '@/layout/header/header-pc/IconLocation'
 import IconSearch from '@/layout/header/header-pc/IconSearch'
 import SvgBacKan from '@/layout/header/header-pc/SvgBacKan'
 import SvgCaoBang from '@/layout/header/header-pc/SvgCaoBang'
 import SvgHaGiang from '@/layout/header/header-pc/SvgHaGiang'
-import {DataLocation, HeaderOption, PageLink} from '@/types/options.interface'
+import { DataLocation, HeaderOption, PageLink } from '@/types/options.interface'
+import he from 'he'
 import Image from 'next/image'
 import Link from 'next/link'
 import './Header-pc.css'
-import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
-import he from 'he'
 
 export default function HeaderPc({
   HeaderOption,
@@ -23,7 +22,6 @@ export default function HeaderPc({
   ImgLocation: DataLocation
 }) {
   const {isHeaderHidden, isToursActive, setIsToursActive} = useHeaderScroll()
-
   return (
     <header
       id='header'
@@ -34,7 +32,7 @@ export default function HeaderPc({
           <ul>
             <li>
               <Link href='/'>
-                <ImageFallback
+                <Image
                   className='header__logo'
                   alt={HeaderOption.logo.alt}
                   src={HeaderOption.logo.url}
@@ -86,7 +84,7 @@ export default function HeaderPc({
                                 />
                                 <div className='minimap-svg__wapper'>
                                   <SvgHaGiang
-                                    src={ImgLocation?.ha_giang?.img}
+                                    src={ImgLocation?.ha_giang?.img?.url}
                                   />
                                 </div>
                                 <p>{ImgLocation?.ha_giang?.name}</p>
@@ -104,7 +102,7 @@ export default function HeaderPc({
                                   height={40}
                                 />
 
-                                <SvgCaoBang src={ImgLocation?.cao_bang?.img} />
+                                <SvgCaoBang src={ImgLocation?.cao_bang?.img?.url} />
                                 <p>{ImgLocation?.cao_bang?.name}</p>
                               </Link>
                             </li>
@@ -120,7 +118,7 @@ export default function HeaderPc({
                                   height={40}
                                 />
                                 <div className='minimap-svg__wapper'>
-                                  <SvgBacKan src={ImgLocation?.bac_kan?.img} />
+                                  <SvgBacKan src={ImgLocation?.bac_kan?.img?.url} />
                                 </div>
                                 <p>{ImgLocation?.bac_kan?.name}</p>
                               </Link>
@@ -160,7 +158,7 @@ export default function HeaderPc({
             target='__blank'
           >
             <p>{HeaderOption?.let_your_trip?.title}</p>
-            <ImageFallback
+            <Image
               src={HeaderOption?.let_your_trip?.hotline_image?.url}
               alt={HeaderOption?.let_your_trip?.hotline_image?.alt}
               width={40}

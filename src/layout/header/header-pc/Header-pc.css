@@ -47,10 +47,9 @@
 }
 
 #header .header__left-nav li .header__logo {
-  margin-top: -0.5rem;
   object-fit: cover;
-  width: 10.5rem;
-  height: 2.5rem;
+  width: 11.25rem;
+  height: 2.8125rem;
 }
 
 #header .header__left-nav li a,
@@ -177,10 +176,13 @@
 #header .header__right-hotline:hover p {
   transform: scale(1.05);
 }
-
+#header .header__right-hotline:hover img {
+  transform: scale(1.05);
+}
 #header .header__right-hotline img {
   width: 2.36481rem;
   height: 2.375rem;
+  transition: all .5s;
 }
 
 #header .header__right-hotline p {
@@ -352,6 +354,7 @@ height: 110%;
   letter-spacing: 0.01563rem;
   text-transform: uppercase;
   transition: all 0.3s;
+  transform: translateY(0.5rem);
 }
 .tours-dropdown-first-item:hover a > p {
   transform: translateY(1rem);
