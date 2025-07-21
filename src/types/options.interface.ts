@@ -1,4 +1,4 @@
-import {IMedia} from './media.interface'
+import { IMedia } from './media.interface'
 
 export interface PageLink {
   id: number
@@ -82,17 +82,26 @@ export interface CtaButtons {
 export interface DataLocation {
   ha_giang: {
     name: string
-    img: string
+    img: {
+      url: string
+      alt: string
+    }
     slug: string
   }
   cao_bang: {
     name: string
-    img: string
+    img: {
+      url: string
+      alt: string
+    }
     slug: string
   }
   bac_kan: {
     name: string
-    img: string
+    img: {
+      url: string
+      alt: string
+    }
     slug: string
   }
 }

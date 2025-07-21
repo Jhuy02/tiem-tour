@@ -1,6 +1,6 @@
 'use client'
 import ImageFallback from '@/components/image/ImageFallback'
-import Image, {StaticImageData} from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import React from 'react'
 
 interface NewsCardProps extends React.ComponentPropsWithoutRef<'article'> {
@@ -33,7 +33,7 @@ export default function NewsCard({
               {category}
             </p>
             <span className='inline-block w-[0.25rem] h-[0.25rem] bg-[#fff] rounded-full mx-[0.75rem]'></span>
-            <p className='text-white text-[0.75rem] font-normal leading-[120%] tracking-[0.00188rem] opacity-60'>
+            <p className='text-white group-hover:text-[#303030] transition-all text-[0.75rem] font-normal leading-[120%] tracking-[0.00188rem] opacity-60'>
               {date}
             </p>
           </div>

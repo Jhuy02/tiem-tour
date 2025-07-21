@@ -98,12 +98,12 @@ const CTA = ({data}: {data: ICta}) => {
         <div className='fab__whatsapp__animation fab__whatsapp__animation1'>
           <div className='animate-ping animation__ping__1'></div>
         </div>
-        <div className='fab__whatsapp__animation'>
+        {/* <div className='fab__whatsapp__animation'>
           <div className='animation__ping__2'></div>
         </div>
         <div className='fab__whatsapp__animation'>
           <div className='animation__ping__3'></div>
-        </div>
+        </div> */}
       </Link>
       <Link
         href={data.messenger.url || ''}

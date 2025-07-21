@@ -5,11 +5,11 @@ import { Content } from '@/app/(main)/tours/[slug]/_components/overview-compound
 import { Tab } from '@/app/(main)/tours/[slug]/_components/overview-compound/tab'
 import { Tripadvisor } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
 import { TripadvisorTab } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
+import TripsForYour from '@/app/(main)/tours/[slug]/_components/tripsforyour'
 import PageProvider from '@/app/(main)/tours/[slug]/context/PageProvider'
 
 import NotFound from '@/components/NotFound'
 import fetchData from '@/fetches/fetchData'
-import { TourDetailApiResType } from '@/types/tours.interface'
 
 export default async function TourDetail({
   params,
@@ -17,14 +17,24 @@ export default async function TourDetail({
   params: Promise<{slug: string}>
 }) {
   const {slug} = await params
-  const data: TourDetailApiResType = await fetchData({
-    api: `custom/v1/tour-detail/${slug}`,
-    option: {
-      next: {
-        revalidate: 10,
+  const [data, dataTripsForYour] =  await Promise.all([
+    fetchData({
+      api: `custom/v1/tour-detail/${slug}`,
+      option: {
+        next: {
+          revalidate: 10,
+        },
       },
-    },
-  })
+    }),
+    fetchData({
+      api: `api/v1/related-tour/${slug}?limit=10`,
+      option: {
+        next: {
+          revalidate: 10,
+        },
+      },
+    }),
+  ])
 
   if (!data || slug === 'undefined') {
     return <NotFound />
@@ -33,7 +43,7 @@ export default async function TourDetail({
 
   return (
     <PageProvider data={data}>
-      <main className='h-[1000rem]'>
+      <main>
         <Banner data={data} />
         <div className='relative h-auto'>
           <Tab />
@@ -60,6 +70,8 @@ export default async function TourDetail({
 
         <BookingForm data={data?.package_tour} />
         <BookingFormMobile data={data?.package_tour} />
+        
+        <TripsForYour dataTripsForYour={dataTripsForYour?.data} />
       </main>
     </PageProvider>
   )
