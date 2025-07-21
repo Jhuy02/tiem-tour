@@ -214,16 +214,14 @@ export default function DatePickerField({
                 <p className='leading-[150%] font-bold tracking-[-0.01rem] text-[#1A1A1A]'>
                   {label}
                 </p>
-                <DrawerClose asChild>
-                  <button type='button'>
-                    <Image
-                      alt='Close drawer'
-                      width={24}
-                      height={24}
-                      src={'/icons/x-close.svg'}
-                      className='h-auto w-[1.5rem]'
-                    />
-                  </button>
+                <DrawerClose>
+                  <Image
+                    alt='Close drawer'
+                    width={24}
+                    height={24}
+                    src={'/icons/x-close.svg'}
+                    className='h-auto w-[1.5rem]'
+                  />
                 </DrawerClose>
               </div>
               <Calendar

@@ -1,48 +1,36 @@
 'use client'
 import {convertRemToPx} from '@/lib/utils'
 import Image from 'next/image'
-import React from 'react'
+import React, {useContext, useMemo} from 'react'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import 'swiper/css'
 import useIsMobile from '@/hooks/useIsMobile'
-
-const TransportVehicleGalleryList = [
-  {
-    name: 'Limousine bus',
-    slug: 'limousine_bus',
-    price: '350000',
-    maximum: '7',
-    images: [...Array(4)].map(() => ({alt: '', url: '/tours/d_image1.png'})),
-  },
-  {
-    name: 'VIP Cabin bus',
-    slug: 'vip_cabin_bus',
-    price: '350000',
-    maximum: '7',
-    images: [...Array(4)].map(() => ({alt: '', url: '/tours/d_image2.png'})),
-  },
-  {
-    name: 'Luxury bus',
-    slug: 'luxury_bus',
-    price: '350000',
-    maximum: '7',
-    images: [...Array(4)].map(() => ({alt: '', url: '/tours/d_image3.png'})),
-  },
-  {
-    name: 'Regular sleeping bus',
-    slug: 'regular_sleeping_bus',
-    price: '350000',
-    maximum: '7',
-    images: [...Array(4)].map(() => ({alt: '', url: '/tours/d_image1.png'})),
-  },
-]
+import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
+import {TourDetailApiResType} from '@/types/tours.interface'
 
 export default function TransportVehicleGallery() {
+  const pageContext = useContext(PageContext)
+  if (!pageContext) throw new Error('Page context is missing')
+  const {data: apiData}: {data: TourDetailApiResType} = pageContext
+
+  const transportVehicleGalleryList = useMemo(() => {
+    if (!apiData?.package_tour?.main_car_pick_up_data) return []
+    return apiData?.package_tour?.main_car_pick_up_data?.map((item) => {
+      return {
+        name: item?.title,
+        slug: item?.id,
+        price: item?.fields?.price_car_pax,
+        maximum: item?.fields?.max_number_pax,
+        images: item?.fields?.images_review_car,
+      }
+    })
+  }, [apiData?.package_tour?.main_car_pick_up_data])
+
   const isMobile = useIsMobile()
   return (
     <div className='font-trip-sans flex flex-col space-y-[1rem]'>
-      {Array.isArray(TransportVehicleGalleryList) &&
-        TransportVehicleGalleryList.map((transportVehicle, index) => {
+      {Array.isArray(transportVehicleGalleryList) &&
+        transportVehicleGalleryList.map((transportVehicle, index) => {
           return (
             <div
               key={index}

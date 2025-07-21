@@ -1,7 +1,7 @@
 'use client'
-
+import {v4 as uuidv4} from 'uuid'
 import Caution from '@/app/(main)/tours/[slug]/_components/common/Caution'
-import React from 'react'
+import React, {useContext, useMemo} from 'react'
 import {
   Dialog,
   DialogContent,
@@ -11,9 +11,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import Image from 'next/image'
-import {useFormContext} from 'react-hook-form'
+import {useFormContext, useWatch} from 'react-hook-form'
 import {BookingFormValues} from '@/schemas/booking.schema'
-import {PrivatePickupLocation, TransportVehicleList} from '@/constants/mockApi'
 import {
   FormControl,
   FormField,
@@ -27,19 +26,46 @@ import {Label} from '@/components/ui/label'
 import Link from 'next/link'
 import SelectOptionField from '@/app/(main)/tours/[slug]/_components/form-controls/SelectOptionField'
 import {Input} from '@/components/ui/input'
+import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
+import {TourDetailApiResType} from '@/types/tours.interface'
+import clsx from 'clsx'
 
 export default function ServiceReturnTripWithPrivateTransport() {
-  const {control} = useFormContext<BookingFormValues>()
+  const pageContext = useContext(PageContext)
+  if (!pageContext) throw new Error('Page context is missing')
+  const {data: apiData}: {data: TourDetailApiResType} = pageContext
+
+  const {control, setValue} = useFormContext<BookingFormValues>()
+
+  const pickupVehicle = useWatch({
+    control,
+    name: 'returnTrip.data.pickUpVehicle',
+  })
+
+  const pickupLocation = useWatch({
+    control,
+    name: 'returnTrip.data.pickUpLocation',
+  })
+
+  const returnTripArrivalLocation = useWatch({
+    control,
+    name: 'returnTrip.data.arrivalLocation',
+  })
+
+  const pickupLocations = useMemo(() => {
+    if (typeof pickupVehicle === 'undefined') return
+    const locations = apiData?.package_tour?.private_transport?.find(
+      (item) => item.id === Number(pickupVehicle),
+    )
+    return locations?.pick_up_location
+  }, [apiData?.package_tour?.private_transport, pickupVehicle])
 
   return (
     <>
       <div className='xsm:hidden absolute top-0 right-0'>
         <Dialog>
-          <DialogTrigger asChild>
-            <button
-              type='button'
-              className='flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC] px-[1rem] py-[0.5rem]'
-            >
+          <DialogTrigger>
+            <div className='flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC] px-[1rem] py-[0.5rem]'>
               <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#303030]'>
                 Private schedule
               </span>
@@ -50,7 +76,7 @@ export default function ServiceReturnTripWithPrivateTransport() {
                 src={'/icons/chevron-right-double.svg'}
                 className='h-auto w-[1.25rem] shrink-0'
               />
-            </button>
+            </div>
           </DialogTrigger>
           <DialogContent className='z-150 max-h-[95vh]! max-w-fit! rounded-none! border-none! bg-transparent! p-0! duration-500'>
             <DialogHeader className='hidden'>
@@ -71,51 +97,62 @@ export default function ServiceReturnTripWithPrivateTransport() {
           </p>
           <FormField
             control={control}
-            name='outbound_trip_pickup_vehicle'
+            name='returnTrip.data.pickUpVehicle'
             render={({field}) => (
               <FormItem className='self-stretch'>
                 <RadioGroup
                   className='grid grid-cols-2 gap-[0.75rem]'
                   name={field.name}
-                  value={field.value}
-                  onValueChange={field.onChange}
+                  value={field.value.toString()}
+                  onValueChange={(val) => {
+                    field.onChange(val)
+                    const locationId = apiData?.package_tour?.private_transport
+                      ?.find(({id}) => id === Number(val))
+                      ?.pick_up_location?.[0]?.id?.toString()
+                    if (locationId) {
+                      setValue('returnTrip.data.pickUpLocation', locationId)
+                    }
+                  }}
                 >
-                  {Array.isArray(TransportVehicleList) &&
-                    TransportVehicleList?.slice(0, 2)?.map((item, index) => {
-                      return (
-                        <Label
-                          key={index}
-                          className='inline-flex w-full flex-1 cursor-pointer items-center gap-0 rounded-[0.75rem] border border-solid border-[#EDEDED] p-[0.75rem]'
-                        >
-                          <RadioGroupItem
-                            value={item.slug}
-                            className='peer sr-only'
-                          />
-                          <Image
-                            alt=''
-                            width={22}
-                            height={22}
-                            src={'/icons/check_default.svg'}
-                            className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
-                          />
-                          <Image
-                            alt=''
-                            width={22}
-                            height={22}
-                            src={'/icons/check_active-v1.svg'}
-                            className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
-                          />
-                          <div className='flex flex-col space-y-[0.5rem] pl-[0.5rem]'>
-                            <p className='text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
-                              {item.name}
-                            </p>
-                            <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.01563rem] text-[rgba(48,48,48,0.40)]'>
-                              Maximum {item.maximum} Person
-                            </span>
-                          </div>
-                        </Label>
-                      )
-                    })}
+                  {Array.isArray(apiData?.package_tour?.private_transport) &&
+                    apiData?.package_tour?.private_transport?.map(
+                      ({id, name, maximum_person}) => {
+                        return (
+                          <Label
+                            key={uuidv4()}
+                            className='inline-flex w-full flex-1 cursor-pointer items-center gap-0 rounded-[0.75rem] border border-solid border-[#EDEDED] p-[0.75rem]'
+                          >
+                            <RadioGroupItem
+                              value={id.toString()}
+                              className='peer sr-only'
+                              checked={pickupVehicle === id.toString()}
+                            />
+                            <Image
+                              alt=''
+                              width={22}
+                              height={22}
+                              src={'/icons/radio-unchecked.svg'}
+                              className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
+                            />
+                            <Image
+                              alt=''
+                              width={22}
+                              height={22}
+                              src={'/icons/radio-checked.svg'}
+                              className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
+                            />
+                            <div className='flex flex-col space-y-[0.5rem] pl-[0.5rem]'>
+                              <p className='text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
+                                {name}
+                              </p>
+                              <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.01563rem] text-[rgba(48,48,48,0.40)]'>
+                                Maximum {maximum_person} Person
+                              </span>
+                            </div>
+                          </Label>
+                        )
+                      },
+                    )}
 
                   <FormMessage className='font-trip-sans col-span-1 pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </RadioGroup>
@@ -148,7 +185,7 @@ export default function ServiceReturnTripWithPrivateTransport() {
           {/* Note: Pickup address */}
           <FormField
             control={control}
-            name='return_trip_pickup_address'
+            name='returnTrip.data.pickUpAddress'
             render={({field}) => (
               <FormItem className=''>
                 <FormControl>
@@ -170,15 +207,14 @@ export default function ServiceReturnTripWithPrivateTransport() {
             Arrival time
           </p>
           <div className='xsm:space-y-[0.75rem] xsm:space-x-0 xsm:flex-wrap flex items-start space-x-[0.75rem]'>
-            <FormField
+            {/* <FormField
               control={control}
-              // name='outboundTripArrivalLocation'
-              name='outbound_trip_arrival_location'
+              name='returnTrip.data.arrivalLocation'
               render={({field}) => (
                 <FormItem className='xsm:basis-full flex-1'>
                   <SelectOptionField
                     label='Arrival location'
-                    placeholder='Hagiang'
+                    placeholder=''
                     options={[]}
                     disabled
                     {...field}
@@ -186,10 +222,32 @@ export default function ServiceReturnTripWithPrivateTransport() {
                   <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
-            />
+            /> */}
+            <div className='flex-1'>
+              <div
+                className={clsx(
+                  'font-trip-sans pointer-events-none relative h-[3rem] cursor-not-allowed rounded-[0.75rem] border border-solid border-[#EDEDED] bg-[#F6F6F6]',
+                )}
+              >
+                <div className='flex h-full w-full cursor-pointer items-center justify-between space-x-[1rem] px-[1rem] py-[0.875rem]'>
+                  <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'>
+                    {returnTripArrivalLocation}
+                  </p>
+                  <Image
+                    alt=''
+                    width={20}
+                    height={20}
+                    src='/icons/arrow-down.svg'
+                    className={clsx(
+                      'h-auto w-[1.25rem] shrink-0 opacity-40 transition-transform duration-300',
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
             <FormField
               control={control}
-              name='outbound_trip_arrival_time'
+              name='returnTrip.data.arrivalTime'
               render={({field}) => (
                 <FormItem className='xsm:basis-full flex-1'>
                   <SelectOptionField
@@ -208,7 +266,7 @@ export default function ServiceReturnTripWithPrivateTransport() {
           <div className=''>
             <FormField
               control={control}
-              name='return_trip_arrival_location'
+              name='returnTrip.data.pickUpLocation'
               render={({field}) => (
                 <FormItem className=''>
                   <RadioGroup
@@ -216,37 +274,40 @@ export default function ServiceReturnTripWithPrivateTransport() {
                     onValueChange={field.onChange}
                     name={field.name}
                   >
-                    {Array.isArray(PrivatePickupLocation) &&
-                      PrivatePickupLocation.map((item, index) => {
+                    {Array.isArray(pickupLocations) &&
+                      pickupLocations.map(({id, price, title}) => {
                         return (
                           <Label
-                            key={index}
+                            key={uuidv4()}
                             className='inline-flex w-full flex-1 cursor-pointer items-center gap-0 rounded-[0.75rem] border border-solid border-[#EDEDED] p-[0.75rem]'
                           >
                             <RadioGroupItem
-                              value={item.slug}
+                              value={id.toString()}
                               className='peer sr-only'
+                              checked={pickupLocation === id.toString()}
                             />
                             <Image
                               alt=''
                               width={22}
                               height={22}
-                              src={'/icons/check_default.svg'}
+                              src={'/icons/radio-unchecked.svg'}
                               className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
                             />
                             <Image
                               alt=''
                               width={22}
                               height={22}
-                              src={'/icons/check_active-v1.svg'}
+                              src={'/icons/radio-checked.svg'}
                               className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
                             />
                             <div className='flex flex-col space-y-[0.5rem] pl-[0.5rem]'>
                               <p className='text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
-                                {item.name}
+                                {title}
                               </p>
                               <span className='text-[0.875rem] leading-[120%] font-bold tracking-[0.01563rem] text-[#C83E21] uppercase'>
-                                <span>{item.price}</span>
+                                <span>
+                                  {Number(price).toLocaleString('en-US')}
+                                </span>
                                 <span>USD/car</span>
                               </span>
                             </div>
@@ -264,7 +325,7 @@ export default function ServiceReturnTripWithPrivateTransport() {
           <div>
             <FormField
               control={control}
-              name='return_trip_arrival_address'
+              name='returnTrip.data.arrivalAddress'
               render={({field}) => (
                 <FormItem className=''>
                   <FormControl>

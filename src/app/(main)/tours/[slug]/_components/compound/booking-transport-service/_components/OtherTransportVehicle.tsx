@@ -19,8 +19,8 @@ import React, {useState} from 'react'
 import {useFormContext, useWatch} from 'react-hook-form'
 
 type VehicleFieldKey =
-  | 'outbound_trip_pickup_vehicle'
-  | 'return_trip_pickup_vehicle'
+  | 'outboundTrip.data.pickUpVehicle'
+  | 'returnTrip.data.pickUpVehicle'
 
 interface OtherTransportVehicleProps {
   keySchema: VehicleFieldKey
@@ -45,10 +45,23 @@ export default function OtherTransportVehicle({
   }
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <button type='button'>
-          <OtherOptionButton />
-        </button>
+      <DialogTrigger>
+        <div className='flex cursor-pointer items-center space-x-[0.25rem]'>
+          <Image
+            alt=''
+            style={{
+              filter:
+                'brightness(0) saturate(100%) invert(51%) sepia(19%) saturate(1542%) hue-rotate(131deg) brightness(108%) contrast(89%)',
+            }}
+            width={18}
+            height={18}
+            src={'/icons/add_plus.svg'}
+            className='h-auto w-[1.125rem] shrink-0'
+          />
+          <p className='xsm:text-[0.875rem] xsm:leading-[150%] xsm:tracking-[-0.00438rem] text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#25ACAB]'>
+            Other option
+          </p>
+        </div>
       </DialogTrigger>
       <DialogContent className='max-h-[80vh]! w-[54.6875rem] max-w-[80vw]! rounded-none! border-none! bg-transparent! p-0! duration-500'>
         <DialogHeader className='hidden'>
@@ -58,10 +71,7 @@ export default function OtherTransportVehicle({
         <div className='font-trip-sans relative z-2 rounded-[2.25rem] bg-[#FAFAFA]'>
           <div className='relative z-1 flex flex-col space-y-[1.5rem] px-[1.5rem] py-[1.875rem]'>
             <DialogClose asChild>
-              <button
-                type='button'
-                className='absolute top-[1.5rem] right-[1.5rem] cursor-pointer'
-              >
+              <div className='absolute top-[1.5rem] right-[1.5rem] cursor-pointer'>
                 <Image
                   alt=''
                   width={20}
@@ -69,7 +79,7 @@ export default function OtherTransportVehicle({
                   src={'/icons/x-close.svg'}
                   className='h-auto w-[1.25rem] shrink-0'
                 />
-              </button>
+              </div>
             </DialogClose>
             <h3 className='font-trip-sans border-b border-solid border-[#EDEDED] pb-[1rem] text-left text-[1.125rem] leading-[130%] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
               Other option
@@ -96,14 +106,14 @@ export default function OtherTransportVehicle({
                           alt=''
                           width={22}
                           height={22}
-                          src={'/icons/check_default.svg'}
+                          src={'/icons/radio-unchecked.svg'}
                           className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
                         />
                         <Image
                           alt=''
                           width={22}
                           height={22}
-                          src={'/icons/check_active-v1.svg'}
+                          src={'/icons/radio-checked.svg'}
                           className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
                         />
                         <div className='flex flex-1 flex-col space-y-[0.5rem] pl-[0.5rem]'>
@@ -140,8 +150,7 @@ export default function OtherTransportVehicle({
             </div>
             <Caution content='We will call you back to confirm the pickup date and location.' />
             <DialogClose asChild>
-              <button
-                type='button'
+              <div
                 onClick={handleAddOtherOption}
                 className='inline-flex cursor-pointer items-center justify-center space-x-[0.625rem] rounded-[3.125rem] bg-[#C83E21] px-[2.5rem] py-[1.25rem] transition-colors duration-300 ease-out lg:hover:bg-[#EA6A44]'
               >
@@ -149,7 +158,7 @@ export default function OtherTransportVehicle({
                   Add other option
                 </span>
                 <IconArrowRightV1 className='h-[1.5rem] w-[1.575rem] shrink-0' />
-              </button>
+              </div>
             </DialogClose>
           </div>
         </div>

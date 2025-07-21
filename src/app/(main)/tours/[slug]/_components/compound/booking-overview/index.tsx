@@ -4,7 +4,12 @@ import Caution from '@/app/(main)/tours/[slug]/_components/common/Caution'
 import DatePickerField from '@/app/(main)/tours/[slug]/_components/form-controls/DatePickerField'
 import SelectRiderField from '@/app/(main)/tours/[slug]/_components/form-controls/SelectRiderField'
 import SelectTravelerField from '@/app/(main)/tours/[slug]/_components/form-controls/SelectTravelerField'
-import {FormField, FormItem, FormMessage} from '@/components/ui/form'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form'
 import {Label} from '@/components/ui/label'
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group'
 import {PackageTypeList, TourTypeList} from '@/constants/mockApi'
@@ -23,8 +28,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import TriggerDialogButton from '@/app/(main)/tours/[slug]/_components/common/TriggerDialogButton'
+} from '@/components/ui/dialog-v2'
 import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
 import {TourDetailApiResType} from '@/types/tours.interface'
 import TourPackageInfo from '@/app/(main)/tours/[slug]/_components/compound/booking-overview/TourPackageInfo'
@@ -40,24 +44,44 @@ export default function BookingOverview() {
   const tourPackage = useWatch({control, name: 'package'})
 
   const packageInfo = useMemo(() => {
-    if (tourType === 'motorbike_tour' && tourPackage) {
-      return apiData.package_tour.motorbike_package[tourPackage]
-    } else if (tourType === 'car_tour' && tourPackage) {
-      return apiData.package_tour.car_package[tourPackage]
-    } else {
-      return apiData.package_tour.motorbike_package.saving
+    const salePercent = Number(apiData.acf_fields.tour_sale_percent)
+    const pkg = apiData.package_tour
+    if (tourType && tourPackage) {
+      return (
+        pkg[`${tourType === 'car_tour' ? 'car' : 'motorbike'}_package`]?.[
+          tourPackage
+        ]?.map((item) => ({
+          ...item,
+          price: (1 - salePercent / 100) * item.price,
+        })) || []
+      )
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tourType, tourPackage])
+    return (
+      pkg.motorbike_package.saving?.map((item) => ({
+        ...item,
+        price: (1 - salePercent / 100) * item.price,
+      })) || []
+    )
+  }, [
+    apiData.acf_fields.tour_sale_percent,
+    apiData.package_tour,
+    tourType,
+    tourPackage,
+  ])
 
   useEffect(() => {
     if (scheduleStart) {
-      const duration = parseInt(apiData.package_tour.duration_number)
+      const duration = Number(apiData.package_tour.duration_number)
       const scheduleEnd = addDays(new Date(scheduleStart), duration)
       setValue('schedule_end', scheduleEnd)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scheduleStart, setValue])
+  }, [apiData.package_tour.duration_number, scheduleStart, setValue])
+
+  useEffect(() => {
+    if (tourPackage && tourType) {
+    } else {
+    }
+  }, [tourPackage, tourType])
 
   return (
     <div className='xsm:border-none xsm:rounded-0 xsm:p-[0.75rem] rounded-[1.5rem] border border-solid border-[#ededed] bg-white p-[1.5rem]'>
@@ -71,9 +95,20 @@ export default function BookingOverview() {
 
         <Dialog>
           <DialogTrigger className='xsm:w-full'>
-            <TriggerDialogButton>Policy tour</TriggerDialogButton>
+            <div className='xsm:justify-center font-trip-sans flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC] px-[1rem] py-[0.5rem]'>
+              <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#303030]'>
+                Policy tour
+              </span>
+              <Image
+                alt=''
+                width={20}
+                height={20}
+                src={'/icons/chevron-right-double.svg'}
+                className='h-auto w-[1.25rem] shrink-0'
+              />
+            </div>
           </DialogTrigger>
-          <DialogContent className='z-150 w-[56.0625rem] max-w-[80vw]! overflow-hidden rounded-[1.5rem]! border-none! bg-transparent p-0!'>
+          <DialogContent className='xsm:rounded-b-none w-[56.0625rem] overflow-hidden rounded-[1.5rem] bg-transparent p-0!'>
             <DialogHeader className='hidden'>
               <DialogTitle>
                 TIEM TOURS HA GIANG TERMS AND CONDITIONS
@@ -93,11 +128,13 @@ export default function BookingOverview() {
               name='schedule_start'
               render={({field}) => (
                 <FormItem>
-                  <DatePickerField
-                    label='Start day'
-                    required
-                    {...field}
-                  />
+                  <FormControl>
+                    <DatePickerField
+                      label='Start day'
+                      required
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
@@ -109,12 +146,14 @@ export default function BookingOverview() {
               name='schedule_end'
               render={({field}) => (
                 <FormItem>
-                  <DatePickerField
-                    label='End day'
-                    required
-                    disabled
-                    {...field}
-                  />
+                  <FormControl>
+                    <DatePickerField
+                      label='End day'
+                      required
+                      disabled
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
@@ -216,14 +255,14 @@ export default function BookingOverview() {
                                 alt=''
                                 width={22}
                                 height={22}
-                                src={'/icons/check_default.svg'}
+                                src={'/icons/radio-unchecked.svg'}
                                 className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
                               />
                               <Image
                                 alt=''
                                 width={22}
                                 height={22}
-                                src={'/icons/check_active-v1.svg'}
+                                src={'/icons/radio-checked.svg'}
                                 className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
                               />
                             </Label>
@@ -274,14 +313,14 @@ export default function BookingOverview() {
                                 alt=''
                                 width={22}
                                 height={22}
-                                src={'/icons/check_default.svg'}
+                                src={'/icons/radio-unchecked.svg'}
                                 className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
                               />
                               <Image
                                 alt=''
                                 width={22}
                                 height={22}
-                                src={'/icons/check_active-v1.svg'}
+                                src={'/icons/radio-checked.svg'}
                                 className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
                               />
                               <p className='inline-flex items-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
@@ -310,13 +349,16 @@ export default function BookingOverview() {
                       title={item.title}
                       price={Number(item.price)}
                       note={item.note}
+                      tour_sale_percent={
+                        Number(apiData?.acf_fields?.tour_sale_percent) ?? 0
+                      }
                     />
                   )
                 },
               )}
             {tourType === 'motorbike_tour' &&
-              tourPackage === 'saving' &&
-              apiData?.package_tour?.motorbike_package?.saving?.map(
+              tourPackage &&
+              apiData?.package_tour?.motorbike_package?.[tourPackage]?.map(
                 (item, index) => {
                   return (
                     <TourPackageInfo
@@ -324,26 +366,16 @@ export default function BookingOverview() {
                       title={item.title}
                       price={Number(item.price)}
                       note={item.note}
+                      tour_sale_percent={
+                        Number(apiData?.acf_fields?.tour_sale_percent) ?? 0
+                      }
                     />
                   )
                 },
               )}
             {tourType === 'car_tour' &&
-              tourPackage === 'saving' &&
-              apiData?.package_tour?.car_package?.saving?.map((item, index) => {
-                return (
-                  <TourPackageInfo
-                    key={index}
-                    title={item.title}
-                    price={Number(item.price)}
-                    note={item.note}
-                  />
-                )
-              })}
-
-            {tourType === 'motorbike_tour' &&
-              tourPackage === 'budget' &&
-              apiData?.package_tour?.motorbike_package?.budget?.map(
+              tourPackage &&
+              apiData?.package_tour?.car_package?.[tourPackage]?.map(
                 (item, index) => {
                   return (
                     <TourPackageInfo
@@ -351,47 +383,9 @@ export default function BookingOverview() {
                       title={item.title}
                       price={Number(item.price)}
                       note={item.note}
-                    />
-                  )
-                },
-              )}
-            {tourType === 'car_tour' &&
-              tourPackage === 'budget' &&
-              apiData?.package_tour?.car_package?.budget?.map((item, index) => {
-                return (
-                  <TourPackageInfo
-                    key={index}
-                    title={item.title}
-                    price={Number(item.price)}
-                    note={item.note}
-                  />
-                )
-              })}
-
-            {tourType === 'motorbike_tour' &&
-              tourPackage === 'premium' &&
-              apiData?.package_tour?.motorbike_package?.premium?.map(
-                (item, index) => {
-                  return (
-                    <TourPackageInfo
-                      key={index}
-                      title={item.title}
-                      price={Number(item.price)}
-                      note={item.note}
-                    />
-                  )
-                },
-              )}
-            {tourType === 'car_tour' &&
-              tourPackage === 'premium' &&
-              apiData?.package_tour?.car_package?.premium?.map(
-                (item, index) => {
-                  return (
-                    <TourPackageInfo
-                      key={index}
-                      title={item.title}
-                      price={Number(item.price)}
-                      note={item.note}
+                      tour_sale_percent={
+                        Number(apiData?.acf_fields?.tour_sale_percent) ?? 0
+                      }
                     />
                   )
                 },

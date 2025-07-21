@@ -7,12 +7,14 @@ import ContactInformation from '@/app/(main)/tours/[slug]/_components/contact'
 import Gift from '@/app/(main)/tours/[slug]/_components/gift'
 import Policy from '@/app/(main)/tours/[slug]/_components/policy'
 import RentMotorcycles from '@/app/(main)/tours/[slug]/_components/rent-motorcycles'
+import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
 import {Form} from '@/components/ui/form'
 import useIsMobile from '@/hooks/useIsMobile'
 import bookingSchema, {BookingFormValues} from '@/schemas/booking.schema'
-import {TourDetailPackage} from '@/types/tours.interface'
+import {TourDetailApiResType, TourDetailPackage} from '@/types/tours.interface'
 import {zodResolver} from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import {useContext} from 'react'
 import {useForm} from 'react-hook-form'
 
 interface BookTourNowProps {
@@ -20,40 +22,25 @@ interface BookTourNowProps {
 }
 
 export default function BookingForm({data}: BookTourNowProps) {
+  const pageContext = useContext(PageContext)
+  if (!pageContext) throw new Error('Page context is missing')
+  const {data: apiData}: {data: TourDetailApiResType} = pageContext
+
   const isMobile = useIsMobile()
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
+      schedule_start: new Date(),
       // Data customer
       adults: 0,
       children: 0,
       infants: 0,
       // Data tour
-      tour_type: '',
-      package: '',
-      // Data rider
-      easy_rider: 0,
-      ride_by_yourself: 0,
-      seat_behind: 0,
-      // Data pickup trip
-      outbound_trip_pickup_location: '',
-      outbound_trip_pickup_vehicle: '',
-      outbound_trip_pickup_address:
-        'Pick up at 94 Tran nhat duat street, BaDinh',
-      outbound_trip_arrival_time: '22:00',
-      outbound_trip_arrival_location: 'Hagiang',
-      // Data return trip
-      return_trip_pickup_location: 'Hagiang',
-      return_trip_pickup_vehicle: '',
-      return_trip_pickup_address: 'Pick up at TiemTours Office 92i Nguyen Trai',
-      return_trip_arrival_location: '',
-      return_trip_arrival_time: '23:00',
-
       // Deposit and Agree
-      deposit: '',
       riders: data?.motorbike_package.saving?.map((item) => ({
         name: item?.title,
-        price: item?.price,
+        price: Number(item?.price),
+        quantity: 0,
       })),
       motorcycles: data?.motorbike_rents?.motorbike_rent_list?.map((motor) => ({
         name: motor?.title,
@@ -66,6 +53,40 @@ export default function BookingForm({data}: BookTourNowProps) {
       yourPhone: '',
       yourEmail: '',
       yourMessage: '',
+      outboundTrip: {
+        type: 'use_our_bus',
+        data: {
+          pickUpLocation: apiData?.package_tour?.pick_up_location[0]?.location,
+          pickUpVehicle:
+            apiData?.package_tour?.main_car_pick_up_data[0]?.id?.toString(),
+          pickUpAddress:
+            apiData?.package_tour?.pick_up_location[0]?.detail_location,
+          arrivalLocation:
+            apiData?.acf_fields?.transport_service?.outbound_trip
+              ?.use_our_bus_service?.arrival_location,
+          arrivalTime:
+            apiData?.acf_fields?.transport_service?.outbound_trip
+              ?.use_our_bus_service?.arrival_time,
+          arrivalAddress: '',
+        },
+      },
+      returnTrip: {
+        type: 'use_our_bus',
+        data: {
+          pickUpLocation:
+            apiData?.acf_fields?.transport_service?.return_trip
+              ?.use_our_bus_service?.pickup_location,
+          pickUpVehicle:
+            apiData?.package_tour?.main_car_pick_up_data[0]?.id?.toString(),
+          pickUpAddress:
+            apiData?.acf_fields?.transport_service?.return_trip
+              ?.use_our_bus_service?.pickup_address,
+          arrivalLocation: apiData.package_tour.arrival_use_bus[0].arrival_city,
+          arrivalTime: apiData.package_tour.arrival_use_bus[0].arrival_time,
+          arrivalAddress:
+            apiData.package_tour.arrival_use_bus[0].arrival_address_,
+        },
+      },
     },
   })
 

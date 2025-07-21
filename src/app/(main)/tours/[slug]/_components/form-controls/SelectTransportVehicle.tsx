@@ -26,18 +26,18 @@ export default function SelectTransportVehicle({
         alt=''
         width={22}
         height={22}
-        src={'/icons/check_default.svg'}
+        src={'/icons/radio-unchecked.svg'}
         className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
       />
       <Image
         alt=''
         width={22}
         height={22}
-        src={'/icons/check_active-v1.svg'}
+        src={'/icons/radio-checked.svg'}
         className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
       />
       <div className='flex flex-1 flex-col space-y-[0.5rem] pl-[0.5rem]'>
-        <p className='inline-flex items-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
+        <p className='inline-flex items-center text-[1rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
           {title}
         </p>
         <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'>
@@ -45,7 +45,7 @@ export default function SelectTransportVehicle({
         </span>
       </div>
       <p className='text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[#C83E21] uppercase'>
-        <span>{price?.toLocaleString('vi-VN')}</span>
+        <span>{price?.toLocaleString('en-US')}</span>
         /PAX
       </p>
     </Label>
