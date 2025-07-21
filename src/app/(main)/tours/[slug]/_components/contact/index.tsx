@@ -13,11 +13,11 @@ import {useFormContext} from 'react-hook-form'
 export default function ContactInformation() {
   const {control} = useFormContext<BookingFormValues>()
   return (
-    <div className='rounded-[1.5rem] border-[1px] border-solid border-[#EDEDED] bg-white p-[1.875rem_1.75rem]'>
-      <p className='mb-[1.5rem] border-b-[0.0625rem] border-solid border-b-[#EDEDED] pb-[1rem] text-[1.125rem] leading-[1.3] font-[900] tracking-[0.00281rem] text-[#303030]'>
+    <div className='xsm:p-[0rem_1rem_0rem_1rem] rounded-[1.5rem] bg-white p-[1.875rem_1.75rem] sm:border-[1px] sm:border-solid sm:border-[#EDEDED]'>
+      <p className='xsm:mb-[0.5rem] mb-[1.5rem] pb-[1rem] text-[1.125rem] leading-[1.3] font-[900] tracking-[0.00281rem] text-[#303030] sm:border-b-[0.0625rem] sm:border-solid sm:border-b-[#EDEDED]'>
         Contact information
       </p>
-      <div className='flex w-full space-x-[0.75rem]'>
+      <div className='xsm:flex-col xsm:space-y-[0.75rem] flex w-full sm:space-x-[0.75rem]'>
         <FormField
           control={control}
           name='yourName'
@@ -33,7 +33,7 @@ export default function ContactInformation() {
                 <Input
                   {...field}
                   placeholder='Nguyen Van A'
-                  className='font-trip-sans h-[3.0625rem] rounded-[0.75rem] border-[1px] border-solid border-[#EDEDED] bg-[#FFF] p-[1rem] text-[0.875rem] leading-[1.2] font-medium tracking-[0.00219rem] text-[#2E2E2E] transition-all duration-300 hover:border-[#25ACAB] focus-visible:border-[#25ACAB] focus-visible:ring-0'
+                  className='font-trip-sans h-[3.0625rem] rounded-[0.75rem] border-[1px] border-solid border-[#EDEDED] bg-[#FFF] p-[1rem] text-[0.875rem] leading-[1.2] font-medium tracking-[0.00219rem] text-[#2E2E2E] transition-all duration-300 focus-visible:border-[#25ACAB] focus-visible:ring-0 lg:hover:border-[#25ACAB]'
                 />
               </FormControl>
               <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
@@ -55,7 +55,7 @@ export default function ContactInformation() {
                 <Input
                   {...field}
                   placeholder='02445*********'
-                  className='font-trip-sans h-[3.0625rem] rounded-[0.75rem] border-[1px] border-solid border-[#EDEDED] bg-[#FFF] p-[1rem] text-[0.875rem] leading-[1.2] font-medium tracking-[0.00219rem] text-[#2E2E2E] transition-all duration-300 hover:border-[#25ACAB] focus-visible:border-[#25ACAB] focus-visible:ring-0'
+                  className='font-trip-sans h-[3.0625rem] rounded-[0.75rem] border-[1px] border-solid border-[#EDEDED] bg-[#FFF] p-[1rem] text-[0.875rem] leading-[1.2] font-medium tracking-[0.00219rem] text-[#2E2E2E] transition-all duration-300 focus-visible:border-[#25ACAB] focus-visible:ring-0 lg:hover:border-[#25ACAB]'
                 />
               </FormControl>
               <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
@@ -78,7 +78,7 @@ export default function ContactInformation() {
               <Input
                 {...field}
                 placeholder='tiemtour@gmail.com'
-                className='font-trip-sans h-[3.0625rem] rounded-[0.75rem] border-[1px] border-solid border-[#EDEDED] bg-[#FFF] p-[1rem] text-[0.875rem] leading-[1.2] font-medium tracking-[0.00219rem] text-[#2E2E2E] transition-all duration-300 hover:border-[#25ACAB] focus-visible:border-[#25ACAB] focus-visible:ring-0'
+                className='font-trip-sans h-[3.0625rem] rounded-[0.75rem] border-[1px] border-solid border-[#EDEDED] bg-[#FFF] p-[1rem] text-[0.875rem] leading-[1.2] font-medium tracking-[0.00219rem] text-[#2E2E2E] transition-all duration-300 focus-visible:border-[#25ACAB] focus-visible:ring-0 lg:hover:border-[#25ACAB]'
               />
             </FormControl>
             <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
@@ -97,7 +97,7 @@ export default function ContactInformation() {
               <Textarea
                 {...field}
                 placeholder='Your message'
-                className='font-trip-sans h-[6.8125rem] resize-none rounded-[0.75rem] border-[1px] border-solid border-[#EDEDED] bg-[#FFF] p-[1rem] text-[0.875rem] leading-[1.2] font-medium tracking-[0.00219rem] text-[#2E2E2E] transition-all duration-300 hover:border-[#25ACAB] focus-visible:border-[#25ACAB] focus-visible:ring-0'
+                className='xsm:h-[8.125rem] font-trip-sans h-[6.8125rem] resize-none rounded-[0.75rem] border-[1px] border-solid border-[#EDEDED] bg-[#FFF] p-[1rem] text-[0.875rem] leading-[1.2] font-medium tracking-[0.00219rem] text-[#2E2E2E] transition-all duration-300 focus-visible:border-[#25ACAB] focus-visible:ring-0 lg:hover:border-[#25ACAB]'
               />
             </FormControl>
             <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />

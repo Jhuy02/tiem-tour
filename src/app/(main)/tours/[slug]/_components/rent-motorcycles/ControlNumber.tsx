@@ -7,21 +7,22 @@ import {Fragment} from 'react'
 import {useFormContext} from 'react-hook-form'
 
 interface ControlNumberProps {
-  motorcycles: InMotorbikeRents[]
+  motorcycles: InMotorbikeRents
 }
 
 export default function ControlNumber({motorcycles}: ControlNumberProps) {
   const {control} = useFormContext<BookingFormValues>()
   return (
     <div className='xsm:space-y-[0.25rem] xsm:p-[0.25rem] xsm:rounded-[1rem] xsm:bg-[rgba(205,205,205,0.32)] mt-[2rem] rounded-[1.5rem] bg-[#F3F9F9] p-[1rem]'>
-      {Array.isArray(motorcycles) &&
-        motorcycles?.length > 0 &&
-        motorcycles.map((motor, index) => (
+      {Array.isArray(motorcycles?.motorbike_rent_list) &&
+        motorcycles?.motorbike_rent_list?.length > 0 &&
+        motorcycles?.motorbike_rent_list?.map((motor, index) => (
           <Fragment key={index}>
-            <div className='xsm:p-[0.31rem_0.5rem_0.31rem_1rem] xsm:rounded-[0.75rem] xsm:bg-white flex w-full items-center justify-between'>
-              <p className='xsm:text-[0.875rem] xsm:font-medium xsm:leading-[1.5] xsm:tracking-[-0.00438rem] font-trip-sans text-[1rem] leading-[1.2] font-semibold tracking-[0.0025rem] text-[#303030]'>
-                {motor?.title}
-              </p>
+            <div className='xsm:p-[0.69rem_0.5rem_0.69rem_1rem] xsm:rounded-[0.75rem] xsm:bg-white flex w-full items-center justify-between'>
+              <p
+                className='xsm:text-[0.875rem] xsm:font-medium xsm:leading-[1.5] xsm:tracking-[-0.00438rem] font-trip-sans text-[1rem] leading-[1.2] font-semibold tracking-[0.0025rem] text-[#303030]'
+                dangerouslySetInnerHTML={{__html: motor?.title}}
+              ></p>
               <FormField
                 control={control}
                 name={`motorcycles.${index}.quantity`}
@@ -36,7 +37,7 @@ export default function ControlNumber({motorcycles}: ControlNumberProps) {
                 )}
               />
             </div>
-            {motorcycles?.length !== index + 1 && (
+            {motorcycles?.motorbike_rent_list?.length !== index + 1 && (
               <div className='xsm:hidden my-[0.75rem] h-[0.0625rem] w-full bg-[#EDEDED]'></div>
             )}
           </Fragment>

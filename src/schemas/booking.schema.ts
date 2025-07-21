@@ -1,5 +1,5 @@
 'use client'
-import {z} from 'zod'
+import { z } from 'zod'
 
 const bookingSchema = z
   .object({
@@ -81,11 +81,11 @@ const bookingSchema = z
     return_trip_arrival_location: z.string(),
     return_trip_arrival_time: z.string(),
     deposit: z.string(),
-    agree_policy: z.literal(true, {
-      errorMap: () => ({
-        message: 'You must agree to the policy before proceeding',
-      }),
-    }),
+    // agree_policy: z.literal(true, {
+    //   errorMap: () => ({
+    //     message: 'You must agree to the policy before proceeding',
+    //   }),
+    // }),
   })
   .refine((data) => data.schedule_end >= data.schedule_start, {
     path: ['end_day'],

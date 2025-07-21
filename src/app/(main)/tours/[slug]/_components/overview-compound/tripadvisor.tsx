@@ -1,24 +1,24 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-
-const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
-  ssr: false,
-})
-import {SwiperSlide} from 'swiper/react'
-import 'swiper/css'
+import { TripadvisorReviews } from '@/app/(main)/tours/[slug]/_components/icon'
 import ImageFallback from '@/components/image/ImageFallback'
-import {convertRemToPx} from '@/lib/utils'
-import Link from 'next/link'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { convertRemToPx } from '@/lib/utils'
+import { Tripadvisor as TripadvisorType } from '@/types/tours.interface'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import {TripadvisorReviews} from '@/app/(main)/tours/[slug]/_components/icon'
-import {Tripadvisor as TripadvisorType} from '@/types/tours.interface'
+import Link from 'next/link'
+import 'swiper/css'
+import { SwiperSlide } from 'swiper/react'
+
+const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
+  ssr: false,
+})
 
 export const Tripadvisor = ({
   data,
@@ -100,7 +100,7 @@ export const Tripadvisor = ({
                   />
                   {index === data.gallery.length - 1 && (
                     <Link
-                      href={link}
+                      href={link || ''}
                       target='_blank'
                       className='absolute inset-0 flex items-center justify-center'
                       style={{

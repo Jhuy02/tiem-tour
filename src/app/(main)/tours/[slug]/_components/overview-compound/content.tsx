@@ -1,18 +1,18 @@
-import {Separator} from '@/components/ui/separator'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { Separator } from '@/components/ui/separator'
 
-import {Overview} from '@/app/(main)/tours/[slug]/_components/overview-compound/overview'
-import {Landscape} from '@/app/(main)/tours/[slug]/_components/overview-compound/landscape'
-import {FAQ} from '@/app/(main)/tours/[slug]/_components/overview-compound/faq'
-import {TourDetailContent} from '@/types/tours.interface'
+import { FAQ } from '@/app/(main)/tours/[slug]/_components/overview-compound/faq'
+import { Landscape } from '@/app/(main)/tours/[slug]/_components/overview-compound/landscape'
+import { Overview } from '@/app/(main)/tours/[slug]/_components/overview-compound/overview'
+import { TourDetailContent } from '@/types/tours.interface'
 
-import {Tripadvisor} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
-import {TripadvisorTab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
+import { Tripadvisor } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor'
+import { TripadvisorTab } from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
 
 export const Content = ({data}: {data: TourDetailContent}) => {
   return (
@@ -31,13 +31,13 @@ export const Content = ({data}: {data: TourDetailContent}) => {
         </AccordionTrigger>
         <Separator className='my-[1rem] h-[0.0625rem] bg-[#ededed]' />
         <AccordionContent className='p-0'>
-          <Overview data={data.acf_fields.overview} />
+          <Overview data={data?.acf_fields?.overview} />
         </AccordionContent>
       </AccordionItem>
       <div className='xsm:p-[1rem] xsm:rounded-[1rem] xsm:block mt-[1rem] hidden h-fit rounded-[1.5rem] border border-[#EDEDED] bg-white p-[1.25rem]'>
         <Tripadvisor
-          data={data.acf_fields.tripadvisor}
-          link={data.acf_fields.overview.gallery.link.url}
+          data={data?.acf_fields?.tripadvisor}
+          link={data?.acf_fields?.overview?.gallery?.link?.url}
         />
         <TripadvisorTab
           data={data.acf_fields.tripadvisor}

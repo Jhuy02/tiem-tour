@@ -1,0 +1,29 @@
+.depositPolicy li,
+.noRefundPolicy li {
+  position: relative;
+  padding-left: 2rem;
+}
+.depositPolicy li::before,
+.noRefundPolicy li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.depositPolicy li::before {
+  background-image: url('/icons/privacy-policy.svg');
+}
+.noRefundPolicy li::before {
+  background-image: url('/icons/noRefundPolicy.svg');
+}
+
+.depositPolicy strong,
+.noRefundPolicy strong {
+  font-weight: 800;
+}

@@ -5,21 +5,21 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import useIsMobile from '@/hooks/useIsMobile'
 import { BookingFormValues } from '@/schemas/booking.schema'
-import { InterGift } from '@/types/tours.interface'
+import { InGift } from '@/types/tours.interface'
 import { useFormContext } from 'react-hook-form'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 interface GiftProps {
-  gifts: InterGift[]
+  gifts: InGift
 }
 
 export default function Gift({ gifts }: GiftProps) {
   const isMobile = useIsMobile();
   const {control} = useFormContext<BookingFormValues>()
   return (
-    <div className='xsm:mx-[1rem] p-[1.875rem_1.75rem] xsm:w-full xsm:p-[1rem_0.75rem] sm:rounded-[1.5rem] xsm:rounded-[1rem] border-[1px] border-solid border-[#EDEDED] bg-white'>
+    <div className='xsm:mx-[1rem] p-[1.875rem_1.75rem] xsm:w-[calc(100%-2rem)] xsm:p-[1rem_0.75rem] sm:rounded-[1.5rem] xsm:rounded-[1rem] border-[1px] border-solid border-[#EDEDED] bg-white'>
       <p className='mb-[1.5rem] border-b-[0.0625rem] border-solid border-b-[#EDEDED] pb-[1rem] text-[1.125rem] leading-[1.3] font-black tracking-[0.00281rem] text-[#303030]'>
         Gift for you
       </p>
@@ -32,7 +32,7 @@ export default function Gift({ gifts }: GiftProps) {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
-                className="flex w-full"
+                className="flex xsm:flex-col w-full"
               >
                 {!isMobile ? (
                   <Swiper
@@ -41,13 +41,21 @@ export default function Gift({ gifts }: GiftProps) {
                     spaceBetween={12}
                     grabCursor={true}
                   >
-                    {Array.isArray(gifts) && gifts?.length > 0 && gifts.map((gift, index) => (
+                    {Array.isArray(gifts?.gift_tour_list) && gifts?.gift_tour_list?.length > 0 && gifts?.gift_tour_list?.map((gift, index) => (
                       <SwiperSlide key={index}>
                         <FormItem className="flex items-center space-x-[0.5rem] cursor-pointer">
                           <FormControl>
                             <RadioGroupItem className='aria-[checked=true]:border-[#25ACAB] cursor-pointer aria-checked size-[1.25rem] rounded-[100%] border-[0.125rem] border-solid border-[#ADADAD] [&_svg]:size-[0.625rem] [&_svg_circle]:stroke-[#25ACAB] [&_svg_circle]:fill-[#25ACAB]' value={gift?.name} />
                           </FormControl>
-                          <ImageFallback className='size-[5.75rem] rounded-[1rem]' src={'/images/gift.png'} alt={''} width={92} height={92} />
+                          <FormLabel>
+                            <ImageFallback
+                              className='size-[5.75rem] rounded-[1rem]'
+                              src={gift?.image?.url || ''}
+                              alt={gift?.image?.alt || gift?.name || ''}
+                              width={92}
+                              height={92}
+                            />
+                          </FormLabel>
                           <FormLabel className="pl-[0.75rem] text-[#303030] font-trip-sans text-[0.875rem] font-extrabold tracking-[0.01563rem] leading-[1.2] cursor-pointer">
                             {gift?.name}
                           </FormLabel>
@@ -56,12 +64,20 @@ export default function Gift({ gifts }: GiftProps) {
                     ))}
                   </Swiper>
                 ) : 
-                  Array.isArray(gifts) && gifts?.length > 0 && gifts.map((gift, index) => (
-                    <FormItem className="flex items-center space-x-[0.5rem] cursor-pointer">
+                  Array.isArray(gifts?.gift_tour_list) && gifts?.gift_tour_list?.length > 0 && gifts?.gift_tour_list?.map((gift, index) => (
+                    <FormItem key={index} className="flex items-center space-x-[0.5rem] cursor-pointer">
                       <FormControl>
                         <RadioGroupItem className='aria-[checked=true]:border-[#25ACAB] cursor-pointer aria-checked size-[1.25rem] rounded-[100%] border-[0.125rem] border-solid border-[#ADADAD] [&_svg]:size-[0.625rem] [&_svg_circle]:stroke-[#25ACAB] [&_svg_circle]:fill-[#25ACAB]' value={gift?.name} />
                       </FormControl>
-                      <ImageFallback className='size-[5.75rem] rounded-[1rem]' src={'/images/gift.png'} alt={''} width={92} height={92} />
+                      <FormLabel>
+                        <ImageFallback
+                          className='size-[5.75rem] rounded-[1rem]'
+                          src={gift?.image?.url || ''}
+                          alt={gift?.image?.alt || gift?.name || ''}
+                          width={92}
+                          height={92}
+                        />
+                      </FormLabel>
                       <FormLabel className="pl-[0.75rem] text-[#303030] font-trip-sans text-[0.875rem] font-extrabold tracking-[0.01563rem] leading-[1.2] cursor-pointer">
                         {gift?.name}
                       </FormLabel>
@@ -74,7 +90,9 @@ export default function Gift({ gifts }: GiftProps) {
           </FormItem>
         )}
       />
-      <Caution className="mt-[1.5rem]" content="Discounted car rental prices only apply to customers booking Tiemtour" />
+      {gifts?.warning && (
+        <Caution className="mt-[1.5rem]" content={gifts?.warning} />
+      )}
     </div>
   )
 }

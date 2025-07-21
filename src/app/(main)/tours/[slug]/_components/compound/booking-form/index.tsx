@@ -4,6 +4,7 @@ import BookingHomestay from '@/app/(main)/tours/[slug]/_components/compound/book
 import BookingOverview from '@/app/(main)/tours/[slug]/_components/compound/booking-overview'
 import BookingTransportService from '@/app/(main)/tours/[slug]/_components/compound/booking-transport-service'
 import ContactInformation from '@/app/(main)/tours/[slug]/_components/contact'
+import Gift from '@/app/(main)/tours/[slug]/_components/gift'
 import Policy from '@/app/(main)/tours/[slug]/_components/policy'
 import RentMotorcycles from '@/app/(main)/tours/[slug]/_components/rent-motorcycles'
 import {Form} from '@/components/ui/form'
@@ -19,6 +20,7 @@ interface BookTourNowProps {
 }
 
 export default function BookingForm({data}: BookTourNowProps) {
+  const isMobile = useIsMobile()
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -52,14 +54,13 @@ export default function BookingForm({data}: BookTourNowProps) {
       riders: data?.motorbike_package.saving?.map((item) => ({
         name: item?.title,
         price: item?.price,
+      })),
+      motorcycles: data?.motorbike_rents?.motorbike_rent_list?.map((motor) => ({
+        name: motor?.title,
+        id: motor?.id,
+        price: motor?.price,
         quantity: 0,
       })),
-      // motorcycles: data?.motorbike_rents?.map((motor) => ({
-      //   name: motor?.title,
-      //   id: motor?.id,
-      //   price: motor?.price,
-      //   quantity: 0,
-      // })),
       gifts: '',
       yourName: '',
       yourPhone: '',
@@ -68,42 +69,41 @@ export default function BookingForm({data}: BookTourNowProps) {
     },
   })
 
-  const isMobile = useIsMobile()
-
   function onSubmit(values: BookingFormValues) {
-    console.log('FORM: ', values)
+    console.log('...')
+    console.log(values)
   }
   console.log('ERR: ', form.formState.errors)
 
-  return (
-    !isMobile && (
-      <section
-        className={clsx(
-          'xsm:fixed xsm:inset-0 xsm:z-150 xsm:transition-transform xsm:duration-300 xsm:ease-in-out xsm:bg-white xsm:hidden mx-auto flex max-w-[87.5rem] flex-col space-y-[1.5rem] px-0 py-[3.125rem]',
-        )}
-      >
-        <h2 className='font-dvn-luckiest-guy text-[3.125rem] leading-[130%] font-black text-[#3B3943]'>
-          BookTourNow
-        </h2>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className='relative flex justify-between'>
-              <div className='flex w-[54.6875rem] shrink-0 flex-col space-y-[1.5rem]'>
-                <BookingOverview />
-                <BookingHomestay />
-                <BookingTransportService />
-                {/* <RentMotorcycles motorcycles={data?.motorbike_rents} /> */}
-                {/* <Gift gifts={gifts} /> */}
-                <ContactInformation />
-                <Policy />
-              </div>
-              <div className='w-[28.6875rem] shrink-0'>
-                <BookingCheckout />
-              </div>
+  return !isMobile ? (
+    <section
+      className={clsx(
+        'xsm:fixed xsm:inset-0 xsm:z-150 xsm:transition-transform xsm:duration-300 xsm:ease-in-out xsm:bg-white xsm:hidden mx-auto flex max-w-[87.5rem] flex-col space-y-[1.5rem] px-0 py-[3.125rem]',
+      )}
+    >
+      <h2 className='font-dvn-luckiest-guy text-[3.125rem] leading-[130%] font-black text-[#3B3943]'>
+        BookTourNow
+      </h2>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className='relative flex justify-between'>
+            <div className='flex w-[54.6875rem] shrink-0 flex-col space-y-[1.5rem]'>
+              <BookingOverview />
+              <BookingHomestay />
+              <BookingTransportService />
+              <RentMotorcycles motorcycles={data?.motorbike_rents} />
+              <Gift gifts={data?.gift} />
+              <ContactInformation />
+              <Policy policy={data?.policy} />
             </div>
-          </form>
-        </Form>
-      </section>
-    )
+            <div className='w-[28.6875rem] shrink-0'>
+              <BookingCheckout />
+            </div>
+          </div>
+        </form>
+      </Form>
+    </section>
+  ) : (
+    <></>
   )
 }
