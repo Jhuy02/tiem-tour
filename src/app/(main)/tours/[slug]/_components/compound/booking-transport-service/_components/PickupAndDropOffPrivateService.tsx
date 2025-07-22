@@ -120,7 +120,7 @@ export default function PickupAndDropOffPrivateService() {
         </table>
       </div>
       <div className='relative'>
-        <div className='xsm:flex-col xsm:items-end relative flex items-center gap-[0.375rem] rounded-[0.75rem] bg-[#F5F5F5] p-[0.75rem]'>
+        <div className='xsm:flex-col xsm:items-end relative flex items-center justify-between gap-[0.375rem] rounded-[0.75rem] bg-[#F5F5F5] p-[0.75rem]'>
           <div className='flex items-center gap-[0.375rem]'>
             <Image
               alt=''
@@ -131,7 +131,7 @@ export default function PickupAndDropOffPrivateService() {
             />
             <p
               dangerouslySetInnerHTML={{__html: schedulePrivate.note ?? ''}}
-              className='flex-1 text-[0.75rem] leading-[130%] tracking-[0.00188rem] text-[rgba(48,48,48,0.80)]'
+              className='xsm:w-auto w-[25rem] flex-1 text-[0.75rem] leading-[130%] tracking-[0.00188rem] text-[rgba(48,48,48,0.80)]'
             ></p>
           </div>
           <Link
