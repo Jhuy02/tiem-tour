@@ -8,7 +8,7 @@ const IMAGE_LENGTH = 6
 const ImageAnimationFooter = () => {
   const animationRef = useMysteriousAnimation()
   const pathName = usePathname()
-  const isAboutUs = pathName === '/about-us'
+  const isDifferent = pathName === '/about-us' || pathName.startsWith('/tours/')
 
   return (
     <div
@@ -19,7 +19,7 @@ const ImageAnimationFooter = () => {
         <Image
           key={index}
           src={
-            isAboutUs
+            isDifferent
               ? `/footer/l-${index + 1}.webp`
               : `/footer/line-${index + 1}.webp`
           }

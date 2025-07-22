@@ -1,17 +1,12 @@
-import {
-  ArrowRight,
-  Circle,
-  Compass,
-  Star,
-} from '@/app/(main)/tours/[slug]/_components/icon'
+import {Circle, Compass, Star} from '@/app/(main)/tours/[slug]/_components/icon'
+import BookNow from '@/app/(main)/tours/[slug]/_components/overview-compound/book-now'
 import ImageFallback from '@/components/image/ImageFallback'
-import { BreadcrumbDynamic } from '@/components/ui/breadcrumb-dynamic'
-import { Button } from '@/components/ui/button'
-import { WEATHER_API_KEY } from '@/config-global.env'
-import { cn } from '@/lib/utils'
-import { TourDetailContent } from '@/types/tours.interface'
+import {BreadcrumbDynamic} from '@/components/ui/breadcrumb-dynamic'
+import {WEATHER_API_KEY} from '@/config-global.env'
+import {cn} from '@/lib/utils'
+import {TourDetailContent} from '@/types/tours.interface'
 import he from 'he'
-import { ArrowUpRight } from 'lucide-react'
+import {ArrowUpRight} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -26,7 +21,7 @@ export const Banner = async ({data}: {data: TourDetailContent}) => {
   )
   const {main} = await weather.json()
   return (
-    <section className='xsm:h-auto relative h-[100vh] w-full'>
+    <section className='xsm:h-auto tablet:h-[40vh] relative h-[100vh] w-full'>
       <BreadcrumbDynamic
         breadcrumbs={[
           {label: 'Home', href: '/'},
@@ -36,14 +31,14 @@ export const Banner = async ({data}: {data: TourDetailContent}) => {
             href: '',
           },
         ]}
-        className='xsm:[&_svg]:text-[#303030]/40 xsm:block last hidden'
+        className='xsm:[&_svg]:text-[#303030]/40 xsm:block last mt-[5rem] hidden'
       />
       <ImageFallback
         src={data.thumbnail?.url}
         alt={data.thumbnail?.alt}
         width={1920}
         height={512}
-        className='xsm:h-[12.785rem] h-[100vh] w-full object-cover object-center'
+        className='xsm:h-[12.785rem] tablet:h-[40vh] h-[100vh] w-full object-cover object-center'
       />
       <Image
         src='/tour-detail/bottom.webp'
@@ -113,7 +108,8 @@ export const Banner = async ({data}: {data: TourDetailContent}) => {
 
             <div className='ml-[1.125rem] flex'>
               <Link
-                href={'/'}
+                href={data.acf_fields.overview.gallery.link.url}
+                target='_blank'
                 className='mr-[0.6875rem] flex items-center'
               >
                 Gallery <ArrowUpRight className='ml-[0.25rem] size-[1rem]' />
@@ -159,12 +155,7 @@ export const Banner = async ({data}: {data: TourDetailContent}) => {
             ({data.acf_fields.tripadvisor.number_of_reviews || 121} review)
           </p>
         </div>
-        <Button className='col-start-2 h-[5.5rem] w-[10.375rem] flex-col items-center justify-center rounded-[1.5rem] bg-[#25ACAB] p-[1.1875rem_1.625rem_1.25rem_1.5625rem] text-white transition-colors duration-300 hover:bg-[#25ACAB]/80'>
-          <ArrowRight className='h-[1.5rem] w-[1.575rem]' />
-          <span className='font-dvn-luckiest-guy leading-[1.2rem] text-white uppercase'>
-            Book now
-          </span>
-        </Button>
+        <BookNow />
       </div>
     </section>
   )

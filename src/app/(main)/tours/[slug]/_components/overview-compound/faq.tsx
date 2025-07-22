@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import {Separator} from '@/components/ui/separator'
 import {cn} from '@/lib/utils'
 import {TourDetailContent} from '@/types/tours.interface'
 
@@ -23,7 +24,7 @@ export const FAQ = ({data}: {data: TourDetailContent['acf_fields']['faq']}) => {
           <AccordionTrigger className='w-[15.4375rem] items-center rounded-[1.5rem] bg-[#f6f6f6] p-4 text-[0.875rem] leading-[1.05rem] font-medium tracking-[0.00219rem] text-[#303030]'>
             {faq.title}
           </AccordionTrigger>
-          <AccordionContent className='xsm:w-full mx-auto w-[47.1875rem]'>
+          <AccordionContent className='xsm:w-full relative mx-auto w-[47.1875rem]'>
             <article
               className={cn(
                 'xsm:overflow-auto text-[0.875rem] leading-[1.3125rem] tracking-[0.00219rem] text-[#303030]/80 [&_table]:p-[1.5rem]',
@@ -34,6 +35,10 @@ export const FAQ = ({data}: {data: TourDetailContent['acf_fields']['faq']}) => {
                 __html: faq.desc,
               }}
             ></article>
+            <Separator
+              orientation='vertical'
+              className='absolute top-[5.5rem] left-[11rem] h-[calc(100%-9rem)]! w-[0.0625rem]! bg-[#EDEDED]'
+            />
           </AccordionContent>
         </AccordionItem>
       ))}

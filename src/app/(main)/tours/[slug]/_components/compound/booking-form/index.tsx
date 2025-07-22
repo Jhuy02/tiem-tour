@@ -45,7 +45,7 @@ export default function BookingForm({data}: BookTourNowProps) {
       motorcycles: data?.motorbike_rents?.motorbike_rent_list?.map((motor) => ({
         name: motor?.title,
         id: motor?.id,
-        price: motor?.price,
+        price: motor?.price.toString(),
         quantity: 0,
       })),
       gifts: '',
