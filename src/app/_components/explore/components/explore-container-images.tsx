@@ -21,42 +21,49 @@ const ExploreContainerImages = () => (
       alt='explore-container-river'
       width={1920}
       height={1080}
-      className='explore__container-river'
+      className='xsm:hidden explore__container-river'
     />
     <Image
       src={'/home/explore/river-mb.webp'}
       alt='explore-container-river-mb'
       width={1920}
       height={1080}
-      className='explore__container-river-mb'
+      className='xsm:hidden explore__container-river-mb'
     />
     <Image
       src={'/home/explore/river-2.webp'}
       alt='explore-container-river-2'
       width={1920}
       height={1080}
-      className='explore__container-river-2'
+      className='xsm:hidden explore__container-river-2'
     />
     <Image
       src={'/home/explore/fanxipang.webp'}
       alt='explore-container-fanxipang'
       width={1920}
       height={1080}
-      className='explore__container-fanxipang'
+      className='xsm:hidden explore__container-fanxipang'
     />
     <Image
       src={'/home/explore/fanxipang-2.webp'}
       alt='explore-container-fanxipang-2'
       width={1920}
       height={1080}
-      className='explore__container-fanxipang-2'
+      className='xsm:hidden explore__container-fanxipang-2'
     />
     <Image
       src={'/home/explore/coin.webp'}
       alt='explore-container-remove-bg'
       width={1920}
       height={1080}
-      className='explore__container-remove-bg'
+      className='xsm:hidden explore__container-remove-bg'
+    />
+    <Image
+      src={'/home/explore/bg-mb.webp'}
+      alt=''
+      width={1920}
+      height={1080}
+      className='absolute bottom-0 left-0 z-[2] h-[17.23538rem] w-[45.875rem] max-w-none sm:hidden'
     />
     <p className='explore__container-text'>Nhoque River</p>
   </>

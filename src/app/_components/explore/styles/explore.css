@@ -160,7 +160,9 @@
   width: 53.5625rem;
   color: rgba(48, 48, 48, 0.4);
   text-align: center;
-  font-feature-settings: 'liga' off, 'clig' off;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
 
   /* PC/H3/H3 */
   font-family: var(--font-dvn-luckiest-guy);
@@ -317,8 +319,8 @@
     font-weight: 400;
     line-height: normal;
     transform: rotate(-2.275deg);
-    bottom: 4rem;
-    right: 25%;
+    bottom: 6rem;
+    right: 20%;
     z-index: 3;
   }
 

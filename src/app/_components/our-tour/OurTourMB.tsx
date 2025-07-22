@@ -30,7 +30,7 @@ export default function OurTourMB({
                   alt={item?.img_tour_1?.alt}
                   width={610}
                   height={230}
-                  className='ourTour-item__img'
+                  className='ourTour-item__img object-cover'
                 />
                 <div className={`item-infor ${index === 0 ? 'active' : ''}`}>
                   <p className='item-infor__title'>{item?.tour_1.title}</p>

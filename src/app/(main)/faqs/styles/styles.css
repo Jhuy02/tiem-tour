@@ -40,6 +40,7 @@
   position: absolute;
   border: 0;
   left: 0;
+  max-width: none;
 }
 
 #faq .faq__left {
