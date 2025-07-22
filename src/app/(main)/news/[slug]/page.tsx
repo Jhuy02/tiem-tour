@@ -30,11 +30,8 @@ export default async function BlogDetail({
     }),
   ])
 
-  console.log(detailBlog)
-  console.log(relatedBlog)
-
   return (
-    <main className="relative bg-[url('/images/background-page-mobile.webp')] bg-cover bg-fixed bg-center bg-no-repeat pb-0 sm:bg-[url('/images/background-page-pc.webp')] sm:pb-[12rem]">
+    <main className="xsm:pb-[5rem] relative bg-[url('/images/background-page-mobile.webp')] bg-cover bg-fixed bg-center bg-no-repeat pb-[12rem] sm:bg-[url('/images/background-page-pc.webp')]">
       <BlogContent data={detailBlog.data} />
       <RelatedNewsList data={relatedBlog.data} />
     </main>

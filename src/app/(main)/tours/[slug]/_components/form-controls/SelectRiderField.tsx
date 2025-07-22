@@ -31,7 +31,7 @@ export default function SelectRiderField({
       </p>
       <div className='flex items-center space-x-[1.5rem]'>
         <span className='xsm:hidden text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[#C83E21] uppercase'>
-          <span className=''>{unitPrice.toLocaleString('vi-VN')}</span>đ
+          <span className=''>{unitPrice.toLocaleString('en-US')} USD</span>
         </span>
         <span className='xsm:hidden text-[0.875rem] leading-[140%] font-bold text-[#2E2E2E]'>
           x

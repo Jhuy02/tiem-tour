@@ -36,7 +36,7 @@ interface SelectOptionFieldProps {
 
 export default function SelectOptionField({
   label,
-  placeholder = 'Chọn một mục',
+  placeholder = '',
   options,
   value,
   disabled,
@@ -56,7 +56,16 @@ export default function SelectOptionField({
             if (!disabled) setIsOpen(open)
           }}
         >
-          <PopoverTrigger asChild>
+          <PopoverTrigger
+            onClick={(e) => {
+              if (disabled) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+              }
+            }}
+            asChild
+          >
             <div
               className={clsx(
                 'font-trip-sans relative h-[3rem] rounded-[0.75rem] border border-solid border-[#EDEDED]',
@@ -104,7 +113,10 @@ export default function SelectOptionField({
             <RadioGroup
               className='flex flex-col gap-0 space-y-[0.25rem]'
               value={value}
-              onValueChange={onChange}
+              onValueChange={(val) => {
+                onChange?.(val)
+                setIsOpen(false)
+              }}
               name={name}
             >
               {Array.isArray(options) &&
@@ -112,7 +124,7 @@ export default function SelectOptionField({
                   return (
                     <Label
                       key={index}
-                      className='flex h-[2.8125rem] items-center space-x-[0.5rem] px-[0.75rem]'
+                      className='flex h-[2.8125rem] cursor-pointer items-center space-x-[0.5rem] px-[0.75rem]'
                     >
                       <RadioGroupItem
                         value={item?.slug}
@@ -122,14 +134,14 @@ export default function SelectOptionField({
                         alt=''
                         width={22}
                         height={22}
-                        src={'/icons/check_default.svg'}
+                        src={'/icons/radio-unchecked.svg'}
                         className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
                       />
                       <Image
                         alt=''
                         width={22}
                         height={22}
-                        src={'/icons/check_active-v1.svg'}
+                        src={'/icons/radio-checked.svg'}
                         className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
                       />
                       <p className='line-clamp-1 text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>
@@ -145,7 +157,16 @@ export default function SelectOptionField({
 
       {isMobile && (
         <Drawer>
-          <DrawerTrigger asChild>
+          <DrawerTrigger
+            onClick={(e) => {
+              if (disabled) {
+                e.preventDefault()
+                e.stopPropagation()
+                return
+              }
+            }}
+            asChild
+          >
             <div
               className={clsx(
                 'font-trip-sans relative h-[3rem] rounded-[0.75rem] border border-solid border-[#EDEDED]',
@@ -212,14 +233,14 @@ export default function SelectOptionField({
                           alt=''
                           width={22}
                           height={22}
-                          src={'/icons/check_default.svg'}
+                          src={'/icons/radio-unchecked.svg'}
                           className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
                         />
                         <Image
                           alt=''
                           width={22}
                           height={22}
-                          src={'/icons/check_active-v1.svg'}
+                          src={'/icons/radio-checked.svg'}
                           className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
                         />
                         <p className='line-clamp-1 text-[1rem] leading-[120%] font-medium tracking-[0.0025rem] text-[#303030]'>

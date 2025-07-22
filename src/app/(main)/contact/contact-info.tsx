@@ -1,89 +1,93 @@
 import {IContactPageACF} from '@/app/(main)/contact/page'
+import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import styles from './contact-info.module.css'
+import IconArrowRightV1 from '@/components/icon/IconArrowRightV1'
 
 export default function ContactInfo({data}: IContactPageACF) {
   return (
     <div className='w-[40.5625rem] shrink-0 max-sm:w-full max-sm:px-[1rem] max-sm:py-[2rem]'>
-      <div className='flex mb-[2rem] max-sm:flex-wrap'>
-        <div className='w-[14.5625rem] mr-[2rem] shrink-0 max-sm:w-full max-sm:mr-0 max-sm:mb-[1.5rem]'>
-          <p className='flex items-start mb-[0.5rem]'>
+      <div className='mb-[2rem] flex max-sm:flex-wrap'>
+        <div className='mr-[2rem] w-[14.5625rem] shrink-0 max-sm:mr-0 max-sm:mb-[1.5rem] max-sm:w-full'>
+          <p className='mb-[0.5rem] flex items-start'>
             <Image
               alt=''
-              width={50}
-              height={50}
+              width={20}
+              height={20}
               src={data?.contact_social?.icon}
-              className='w-[1.25rem] h-auto shrink-0'
+              className='h-auto w-[1.25rem] shrink-0'
             />
-            <span className='shrink-0 ml-[0.5rem] text-[#3B3943] font-dvn-luckiest-guy text-[1.25rem] font-normal leading-[150%] tracking-[0.00313rem]'>
+            <span className='font-dvn-luckiest-guy ml-[0.5rem] shrink-0 text-[1.25rem] leading-[150%] font-normal tracking-[0.00313rem] text-[#3B3943]'>
               {data?.contact_social?.title ?? ''}
             </span>
           </p>
           <Link
             target='_blank'
             href={data?.contact_social?.social_link?.url}
-            className='inline-block text-[rgba(48,48,48,0.80)] text-[1rem] font-normal leading-[160%] tracking-[0.0025rem] underline mb-[0.5rem]'
+            className='mb-[0.5rem] inline-block text-[1rem] leading-[160%] font-normal tracking-[0.0025rem] text-[rgba(48,48,48,0.80)] underline'
           >
             {data?.contact_social?.social_link?.title}
           </Link>
           <div className='w-[14.5625rem] max-sm:w-full'>
             <Image
               alt=''
-              width={200}
-              height={300}
+              width={233}
+              height={287}
               src={data?.contact_social?.qr_image}
-              className='w-full h-auto max-sm:w-auto max-sm:h-[9.4375rem]'
+              className='h-auto w-full max-sm:h-[9.4375rem] max-sm:w-auto'
             />
           </div>
         </div>
-        <div className='flex-1 flex flex-col max-sm:w-full'>
-          <div className='not-last:mb-[2rem] max-sm:not-last:mb-[0.75rem] self-stretch max-sm:pb-[0.625rem]'>
-            <p className='flex items-start mb-[0.625rem]'>
+        <div className='flex flex-1 flex-col max-sm:w-full'>
+          <div className='self-stretch not-last:mb-[2rem] max-sm:pb-[0.625rem] max-sm:not-last:mb-[0.75rem]'>
+            <p className='mb-[0.625rem] flex items-start'>
               <Image
                 alt=''
                 width={50}
                 height={50}
-                className='w-[1.25rem] h-auto shrink-0'
+                className='h-auto w-[1.25rem] shrink-0'
                 src={data?.email?.icon}
               />
-              <span className='ml-[0.5rem] text-[#3B3943] font-dvn-luckiest-guy text-[1.25rem] font-normal leading-[150%] tracking-[0.00313rem] max-sm:text-[1.125rem] max-sm:leading-[120%] max-sm:tracking-[0.0125rem]'>
+              <span className='font-dvn-luckiest-guy ml-[0.5rem] text-[1.25rem] leading-[150%] font-normal tracking-[0.00313rem] text-[#3B3943] max-sm:text-[1.125rem] max-sm:leading-[120%] max-sm:tracking-[0.0125rem]'>
                 {data?.email?.label}
               </span>
             </p>
             <Link
               href={`mailto:${data?.email?.email}`}
-              className='text-[rgba(48,48,48,0.80)] font-trip-sans text-[1rem] font-normal leading-[160%] tracking-[0.0025rem] max-sm:leading-[150%] inline-block'
+              className='font-trip-sans inline-block text-[1rem] leading-[160%] font-normal tracking-[0.0025rem] text-[rgba(48,48,48,0.80)] max-sm:leading-[150%]'
             >
               {data?.email?.email}
             </Link>
           </div>
-          <div className='not-last:mb-[2rem] max-sm:not-last:mb-[0.75rem] self-stretch'>
-            <p className='flex items-start mb-[0.625rem]'>
+          <div className='self-stretch not-last:mb-[2rem] max-sm:not-last:mb-[0.75rem]'>
+            <p className='mb-[0.625rem] flex items-start'>
               <Image
                 alt=''
                 width={50}
                 height={50}
-                className='w-[1.25rem] h-auto shrink-0'
+                className='h-auto w-[1.25rem] shrink-0'
                 src={data?.address?.icon}
               />
-              <span className='ml-[0.5rem] text-[#3B3943] font-dvn-luckiest-guy text-[1.25rem] font-normal leading-[150%] tracking-[0.00313rem]'>
+              <span className='font-dvn-luckiest-guy ml-[0.5rem] text-[1.25rem] leading-[150%] font-normal tracking-[0.00313rem] text-[#3B3943]'>
                 {data?.address?.label}
               </span>
             </p>
-            <span className='text-[rgba(48,48,48,0.80)] font-trip-sans text-[1rem] font-normal leading-[160%] tracking-[0.0025rem]'>
+            <span className='font-trip-sans text-[1rem] leading-[160%] font-normal tracking-[0.0025rem] text-[rgba(48,48,48,0.80)]'>
               {data?.address?.address}
             </span>
           </div>
-          <div className='not-last:mb-[2rem] max-sm:not-last:mb-[0.75rem] self-stretch max-sm:pb-[0.75rem]'>
-            <p className='flex items-start mb-[0.625rem]'>
+          <div className='self-stretch not-last:mb-[2rem] max-sm:pb-[0.75rem] max-sm:not-last:mb-[0.75rem]'>
+            <p className='mb-[0.625rem] flex items-start'>
               <Image
                 alt=''
                 width={50}
                 height={50}
-                className='w-[1.25rem] h-auto shrink-0'
+                className='h-auto w-[1.25rem] shrink-0'
                 src={data?.hotline?.icon}
               />
-              <span className='ml-[0.5rem] text-[#3B3943] font-dvn-luckiest-guy text-[1.25rem] font-normal leading-[150%] tracking-[0.00313rem]'>
+              <span className='font-dvn-luckiest-guy ml-[0.5rem] text-[1.25rem] leading-[150%] font-normal tracking-[0.00313rem] text-[#3B3943]'>
                 {data?.hotline?.label}
               </span>
             </p>
@@ -92,7 +96,7 @@ export default function ContactInfo({data}: IContactPageACF) {
                 return (
                   <p
                     key={index}
-                    className='text-[rgba(48,48,48,0.80)] font-trip-sans text-[1rem] font-normal leading-[160%] tracking-[0.0025rem]'
+                    className='font-trip-sans text-[1rem] leading-[160%] font-normal tracking-[0.0025rem] text-[rgba(48,48,48,0.80)]'
                   >
                     <span>{item.label} </span>
                     <Link
@@ -108,26 +112,26 @@ export default function ContactInfo({data}: IContactPageACF) {
           </div>
         </div>
       </div>
-      {/* <div className='w-full relative'>
-        <div className='flex flex-col relative w-full h-auto bg-[#25acab] shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)]'>
+      <div className='relative w-full'>
+        <div className='relative flex h-auto w-full flex-col bg-[#25acab] shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)]'>
           <div
             className={clsx(styles.googleMap)}
-            dangerouslySetInnerHTML={{__html: data.map.iframe ?? ''}}
+            dangerouslySetInnerHTML={{__html: data?.map?.iframe ?? ''}}
           ></div>
           {data?.map?.link?.url && (
             <Link
               target='_blank'
-              href={data.map.link.url}
-              className='flex self-stretch w-full items-center justify-between px-[1.5rem] py-[1rem]'
+              href={data?.map?.link.url}
+              className='flex w-full items-center justify-between self-stretch px-[1.5rem] py-[1rem]'
             >
-              <span className='text-[#fff] text-[1.375rem] font-normal leading-[120%] tracking-[0.01563rem] uppercase inline-block pl-[0.3125rem] pt-[0.375rem] pr-[19.25rem] font-dvn-luckiest-guy max-sm:text-[1.125rem] max-sm:tracking-[0.0125rem] max-sm:pr-[3.0625rem] max-sm:pb-[0.1875rem]'>
+              <span className='font-dvn-luckiest-guy inline-block pt-[0.375rem] pr-[19.25rem] pl-[0.3125rem] text-[1.375rem] leading-[120%] font-normal tracking-[0.01563rem] text-[#fff] uppercase max-sm:pr-[3.0625rem] max-sm:pb-[0.1875rem] max-sm:text-[1.125rem] max-sm:tracking-[0.0125rem]'>
                 Directions to the office
               </span>
               <IconArrowRightV1 className='w-[1.3125rem h-auto]' />
             </Link>
           )}
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }

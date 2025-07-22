@@ -23,22 +23,25 @@ export function BlueButton({
   return (
     <Link
       href={href}
-      className={`flex justify-center items-center gap-2.5 rounded-[3.125rem] border-4 shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)] w-fit relative overflow-hidden transition-all duration-700 ease-in-out z-10 bg-transparent no-underline group ${className}`}
+      className={`group relative z-10 flex w-fit items-center justify-center gap-2.5 overflow-hidden rounded-[3.125rem] border-4 bg-transparent no-underline shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)] transition-all duration-700 ease-in-out ${className}`}
       style={{borderColor}}
     >
       <p
-        className={`text-center font-dvn-luckiest-guy font-normal leading-[120%] mb-0 transition-colors duration-500 ease-in-out lg:group-hover:text-white! sm:text-lg text-[1.125rem]`}
+        className={`font-dvn-luckiest-guy mb-0 text-center text-[1.125rem] leading-[120%] font-normal transition-colors duration-500 ease-in-out sm:text-lg lg:group-hover:text-white!`}
         style={{color: textColor}}
       >
         {children}
       </p>
 
-      <div className='lg:group-hover:[&>svg>path]:fill-white transition-all duration-500 ease-in-out'>
-        <Arrow color={arrowColor} />
+      <div className='transition-all duration-500 ease-in-out lg:group-hover:[&>svg>path]:fill-white'>
+        <Arrow
+          color={arrowColor}
+          className='h-6 w-[1.575rem] -translate-y-0.5 transform'
+        />
       </div>
 
       {/* Hover effect background circle - only on desktop */}
-      <div className='absolute inset-0 bg-[#19c2c2] w-[18.41494rem] h-[10.85244rem] rounded-full scale-0 translate-y-full -translate-x-[32%] transition-all duration-500 ease-in-out -z-10 lg:group-hover:scale-100 lg:group-hover:-translate-y-[20%] lg:group-hover:-translate-x-[5%]' />
+      <div className='absolute inset-0 -z-10 h-[10.85244rem] w-[18.41494rem] -translate-x-[32%] translate-y-full scale-0 rounded-full bg-[#19c2c2] transition-all duration-500 ease-in-out lg:group-hover:-translate-x-[5%] lg:group-hover:-translate-y-[20%] lg:group-hover:scale-100' />
     </Link>
   )
 }
@@ -59,7 +62,7 @@ export function Arrow({
       height='25'
       viewBox='0 0 27 25'
       fill='none'
-      className={`ease-in-out transition-all duration-500 ${className}`}
+      className={`transition-all duration-500 ease-in-out ${className}`}
       {...props}
     >
       <path

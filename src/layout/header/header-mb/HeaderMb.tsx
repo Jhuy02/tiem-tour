@@ -14,6 +14,7 @@ import {DataLocation, HeaderMobile} from '@/types/options.interface'
 import Link from 'next/link'
 import Image from 'next/image'
 import './Header-mb.css'
+import {Drawer, DrawerContent, DrawerTrigger} from '@/components/ui/drawer'
 
 export default function HeaderMb({
   HeaderMobile,
@@ -26,7 +27,7 @@ export default function HeaderMb({
     <>
       <header
         id='header-mobile'
-        className='header__wrapper'
+        className='header__wrapper sm:hidden'
       >
         <div className='header-mobile__container'>
           <div className='header-mobile__left'>
@@ -42,20 +43,28 @@ export default function HeaderMb({
           </div>
 
           <div className='header-mobile__right'>
-            <Sheet>
+            {/* <Sheet>
               <SheetTrigger className='header-mobile__search'>
                 <IconSearch />
               </SheetTrigger>
               <SheetContent
                 side='bottom'
-                className='z-[100] w-full bg-white [&>button]:top-[0.5rem] [&>button]:right-[1rem] [&>button]:border-none [&>button]:bg-white [&>button]:p-[0.6875rem_1rem_0.6875rem_0.75rem] [&>button]:opacity-[1] [&>button]:focus:ring-0 [&>button]:focus:ring-offset-0 [&>button]:focus-visible:ring-0 [&>button]:focus-visible:ring-offset-0 [&>button>svg]:size-[1rem]'
+                className='animate-slide-up z-[100] w-full bg-white [&>button]:top-[0.5rem] [&>button]:right-[1rem] [&>button]:border-none [&>button]:bg-white [&>button]:p-[0.6875rem_1rem_0.6875rem_0.75rem] [&>button]:opacity-[1] [&>button]:focus:ring-0 [&>button]:focus:ring-offset-0 [&>button]:focus-visible:ring-0 [&>button]:focus-visible:ring-offset-0 [&>button>svg]:size-[1rem]'
               >
                 <SheetHeader className='hidden'>
                   <SheetTitle>Search</SheetTitle>
                 </SheetHeader>
                 <SearchPopup dataSearch={HeaderMobile?.search} />
               </SheetContent>
-            </Sheet>
+            </Sheet> */}
+            <Drawer>
+              <DrawerTrigger className='header-mobile__search'>
+                <IconSearch />
+              </DrawerTrigger>
+              <DrawerContent className='h-full'>
+                <SearchPopup dataSearch={HeaderMobile?.search} />
+              </DrawerContent>
+            </Drawer>
 
             <Sheet>
               <SheetTrigger className='flex cursor-pointer items-center gap-[0.5rem] rounded-[0rem_0.5rem_0.5rem_0rem] border-none bg-[rgba(255,255,255,0.2)] p-[0.6875rem_1rem_0.6875rem_0.75rem] text-[0.75rem] leading-[150%] font-medium text-white backdrop-blur-[5px]'>

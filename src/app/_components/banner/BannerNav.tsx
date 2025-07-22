@@ -2,12 +2,18 @@
 import IconCheck from '@/app/_components/banner/IconCheck'
 import PopupSelectMb from '@/app/_components/banner/PopupSelectMb'
 import IconArrow from '@/components/icon/IconArrow'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger
+} from "@/components/ui/drawer"
+import scrollToElement from '@/hooks/scrollToElement'
 import useIsMobile from '@/hooks/useIsMobile'
-import {TaxonomyResponse} from '@/types/taxonomies.interface'
+import { TaxonomyResponse } from '@/types/taxonomies.interface'
 import Image from 'next/image'
-import {useState} from 'react'
-import {Navigation} from 'swiper/modules'
-import {Swiper, SwiperSlide} from 'swiper/react'
+import { useState } from 'react'
+import { Navigation } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
 const dataBudget = [
   {
@@ -50,166 +56,219 @@ export default function BannerNav({
       <div className='banner-nav'>
         <div className='banner-nav__fillter'>
           <div className='banner-fillter__wapper'>
-            <div
-              className='banner-fillter__item select__location'
-              tabIndex={0}
-              onClick={(e) => {
-                e.stopPropagation()
-                setOpenLocation(!openLocation)
-                setOpenDuration(false)
-                setOpenBudget(false)
-              }}
-              onBlur={() => {
-                if (!isMobile) {
-                  setOpenLocation(false)
-                }
-              }}
-            >
-              <div className='fillter-item__icon'>
-                <Image
-                  src={'/home/icon-location.svg'}
-                  width={40}
-                  height={40}
-                  alt=''
-                />
-              </div>
-              <div className='fillter-item__wapper'>
-                <p className='fillter-item__label'>Location of interest</p>
-                <div className='fillter-item__select'>
-                  <p
-                    className='fillter-item__title'
-                    data-check='0'
+            {isMobile ? (
+              <Drawer>
+                <DrawerTrigger asChild>
+                  <div
+                    className='banner-fillter__item select__location'
+                    tabIndex={0}
                   >
-                    {selectedLocation.length > 0
-                      ? selectedLocation
-                          .map((location) => location.name)
-                          .join(', ')
-                      : 'Click to select'}
-                  </p>
-                  <Image
-                    className='fillter-item__arrow'
-                    src={'/home/dropdown-Icon.svg'}
-                    width={18}
-                    height={18}
-                    alt=''
-                  />
-                </div>
-              </div>
-            </div>
-            <div className='banner-fillter__itemline'></div>
-            <div
-              tabIndex={1}
-              onClick={(e) => {
-                e.stopPropagation()
-                setOpenDuration(!openDuration)
-                setOpenLocation(false)
-                setOpenBudget(false)
-              }}
-              onBlur={() => {
-                if (!isMobile) {
-                  setOpenDuration(false)
-                }
-              }}
-              className='banner-fillter__item select__duration'
-              data-tax=''
-            >
-              <div className='fillter-item__icon'>
-                <Image
-                  src={'/home/icon-duration.svg'}
-                  width={40}
-                  height={40}
-                  alt=''
-                />
-              </div>
-              <div className='fillter-item__wapper'>
-                <p className='fillter-item__label'>Travel time</p>
-                <div className='fillter-item__select'>
-                  <p className='fillter-item__title'>
-                    {selectedDuration?.name || 'Click to select'}
-                  </p>
-                  <Image
-                    className='fillter-item__arrow'
-                    src={'/home/dropdown-Icon.svg'}
-                    width={18}
-                    height={18}
-                    alt=''
-                  />
-                </div>
-              </div>
-              {!isMobile && (
-                <div
-                  className={`banner-fillter__itempopup ${
-                    openDuration ? 'open' : ''
-                  }`}
-                >
-                  {Array.isArray(dataTaxonomies?.duration) &&
-                    dataTaxonomies?.duration?.map((term) => (
-                      <div
-                        key={term.slug}
-                        className='fillter-itempopup__item'
-                        onClick={() => {
-                          setSelectedDuration(
-                            selectedDuration?.slug === term.slug
-                              ? null
-                              : {name: term.name, slug: term.slug},
-                          )
-                        }}
-                      >
-                        <div
-                          className={`itempopup-item__check duration-item ${
-                            selectedDuration?.slug === term.slug ? 'active' : ''
-                          }`}
+                    <div className='fillter-item__icon'>
+                      <Image
+                        src={'/home/icon-location.svg'}
+                        width={40}
+                        height={40}
+                        alt=''
+                      />
+                    </div>
+                    <div className='fillter-item__wapper'>
+                      <p className='fillter-item__label'>Location of interest</p>
+                      <div className='fillter-item__select'>
+                        <p
+                          className='fillter-item__title'
+                          data-check='0'
                         >
-                          <IconCheck />
-                        </div>
-                        <p>{term.name}</p>
+                          {selectedLocation.length > 0
+                            ? selectedLocation
+                                .map((location) => location.name)
+                                .join(', ')
+                            : 'Click to select'}
+                        </p>
+                        <Image
+                          className='fillter-item__arrow'
+                          src={'/home/dropdown-Icon.svg'}
+                          width={18}
+                          height={18}
+                          alt=''
+                        />
                       </div>
-                    ))}
-                </div>
-              )}
-            </div>
-            <div className='banner-fillter__itemline'></div>
-            <div
-              tabIndex={2}
-              onClick={(e) => {
-                e.stopPropagation()
-                setOpenBudget(!openBudget)
-                setOpenLocation(false)
-                setOpenDuration(false)
-              }}
-              onBlur={() => {
-                if (!isMobile) {
-                  setOpenBudget(false)
-                }
-              }}
-              className='banner-fillter__item select__proposedbudget'
-              data-tax=''
-            >
-              <div className='fillter-item__icon'>
-                <Image
-                  src={'/home/icon-budget.svg'}
-                  width={40}
-                  height={40}
-                  alt=''
-                />
-              </div>
-              <div className='fillter-item__wapper'>
-                <p className='fillter-item__label'>Proposed budget</p>
-                <div className='fillter-item__select'>
-                  <p className='fillter-item__title'>
-                    {selectedBudget?.name || 'Click to select'}
-                  </p>
-                  <Image
-                    className='fillter-item__arrow'
-                    src={'/home/dropdown-Icon.svg'}
-                    width={18}
-                    height={18}
-                    alt=''
+                    </div>
+                  </div>
+                </DrawerTrigger>
+                <DrawerContent className='[&_.drawer_heading_icon]:!hidden'>
+                  <PopupSelectMb
+                    title='Location of interest'
+                    toggle={openLocation}
+                    dataTaxonomies={dataTaxonomies.location}
+                    setSelectedMultiple={setSelectedLocation}
+                    selectedMultiple={selectedLocation}
                   />
+                </DrawerContent>
+              </Drawer>
+            ):
+              <>
+                <div
+                  className='banner-fillter__item select__location'
+                  tabIndex={0}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setOpenLocation(!openLocation)
+                    setOpenDuration(false)
+                    setOpenBudget(false)
+                  }}
+                  onBlur={() => {
+                    if (!isMobile) {
+                      setOpenLocation(false)
+                    }
+                  }}
+                >
+                  <div className='fillter-item__icon'>
+                    <Image
+                      src={'/home/icon-location.svg'}
+                      width={40}
+                      height={40}
+                      alt=''
+                    />
+                  </div>
+                  <div className='fillter-item__wapper'>
+                    <p className='fillter-item__label'>Location of interest</p>
+                    <div className='fillter-item__select'>
+                      <p
+                        className='fillter-item__title'
+                        data-check='0'
+                      >
+                        {selectedLocation.length > 0
+                          ? selectedLocation
+                              .map((location) => location.name)
+                              .join(', ')
+                          : 'Click to select'}
+                      </p>
+                      <Image
+                        className='fillter-item__arrow'
+                        src={'/home/dropdown-Icon.svg'}
+                        width={18}
+                        height={18}
+                        alt=''
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className='banner-fillter__itemline'></div>
+                <div className='banner-fillter__itemline'></div>
+                <div
+                  tabIndex={1}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setOpenDuration(!openDuration)
+                    setOpenLocation(false)
+                    setOpenBudget(false)
+                  }}
+                  onBlur={() => {
+                    if (!isMobile) {
+                      setOpenDuration(false)
+                    }
+                  }}
+                  className='banner-fillter__item select__duration'
+                  data-tax=''
+                >
+                  <div className='fillter-item__icon'>
+                    <Image
+                      src={'/home/icon-duration.svg'}
+                      width={40}
+                      height={40}
+                      alt=''
+                    />
+                  </div>
+                  <div className='fillter-item__wapper'>
+                    <p className='fillter-item__label'>Travel time</p>
+                    <div className='fillter-item__select'>
+                      <p className='fillter-item__title'>
+                        {selectedDuration?.name || 'Click to select'}
+                      </p>
+                      <Image
+                        className='fillter-item__arrow'
+                        src={'/home/dropdown-Icon.svg'}
+                        width={18}
+                        height={18}
+                        alt=''
+                      />
+                    </div>
+                  </div>
+                  {!isMobile && (
+                    <div
+                      className={`banner-fillter__itempopup ${
+                        openDuration ? 'open' : ''
+                      }`}
+                    >
+                      {Array.isArray(dataTaxonomies?.duration) &&
+                        dataTaxonomies?.duration?.map((term) => (
+                          <div
+                            key={term.slug}
+                            className='fillter-itempopup__item'
+                            onClick={() => {
+                              setSelectedDuration(
+                                selectedDuration?.slug === term.slug
+                                  ? null
+                                  : {name: term.name, slug: term.slug},
+                              )
+                            }}
+                          >
+                            <div
+                              className={`itempopup-item__check duration-item ${
+                                selectedDuration?.slug === term.slug ? 'active' : ''
+                              }`}
+                            >
+                              <IconCheck />
+                            </div>
+                            <p>{term.name}</p>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </div>
+                <div className='banner-fillter__itemline'></div>
+                <div
+                  tabIndex={2}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setOpenBudget(!openBudget)
+                    setOpenLocation(false)
+                    setOpenDuration(false)
+                  }}
+                  onBlur={() => {
+                    if (!isMobile) {
+                      setOpenBudget(false)
+                    }
+                  }}
+                  className='banner-fillter__item select__proposedbudget'
+                  data-tax=''
+                >
+                  <div className='fillter-item__icon'>
+                    <Image
+                      src={'/home/icon-budget.svg'}
+                      width={40}
+                      height={40}
+                      alt=''
+                    />
+                  </div>
+                  <div className='fillter-item__wapper'>
+                    <p className='fillter-item__label'>Proposed budget</p>
+                    <div className='fillter-item__select'>
+                      <p className='fillter-item__title'>
+                        {selectedBudget?.name || 'Click to select'}
+                      </p>
+                      <Image
+                        className='fillter-item__arrow'
+                        src={'/home/dropdown-Icon.svg'}
+                        width={18}
+                        height={18}
+                        alt=''
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className='banner-fillter__itemline'></div>
+              </>
+            }
           </div>
           <div className='banner-fillter__btn'>
             <p className='fillter-btn__text'>Search for a tour</p>
@@ -218,7 +277,7 @@ export default function BannerNav({
           {!isMobile && (
             <div className={`popuplocation ${openLocation ? 'open' : ''}`}>
               <Swiper
-                className='popuplocation-content'
+                className='popuplocation-content p-[0.75rem_1.3125rem]'
                 modules={[Navigation]}
                 navigation={{
                   nextEl: '.popuplocationlocation-button-next',
@@ -326,7 +385,12 @@ export default function BannerNav({
             </div>
           )}
         </div>
-        <div className='banner-nav__scroll'>
+        <div
+          onClick={() => {
+            scrollToElement(null, 'explore', 1, 0)
+          }}
+          className='banner-nav__scroll'
+        >
           <p>Scroll down</p>
           <Image
             className='nav__scrollicon'
@@ -337,7 +401,7 @@ export default function BannerNav({
           />
         </div>
       </div>
-      {isMobile && (
+      {/* {isMobile && (
         <>
           <div
             onClick={(e) => {
@@ -375,7 +439,7 @@ export default function BannerNav({
             changeOpen={setOpenDuration}
           />
         </>
-      )}
+      )} */}
     </>
   )
 }

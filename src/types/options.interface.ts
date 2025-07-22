@@ -102,7 +102,7 @@ export interface DataSearch {
   hot_search: {
     title: string
     key: {
-      key: string
+      key_text: string
     }[]
   }
   button: string

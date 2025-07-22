@@ -3,6 +3,10 @@
   position: relative;
   padding-left: 2rem;
 }
+.tourIncludedContent li:not(:last-child),
+.tourExcludesContent li:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
 .tourIncludedContent li::before,
 .tourExcludesContent li::before {
   content: '';
@@ -31,7 +35,67 @@
 @media (max-width) {
   .tourIncludedContent li::before,
   .tourExcludesContent li::before {
-      width: 1.25rem;
-      height: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/* Policy */
+
+.depositPolicyContent li,
+.noRefundPolicyContent li {
+  position: relative;
+  padding-left: 2rem;
+}
+.depositPolicyContent li:not(:last-child),
+.noRefundPolicyContent li:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+.depositPolicyContent li::before,
+.noRefundPolicyContent li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.depositPolicyContent li::before {
+  background-image: url('/icons/privacy_policy.svg');
+}
+.noRefundPolicyContent li::before {
+  background-image: url('/icons/danger.svg');
+}
+
+.depositPolicyContent strong,
+.noRefundPolicyContent strong {
+  font-weight: 800;
+}
+
+.policyContent {
+  color: #303030;
+  font-size: 0.875rem;
+  line-height: 150%;
+  font-weight: 400;
+  letter-spacing: 0.00219rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (max-width) {
+  .depositPolicyContent li::before,
+  .noRefundPolicyContent li::before {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .tourIncludedContent li:not(:last-child),
+  .tourExcludesContent li:not(:last-child) {
+    margin-bottom: 0.625rem;
   }
 }

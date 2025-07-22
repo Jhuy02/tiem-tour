@@ -176,10 +176,13 @@
 #header .header__right-hotline:hover p {
   transform: scale(1.05);
 }
-
+#header .header__right-hotline:hover img {
+  transform: scale(1.05);
+}
 #header .header__right-hotline img {
   width: 2.36481rem;
   height: 2.375rem;
+  transition: all 0.5s;
 }
 
 #header .header__right-hotline p {
@@ -351,6 +354,7 @@ height: 110%;
   letter-spacing: 0.01563rem;
   text-transform: uppercase;
   transition: all 0.3s;
+  transform: translateY(0.5rem);
 }
 .tours-dropdown-first-item:hover a > p {
   transform: translateY(1rem);

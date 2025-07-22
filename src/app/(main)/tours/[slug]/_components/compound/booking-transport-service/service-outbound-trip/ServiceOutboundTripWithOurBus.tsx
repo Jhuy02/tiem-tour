@@ -7,6 +7,8 @@ import PickupAndDropOffBusService from '@/app/(main)/tours/[slug]/_components/co
 import DatePickerField from '@/app/(main)/tours/[slug]/_components/form-controls/DatePickerField'
 import SelectOptionField from '@/app/(main)/tours/[slug]/_components/form-controls/SelectOptionField'
 import SelectTransportVehicle from '@/app/(main)/tours/[slug]/_components/form-controls/SelectTransportVehicle'
+import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
+
 import {
   Dialog,
   DialogContent,
@@ -14,40 +16,90 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import {FormField, FormItem, FormMessage} from '@/components/ui/form'
+} from '@/components/ui/dialog-v2'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form'
 import {RadioGroup} from '@/components/ui/radio-group'
-import {CITY_LIST, TransportVehicleList} from '@/constants/mockApi'
 import {BookingFormValues} from '@/schemas/booking.schema'
+import {TourDetailApiResType} from '@/types/tours.interface'
+import clsx from 'clsx'
 import Image from 'next/image'
-import {useMemo, useState} from 'react'
-import {useFormContext} from 'react-hook-form'
+import {useContext, useEffect, useMemo, useState} from 'react'
+import {useFormContext, useWatch} from 'react-hook-form'
 
 export default function ServiceOutboundTripWithOurBus() {
-  const {control} = useFormContext<BookingFormValues>()
+  const pageContext = useContext(PageContext)
+  if (!pageContext) throw new Error('Page context is missing')
+  const {data: apiData}: {data: TourDetailApiResType} = pageContext
+
+  const {control, setValue} = useFormContext<BookingFormValues>()
   const [addedOptionSlug, setAddedOptionSlug] = useState<string | null>(null)
+  const pickupLocation = useWatch({
+    control,
+    name: 'outboundTrip.data.pickUpLocation',
+  })
+  const pickupAddress = useWatch({
+    control,
+    name: 'outboundTrip.data.pickUpAddress',
+  })
+
+  const pickupVehicleList = useMemo(() => {
+    const vehicles = apiData?.package_tour?.main_car_pick_up_data.map(
+      (item) => {
+        return {
+          id: item.id,
+          name: item.title,
+          slug: item.id.toString(),
+          startTime: item.fields.start_time,
+          price: Number(item.fields.price_car_pax),
+          maximum: Number(item.fields.max_number_pax),
+        }
+      },
+    )
+    return vehicles || []
+  }, [apiData?.package_tour?.main_car_pick_up_data])
 
   const addedOtherOptionItem = useMemo(() => {
     if (!addedOptionSlug) return null
 
-    const item = TransportVehicleList.find((i) => i.slug === addedOptionSlug)
+    const item = pickupVehicleList.find((i) => i.slug === addedOptionSlug)
     if (!item) return null
 
-    const isInTop2 = TransportVehicleList.slice(0, 2).some(
-      (i) => i.slug === item.slug,
-    )
+    const isInTop2 = pickupVehicleList
+      .slice(0, 2)
+      .some((i) => i.slug === item.slug)
     return isInTop2 ? null : item
-  }, [addedOptionSlug])
+  }, [addedOptionSlug, pickupVehicleList])
+
+  const pickupLocationList = useMemo(() => {
+    const locations = apiData?.package_tour?.pick_up_location?.map((item) => {
+      return {
+        name: item.location,
+        slug: item.location,
+      }
+    })
+    return locations || []
+  }, [apiData?.package_tour?.pick_up_location])
+
+  useEffect(() => {
+    const pickupInfo = apiData?.package_tour?.pick_up_location?.find(
+      (item) => item.location === pickupLocation,
+    )
+    if (pickupInfo) {
+      setValue('outboundTrip.data.pickUpAddress', pickupInfo.detail_location)
+    }
+  }, [apiData?.package_tour?.pick_up_location, pickupLocation, setValue])
 
   return (
     <>
       <div className='xsm:hidden absolute top-0 right-0'>
         <Dialog>
           <DialogTrigger asChild>
-            <button
-              type='button'
-              className='flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC] px-[1rem] py-[0.5rem]'
-            >
+            <div className='flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC] px-[1rem] py-[0.5rem]'>
               <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#303030]'>
                 Bus schedule
               </span>
@@ -58,11 +110,11 @@ export default function ServiceOutboundTripWithOurBus() {
                 src={'/icons/chevron-right-double.svg'}
                 className='h-auto w-[1.25rem] shrink-0'
               />
-            </button>
+            </div>
           </DialogTrigger>
-          <DialogContent className='z-150 max-h-[95vh]! max-w-fit! rounded-none! border-none! bg-transparent! p-0! duration-500'>
+          <DialogContent className='xsm:rounded-b-none hidden_scroll max-h-[95vh]! overflow-y-auto! rounded-[1.5rem] border-none! bg-transparent! p-0! duration-500'>
             <DialogHeader className='hidden'>
-              <DialogTitle>Other Option</DialogTitle>
+              <DialogTitle>Schedule Bus Service</DialogTitle>
               <DialogDescription></DialogDescription>
             </DialogHeader>
             <PickupAndDropOffBusService />
@@ -78,15 +130,17 @@ export default function ServiceOutboundTripWithOurBus() {
           <div className='xsm:flex-wrap xsm:space-x-0 xsm:space-y-[0.75rem] flex items-start space-x-[0.75rem]'>
             <FormField
               control={control}
-              name='outbound_trip_pickup_location'
+              name='outboundTrip.data.pickUpLocation'
               render={({field}) => (
                 <FormItem className='xsm:basis-full flex-1'>
-                  <SelectOptionField
-                    label='Pick up at'
-                    placeholder='Select pickup location'
-                    options={CITY_LIST}
-                    {...field}
-                  />
+                  <FormControl>
+                    <SelectOptionField
+                      label='Pick up at'
+                      placeholder='Select pickup location'
+                      options={pickupLocationList}
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                 </FormItem>
               )}
@@ -108,17 +162,17 @@ export default function ServiceOutboundTripWithOurBus() {
           <div className='flex flex-col items-end space-y-[0.75rem]'>
             <FormField
               control={control}
-              name='outbound_trip_pickup_vehicle'
+              name='outboundTrip.data.pickUpVehicle'
               render={({field}) => (
                 <FormItem className='self-stretch'>
                   <RadioGroup
                     className='grid grid-cols-2 gap-[0.75rem]'
-                    value={field.value}
+                    value={field.value.toString()}
                     onValueChange={field.onChange}
                     name={field.name}
                   >
-                    {Array.isArray(TransportVehicleList) &&
-                      TransportVehicleList?.slice(0, 2)?.map((item, index) => {
+                    {Array.isArray(pickupVehicleList) &&
+                      pickupVehicleList?.slice(0, 2)?.map((item, index) => {
                         return (
                           <div
                             key={index}
@@ -135,7 +189,7 @@ export default function ServiceOutboundTripWithOurBus() {
                       })}
 
                     {addedOtherOptionItem && (
-                      <div className='xsm:col-span-full xsm:border xsm:border-solid xsm:border-[#EDEDED] xsm:bg-white col-span-1 flex items-center justify-between rounded-[0.75rem] bg-[#F6F6F6] p-[0.75rem]'>
+                      <div className='xsm:col-span-full col-span-1 flex items-center justify-between rounded-[0.75rem] border border-solid border-[#EDEDED] bg-white p-[0.75rem]'>
                         <SelectTransportVehicle
                           title={addedOtherOptionItem?.name}
                           value={addedOtherOptionItem?.slug}
@@ -147,9 +201,16 @@ export default function ServiceOutboundTripWithOurBus() {
                     <FormMessage className='font-trip-sans col-span-1 pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
                     <div className='col-span-1 col-start-2 flex items-center justify-end'>
                       <OtherTransportVehicle
-                        keySchema='outbound_trip_pickup_vehicle'
-                        optionList={TransportVehicleList}
-                        onAddOption={(slug) => setAddedOptionSlug(slug)}
+                        keySchema='outboundTrip.data.pickUpVehicle'
+                        optionList={pickupVehicleList}
+                        onAddOption={(slug) => {
+                          const isInTop2 = pickupVehicleList
+                            .slice(0, 2)
+                            .some((i) => i.slug === slug)
+                          if (!isInTop2) {
+                            setAddedOptionSlug(slug)
+                          }
+                        }}
                       />
                     </div>
                   </RadioGroup>
@@ -168,7 +229,7 @@ export default function ServiceOutboundTripWithOurBus() {
                 className='h-auto w-[1.25rem]'
               />
               <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'>
-                Pick up at 94 Tran nhat duat street, BaDinh
+                {pickupAddress ?? 'Please select pick up location'}
               </p>
             </div>
             <p className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'>
@@ -181,39 +242,64 @@ export default function ServiceOutboundTripWithOurBus() {
             Arrival time
           </p>
           <div className='xsm:space-y-[0.75rem] xsm:space-x-0 xsm:flex-wrap flex items-start space-x-[0.75rem]'>
-            <FormField
-              control={control}
-              // name='outboundTripArrivalLocation'
-              name='outbound_trip_arrival_location'
-              render={({field}) => (
-                <FormItem className='xsm:basis-full flex-1'>
-                  <SelectOptionField
-                    label='Arrival location'
-                    placeholder='Select arrival location'
-                    options={CITY_LIST}
-                    disabled
-                    {...field}
+            <div className='xsm:basis-full flex-1'>
+              <div
+                className={clsx(
+                  'font-trip-sans pointer-events-none relative h-[3rem] cursor-not-allowed rounded-[0.75rem] border border-solid border-[#EDEDED] bg-[#F6F6F6]',
+                )}
+              >
+                <div className='flex h-full w-full cursor-pointer items-center justify-between space-x-[1rem] px-[1rem] py-[0.875rem]'>
+                  <p
+                    className={clsx(
+                      'text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]',
+                    )}
+                  >
+                    {
+                      apiData?.acf_fields?.transport_service?.outbound_trip
+                        ?.use_our_bus_service?.arrival_location
+                    }
+                  </p>
+                  <Image
+                    alt=''
+                    width={20}
+                    height={20}
+                    src='/icons/arrow-down.svg'
+                    className={clsx(
+                      'h-auto w-[1.25rem] shrink-0 transition-transform duration-300',
+                    )}
                   />
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name='outbound_trip_arrival_time'
-              render={({field}) => (
-                <FormItem className='xsm:basis-full flex-1'>
-                  <SelectOptionField
-                    label='Arrival time'
-                    placeholder='Select arrival time'
-                    options={CITY_LIST}
-                    disabled
-                    {...field}
+                </div>
+              </div>
+            </div>
+            <div className='xsm:basis-full flex-1'>
+              <div
+                className={clsx(
+                  'font-trip-sans pointer-events-none relative h-[3rem] cursor-not-allowed rounded-[0.75rem] border border-solid border-[#EDEDED] bg-[#F6F6F6]',
+                )}
+              >
+                <div className='flex h-full w-full cursor-pointer items-center justify-between space-x-[1rem] px-[1rem] py-[0.875rem]'>
+                  <p
+                    className={clsx(
+                      'text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]',
+                    )}
+                  >
+                    {
+                      apiData?.acf_fields?.transport_service?.outbound_trip
+                        ?.use_our_bus_service?.arrival_time
+                    }
+                  </p>
+                  <Image
+                    alt=''
+                    width={20}
+                    height={20}
+                    src='/icons/arrow-down.svg'
+                    className={clsx(
+                      'h-auto w-[1.25rem] shrink-0 transition-transform duration-300',
+                    )}
                   />
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                </FormItem>
-              )}
-            />
+                </div>
+              </div>
+            </div>
           </div>
           <div className='flex items-start space-x-[1rem] rounded-[0.75rem] border border-solid border-[#ECECEC] bg-[#F6F6F6] px-[1rem] py-[0.875rem]'>
             <Image
@@ -223,12 +309,14 @@ export default function ServiceOutboundTripWithOurBus() {
               src={'/icons/marker-pin.svg'}
               className='h-auto w-[1.25rem] shrink-0'
             />
-            <div className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'>
-              <p>Stop at</p>
-              <p>1. TiemTours Office 92i Nguyen Trai</p>
-              <p>2. Ha Giang Bus Station </p>
-              <p>3. Homestays, hostels, and hotels in downtown Ha Giang</p>
-            </div>
+            <div
+              dangerouslySetInnerHTML={{
+                __html:
+                  apiData?.acf_fields?.transport_service?.outbound_trip
+                    ?.use_our_bus_service?.arrival_address ?? '',
+              }}
+              className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[rgba(48,48,48,0.40)]'
+            ></div>
           </div>
         </div>
       </div>

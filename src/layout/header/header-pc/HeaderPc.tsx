@@ -1,5 +1,6 @@
 'use client'
 
+import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
 import {useHeaderScroll} from '@/hooks/useHeaderScroll'
 import IconArrowHeader from '@/layout/header/header-pc/IconArrowHeader'
 import IconLocation from '@/layout/header/header-pc/IconLocation'
@@ -8,11 +9,13 @@ import SvgBacKan from '@/layout/header/header-pc/SvgBacKan'
 import SvgCaoBang from '@/layout/header/header-pc/SvgCaoBang'
 import SvgHaGiang from '@/layout/header/header-pc/SvgHaGiang'
 import {DataLocation, HeaderOption, PageLink} from '@/types/options.interface'
+import he from 'he'
 import Image from 'next/image'
 import Link from 'next/link'
 import './Header-pc.css'
-import {getPathFromUrl} from '@/hooks/useGetPathFromUrl'
-import he from 'he'
+import {useRouter} from 'next/navigation'
+import SearchPopup from '@/layout/header/header-pc/SearchPopup'
+import {useState, useEffect} from 'react'
 
 export default function HeaderPc({
   HeaderOption,
@@ -22,6 +25,19 @@ export default function HeaderPc({
   ImgLocation: DataLocation
 }) {
   const {isHeaderHidden, isToursActive, setIsToursActive} = useHeaderScroll()
+  const [isShowSearchPopup, setIsShowSearchPopup] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQueryDebounced, setSearchQueryDebounced] = useState('')
+  const router = useRouter()
+
+  // Debounce logic
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchQueryDebounced(searchQuery)
+    }, 500) // 500ms delay
+
+    return () => clearTimeout(timer)
+  }, [searchQuery])
 
   return (
     <header
@@ -52,10 +68,9 @@ export default function HeaderPc({
                         className={`header__left-nav-tour ${
                           isToursActive ? 'active' : ''
                         }`}
-                        onClick={(e) => {
-                          e.preventDefault()
-                          setIsToursActive(!isToursActive)
-                        }}
+                        onMouseEnter={() => setIsToursActive(true)}
+                        onMouseLeave={() => setIsToursActive(false)}
+                        onClick={() => router.push('/tours')}
                       >
                         <div className='header__left-nav-tour-icon'>
                           <IconLocation />
@@ -85,7 +100,7 @@ export default function HeaderPc({
                                 />
                                 <div className='minimap-svg__wapper'>
                                   <SvgHaGiang
-                                    src={ImgLocation?.ha_giang?.img.url}
+                                    src={ImgLocation?.ha_giang?.img?.url}
                                   />
                                 </div>
                                 <p>{ImgLocation?.ha_giang?.name}</p>
@@ -104,7 +119,7 @@ export default function HeaderPc({
                                 />
 
                                 <SvgCaoBang
-                                  src={ImgLocation?.cao_bang?.img.url}
+                                  src={ImgLocation?.cao_bang?.img?.url}
                                 />
                                 <p>{ImgLocation?.cao_bang?.name}</p>
                               </Link>
@@ -122,7 +137,7 @@ export default function HeaderPc({
                                 />
                                 <div className='minimap-svg__wapper'>
                                   <SvgBacKan
-                                    src={ImgLocation?.bac_kan?.img.url}
+                                    src={ImgLocation?.bac_kan?.img?.url}
                                   />
                                 </div>
                                 <p>{ImgLocation?.bac_kan?.name}</p>
@@ -150,12 +165,25 @@ export default function HeaderPc({
         </nav>
       </div>
       <div className='header__right'>
-        <div className='header__right-search'>
+        <div
+          className='header__right-search relative'
+          onClick={() => setIsShowSearchPopup(true)}
+        >
           <input
             type='text'
             placeholder='Search'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <IconSearch />
+          <IconSearch
+            className='cursor-pointer'
+            onClick={() => router.push(`/tours?s=${searchQuery}`)}
+          />
+          <SearchPopup
+            query={searchQueryDebounced}
+            isOpen={isShowSearchPopup}
+            setIsOpen={setIsShowSearchPopup}
+          />
         </div>
         <div className='header__right-hotline'>
           <Link

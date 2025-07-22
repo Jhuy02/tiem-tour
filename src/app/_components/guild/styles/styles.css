@@ -184,7 +184,9 @@
 #guild .guild__item-title {
   margin-top: 1rem;
   color: var(--Text-Body-White---80, rgba(255, 255, 255, 0.8));
-  font-feature-settings: 'liga' off, 'clig' off;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
 
   /* PC/H4/24-R- Upper */
   font-family: 'DVN - Luckiest Guy';
@@ -239,7 +241,7 @@
     display: none;
   }
   #guild {
-    height: 44.275rem;
+    height: 46.275rem;
     width: 100%;
     padding-top: 1rem;
     background: linear-gradient(180deg, #fff 0%, rgba(240, 235, 229, 0) 72.66%);

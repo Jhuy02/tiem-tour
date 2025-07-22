@@ -48,7 +48,7 @@ export default async function ContactPage() {
     api: `wp/v2/pages/25?_fields=acf&acf_format=standard`,
   })
   return (
-    <main className="xsm:pb-[5rem] relative bg-[url('/images/background-page-mobile.webp')] bg-cover bg-fixed bg-center bg-no-repeat pb-[12rem] sm:bg-[url('/images/background-page-pc.webp')]">
+    <main className="xsm:pb-[5rem] relative bg-[url('/common/common-background-mb.webp')] bg-cover bg-fixed bg-center bg-no-repeat pb-[12rem] sm:bg-[url('/images/background-page-pc.webp')]">
       <BannerV2 data={acf.compound_banner} />
       <section className='relative my-[8.75rem] max-sm:my-0'>
         <div className='mx-auto flex max-w-[79.75rem] max-sm:flex-wrap'>

@@ -1,8 +1,8 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, {MouseEvent, useEffect, useRef, useState} from 'react'
-import styles from './news-content.module.css'
+import React, {useEffect, useRef, useState} from 'react'
+import './news-content.css'
 import clsx from 'clsx'
 // Interface cho dữ liệu bài viết
 export interface NewsData {
@@ -26,7 +26,7 @@ export default function NewsContent({data}: NewsContentProps) {
     },
     {
       icon: '/images/instagram.svg',
-      href: `https://www.instagram.com/?url=${data.link}`,
+      href: `https://www.linkedin.com/sharing/share-offsite/?url=${data.link}`,
     },
     {
       icon: '/images/twitter.svg',
@@ -36,23 +36,41 @@ export default function NewsContent({data}: NewsContentProps) {
   const MAX_VISIBLE_SUMMARY_ITEMS = 4
   const [expandedSummary, setExpandedSummary] = useState<boolean>(false)
   const [headingCount, setHeadingCount] = useState<number>(0)
+  const [isSharing, setIsSharing] = useState<boolean>(false)
 
   const newsDetailContentRef = useRef<HTMLDivElement>(null)
   const summaryContentRef = useRef<HTMLUListElement>(null)
 
-  const handleCopyUrl = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    const currentUrl = window.location.href
+  // const handleCopyUrl = (e: MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault()
+  //   const currentUrl = window.location.href
 
-    navigator.clipboard
-      .writeText(currentUrl)
-      .then(() => {
-        // Có thể hiện thông báo đã sao chép thành công
-        alert('Đã sao chép liên kết!')
-      })
-      .catch((err) => {
-        console.error('Không thể sao chép liên kết: ', err)
-      })
+  //   navigator.clipboard
+  //     .writeText(currentUrl)
+  //     .then(() => {
+  //       // Có thể hiện thông báo đã sao chép thành công
+  //       alert('Đã sao chép liên kết!')
+  //     })
+  //     .catch((err) => {
+  //       console.error('Không thể sao chép liên kết: ', err)
+  //     })
+  // }
+
+  const handleClickShare = async () => {
+    if (typeof window === 'undefined' || !navigator.share || isSharing) return
+    setIsSharing(true)
+    const shareData = {
+      title: 'Tiemtour',
+      text: 'Tiemtour',
+      url: window.location.origin,
+    }
+    try {
+      await navigator.share(shareData)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsSharing(false)
+    }
   }
 
   const handleToggleSummaryContent = () => {
@@ -101,11 +119,11 @@ export default function NewsContent({data}: NewsContentProps) {
 
   const wrapAllTables = () => {
     const container = newsDetailContentRef.current
+    console.log(container)
     if (!container) return
-
     container.querySelectorAll('table').forEach((table) => {
       const wrapper = document.createElement('div')
-      wrapper.classList.add(styles.tableResponsive)
+      wrapper.classList.add('table-responsive')
       table.parentNode?.insertBefore(wrapper, table)
       wrapper.appendChild(table)
     })
@@ -114,21 +132,24 @@ export default function NewsContent({data}: NewsContentProps) {
   useEffect(() => {
     generateSummaryContent()
     setAllLinksTargetBlank()
-    wrapAllTables()
-  }, [newsDetailContentRef.current])
+    setTimeout(() => {
+      wrapAllTables()
+    }, 0)
+  }, [])
 
   return (
     <section className='relative max-sm:px-[1rem] max-sm:pt-[4.375rem]'>
-      <div className='ml-auto flex max-w-[95.5625rem]'>
-        <div className='sticky top-0 hidden h-[100vh] w-[8.125rem] flex-col justify-end pb-[4rem] sm:flex'>
-          <div className='flex flex-col items-center'>
-            <p className='font-trip-sans mb-[1rem] border-b-[1px] border-solid border-[#202020] py-[0.5rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#303030]'>
+      <div className='xsm:max-w-full xsm:py-[2rem] xsm:gap-[1.125rem] xsm:flex-col-reverse ml-auto flex max-w-[95.5625rem]'>
+        <div className='xsm:static xsm:h-fit xsm:w-full xsm:pb-0 sticky top-0 flex h-[100vh] w-[8.125rem] flex-col justify-end pb-[4rem]'>
+          <div className='xsm:items-start flex flex-col items-center'>
+            <p className='font-trip-sans xsm:border-none xsm:py-0 mb-[1rem] border-b-[1px] border-solid border-[#202020] py-[0.5rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#303030]'>
               Share
             </p>
-            <ul className='flex flex-col items-center'>
-              <li className='flex size-[3.125rem] shrink-0 items-center justify-center not-last:mb-[0.75rem]'>
+            <ul className='xsm:flex-row flex flex-col items-center gap-[0.75rem]'>
+              <li className='flex size-[3.125rem] shrink-0 items-center justify-center'>
                 <button
-                  onClick={handleCopyUrl}
+                  // onClick={handleCopyUrl}
+                  onClick={handleClickShare}
                   className='flex size-full cursor-pointer items-center justify-center rounded-full'
                 >
                   <Image
@@ -144,7 +165,7 @@ export default function NewsContent({data}: NewsContentProps) {
                 return (
                   <li
                     key={index}
-                    className='flex size-[3.125rem] shrink-0 items-center justify-center not-last:mb-[0.75rem]'
+                    className='flex size-[3.125rem] shrink-0 items-center justify-center'
                   >
                     <Link
                       href={item.href}
@@ -165,7 +186,7 @@ export default function NewsContent({data}: NewsContentProps) {
             </ul>
           </div>
         </div>
-        <div className='max-w-[100%] flex-1 py-[2rem] sm:ml-[8.44rem] sm:max-w-[75rem] sm:pt-[12.1875rem] lg:max-w-[60rem]'>
+        <div className='max-w-[100%] flex-1 sm:ml-[8.44rem] sm:max-w-[75rem] sm:pt-[12.1875rem] lg:max-w-[60rem]'>
           <h1
             dangerouslySetInnerHTML={{__html: data.title}}
             className='font-dvn-luckiest-guy mb-[1.5rem] text-[1.375rem] leading-[130%] font-normal tracking-[0.01563rem] text-[#3B3943] uppercase sm:mb-[2.5rem] sm:text-[2.25rem] sm:leading-[120%]'
@@ -176,7 +197,7 @@ export default function NewsContent({data}: NewsContentProps) {
             </p>
             <ul
               ref={summaryContentRef}
-              className={clsx(styles.summaryList)}
+              className={clsx('summary-list')}
             ></ul>
             {headingCount > MAX_VISIBLE_SUMMARY_ITEMS && (
               <button
@@ -189,7 +210,7 @@ export default function NewsContent({data}: NewsContentProps) {
           </div>
           <div
             ref={newsDetailContentRef}
-            className={clsx(styles.newsContent)}
+            className={clsx('news-content')}
             dangerouslySetInnerHTML={{__html: data.content}}
           ></div>
           <div className='font-trip-sans flex items-center text-[1rem] leading-[160%] font-normal tracking-[0.0025rem] text-[#303030]'>

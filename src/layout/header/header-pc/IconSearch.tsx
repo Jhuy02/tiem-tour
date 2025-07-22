@@ -1,4 +1,10 @@
-export default function IconSearch({className}: {className?: string}) {
+export default function IconSearch({
+  className,
+  onClick,
+}: {
+  className?: string
+  onClick?: () => void
+}) {
   return (
     <svg
       width='24'
@@ -7,6 +13,7 @@ export default function IconSearch({className}: {className?: string}) {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       className={className}
+      onClick={onClick}
     >
       <g opacity='0.75'>
         <path

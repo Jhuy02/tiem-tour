@@ -43,6 +43,7 @@ function DialogClose({
   return (
     <DialogPrimitive.Close
       data-slot='dialog-close'
+      className='cursor-pointer'
       {...props}
     />
   )
