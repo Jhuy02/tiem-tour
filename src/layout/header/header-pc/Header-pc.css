@@ -182,7 +182,7 @@
 #header .header__right-hotline img {
   width: 2.36481rem;
   height: 2.375rem;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 #header .header__right-hotline p {
