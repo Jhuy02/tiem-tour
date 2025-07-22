@@ -118,7 +118,7 @@ export default function BookingCheckout() {
         )
         outboundTripVehicle = {
           name: vehicle?.title,
-          price: Number(vehicle?.fields?.price_car_pax),
+          price: Number(vehicle?.fields?.price_car_pax) * Number(adults),
         }
       } else if (outboundTripTransportType === 'private_transport') {
         const vehicle = apiData.package_tour.private_transport.find(
@@ -130,7 +130,7 @@ export default function BookingCheckout() {
         )?.price
         outboundTripVehicle = {
           name: vehicleName,
-          price: Number(vehiclePrice),
+          price: Number(vehiclePrice) * Number(adults),
         }
       } else if (outboundTripTransportType === 'personal_vehicle') {
         outboundTripVehicle = null
@@ -143,7 +143,7 @@ export default function BookingCheckout() {
         )
         returnTripVehicle = {
           name: vehicle?.title,
-          price: Number(vehicle?.fields?.price_car_pax),
+          price: Number(vehicle?.fields?.price_car_pax) * Number(adults),
         }
       } else if (returnTripTransportType === 'private_transport') {
         const vehicle = apiData.package_tour.private_transport.find(
@@ -155,7 +155,7 @@ export default function BookingCheckout() {
         )?.price
         returnTripVehicle = {
           name: vehicleName,
-          price: Number(vehiclePrice),
+          price: Number(vehiclePrice) * Number(adults),
         }
       } else if (returnTripTransportType === 'personal_vehicle') {
         returnTripVehicle = null
@@ -166,6 +166,7 @@ export default function BookingCheckout() {
       returnTripVehicle,
     }
   }, [
+    adults,
     apiData.package_tour.main_car_pick_up_data,
     apiData.package_tour.private_transport,
     outboundTripTransportPickupLocation,
