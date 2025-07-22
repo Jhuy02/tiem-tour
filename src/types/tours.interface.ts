@@ -201,7 +201,10 @@ export interface TourDetailPackage {
   main_car_pick_up_data: MainCarPickup[]
   arrival_use_bus: ArrivalUseBus[]
   arrival_private: ArrivalPrivate[]
-  pick_up_and_drop_off_bus_service: ScheduleBus[]
+  pick_up_and_drop_off_bus_service: {
+    note: string
+    schedule_bus: ScheduleBus[]
+  }
   schedule_private_hanoi_hagiang: SchedulePrivateHanoiHagiang
 }
 

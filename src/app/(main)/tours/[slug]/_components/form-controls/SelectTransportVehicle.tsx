@@ -45,8 +45,7 @@ export default function SelectTransportVehicle({
         </span>
       </div>
       <p className='text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[#C83E21] uppercase'>
-        <span>{price?.toLocaleString('en-US')}</span>
-        /PAX
+        {price?.toLocaleString('en-US')} USD/PAX
       </p>
     </Label>
   )

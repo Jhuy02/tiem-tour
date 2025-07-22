@@ -16,32 +16,36 @@ import {PackageTypeList, TourTypeList} from '@/constants/mockApi'
 import {BookingFormValues} from '@/schemas/booking.schema'
 import clsx from 'clsx'
 import Image from 'next/image'
-import {useFormContext, useWatch} from 'react-hook-form'
+import {useFormContext, useFormState, useWatch} from 'react-hook-form'
 import styles from './styles.module.css'
-import PolicyTourDialog from '@/app/(main)/tours/[slug]/_components/compound/booking-overview/PolicyTourDialog'
 import {useContext, useEffect, useMemo} from 'react'
 import {addDays} from 'date-fns'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog-v2'
 import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
 import {TourDetailApiResType} from '@/types/tours.interface'
 import TourPackageInfo from '@/app/(main)/tours/[slug]/_components/compound/booking-overview/TourPackageInfo'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import OpenPolicyTourBtn from '@/app/(main)/tours/[slug]/_components/compound/booking-overview/OpenPolicyTourBtn'
 
 export default function BookingOverview() {
   const pageContext = useContext(PageContext)
   if (!pageContext) throw new Error('Page context is missing')
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
 
-  const {control, setValue} = useFormContext<BookingFormValues>()
+  const {control, trigger, setValue} = useFormContext<BookingFormValues>()
+  const {errors} = useFormState<BookingFormValues>()
   const scheduleStart = useWatch({control, name: 'schedule_start'})
   const tourType = useWatch({control, name: 'tour_type'})
   const tourPackage = useWatch({control, name: 'package'})
+
+  const watchedRiders = useWatch({
+    control,
+    name: 'riders',
+  })
 
   const packageInfo = useMemo(() => {
     const pkg = apiData.package_tour
@@ -69,6 +73,10 @@ export default function BookingOverview() {
     }
   }, [tourPackage, tourType])
 
+  useEffect(() => {
+    trigger('riders') // ép validate lại refine
+  }, [watchedRiders, trigger])
+
   return (
     <div className='xsm:border-none xsm:rounded-0 xsm:p-[0.75rem] rounded-[1.5rem] border border-solid border-[#ededed] bg-white p-[1.5rem]'>
       <div className='xsm:flex-col xsm:py-[1rem] xsm:gap-[0.625rem] mb-[1rem] flex items-center justify-between border-b border-solid border-[#EDEDED] pb-[0.625rem]'>
@@ -79,31 +87,7 @@ export default function BookingOverview() {
           ></h3>
         )}
 
-        <Dialog>
-          <DialogTrigger className='xsm:w-full'>
-            <div className='xsm:justify-center font-trip-sans flex cursor-pointer items-center space-x-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC] px-[1rem] py-[0.5rem]'>
-              <span className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#303030]'>
-                Policy tour
-              </span>
-              <Image
-                alt=''
-                width={20}
-                height={20}
-                src={'/icons/chevron-right-double.svg'}
-                className='h-auto w-[1.25rem] shrink-0'
-              />
-            </div>
-          </DialogTrigger>
-          <DialogContent className='xsm:rounded-b-none w-[56.0625rem] overflow-hidden rounded-[1.5rem] bg-transparent p-0!'>
-            <DialogHeader className='hidden'>
-              <DialogTitle>
-                TIEM TOURS HA GIANG TERMS AND CONDITIONS
-              </DialogTitle>
-              <DialogDescription></DialogDescription>
-            </DialogHeader>
-            <PolicyTourDialog policy={apiData?.package_tour?.policy} />
-          </DialogContent>
-        </Dialog>
+        <OpenPolicyTourBtn />
       </div>
       <div className='font-trip-sans flex flex-col space-y-[1rem]'>
         {/* Date Picker */}
@@ -199,130 +183,141 @@ export default function BookingOverview() {
             </div>
           </div>
         </div>
-        {/* Select Tour Type */}
-        <div className='xsm:p-[1rem] rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.5rem]'>
-          <p className='mb-[1rem] border-b border-solid border-[#EDEDED] pb-[1rem] text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#2E2E2E]'>
-            Select tour type
-          </p>
-          {/* Tour Type */}
-          <div className='mb-[1rem]'>
-            <FormField
-              control={control}
-              name='tour_type'
-              render={({field}) => (
-                <FormItem>
-                  <RadioGroup
-                    className=''
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    name={field.name}
-                  >
-                    <div className='xsm:flex-wrap flex h-auto w-full items-center gap-[0.75rem] bg-transparent shadow-none!'>
-                      {TourTypeList.map((item, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className='xsm:basis-full flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-[#F6F6F6]! shadow-none!'
-                          >
-                            <Label className='inline-flex h-full w-full cursor-pointer items-center justify-between px-[0.75rem] py-[1rem]'>
-                              <p className='inline-flex items-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
-                                <span>{item.name}</span>
-                                {item.popular && (
-                                  <span className='ml-[0.5rem] inline-block rounded-full border-[0.8px] border-solid border-[#25ACAB] bg-[#F3F9F9] px-[0.5rem] py-[0.25rem] text-[0.75rem] tracking-[0.00188rem] text-[#19C2C2]'>
-                                    Popular
-                                  </span>
-                                )}
-                              </p>
-                              <RadioGroupItem
-                                value={item.slug}
-                                className='peer sr-only'
-                              />
-                              <Image
-                                alt=''
-                                width={22}
-                                height={22}
-                                src={'/icons/radio-unchecked.svg'}
-                                className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
-                              />
-                              <Image
-                                alt=''
-                                width={22}
-                                height={22}
-                                src={'/icons/radio-checked.svg'}
-                                className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
-                              />
-                            </Label>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </RadioGroup>
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                </FormItem>
-              )}
-            />
-          </div>
-          {/* Tour Package */}
-          <div
-            className={clsx(
-              'xsm:p-[0.75rem] rounded-[0.75rem] bg-[#F3F9F9] p-[1rem]',
-              {
-                'pointer-events-none opacity-40': !tourType,
-                'pointer-events-auto opacity-100': tourType,
-              },
-            )}
+        <Accordion
+          defaultValue='item-1'
+          type='single'
+          collapsible
+          className='xsm:p-[1rem] rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.5rem]'
+        >
+          <AccordionItem
+            value='item-1'
+            className='w-full border-none'
           >
-            <FormField
-              control={control}
-              name='package'
-              render={({field}) => (
-                <FormItem>
-                  <RadioGroup
-                    className='xsm:space-x-0 xsm:space-y-[1.125rem] xsm:flex-wrap flex items-center gap-0 space-x-[0.75rem]'
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    name={field.name}
-                  >
-                    {Array.isArray(PackageTypeList) &&
-                      PackageTypeList?.map((item, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className='xsm:basis-full xsm:p-0 xsm:h-auto flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-transparent px-[0.75rem] py-[1rem]'
-                          >
-                            <Label className='xsm:h-auto xsm:p-0 inline-flex h-[2.875rem] w-full cursor-pointer items-center space-x-[0.5rem] p-[0.75rem]'>
-                              <RadioGroupItem
-                                value={item?.slug}
-                                className='peer sr-only'
-                              />
-                              <Image
-                                alt=''
-                                width={22}
-                                height={22}
-                                src={'/icons/radio-unchecked.svg'}
-                                className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
-                              />
-                              <Image
-                                alt=''
-                                width={22}
-                                height={22}
-                                src={'/icons/radio-checked.svg'}
-                                className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
-                              />
-                              <p className='inline-flex items-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
-                                {item?.name}
-                              </p>
-                            </Label>
-                          </div>
-                        )
-                      })}
-                  </RadioGroup>
-                  <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
+            <AccordionTrigger className='mb-[1rem] w-full cursor-pointer rounded-none border-b border-solid border-[#EDEDED] pb-[1rem] hover:no-underline'>
+              <p className='w-full text-[1rem] leading-[130%] font-extrabold tracking-[0.0025rem] text-[#2E2E2E]'>
+                Select tour type
+              </p>
+            </AccordionTrigger>
+            <AccordionContent className='border-none p-0'>
+              <div className='mb-[1rem]'>
+                <FormField
+                  control={control}
+                  name='tour_type'
+                  render={({field}) => (
+                    <FormItem>
+                      <RadioGroup
+                        className=''
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        name={field.name}
+                      >
+                        <div className='xsm:flex-wrap flex h-auto w-full items-center gap-[0.75rem] bg-transparent shadow-none!'>
+                          {TourTypeList.map((item, index) => {
+                            return (
+                              <div
+                                key={index}
+                                className='xsm:basis-full flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-[#F6F6F6]! shadow-none!'
+                              >
+                                <Label className='inline-flex h-full w-full cursor-pointer items-center justify-between px-[0.75rem] py-[1rem]'>
+                                  <p className='inline-flex items-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
+                                    <span>{item.name}</span>
+                                    {item.popular && (
+                                      <span className='ml-[0.5rem] inline-block rounded-full border-[0.8px] border-solid border-[#25ACAB] bg-[#F3F9F9] px-[0.5rem] py-[0.25rem] text-[0.75rem] tracking-[0.00188rem] text-[#19C2C2]'>
+                                        Popular
+                                      </span>
+                                    )}
+                                  </p>
+                                  <RadioGroupItem
+                                    value={item.slug}
+                                    className='peer sr-only'
+                                  />
+                                  <Image
+                                    alt=''
+                                    width={22}
+                                    height={22}
+                                    src={'/icons/radio-unchecked.svg'}
+                                    className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
+                                  />
+                                  <Image
+                                    alt=''
+                                    width={22}
+                                    height={22}
+                                    src={'/icons/radio-checked.svg'}
+                                    className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
+                                  />
+                                </Label>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </RadioGroup>
+                      <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div
+                className={clsx(
+                  'xsm:p-[0.75rem] rounded-[0.75rem] bg-[#F3F9F9] p-[1rem]',
+                  {
+                    'pointer-events-none opacity-40': !tourType,
+                    'pointer-events-auto opacity-100': tourType,
+                  },
+                )}
+              >
+                <FormField
+                  control={control}
+                  name='package'
+                  render={({field}) => (
+                    <FormItem>
+                      <RadioGroup
+                        className='xsm:space-x-0 xsm:space-y-[1.125rem] xsm:flex-wrap flex items-center gap-0 space-x-[0.75rem]'
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        name={field.name}
+                      >
+                        {Array.isArray(PackageTypeList) &&
+                          PackageTypeList?.map((item, index) => {
+                            return (
+                              <div
+                                key={index}
+                                className='xsm:basis-full xsm:p-0 xsm:h-auto flex h-[3.375rem] flex-1 items-center justify-between rounded-[0.75rem] bg-transparent px-[0.75rem] py-[1rem]'
+                              >
+                                <Label className='xsm:h-auto xsm:p-0 inline-flex h-[2.875rem] w-full cursor-pointer items-center space-x-[0.5rem] p-[0.75rem]'>
+                                  <RadioGroupItem
+                                    value={item?.slug}
+                                    className='peer sr-only'
+                                  />
+                                  <Image
+                                    alt=''
+                                    width={22}
+                                    height={22}
+                                    src={'/icons/radio-unchecked.svg'}
+                                    className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="unchecked"]:block!'
+                                  />
+                                  <Image
+                                    alt=''
+                                    width={22}
+                                    height={22}
+                                    src={'/icons/radio-checked.svg'}
+                                    className='xsm:w-[1.125rem] hidden! h-auto w-[1.375rem] peer-data-[state="checked"]:block!'
+                                  />
+                                  <p className='inline-flex items-center text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#3B3943]'>
+                                    {item?.name}
+                                  </p>
+                                </Label>
+                              </div>
+                            )
+                          })}
+                      </RadioGroup>
+                      <FormMessage className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
         <div className='flex flex-col gap-[0.75rem]'>
           {/* Info Rider */}
           <div className='xsm:p-0 xsm:bg-transparent xsm:gap-[0.75rem] grid grid-cols-3 items-start gap-[2rem] rounded-[0.5rem] bg-[rgba(235,229,226,0.32)] p-[1.25rem]'>
@@ -427,6 +422,11 @@ export default function BookingOverview() {
                 </div>
               )
             })}
+            {errors.riders?.message && (
+              <p className='font-trip-sans pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]'>
+                {errors.riders?.message}
+              </p>
+            )}
           </div>
           {/* Caution */}
           <div className='xsm:hidden'>

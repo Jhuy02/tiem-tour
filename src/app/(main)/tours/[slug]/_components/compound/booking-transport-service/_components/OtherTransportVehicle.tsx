@@ -127,8 +127,7 @@ export default function OtherTransportVehicle({
                           </span>
                         </div>
                         <p className='text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[#C83E21] uppercase'>
-                          <span>{item?.price?.toLocaleString('vi-VN')}</span>
-                          /PAX
+                          {item?.price?.toLocaleString('en-US')} USD/PAX
                         </p>
                       </Label>
                     </div>

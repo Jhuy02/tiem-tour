@@ -468,7 +468,7 @@ export default function CheckoutDrawer({
                     {Number(totalPaymentPrice).toLocaleString('en-US')} USD
                   </span>
                   <span className='flex h-[1.25rem] w-fit items-center justify-center rounded-[1rem] bg-[#115A46]/60 px-[0.375rem] py-[0.1875rem] text-[0.75rem] font-bold text-white'>
-                    -27%
+                    -{tourSalePercent * 100}%
                   </span>
                 </p>
               </>

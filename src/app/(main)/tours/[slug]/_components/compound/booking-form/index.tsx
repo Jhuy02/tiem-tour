@@ -204,8 +204,6 @@ export default function BookingForm({data}: BookTourNowProps) {
     })
   }
 
-  console.log('Error', form.formState.errors)
-
   return !isMobile ? (
     <>
       <LoadingSpinner loading={isPending} />

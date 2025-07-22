@@ -123,7 +123,7 @@ export default function ServiceReturnTripWithOurBus() {
               />
             </div>
           </DialogTrigger>
-          <DialogContent className='max-h-[95vh]! max-w-fit! rounded-none! border-none! bg-transparent! p-0! duration-500'>
+          <DialogContent className='xsm:rounded-b-none hidden_scroll max-h-[95vh]! overflow-y-auto! rounded-[1.5rem] border-none! bg-transparent! p-0! duration-500'>
             <DialogHeader className='hidden'>
               <DialogTitle>Other Option</DialogTitle>
               <DialogDescription></DialogDescription>
