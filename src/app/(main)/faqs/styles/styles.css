@@ -3,7 +3,7 @@
   position: relative;
   background: url('/background.webp');
   padding-top: 8.125rem;
-  padding-bottom: 18rem;
+  align-items: flex-start;
 }
 
 #faq .faq__title {
@@ -35,16 +35,22 @@
 }
 
 #faq .faq__left img {
-  width: 46.875rem;
+  width: 48.875rem;
   height: 30.0625rem;
-  flex-shrink: 0;
+  position: absolute;
+  border: 0;
+  left: 0;
 }
 
 #faq .faq__left {
   position: sticky;
   top: 6.5rem;
-  height: 45rem;
   z-index: 2;
+  width: 46.875rem;
+  padding-bottom: 28rem;
+}
+#faq .faq__right {
+  padding-bottom: 17rem;
 }
 
 #faq .faq__right-item {
@@ -95,7 +101,9 @@
 
 #faq .faq__right-item-title {
   color: var(--Text-Tittle-1, #3b3943);
-  font-feature-settings: 'liga' off, 'clig' off;
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
 
   /* PC/H4/24-R- Upper */
   font-family: var(--font-dvn-luckiest-guy);
@@ -148,11 +156,11 @@
   );
 }
 
-#faq .faq__right-item-image:hover {
+#faq .faq__right-item:hover .faq__right-item-image {
   padding: 0;
 }
 
-#faq .faq__right-item-image:hover img {
+#faq .faq__right-item:hover .faq__right-item-image img {
   scale: 1.165;
   border-radius: 0;
 }
@@ -236,7 +244,9 @@
 
   #faq-mobile .faq-mobile__content-item-name {
     color: var(--Text-Tittle-1, #3b3943);
-    font-feature-settings: 'liga' off, 'clig' off;
+    font-feature-settings:
+      'liga' off,
+      'clig' off;
     font-family: var(--font-dvn-luckiest-guy);
     font-size: 1rem;
     font-style: normal;

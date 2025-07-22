@@ -56,12 +56,12 @@ const Featured = ({featured}: {featured: News[]}) => {
 
   return (
     <>
-      <div className='relative xsm:w-full xsm:my-[0.75rem] xsm:static'>
-        <div className='w-[52.3125rem] p-[2.1875rem_4.6875rem_3.875rem_4.6875rem] xsm:w-full xsm:p-[0.89638rem_1.92094rem_0.84525rem_1.92094rem] relative'>
+      <div className='xsm:w-full xsm:my-[0.75rem] xsm:static relative'>
+        <div className='xsm:w-full xsm:p-[0.89638rem_1.92094rem_0.84525rem_1.92094rem] relative w-[52.3125rem] p-[2.1875rem_4.6875rem_3.875rem_4.6875rem]'>
           <Image
             src='/news/featured-bg.webp'
             alt='featured'
-            className='w-full h-full object-cover'
+            className='h-full w-full object-cover'
             quality={100}
             fill
           />
@@ -75,7 +75,7 @@ const Featured = ({featured}: {featured: News[]}) => {
               delay: 5000,
               disableOnInteraction: false,
             }}
-            className='h-[28.5625rem] rounded-[62.5rem] w-full relative featured xsm:h-[11.70481rem] '
+            className='featured xsm:h-[11.70481rem] relative h-[28.5625rem] w-full rounded-[62.5rem]'
             onSlideChange={(swiper) => {
               setCurrentIndex(swiper.realIndex)
             }}
@@ -89,16 +89,16 @@ const Featured = ({featured}: {featured: News[]}) => {
             {featured.map((item, index) => (
               <SwiperSlide
                 key={index}
-                className='flex items-center justify-center overflow-hidden relative'
+                className='relative flex items-center justify-center overflow-hidden'
               >
                 <div
-                  className='w-full h-full overflow-hidden absolute top-0 left-0 will-change-transform'
+                  className='absolute top-0 left-0 h-full w-full overflow-hidden will-change-transform'
                   data-swiper-parallax='50%'
                 >
                   <ImageFallback
                     src={item.thumbnail}
                     alt='featured'
-                    className='w-[42.98375rem] h-[28.5625rem] object-cover xsm:w-[17.55725rem] xsm:h-[11.70481rem]'
+                    className='xsm:w-[17.55725rem] xsm:h-[11.70481rem] h-[28.5625rem] w-[42.98375rem] object-cover'
                     width={685.5}
                     height={457}
                   />
@@ -112,39 +112,39 @@ const Featured = ({featured}: {featured: News[]}) => {
       {featured[displayIndex] && (
         <article
           ref={articleRef}
-          className='flex flex-1 flex-col p-[1.75rem_0rem_1.75rem_2.5rem] h-[32.875rem] xsm:p-0'
+          className='xsm:p-0 flex h-[32.875rem] flex-1 flex-col p-[1.75rem_0rem_1.75rem_2.5rem]'
           style={{opacity: 1}}
         >
           <p className='space-x-[0.75rem]'>
-            <span className='text-[0.75rem] text-[#19C2C2] font-extrabold leading-[0.9rem] tracking-[0.00188rem] uppercase'>
+            <span className='text-[0.75rem] leading-[0.9rem] font-extrabold tracking-[0.00188rem] text-[#19C2C2] uppercase'>
               {featured[displayIndex].categories?.[0]?.name || 'News'}
             </span>
             <span>•</span>
-            <span className='text-black/60 text-[0.75rem] leading-[0.9rem] tracking-[0.00188rem]'>
+            <span className='text-[0.75rem] leading-[0.9rem] tracking-[0.00188rem] text-black/60'>
               {featured[displayIndex].date || ''}
             </span>
           </p>
           <Link href={`/news/${featured[displayIndex].slug}`}>
             <h2
               ref={titleRef}
-              className='text-[#3B3943] text-[2.25rem] leading-[2.7rem] tracking-[0.01563rem] uppercase font-dvn-luckiest-guy line-clamp-4 mt-[1.5rem] mb-[1rem] xsm:text-[1.375rem] xsm:leading-[1.7875rem] xsm:mt-[0.5rem]'
+              className='font-dvn-luckiest-guy xsm:text-[1.375rem] xsm:leading-[1.7875rem] xsm:mt-[0.5rem] mt-[1.5rem] mb-[1rem] line-clamp-4 text-[2.25rem] leading-[2.7rem] tracking-[0.01563rem] text-[#3B3943] uppercase'
             >
               {featured[displayIndex].title}
             </h2>
           </Link>
           <p
             ref={descRef}
-            className='text-[#303030CC] leading-[1.6rem] tracking-[0.0025rem] xsm:leading-[1.5rem]'
+            className='xsm:leading-[1.5rem] line-clamp-6 leading-[1.6rem] tracking-[0.0025rem] text-[#303030CC]'
           >
             {featured[displayIndex].summary}
           </p>
-          <div className='flex items-start justify-start xsm:hidden'>
+          <div className='xsm:hidden flex items-start justify-start'>
             <BlueButton
               href={`/news/${featured[displayIndex].slug}`}
               textColor='#3B3943'
               arrowColor='#3B3943'
               borderColor='rgba(0, 0,0, 0.12)'
-              className='py-[1.25rem] px-[2.5rem] border-4 shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)] mt-[2.5rem]'
+              className='mt-[2.5rem] border-4 px-[2.5rem] py-[1.25rem] shadow-[7px_10px_34.3px_0px_rgba(0,0,0,0.12)] hover:border-0'
             >
               Send Information
             </BlueButton>

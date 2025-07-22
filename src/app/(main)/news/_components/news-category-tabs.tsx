@@ -21,14 +21,19 @@ const NewsCategoryTabs = ({categories, onTabChange}: NewsCategoryTabsProps) => {
       paramNew.set('category', sortOption.slug)
       paramNew.delete('page')
     } else {
-      paramNew.set('category', '')
+      paramNew.delete('category')
       paramNew.delete('page')
     }
     router.push(pathName + paramNew.toString() && '?' + paramNew.toString(), {
       scroll: false,
     })
     if (sectionRef.current instanceof HTMLElement) {
-      sectionRef.current.scrollIntoView({behavior: 'smooth'})
+      const topOffset = 80
+      const sectionTop =
+        sectionRef.current.getBoundingClientRect().top +
+        window.scrollY -
+        topOffset
+      window.scrollTo({top: sectionTop, behavior: 'smooth'})
     }
     onTabChange?.()
   }
@@ -36,13 +41,13 @@ const NewsCategoryTabs = ({categories, onTabChange}: NewsCategoryTabsProps) => {
   return (
     <div
       ref={sectionRef}
-      className='flex justify-between items-center xsm:flex-col xsm:items-start xsm:mt-[4rem]'
+      className='xsm:flex-col xsm:items-start xsm:mt-[5rem] flex items-center justify-between'
     >
-      <h2 className='text-[3rem] leading-[3.9rem] text-[#3B3943] font-dvn-luckiest-guy xsm:text-[1.5625rem] xsm:leading-[2.03125rem]'>
+      <h2 className='font-dvn-luckiest-guy xsm:text-[1.5625rem] xsm:leading-[2.03125rem] text-[3rem] leading-[3.9rem] text-[#3B3943]'>
         News List
       </h2>
       <Suspense>
-        <ul className='flex items-center *:flex *:items-center *:justify-center *:p-[0.8125rem_1.25rem] *:font-trip-sans *:text-[1.125rem] *:leading-[1.4625rem] *:tracking-[0.00281rem] *:font-[900] *:relative *:uppercase *:cursor-pointer xsm:*:'>
+        <ul className='*:font-trip-sans xsm:*: flex items-center *:relative *:flex *:cursor-pointer *:items-center *:justify-center *:p-[0.8125rem_1.25rem] *:text-[1.125rem] *:leading-[1.4625rem] *:font-[900] *:tracking-[0.00281rem] *:uppercase'>
           <li
             onClick={() =>
               handleSelectSortOption({
@@ -51,10 +56,10 @@ const NewsCategoryTabs = ({categories, onTabChange}: NewsCategoryTabsProps) => {
               })
             }
             className={
-              'relative after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[0.313rem] after:bg-[#25ACAB] after:origin-left after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out' +
+              'relative after:absolute after:bottom-0 after:left-0 after:h-[0.313rem] after:w-full after:origin-left after:scale-x-0 after:bg-[#25ACAB] after:transition-transform after:duration-300 after:ease-in-out after:content-[""]' +
               (slugCategory === '' || slugCategory === null
-                ? ' opacity-100 text-[#303030] cursor-default after:scale-x-100'
-                : ' opacity-40 text-[#303030]/40 cursor-pointer') +
+                ? ' cursor-default text-[#303030] opacity-100 after:scale-x-100'
+                : ' cursor-pointer text-[#303030]/40 opacity-40') +
               ' transition-opacity duration-300'
             }
           >
@@ -65,10 +70,10 @@ const NewsCategoryTabs = ({categories, onTabChange}: NewsCategoryTabsProps) => {
               key={cat.slug}
               onClick={() => handleSelectSortOption(cat)}
               className={
-                'relative after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[0.313rem] after:bg-[#25ACAB] after:origin-left after:scale-x-0 after:transition-transform after:duration-300 after:ease-in-out' +
+                'relative after:absolute after:bottom-0 after:left-0 after:h-[0.313rem] after:w-full after:origin-left after:scale-x-0 after:bg-[#25ACAB] after:transition-transform after:duration-300 after:ease-in-out after:content-[""]' +
                 (slugCategory === cat.slug
-                  ? ' opacity-100 text-[#303030] cursor-default after:scale-x-100'
-                  : ' opacity-40 text-[#303030]/40 cursor-pointer') +
+                  ? ' cursor-default text-[#303030] opacity-100 after:scale-x-100'
+                  : ' cursor-pointer text-[#303030]/40 opacity-40') +
                 ' transition-opacity duration-300'
               }
             >
