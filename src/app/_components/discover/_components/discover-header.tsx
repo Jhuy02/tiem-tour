@@ -1,5 +1,6 @@
+import Filter from '@/app/_components/discover/_components/filter'
 import ImageFallback from '@/components/image/ImageFallback'
-import {IDiscoverLocation} from '@/types/discover.interface'
+import {IDiscoverLocation, IDiscoverPackage} from '@/types/discover.interface'
 import Image from 'next/image'
 
 interface DiscoverHeaderProps {
@@ -9,14 +10,20 @@ interface DiscoverHeaderProps {
   }
   location: IDiscoverLocation[]
   activeLocation: string
+  packageData: IDiscoverPackage[]
   onLocationChange: (slug: string) => void
+  activePackage: string
+  onPackageChange: (slug: string) => void
 }
 
 const DiscoverHeader = ({
   data,
   location,
   activeLocation,
+  packageData,
   onLocationChange,
+  activePackage,
+  onPackageChange,
 }: DiscoverHeaderProps) => {
   return (
     <div className='discover__header'>
@@ -33,7 +40,7 @@ const DiscoverHeader = ({
         <p className='discover__header-desc'>{data.sub_title}</p>
       </article>
       <article className='discover__header-right'>
-        {Array.isArray(location) &&
+        {/* {Array.isArray(location) &&
           location.map((loc, index) => (
             <div
               key={loc.id}
@@ -52,7 +59,15 @@ const DiscoverHeader = ({
               />
               <span>{loc.name}</span>
             </div>
-          ))}
+          ))} */}
+        <Filter
+          location={location}
+          packageData={packageData}
+          activePackage={activePackage}
+          onPackageChange={onPackageChange}
+          activeLocation={activeLocation}
+          onLocationChange={onLocationChange}
+        />
       </article>
     </div>
   )

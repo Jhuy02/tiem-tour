@@ -18,9 +18,11 @@ import PolicyTourDialog from '@/app/(main)/tours/[slug]/_components/compound/boo
 import {Label} from '@/components/ui/label'
 import {Checkbox} from '@/components/ui/checkbox'
 import {Button} from '@/components/ui/button'
+import {useFormContext} from 'react-hook-form'
+import {BookingFormValues} from '@/schemas/booking.schema'
 
 interface ConfirmDrawerProps {
-  onCloseConfirmDrawer: () => void
+  onCloseConfirmDrawer?: () => void
 }
 
 export default function ConfirmDrawer({
@@ -29,15 +31,17 @@ export default function ConfirmDrawer({
   const pageContext = useContext(PageContext)
   if (!pageContext) throw new Error('Page context is missing')
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
-
+  const {trigger} = useFormContext<BookingFormValues>()
   const [agreePolicyStatus, setAgreePolicyStatus] = useState<boolean>(false)
-
+  const handleClickConfirm = async () => {
+    await trigger()
+  }
   return (
-    <div className='xsm:p-[1rem] xsm:rounded-b-none max-h-[80vh] overflow-y-auto rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.5rem] transition-all duration-400 ease-out'>
+    <div className='xsm:rounded-b-none hidden_scroll max-h-[80vh] overflow-y-auto rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white px-[1rem] pb-[1rem] transition-all duration-400 ease-out'>
       <button
         type='button'
         onClick={onCloseConfirmDrawer}
-        className='absolute top-[1.5rem] right-[1.5rem] cursor-pointer'
+        className='absolute top-[1.5rem] right-[1.5rem] z-6 cursor-pointer'
       >
         <Image
           alt=''
@@ -48,7 +52,7 @@ export default function ConfirmDrawer({
         />
       </button>
       <div className='xsm:space-y-[1rem] flex flex-col items-start space-y-[1.25rem]'>
-        <p className='self-stretch border-b border-solid border-[#EDEDED] pb-[1rem] text-[1.125rem] leading-[130%] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
+        <p className='sticky top-0 z-5 self-stretch border-b border-solid border-[#EDEDED] bg-white pt-[1rem] pb-[1rem] text-[1.125rem] leading-[130%] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
           Policy
         </p>
         <div className='xsm:gap-[0.75rem] grid grid-cols-2 gap-[1rem]'>
@@ -113,6 +117,7 @@ export default function ConfirmDrawer({
 
         <Button
           type='submit'
+          onClick={handleClickConfirm}
           disabled={!agreePolicyStatus}
           className={clsx(
             'xsm:h-[3.5rem] flex h-auto cursor-pointer items-center justify-center space-x-[0.625rem] self-stretch rounded-[3.125rem] bg-[#C83E21] px-[2.5rem] py-[1.25rem] transition-colors duration-300 ease-out disabled:bg-[rgba(48,48,48,0.40)] lg:not-disabled:hover:bg-[#EA6A44]',

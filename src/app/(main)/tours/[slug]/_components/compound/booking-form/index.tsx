@@ -45,7 +45,7 @@ export default function BookingForm({data}: BookTourNowProps) {
       motorcycles: data?.motorbike_rents?.motorbike_rent_list?.map((motor) => ({
         name: motor?.title,
         id: motor?.id,
-        price: motor?.price,
+        price: motor?.price.toString(),
         quantity: 0,
       })),
       gifts: '',
@@ -92,6 +92,7 @@ export default function BookingForm({data}: BookTourNowProps) {
   })
 
   const onSubmit = async (values: BookingFormValues) => {
+    console.log('Gọi hàm onsubmit')
     // const createTourDataForm = {
     //   tour_id: apiData?.id,
     //   tour_type: values?.tour_type,
@@ -178,7 +179,7 @@ export default function BookingForm({data}: BookTourNowProps) {
         motorcycle_id: id,
         quantity: quantity,
       })),
-      deposit: values?.deposit === 'deposit',
+      deposit: true,
       schedule_start: format(values.schedule_start, 'yyyy-MM-dd'),
       schedule_end: format(values.schedule_end, 'yyyy-MM-dd'),
       duration: apiData?.taxonomies?.duration[0]?.name,

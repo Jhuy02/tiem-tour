@@ -67,9 +67,9 @@ export default function OtherTransportVehicle({
           <DialogTitle>Other Option</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <div className='font-trip-sans xsm:overflow-y-auto xsm:rounded-b-none xsm:rounded-t-[1rem] relative z-2 max-h-[80vh]! rounded-[2.25rem] bg-[#FAFAFA]'>
-          <div className='xsm:p-[1rem] relative z-1 flex flex-col space-y-[1.5rem] px-[1.5rem] py-[1.875rem]'>
-            <DialogClose asChild>
+        <div className='font-trip-sans xsm:overflow-y-auto xsm:rounded-b-none xsm:rounded-t-[1rem] hidden_scroll xsm:bg-white relative z-2 max-h-[80vh]! rounded-[2.25rem] bg-[#FAFAFA]'>
+          <div className='xsm:px-[1rem] xsm:pb-[1rem] xsm:pt-0 xsm:bg-white xsm:gap-[0.75rem] relative z-1 flex flex-col gap-[1.5rem] px-[1.5rem] py-[1.875rem]'>
+            {/* <DialogClose asChild>
               <div className='absolute top-[1.5rem] right-[1.5rem] cursor-pointer'>
                 <Image
                   alt=''
@@ -79,8 +79,8 @@ export default function OtherTransportVehicle({
                   className='h-auto w-[1.25rem] shrink-0'
                 />
               </div>
-            </DialogClose>
-            <h3 className='font-trip-sans xsm:border-none xsm:mb-0 border-b border-solid border-[#EDEDED] pb-[1rem] text-left text-[1.125rem] leading-[130%] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
+            </DialogClose> */}
+            <h3 className='xsm:sticky xsm:top-0 xsm:pt-[1rem] xsm:bg-white font-trip-sans xsm:border-none xsm:mb-0 border-b border-solid border-[#EDEDED] pb-[1rem] text-left text-[1.125rem] leading-[130%] font-extrabold tracking-[0.00281rem] text-[#2E2E2E]'>
               Other option
             </h3>
 

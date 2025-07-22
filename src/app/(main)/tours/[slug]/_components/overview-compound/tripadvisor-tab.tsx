@@ -8,11 +8,12 @@ import {SwiperSlide} from 'swiper/react'
 import ImageFallback from '@/components/image/ImageFallback'
 import {convertRemToPx} from '@/lib/utils'
 import useIsMobile from '@/hooks/useIsMobile'
-import {useZoomImageWheel} from '@zoom-image/react'
+import {TransformWrapper, TransformComponent} from 'react-zoom-pan-pinch'
 
 import 'swiper/css'
 import 'swiper/css/thumbs'
 import {TourDetailContent} from '@/types/tours.interface'
+import {ZoomInIcon, ZoomOutIcon} from 'lucide-react'
 
 const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
   ssr: false,
@@ -29,27 +30,7 @@ export const TripadvisorTab = ({
   const [mainSwiper, setMainSwiper] = useState<SwiperType | null>(null)
   const isMobile = useIsMobile()
   const imageRefs = useRef<(HTMLDivElement | null)[]>([])
-
-  const {createZoomImage: createZoomImageWheel} = useZoomImageWheel()
-
-  useEffect(() => {
-    if (!mainSwiper) return
-
-    const attachZoomToActiveSlide = () => {
-      const activeIndex = mainSwiper.activeIndex
-      const activeEl = imageRefs.current[activeIndex]
-      if (activeEl) {
-        createZoomImageWheel(activeEl)
-      }
-    }
-
-    attachZoomToActiveSlide()
-    mainSwiper.on('slideChangeTransitionEnd', attachZoomToActiveSlide)
-
-    return () => {
-      mainSwiper.off('slideChangeTransitionEnd', attachZoomToActiveSlide)
-    }
-  }, [mainSwiper, createZoomImageWheel])
+  const [currentScale, setCurrentScale] = useState(1)
 
   return (
     <div className='mt-4'>
@@ -95,18 +76,44 @@ export const TripadvisorTab = ({
             className='rounded-[0.75rem]'
           >
             <div
-              className='relative mx-auto h-full w-full rounded-[0.75rem]'
+              className='relative mx-auto flex h-full w-full flex-col items-center rounded-[0.75rem]'
               ref={(el) => {
                 imageRefs.current[index] = el
               }}
             >
-              <ImageFallback
-                src={item.url}
-                alt={item.alt}
-                width={item.width}
-                height={item.height}
-                className='h-full w-full object-cover'
-              />
+              <TransformWrapper
+                initialScale={1}
+                minScale={1}
+                maxScale={4}
+                wheel={{disabled: isMobile}}
+                pinch={{disabled: isMobile}}
+                panning={{disabled: isMobile && currentScale === 1}}
+                onTransformed={({state}) => setCurrentScale(state.scale)}
+              >
+                {({zoomIn, zoomOut, resetTransform, ...rest}) => (
+                  <>
+                    {isMobile && (
+                      <div className='absolute right-2 bottom-2 z-10 flex w-full justify-end gap-2'>
+                        <button onClick={() => zoomIn()}>
+                          <ZoomInIcon className='size-4' />
+                        </button>
+                        <button onClick={() => zoomOut()}>
+                          <ZoomOutIcon className='size-4' />
+                        </button>
+                      </div>
+                    )}
+                    <TransformComponent>
+                      <ImageFallback
+                        src={item.url}
+                        alt={item.alt}
+                        width={item.width}
+                        height={item.height}
+                        className='h-full w-full object-cover'
+                      />
+                    </TransformComponent>
+                  </>
+                )}
+              </TransformWrapper>
             </div>
           </SwiperSlide>
         ))}

@@ -23,7 +23,6 @@ import clsx from 'clsx'
 import {format} from 'date-fns'
 import {useContext, useEffect, useState, useTransition} from 'react'
 import {useForm, useWatch} from 'react-hook-form'
-
 interface BookTourNowProps {
   data: TourDetailPackage
 }
@@ -35,8 +34,10 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
   const [isPending, setTransition] = useTransition()
   const isMobile = useIsMobile()
   const [showFormBooking, setShowFormBooking] = useState<boolean>(false)
-  const [openCheckout, setOpenCheckout] = useState<boolean>(false)
-  const [openConfirm, setOpenConfirm] = useState<boolean>(false)
+
+  const [openDrawerCheckout, setOpenDrawerCheckout] = useState<boolean>(false)
+  const [openDrawerConfirm, setOpenDrawerConfirm] = useState<boolean>(false)
+
   const [totalPayment, setTotalPayment] = useState<number>(0)
 
   const form = useForm<BookingFormValues>({
@@ -100,7 +101,9 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
         },
       },
     },
+    mode: 'onChange',
   })
+
   function handleOpenBookingForm() {
     setShowFormBooking(true)
   }
@@ -145,7 +148,7 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
         motorcycle_id: id,
         quantity: quantity,
       })),
-      deposit: values?.deposit === 'deposit',
+      deposit: true,
       schedule_start: format(values.schedule_start, 'yyyy-MM-dd'),
       schedule_end: format(values.schedule_end, 'yyyy-MM-dd'),
       duration: apiData?.taxonomies?.duration[0]?.name,
@@ -171,8 +174,6 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
     })
   }
 
-  console.log('ERRORS: ', form.formState.errors)
-
   const scheduleStart = useWatch({
     control: form.control,
     name: 'schedule_start',
@@ -182,15 +183,12 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
     name: 'schedule_end',
   })
 
+  const handleClickCheckout = async () => {
+    // await form.trigger()
+    setOpenDrawerCheckout(true)
+  }
   const handleUpdateTotalPayment = (total: number) => {
     setTotalPayment(total)
-  }
-
-  const handleClickCheckout = async () => {
-    const isValid = await form.trigger() // validate toàn bộ form
-    if (isValid) {
-      setOpenConfirm(true)
-    }
   }
 
   useEffect(() => {
@@ -292,54 +290,96 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
                   </p>
                   <IconArrowRightV1 />
                 </button>
+                {/* <Drawer
+                  open={openDrawerCheckout}
+                  onOpenChange={setOpenDrawerCheckout}
+                >
+                  <DrawerTrigger asChild>
+                    <Button
+                      type='button'
+                      onClick={handleClickCheckout}
+                      className='flex h-[3.125rem] w-full items-center justify-center gap-[0.625rem] rounded-[3.125rem] bg-[#C83E21] px-[2.5rem] py-[1.5rem] hover:bg-[#C83E21] lg:hover:bg-[#C83E21]'
+                    >
+                      <p className='font-dvn-luckiest-guy h-[0.8125rem] text-[1.125rem] leading-[120%] text-white'>
+                        Confirm your booking
+                      </p>
+                      <IconArrowRightV1 />
+                    </Button>
+                  </DrawerTrigger>
+                  <DrawerContent className='hidden_scroll p-0'>
+                    <DrawerHeader className='sr-only hidden'>
+                      <DrawerTitle>Checkbox Booking</DrawerTitle>
+                      <DrawerDescription></DrawerDescription>
+                    </DrawerHeader>
+                    <CheckoutDrawer
+                      onCloseCheckoutDrawer={() => setOpenDrawerCheckout(false)}
+                      onOpenDrawerConfirm={() => setOpenDrawerConfirm(true)}
+                      onUpdateTotalPayment={handleUpdateTotalPayment}
+                    />
+                  </DrawerContent>
+                </Drawer> */}
+                {/* <Drawer
+                  open={openDrawerConfirm}
+                  onOpenChange={setOpenDrawerConfirm}
+                >
+                  <DrawerContent className='hidden_scroll p-0'>
+                    <DrawerHeader className='sr-only hidden'>
+                      <DrawerTitle>Confirm Booking</DrawerTitle>
+                      <DrawerDescription></DrawerDescription>
+                    </DrawerHeader>
+                    <ConfirmDrawer
+                      onCloseConfirmDrawer={() => setOpenDrawerConfirm(false)}
+                    />
+                  </DrawerContent>
+                </Drawer> */}
               </div>
             </div>
             <div
-              onClick={() => setOpenCheckout(false)}
+              onClick={() => setOpenDrawerCheckout(false)}
               className={clsx(
-                'fixed inset-0 z-9998 bg-black/25 transition-all duration-400 ease-out',
+                'fixed inset-0 z-9998 bg-black/25 transition-all duration-500 ease-out',
                 {
-                  'invisible opacity-0': !openCheckout,
-                  'visible opacity-100': openCheckout,
+                  'invisible opacity-0': !openDrawerCheckout,
+                  'visible opacity-100': openDrawerCheckout,
                 },
               )}
             ></div>
             <div
               className={clsx(
-                'fixed bottom-0 left-0 z-9999 w-full transition-all duration-400 ease-out',
+                'fixed bottom-0 left-0 z-9999 w-full transition-all duration-500 ease-out',
                 {
-                  'invisible translate-y-full': !openCheckout,
-                  'visible translate-y-0': openCheckout,
+                  'invisible translate-y-full': !openDrawerCheckout,
+                  'visible translate-y-0': openDrawerCheckout,
                 },
               )}
             >
               <CheckoutDrawer
                 onUpdateTotalPayment={handleUpdateTotalPayment}
-                onOpenConfirmDrawer={() => setOpenConfirm(true)}
-                onCloseCheckoutDrawer={() => setOpenCheckout(false)}
+                onOpenDrawerConfirm={() => setOpenDrawerConfirm(true)}
+                onCloseCheckoutDrawer={() => setOpenDrawerCheckout(false)}
               />
             </div>
             <div
-              onClick={() => setOpenConfirm(false)}
+              onClick={() => setOpenDrawerConfirm(false)}
               className={clsx(
-                'fixed inset-0 z-99998 bg-black/25 transition-all duration-400 ease-out',
+                'fixed inset-0 z-99998 bg-black/25 transition-all duration-600 ease-out',
                 {
-                  'invisible opacity-0': !openConfirm,
-                  'visible opacity-100': openConfirm,
+                  'invisible opacity-0': !openDrawerConfirm,
+                  'visible opacity-100': openDrawerConfirm,
                 },
               )}
             ></div>
             <div
               className={clsx(
-                'fixed bottom-0 left-0 z-99999 w-full transition-all duration-400 ease-out',
+                'fixed bottom-0 left-0 z-99999 w-full transition-all duration-600 ease-out',
                 {
-                  'invisible translate-y-full': !openConfirm,
-                  'visible translate-y-0': openConfirm,
+                  'invisible translate-y-full': !openDrawerConfirm,
+                  'visible translate-y-0': openDrawerConfirm,
                 },
               )}
             >
               <ConfirmDrawer
-                onCloseConfirmDrawer={() => setOpenConfirm(false)}
+                onCloseConfirmDrawer={() => setOpenDrawerConfirm(false)}
               />
             </div>
           </form>
