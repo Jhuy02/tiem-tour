@@ -128,7 +128,7 @@ const Explore = ({data}: {data: IExplore}) => {
           height={1080}
           className='explore__container-top--mobile'
         />
-        <div className='explore__container'>
+        <div className='explore__container xsm:!mt-0'>
           <ExploreContainerImages />
           <ExploreContent
             desc={data.desc}

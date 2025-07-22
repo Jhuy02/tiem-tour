@@ -61,7 +61,7 @@ export default function HeaderPc({
             {Array.isArray(HeaderOption?.page_list) &&
               HeaderOption?.page_list?.map(
                 (item: {page: PageLink}, index: number) => {
-                  if (item?.page?.url === '#') {
+                  if (item?.page?.url === '/tours') {
                     return (
                       <li
                         key={index}
@@ -70,7 +70,6 @@ export default function HeaderPc({
                         }`}
                         onMouseEnter={() => setIsToursActive(true)}
                         onMouseLeave={() => setIsToursActive(false)}
-                        onClick={() => router.push('/tours')}
                       >
                         <div className='header__left-nav-tour-icon'>
                           <IconLocation />
@@ -81,9 +80,12 @@ export default function HeaderPc({
                             height={40}
                           />
                         </div>
-                        <p className='tours-trigger'>
+                        <Link
+                          href={item?.page?.url}
+                          className='tours-trigger'
+                        >
                           {he.decode(item?.page?.title)}
-                        </p>
+                        </Link>
                         <IconArrowHeader />
                         <div className='tours-dropdown'>
                           <ul>
