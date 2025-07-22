@@ -6,7 +6,7 @@ import {Suspense} from 'react'
 
 const NewsLoading = () => (
   <div className='flex items-center justify-center py-8'>
-    <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600'></div>
+    <div className='h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600'></div>
     <span className='ml-3 text-gray-600'>Loading news...</span>
   </div>
 )
@@ -30,12 +30,12 @@ const NewsPage = async () => {
   return (
     <>
       <BannerV2 data={acf.compound_banner} />
-      <div className='bg-[url("/background.webp")] bg-contain pt-[6.25rem] xsm:pt-0 pb-[18.875rem]'>
-        <section className='max-w-[87.375rem] mx-auto font-trip-sans xsm:w-full xsm:overflow-hidden xsm:pt-[2rem] xsm:pb-[2.75rem] xsm:px-[1rem] xsm:flex xsm:flex-col'>
-          <h2 className='xsm:block hidden text-[1.5625rem] leading-[2.03125rem] text-[#3B3943] uppercase font-dvn-luckiest-guy float-left'>
+      <div className='xsm:pt-0 xsm:pb-16 bg-[url("/background.webp")] bg-contain pt-[6.25rem] pb-[18.875rem]'>
+        <section className='font-trip-sans xsm:w-full xsm:overflow-hidden xsm:pt-[2rem] xsm:pb-[2.75rem] xsm:px-[1rem] xsm:flex xsm:flex-col mx-auto max-w-[87.375rem]'>
+          <h2 className='xsm:block font-dvn-luckiest-guy float-left hidden text-[1.5625rem] leading-[2.03125rem] text-[#3B3943] uppercase'>
             The best choose
           </h2>
-          <div className='flex items-center xsm:flex-col xsm:relative xsm:my-0 my-[6.25rem]'>
+          <div className='xsm:flex-col xsm:relative xsm:my-0 my-[6.25rem] flex items-center'>
             <Featured featured={featured} />
           </div>
           <Suspense fallback={<NewsLoading />}>
