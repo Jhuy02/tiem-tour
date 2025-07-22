@@ -14,7 +14,6 @@ import he from 'he'
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -22,6 +21,16 @@ import {
 import useIsMobile from '@/hooks/useIsMobile'
 import {cn} from '@/lib/utils'
 import {X} from 'lucide-react'
+
+function stripHtml(html: string): string {
+  if (typeof window !== 'undefined') {
+    const div = document.createElement('div')
+    div.innerHTML = html
+    return div.textContent || div.innerText || ''
+  } else {
+    return html.replace(/<[^>]+>/g, '')
+  }
+}
 
 export const Overview = ({
   data,
@@ -85,16 +94,13 @@ export const Overview = ({
             </p>
           </li>
           <li className='flex w-full items-center space-x-[0.5rem]'>
-            <Itinerary className='size-[1.25rem]' />
+            <Itinerary className='xsm:flex-none size-[1.25rem]' />
             <p className='flex items-center leading-[1.3rem] tracking-[0.0025rem] text-[#303030]'>
-              <strong className='flex items-center font-extrabold'>
+              <strong className='font-extrabold'>
                 Itinerary:{' '}
-                <span
-                  className='ml-1 font-medium [&_svg]:mx-[0.5rem]'
-                  dangerouslySetInnerHTML={{
-                    __html: data.glance.itinerary,
-                  }}
-                ></span>
+                <span className='w-[15.6875rem] font-medium'>
+                  {he.decode(stripHtml(data.glance.itinerary))}
+                </span>
               </strong>
             </p>
           </li>

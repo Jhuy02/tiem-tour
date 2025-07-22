@@ -43,8 +43,8 @@ export const Content = ({data}: {data: TourDetailContent}) => {
           link={data?.acf_fields?.overview?.gallery?.link?.url}
         />
         <TripadvisorTab
-          data={data.acf_fields.tripadvisor}
-          map={data.taxonomies.location[0].name}
+          data={data?.acf_fields?.tripadvisor}
+          map={data?.taxonomies?.location[0].name}
         />
       </div>
       <AccordionItem
