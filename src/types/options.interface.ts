@@ -1,4 +1,4 @@
-import { IMedia } from './media.interface'
+import {IMedia} from './media.interface'
 
 export interface PageLink {
   id: number
@@ -102,7 +102,7 @@ export interface DataSearch {
   hot_search: {
     title: string
     key: {
-      key: string
+      key_text: string
     }[]
   }
   button: string

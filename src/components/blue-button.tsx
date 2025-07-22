@@ -36,7 +36,7 @@ export function BlueButton({
       <div className='transition-all duration-500 ease-in-out lg:group-hover:[&>svg>path]:fill-white'>
         <Arrow
           color={arrowColor}
-          className='h-6 w-[1.575rem]'
+          className='h-6 w-[1.575rem] -translate-y-0.5 transform'
         />
       </div>
 
