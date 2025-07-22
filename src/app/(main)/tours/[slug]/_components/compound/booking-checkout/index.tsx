@@ -11,14 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog-v2'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
+import {FormField, FormItem} from '@/components/ui/form'
 import {Label} from '@/components/ui/label'
-import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group'
 import {BookingFormValues} from '@/schemas/booking.schema'
 import {TourDetailApiResType} from '@/types/tours.interface'
 import {format} from 'date-fns'
@@ -40,6 +34,7 @@ export default function BookingCheckout() {
   const [agreePolicyStatus, setAgreePolicyStatus] = useState<boolean>(false)
   const [openConfirmPayment, setOpenConfirmPayment] = useState<boolean>(false)
   const tourSalePercent = Number(apiData.acf_fields.tour_sale_percent) / 100
+  const dayCount = Number(apiData?.package_tour?.duration_number)
   // Lấy dữ liệu từ form
   const scheduleStart: Date | null = watch('schedule_start')
   const scheduleEnd: Date | null = watch('schedule_end')
@@ -188,7 +183,7 @@ export default function BookingCheckout() {
         : Number(transportVehicle.returnTripVehicle?.price)
     const totalRentMotorbikePrice = rentMotorcycleList.reduce(
       (total, {price, quantity}) => {
-        return total + Number(price) * Number(quantity)
+        return total + Number(price) * Number(quantity) * dayCount
       },
       0,
     )
@@ -199,6 +194,7 @@ export default function BookingCheckout() {
       returnTripTransportPrice
     )
   }, [
+    dayCount,
     outboundTripTransportType,
     rentMotorcycleList,
     returnTripTransportType,
@@ -391,7 +387,7 @@ export default function BookingCheckout() {
               </p>
               {Array.isArray(rentMotorcycleList) &&
                 rentMotorcycleList.map(({name, quantity, price}) => {
-                  const subtotal = Number(price) * Number(quantity)
+                  const subtotal = Number(price) * Number(quantity) * dayCount
                   return (
                     <div
                       key={uuidv4()}
@@ -434,53 +430,24 @@ export default function BookingCheckout() {
           </div>
         </div>
         <div className='mb-[1rem]'>
-          <FormField
-            control={control}
-            name='deposit'
-            render={({field}) => (
-              <FormItem>
-                <FormControl>
-                  <RadioGroup
-                    name={field.name}
-                    onValueChange={field.onChange}
-                  >
-                    <Label className='inline-flex w-full cursor-pointer items-center gap-0'>
-                      <RadioGroupItem
-                        value={'deposit'}
-                        className='peer sr-only'
-                      />
-                      <Image
-                        alt=''
-                        width={22}
-                        height={22}
-                        src={'/icons/radio-unchecked.svg'}
-                        className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
-                      />
-                      <Image
-                        alt=''
-                        width={22}
-                        height={22}
-                        src={'/icons/radio-checked.svg'}
-                        className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
-                      />
-                      <div className='flex flex-1 flex-col space-y-[0.5rem] pl-[0.5rem]'>
-                        <p className='inline-flex items-center space-x-[0.5rem] text-[0.875rem] tracking-[0.00219rem] text-[#303030]'>
-                          <span className='leading-[120%] font-medium'>
-                            Deposit
-                          </span>
-                          <span className='leading-[150%] font-normal'>
-                            (<span className='text-[#F64722]'>*</span>
-                            Non-refundable in case of cancellation)
-                          </span>
-                        </p>
-                      </div>
-                    </Label>
-                  </RadioGroup>
-                </FormControl>
-                <FormMessage className='font-trip-sans col-span-1 pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-              </FormItem>
-            )}
-          />
+          <div className='inline-flex w-full cursor-pointer items-center gap-0'>
+            <Image
+              alt=''
+              width={22}
+              height={22}
+              src={'/icons/radio-checked.svg'}
+              className='hidden! h-auto w-[1.25rem]'
+            />
+            <div className='flex flex-1 flex-col space-y-[0.5rem] pl-[0.5rem]'>
+              <p className='inline-flex items-center space-x-[0.5rem] text-[0.875rem] tracking-[0.00219rem] text-[#303030]'>
+                <span className='leading-[120%] font-medium'>Deposit</span>
+                <span className='leading-[150%] font-normal'>
+                  (<span className='text-[#F64722]'>*</span>
+                  Non-refundable in case of cancellation)
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
         <div className="mb-[0.5rem] flex items-center justify-between rounded-[1rem] bg-[url('/common/common-background-pc.webp')] bg-cover bg-center bg-no-repeat p-[0.75rem]">
           <div className='flex flex-col space-y-[0.25rem] px-[0.75rem]'>
@@ -516,7 +483,7 @@ export default function BookingCheckout() {
             <span className='text-[1.125rem] leading-[120%] font-extrabold tracking-[-0.0025rem] uppercase'>
               Check out
             </span>
-            {tourSalePercent && (
+            {tourSalePercent > 0 && (
               <span className='text-[0.75rem] leading-[130%] tracking-[0.00188rem]'>
                 Save{' '}
                 {Number(totalPaymentPrice * tourSalePercent).toLocaleString(

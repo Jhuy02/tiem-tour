@@ -99,10 +99,6 @@ const bookingSchema = z
     // ✈️ Thêm outboundTrip và returnTrip
     outboundTrip: transportSchema,
     returnTrip: transportSchema,
-
-    deposit: z.literal('deposit', {
-      errorMap: () => ({message: 'You must select the deposit option'}),
-    }),
   })
   .superRefine((data, ctx) => {
     const totalRiders = data.riders.reduce(

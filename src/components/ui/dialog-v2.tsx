@@ -95,7 +95,7 @@ function DialogContent({
       >
         {children}
         <DialogPrimitive.Close asChild>
-          <Button className='absolute top-[1.5625rem] right-[2.5rem] z-10 size-auto cursor-pointer rounded-none border-0 bg-transparent! p-0 shadow-none'>
+          <Button className='xsm:top-[1rem] xsm:right-[1rem] absolute top-[1.5625rem] right-[2.5rem] z-10 size-auto cursor-pointer rounded-none border-0 bg-transparent! p-0 shadow-none'>
             <Image
               alt=''
               width={20}
