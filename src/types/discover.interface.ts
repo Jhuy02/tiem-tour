@@ -35,3 +35,9 @@ export interface IDiscoverLocation {
   hot_location: boolean
   map_location: string
 }
+
+export interface IDiscoverPackage {
+  id: string
+  name: string
+  slug: string
+}
