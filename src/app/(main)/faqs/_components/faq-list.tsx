@@ -15,7 +15,7 @@ const FaqList = ({faqList}: {faqList: IFaqs['faq_content']}) => {
   return (
     <section
       id='faq'
-      className='xsm:bg-[url(/background.webp)]! bg-cover bg-center'
+      className='xsm:bg-[url(/background.webp)]! xsm:pb-[4.875rem] bg-cover bg-center'
     >
       {isMobile ? (
         <FaqListMobile faqList={faqList} />
