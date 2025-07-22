@@ -11,9 +11,10 @@ import scrollToElement from '@/hooks/scrollToElement'
 import useIsMobile from '@/hooks/useIsMobile'
 import { TaxonomyResponse } from '@/types/taxonomies.interface'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { useRouter } from 'next/navigation'
 
 const dataBudget = [
   {
@@ -36,6 +37,7 @@ export default function BannerNav({
   dataTaxonomies: TaxonomyResponse
 }) {
   const isMobile = useIsMobile()
+  const router = useRouter()
 
   const [openLocation, setOpenLocation] = useState<boolean>(false)
   const [openDuration, setOpenDuration] = useState<boolean>(false)
@@ -51,61 +53,154 @@ export default function BannerNav({
     name: string
     slug: string
   } | null>(null)
+  useEffect(() => {
+    console.log(selectedBudget)
+  }, [selectedBudget])
   return (
     <>
       <div className='banner-nav'>
         <div className='banner-nav__fillter'>
           <div className='banner-fillter__wapper'>
             {isMobile ? (
-              <Drawer>
-                <DrawerTrigger asChild>
-                  <div
-                    className='banner-fillter__item select__location'
-                    tabIndex={0}
-                  >
-                    <div className='fillter-item__icon'>
-                      <Image
-                        src={'/home/icon-location.svg'}
-                        width={40}
-                        height={40}
-                        alt=''
-                      />
-                    </div>
-                    <div className='fillter-item__wapper'>
-                      <p className='fillter-item__label'>Location of interest</p>
-                      <div className='fillter-item__select'>
-                        <p
-                          className='fillter-item__title'
-                          data-check='0'
-                        >
-                          {selectedLocation.length > 0
-                            ? selectedLocation
-                                .map((location) => location.name)
-                                .join(', ')
-                            : 'Click to select'}
-                        </p>
+              <>
+                {/* Drawer cho Location */}
+                <Drawer>
+                  <DrawerTrigger asChild className='border-b !rounded-none'>
+                    <div
+                      className='banner-fillter__item select__location'
+                      tabIndex={0}
+                    >
+                      <div className='fillter-item__icon'>
                         <Image
-                          className='fillter-item__arrow'
-                          src={'/home/dropdown-Icon.svg'}
-                          width={18}
-                          height={18}
+                          src={'/home/icon-location.svg'}
+                          width={40}
+                          height={40}
                           alt=''
                         />
                       </div>
+                      <div className='fillter-item__wapper'>
+                        <p className='fillter-item__label'>Location of interest</p>
+                        <div className='fillter-item__select'>
+                          <p
+                            className='fillter-item__title'
+                            data-check='0'
+                          >
+                            {selectedLocation.length > 0
+                              ? selectedLocation
+                                  .map((location) => location.name)
+                                  .join(', ')
+                              : 'Click to select'}
+                          </p>
+                          <Image
+                            className='fillter-item__arrow'
+                            src={'/home/dropdown-Icon.svg'}
+                            width={18}
+                            height={18}
+                            alt=''
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </DrawerTrigger>
-                <DrawerContent className='[&_.drawer_heading_icon]:!hidden'>
-                  <PopupSelectMb
-                    title='Location of interest'
-                    toggle={openLocation}
-                    dataTaxonomies={dataTaxonomies.location}
-                    setSelectedMultiple={setSelectedLocation}
-                    selectedMultiple={selectedLocation}
-                  />
-                </DrawerContent>
-              </Drawer>
-            ):
+                  </DrawerTrigger>
+                    <DrawerContent className='[&_.drawer_heading_icon]:!hidden !bg-[#25acab]'>
+                    <PopupSelectMb
+                      title='Location of interest'
+                      toggle={openLocation}
+                      dataTaxonomies={dataTaxonomies.location}
+                      setSelectedMultiple={setSelectedLocation}
+                      selectedMultiple={selectedLocation}
+                    />
+                  </DrawerContent>
+                </Drawer>
+                {/* Drawer cho Duration */}
+                <Drawer>
+                  <DrawerTrigger asChild className='border-b !rounded-none'>
+                    <div
+                      className='banner-fillter__item select__duration'
+                      tabIndex={1}
+                    >
+                      <div className='fillter-item__icon'>
+                        <Image
+                          src={'/home/icon-duration.svg'}
+                          width={40}
+                          height={40}
+                          alt=''
+                        />
+                      </div>
+                      <div className='fillter-item__wapper'>
+                        <p className='fillter-item__label'>Travel time</p>
+                        <div className='fillter-item__select'>
+                          <p className='fillter-item__title'>
+                            {selectedDuration?.name || 'Click to select'}
+                          </p>
+                          <Image
+                            className='fillter-item__arrow'
+                            src={'/home/dropdown-Icon.svg'}
+                            width={18}
+                            height={18}
+                            alt=''
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </DrawerTrigger>
+                  <DrawerContent className='[&_.drawer_heading_icon]:!hidden !bg-[#25acab]'>
+                    <PopupSelectMb
+                      title='Travel time'
+                      toggle={openDuration}
+                      dataTaxonomies={dataTaxonomies.duration}
+                      setSelectedOnly={setSelectedDuration}
+                      selectedOnly={selectedDuration}
+                      changeOpen={setOpenDuration}  
+                    />
+                  </DrawerContent>
+                </Drawer>
+                {/* Drawer cho Budget */}
+                <Drawer>
+                  <DrawerTrigger asChild className='border-b'>
+                    <div
+                      className='banner-fillter__item select__proposedbudget'
+                      tabIndex={2}
+                    >
+                      <div className='fillter-item__icon'>
+                        <Image
+                          src={'/home/icon-budget.svg'}
+                          width={40}
+                          height={40}
+                          alt=''
+                        />
+                      </div>
+                      <div className='fillter-item__wapper'>
+                        <p className='fillter-item__label'>Proposed budget</p>
+                        <div className='fillter-item__select'>
+                          <p className='fillter-item__title'>
+                            {selectedBudget?.name || 'Click to select'}
+                          </p>
+                          <Image
+                            className='fillter-item__arrow'
+                            src={'/home/dropdown-Icon.svg'}
+                            width={18}
+                            height={18}
+                            alt=''
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </DrawerTrigger>
+                  <DrawerContent className='[&_.drawer_heading_icon]:!hidden !bg-[#25acab] !rounded-none'>
+                    <PopupSelectMb
+                      title='Proposed budget'
+                      toggle={openBudget}
+                      dataTaxonomies={dataBudget}
+                      type='budget'
+                      setSelectedOnly={setSelectedBudget}
+                      selectedOnly={selectedBudget}
+                      changeOpen={setOpenBudget}
+                    />
+                  </DrawerContent>
+                </Drawer>
+              </>
+            ) :
               <>
                 <div
                   className='banner-fillter__item select__location'
@@ -270,7 +365,20 @@ export default function BannerNav({
               </>
             }
           </div>
-          <div className='banner-fillter__btn'>
+          <div className='banner-fillter__btn'
+            onClick={() => {
+              // Build query params for /tours
+              const locationParam = selectedLocation.map(l => l.slug).join(',')
+              const durationParam = selectedDuration?.slug || ''
+              const budgetParam = selectedBudget?.slug || ''
+              const params = new URLSearchParams()
+              if (locationParam) params.set('location', locationParam)
+              if (durationParam) params.set('duration', durationParam)
+              if (budgetParam) params.set('orderby', budgetParam)
+              params.set('isSearch', 'true')
+              router.push(`/tours?${params.toString()}`)
+            }}
+          >
             <p className='fillter-btn__text'>Search for a tour</p>
             <IconArrow />
           </div>
