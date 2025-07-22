@@ -57,26 +57,14 @@
 
 .formSubmit {
   position: relative;
-  width: fit-content;
-  display: inline-flex;
-  padding: 1.25rem 2.5rem;
-  justify-content: center;
-  align-items: center;
-  border-radius: 3.125rem;
-  border: 4px solid rgba(0, 0, 0, 0.12);
   box-shadow: 7px 10px 34.3px 0px rgba(0, 0, 0, 0.12);
   background: transparent;
-  cursor: pointer;
-  overflow: hidden;
-  height: 4rem;
-  margin-top: 1.375rem;
+  transition: all 0.5s ease;
 }
 .formSubmitText {
   position: relative;
   color: #3b3943;
   text-align: center;
-  leading-trim: both;
-  text-edge: cap;
   font-family: var(--font-dvn-luckiest-guy);
   font-size: 1.125rem;
   font-style: normal;
@@ -94,6 +82,9 @@
   transition: all 0.5s ease;
 }
 @media (min-width: 1024px) {
+  .formSubmit:hover {
+    border-color: transparent;
+  }
   .formSubmit:hover .formSubmitText {
     transition: all 0.5s ease;
   }
@@ -123,19 +114,8 @@
     transform: translateY(-50%) translateX(-50%);
   }
 }
-@media (max-width: 1023.98px) {
-  .formSubmit {
-    border-radius: 3.125rem;
-    border: 3px solid rgba(0, 0, 0, 0.12);
-    box-shadow: 7px 10px 34.3px 0px rgba(0, 0, 0, 0.12);
-  }
-}
+
 @media (max-width: 639.98px) {
-  .formSubmit {
-    width: 100%;
-    padding: 1.125rem 2.5rem;
-    height: 3.375rem;
-  }
   .formSubmitText {
     font-family: var(--font-dvn-luckiest-guy);
     font-size: 1rem;

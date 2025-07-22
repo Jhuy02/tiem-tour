@@ -4,9 +4,8 @@ import useIsMobile from '@/hooks/useIsMobile'
 import Image from 'next/image'
 import styles from './banner-v2.module.css'
 import clsx from 'clsx'
-import ImageFallback from '@/components/image/ImageFallback'
 import IconScrollDown from '@/components/icon/IconScrollDown'
-import React, {useRef} from 'react'
+import React, {useMemo, useRef} from 'react'
 // Import Swiper React components
 import {Swiper, SwiperSlide} from 'swiper/react'
 
@@ -31,6 +30,20 @@ export interface IBannerV2 {
 export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
   const isMobile = useIsMobile()
   const bannerRef = useRef<HTMLDivElement>(null)
+
+  const sizeImage = useMemo(() => {
+    if (isMobile) {
+      return {
+        width: 381.6484,
+        height: 439.1094,
+      }
+    }
+    return {
+      width: 1600,
+      height: 592,
+    }
+  }, [isMobile])
+
   const handleScrollDown = () => {
     if (!bannerRef.current) return
     const bannerHeight = bannerRef.current.offsetHeight
@@ -39,6 +52,7 @@ export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
       behavior: 'smooth',
     })
   }
+
   return (
     <section
       ref={bannerRef}
@@ -130,9 +144,9 @@ export default function BannerV2({data, variant = 'primary'}: IBannerV2) {
                 className='h-full w-full'
                 key={index}
               >
-                <ImageFallback
-                  width={2000}
-                  height={1000}
+                <Image
+                  width={sizeImage.width}
+                  height={sizeImage.height}
                   alt={altText ?? ''}
                   src={imageUrl ?? '/images/fallback-image.webp'}
                   className='h-full w-full object-cover'
