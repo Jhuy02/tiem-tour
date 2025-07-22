@@ -1,6 +1,6 @@
 'use client'
 
-import { TripadvisorReviews } from '@/app/(main)/tours/[slug]/_components/icon'
+import {TripadvisorReviews} from '@/app/(main)/tours/[slug]/_components/icon'
 import ImageFallback from '@/components/image/ImageFallback'
 import {
   Accordion,
@@ -8,13 +8,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { convertRemToPx } from '@/lib/utils'
-import { Tripadvisor as TripadvisorType } from '@/types/tours.interface'
+import {convertRemToPx} from '@/lib/utils'
+import {Tripadvisor as TripadvisorType} from '@/types/tours.interface'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import 'swiper/css'
-import { SwiperSlide } from 'swiper/react'
+import {SwiperSlide} from 'swiper/react'
 
 const Swiper = dynamic(() => import('swiper/react').then((mod) => mod.Swiper), {
   ssr: false,
@@ -52,12 +52,21 @@ export const Tripadvisor = ({
                 height={60}
                 className='mr-[0.5rem] size-[1.42869rem] object-cover'
               />
-              <p>Tripadvisor</p>
+              <Link
+                href={link}
+                target='_blank'
+              >
+                Tripadvisor
+              </Link>
             </div>
             <div className='flex items-center justify-between'>
-              <p className='text-[0.875rem] leading-[1.05rem] font-bold tracking-[0.01563rem] text-[#092F1A] uppercase'>
+              <Link
+                href={link}
+                target='_blank'
+                className='text-[0.875rem] leading-[1.05rem] font-bold tracking-[0.01563rem] text-[#092F1A] uppercase'
+              >
                 {data.title}
-              </p>
+              </Link>
               <div className='xsm:flex-col xsm:items-center xsm:space-x-0 mr-[-2rem] flex items-center space-x-[0.375rem]'>
                 <div className='flex items-center space-x-[0.125rem]'>
                   {Array.from({length: 5}).map((_, index) => (
@@ -67,9 +76,13 @@ export const Tripadvisor = ({
                     />
                   ))}
                 </div>
-                <p className='text-[0.875rem] leading-[1.05rem] font-medium tracking-[0.00219rem] text-[#303030]'>
+                <Link
+                  href={link}
+                  target='_blank'
+                  className='text-[0.875rem] leading-[1.05rem] font-medium tracking-[0.00219rem] text-[#303030]'
+                >
                   {data.number_of_reviews} REVIEWS
-                </p>
+                </Link>
               </div>
             </div>
           </div>
