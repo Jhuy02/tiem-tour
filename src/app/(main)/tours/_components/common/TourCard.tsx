@@ -2,13 +2,14 @@ import IconArrowRightV1 from '@/components/icon/IconArrowRightV1'
 import IconClockV1 from '@/components/icon/IconClockV1'
 import IconLocationV1 from '@/components/icon/IconLocationV1'
 import ImageFallback from '@/components/image/ImageFallback'
-import {TourImage, TourTaxonomy} from '@/types/tours.interface'
+import {IMedia} from '@/types/media.interface'
+import {TourTaxonomy} from '@/types/tours.interface'
 import Image from 'next/image'
 import React from 'react'
 
 interface TourCardProps {
   title: string
-  image?: TourImage
+  image?: IMedia
   price: string
   location: TourTaxonomy[]
   duration: TourTaxonomy[]
@@ -65,7 +66,7 @@ export default function TourCard({
       <div className='relative px-[0.75rem] py-[1rem]'>
         <h3
           dangerouslySetInnerHTML={{__html: title}}
-          className='font-dvn-luckiest-guy mb-[0.75rem] line-clamp-2 h-[2.75rem] text-[1.125rem] leading-[120%] font-normal tracking-[0.0125rem] text-[#3b3943] uppercase max-sm:mb-[0.5rem] max-sm:text-[1rem]'
+          className='font-dvn-luckiest-guy xsm:h-auto mb-[0.75rem] line-clamp-2 h-[2.75rem] text-[1.125rem] leading-[120%] font-normal tracking-[0.0125rem] text-[#3b3943] uppercase max-sm:mb-[0.5rem] max-sm:text-[1rem]'
         ></h3>
 
         <div className='transition-all duration-500 min-lg:group-hover:translate-y-[6rem] min-lg:group-hover:opacity-0'>
@@ -85,12 +86,12 @@ export default function TourCard({
             <span>{price}</span> USD
           </p>
         </div>
-        <button className='pointer-events-none absolute top-[1rem] right-[1rem] left-[1rem] flex items-center justify-center rounded-[3.125rem] bg-[#25acab] px-[1.5rem] py-[0.75rem] opacity-0 transition-all duration-500 min-lg:group-hover:pointer-events-auto min-lg:group-hover:translate-y-[3.5rem] min-lg:group-hover:opacity-100'>
+        <div className='absolute top-[1rem] right-[1rem] left-[1rem] flex items-center justify-center rounded-[3.125rem] bg-[#25acab] px-[1.5rem] py-[0.75rem] opacity-0 transition-all duration-500 min-lg:group-hover:translate-y-[3.5rem] min-lg:group-hover:opacity-100'>
           <span className='font-dvn-luckiest-guy h-[0.6875rem] text-[1rem] leading-[120%] font-normal text-[#fff]'>
             Book Now
           </span>
           <IconArrowRightV1 className='ml-[0.625rem] h-auto w-[1.575rem]' />
-        </button>
+        </div>
       </div>
     </article>
   )

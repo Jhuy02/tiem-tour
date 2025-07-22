@@ -7,17 +7,12 @@ export interface TourTaxonomy {
   slug: string
   hot?: null | boolean
 }
-export interface TourImage {
-  url: string
-  alt: string
-}
 
 export interface TourItemResponse {
   title: string
-  link: string
   slug: string
   price: string
-  image: TourImage
+  image: IMedia
   duration: TourTaxonomy[]
   location: TourTaxonomy[]
 }
@@ -52,7 +47,7 @@ type TaxonomyItem = {
   slug: string
 }
 export interface TourItemDataResponse {
-  images: IMedia
+  image: IMedia
   duration: TaxonomyItem[]
   location: TaxonomyItem[]
   price: string

@@ -86,7 +86,7 @@ export default function TourFilterMobile({
       <DrawerContent className='rounded-t-[1.5rem]'>
         <DrawerHeader className='hidden'>
           <div></div>
-          <DrawerTitle></DrawerTitle>
+          <DrawerTitle>Filter Tour</DrawerTitle>
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
         <div className='relative rounded-t-[1.5rem] bg-white'>
