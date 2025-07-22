@@ -104,10 +104,38 @@ const bookingSchema = z
       errorMap: () => ({message: 'You must select the deposit option'}),
     }),
   })
-  // 📌 Custom validation rules
-  .refine((data) => data.schedule_end >= data.schedule_start, {
-    path: ['schedule_end'],
-    message: 'End day must be after or same as Start day',
+  .superRefine((data, ctx) => {
+    const totalRiders = data.riders.reduce(
+      (total, rider) => total + rider.quantity,
+      0,
+    )
+
+    // Validate ít nhất 1 rider
+    if (totalRiders < 1) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Riders must be 1 or more',
+        path: ['riders'],
+      })
+    }
+
+    // Validate riders > 0
+    if (totalRiders <= 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Riders must be 1 or more',
+        path: ['riders'],
+      })
+    }
+
+    // Validate riders <= adults
+    if (totalRiders > data.adults) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Riders must be equal adults or less',
+        path: ['riders'],
+      })
+    }
   })
 
 export default bookingSchema

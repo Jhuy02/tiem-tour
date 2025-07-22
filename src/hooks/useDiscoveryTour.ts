@@ -12,6 +12,8 @@ import {
   TourTaxonomy,
 } from '@/types/tours.interface'
 import {getSelectedOptionsFromParams} from '@/lib/helper'
+import useIsMobile from '@/hooks/useIsMobile'
+import gsap from 'gsap'
 
 export function useDiscoveryTour({
   initialQueryParams,
@@ -31,6 +33,7 @@ export function useDiscoveryTour({
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const containerRef = useRef<HTMLDivElement>(null)
+  const isMobile = useIsMobile()
 
   const [pagination, setPagination] = useState({
     page: initialPage,
@@ -55,10 +58,11 @@ export function useDiscoveryTour({
     if (initialQueryParams === searchParams.toString()) return null
     // if (!searchParams?.size) return null
     const params = new URLSearchParams(searchParams.toString())
-    params.set('page', String(pagination.page))
+    params.set('page', String(pagination.page) || '1')
     params.set('limit', '12')
     params.set('tax', 'location,duration')
     params.set('order', 'DESC')
+
     return `api/v1${endpoints.news.list}?${params.toString()}`
   }, [searchParams, pagination.page, initialQueryParams])
 
@@ -76,10 +80,19 @@ export function useDiscoveryTour({
   }, [tourListData, initialTours])
 
   const scrollToTop = () => {
-    containerRef.current?.scrollIntoView({behavior: 'smooth'})
+    const container = containerRef.current
+    if (!container) return
+    gsap.to(window, {
+      duration: isMobile ? 1 : 0.5,
+      scrollTo: {y: container.offsetTop - 80},
+      ease: 'power2.out',
+    })
   }
 
   const updateURLWithoutRender = (params: URLSearchParams) => {
+    if (params.get('page') === '1') {
+      params.delete('page')
+    }
     window.history.pushState({}, '', `${pathname}?${params.toString()}`)
   }
 
@@ -100,6 +113,7 @@ export function useDiscoveryTour({
     } else {
       params.delete(key)
     }
+    console.log(params)
     params.set('page', '1')
     setPagination((prev) => ({...prev, page: 1}))
     updateURLWithoutRender(params)
@@ -126,8 +140,13 @@ export function useDiscoveryTour({
         ...prev,
         totalPages: tourListData.totalPages,
       }))
+    } else if (query === null) {
+      setPagination((prev) => ({
+        ...prev,
+        totalPages: initialTotalPages,
+      }))
     }
-  }, [tourListData, searchParams?.size])
+  }, [tourListData, searchParams?.size, query, initialTotalPages])
 
   return {
     containerRef,

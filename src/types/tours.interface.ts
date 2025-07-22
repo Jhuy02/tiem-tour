@@ -7,17 +7,12 @@ export interface TourTaxonomy {
   slug: string
   hot?: null | boolean
 }
-export interface TourImage {
-  url: string
-  alt: string
-}
 
 export interface TourItemResponse {
   title: string
-  link: string
   slug: string
   price: string
-  image: TourImage
+  image: IMedia
   duration: TourTaxonomy[]
   location: TourTaxonomy[]
 }
@@ -52,7 +47,7 @@ type TaxonomyItem = {
   slug: string
 }
 export interface TourItemDataResponse {
-  images: IMedia
+  image: IMedia
   duration: TaxonomyItem[]
   location: TaxonomyItem[]
   price: string
@@ -206,7 +201,10 @@ export interface TourDetailPackage {
   main_car_pick_up_data: MainCarPickup[]
   arrival_use_bus: ArrivalUseBus[]
   arrival_private: ArrivalPrivate[]
-  pick_up_and_drop_off_bus_service: ScheduleBus[]
+  pick_up_and_drop_off_bus_service: {
+    note: string
+    schedule_bus: ScheduleBus[]
+  }
   schedule_private_hanoi_hagiang: SchedulePrivateHanoiHagiang
 }
 

@@ -59,7 +59,6 @@ export default function TourDiscoveryTrip({
     tourLocationTax,
     tourDurationTax,
   })
-
   return (
     <TourDiscoveryTripContext.Provider
       value={{

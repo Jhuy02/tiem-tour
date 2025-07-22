@@ -43,8 +43,8 @@ export default function TransportVehicleGallery() {
                   </p>
                   <p className='xsm:block hidden text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[rgba(48,48,48,0.40)] uppercase'>
                     <span className='tracking-[0.01563rem] text-[#C83E21]'>
-                      {Number(transportVehicle?.price)?.toLocaleString('vi-VN')}
-                      /
+                      {Number(transportVehicle?.price)?.toLocaleString('en-US')}{' '}
+                      USD/
                     </span>
                     PAX
                   </p>
@@ -52,8 +52,8 @@ export default function TransportVehicleGallery() {
                 <div className='xsm:space-x-0 flex items-center space-x-[0.5rem]'>
                   <p className='xsm:hidden text-[0.875rem] leading-[120%] font-extrabold tracking-[0.01563rem] text-[rgba(48,48,48,0.40)] uppercase'>
                     <span className='tracking-[0.01563rem] text-[#C83E21]'>
-                      {Number(transportVehicle?.price)?.toLocaleString('vi-VN')}
-                      /
+                      {Number(transportVehicle?.price)?.toLocaleString('en-US')}{' '}
+                      USD/
                     </span>
                     PAX
                   </p>

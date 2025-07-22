@@ -214,7 +214,7 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
                   {scheduleEnd && format(scheduleEnd, 'dd MMM')}
                 </p>
                 <span className='text-[0.75rem] leading-[130%] font-normal tracking-[0.00188rem] text-[rgba(48,48,48,0.80)]'>
-                  Price for {Number(apiData?.package_tour?.duration_number) - 1}{' '}
+                  Price for {Number(apiData?.package_tour?.duration_number)}{' '}
                   night
                 </span>
               </div>

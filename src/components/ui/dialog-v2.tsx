@@ -2,9 +2,10 @@
 
 import * as React from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import {XIcon} from 'lucide-react'
 
 import {cn} from '@/lib/utils'
+import {Button} from '@/components/ui/button'
+import Image from 'next/image'
 
 function Dialog({...props}: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return (
@@ -43,6 +44,7 @@ function DialogClose({
   return (
     <DialogPrimitive.Close
       data-slot='dialog-close'
+      className='cursor-pointer'
       {...props}
     />
   )
@@ -92,9 +94,16 @@ function DialogContent({
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
-          <XIcon />
-          <span className='sr-only'>Close</span>
+        <DialogPrimitive.Close asChild>
+          <Button className='absolute top-[1.5625rem] right-[2.5rem] z-10 size-auto cursor-pointer rounded-none border-0 bg-transparent! p-0 shadow-none'>
+            <Image
+              alt=''
+              width={20}
+              height={20}
+              className='w-[1.25rem]'
+              src={'/icons/x-close.svg'}
+            />
+          </Button>
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPortal>

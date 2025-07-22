@@ -1,14 +1,14 @@
-.newsContent {
+.news-content {
   margin-bottom: 1.125rem;
   padding-bottom: 2.5rem;
   border-bottom: 1px solid rgba(48, 48, 48, 0.4);
 }
-.newsContent h1,
-.newsContent h2,
-.newsContent h3,
-.newsContent h4,
-.newsContent h5,
-.newsContent h6 {
+.news-content h1,
+.news-content h2,
+.news-content h3,
+.news-content h4,
+.news-content h5,
+.news-content h6 {
   color: #303030;
   font-family: var(--font-dvn-luckiest-guy);
   font-size: 1.625rem;
@@ -19,28 +19,28 @@
   text-transform: uppercase;
   margin-bottom: 1rem;
 }
-.newsContent h1 {
+.news-content h1 {
   font-size: 1.875rem;
 }
-.newsContent h2 {
+.news-content h2 {
   font-size: 1.625rem;
 }
-.newsContent h3 {
+.news-content h3 {
   font-size: 1.5rem;
 }
-.newsContent h4 {
+.news-content h4 {
   font-size: 1.25rem;
 }
-.newsContent h5 {
+.news-content h5 {
   font-size: 1rem;
 }
-.newsContent h6 {
+.news-content h6 {
   font-size: 0.75rem;
 }
-.newsContent strong {
+.news-content strong {
   font-weight: 800;
 }
-.newsContent p {
+.news-content p {
   color: #303030;
   font-family: var(--font-trip-sans);
   font-size: 1rem;
@@ -49,25 +49,25 @@
   line-height: 160%;
   letter-spacing: 0.0025rem;
 }
-.newsContent > * + h1,
-.newsContent > * + h2,
-.newsContent > * + h3,
-.newsContent > * + h4,
-.newsContent > * + h5,
-.newsContent > * + h6 {
+.news-content > * + h1,
+.news-content > * + h2,
+.news-content > * + h3,
+.news-content > * + h4,
+.news-content > * + h5,
+.news-content > * + h6 {
   margin-top: 2.5rem !important;
 }
-.newsContent p + *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+.news-content p + *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
   margin-top: 1rem;
 }
-.newsContent > * + p:has(img) {
+.news-content > * + p:has(img) {
   margin-top: 2.5rem !important;
   margin-bottom: 2.5rem !important;
 }
-.newsContent p:has(img) {
+.news-content p:has(img) {
   text-align: center;
 }
-.newsContent a {
+.news-content a {
   color: #006ce4;
   text-decoration: none;
   font-family: var(--font-trip-sans);
@@ -77,18 +77,18 @@
   line-height: 160%;
   letter-spacing: 0.0025rem;
 }
-.newsContent ul li {
+.news-content ul li {
   list-style: disc;
 }
-.newsContent ol li {
+.news-content ol li {
   list-style: numeric;
 }
-.newsContent ul,
-.newsContent ol {
+.news-content ul,
+.news-content ol {
   padding-left: 1.5rem;
 }
-.newsContent ul li,
-.newsContent ol li {
+.news-content ul li,
+.news-content ol li {
   color: #303030;
   font-family: var(--font-trip-sans);
   font-size: 1rem;
@@ -97,18 +97,18 @@
   line-height: 160%;
   letter-spacing: 0.0025rem;
 }
-.newsContent img {
+.news-content img {
   max-width: 100%;
   height: auto;
   max-height: 80vh;
   object-fit: cover;
 }
-.newsContent thead,
-.newsContent tbody,
-.newsContent tfoot,
-.newsContent tr,
-.newsContent td,
-.newsContent th {
+.news-content thead,
+.news-content tbody,
+.news-content tfoot,
+.news-content tr,
+.news-content td,
+.news-content th {
   border-color: inherit;
   border-style: solid;
   border-width: 0;
@@ -117,31 +117,31 @@
   width: 100%;
   overflow-x: auto;
 }
-.newsContent table {
+.news-content table {
   border: 1px solid #ccc;
   border-collapse: collapse;
   margin: 0;
   padding: 0;
   table-layout: auto;
 }
-.newsContent table tr {
+.news-content table tr {
   border: 1px solid #ccc;
   padding: 0.35em;
 }
-.newsContent table td,
-.newsContent table th {
+.news-content table td,
+.news-content table th {
   border: 1px solid #ccc;
   padding: 0.625em;
 }
-.newsContent table td {
+.news-content table td {
   vertical-align: top;
 }
-.newsContent table th {
+.news-content table th {
   text-align: center;
   font-weight: 700;
   text-transform: uppercase;
 }
-.summaryList li {
+.summary-list li {
   color: #303030;
   font-family: var(--font-trip-sans);
   font-size: 1rem;
@@ -151,7 +151,7 @@
   letter-spacing: 0.0025rem;
   cursor: pointer;
 }
-.summaryList li:not(:first-child) {
+.summary-list li:not(:first-child) {
   margin-top: 0.5rem;
 }
 .tableResponsive {
@@ -160,38 +160,38 @@
 }
 @media (max-width: 639.98px) {
   .blog-detail__main-content h1,
-  .newsContent h2,
-  .newsContent h3,
-  .newsContent h4,
-  .newsContent h5,
-  .newsContent h6 {
+  .news-content h2,
+  .news-content h3,
+  .news-content h4,
+  .news-content h5,
+  .news-content h6 {
     font-size: 1.375rem;
     font-style: normal;
     font-weight: 400;
     line-height: 130%;
   }
-  .newsContent h1 {
+  .news-content h1 {
     font-size: 1.5rem;
   }
-  .newsContent h2 {
+  .news-content h2 {
     font-size: 1.375rem;
   }
-  .newsContent h3 {
+  .news-content h3 {
     font-size: 1.25rem;
   }
-  .newsContent h4 {
+  .news-content h4 {
     font-size: 1rem;
   }
-  .newsContent h5 {
+  .news-content h5 {
     font-size: 0.875rem;
   }
-  .newsContent h6 {
+  .news-content h6 {
     font-size: 0.75rem;
   }
-  .newsContent strong {
+  .news-content strong {
     font-weight: 700;
   }
-  .newsContent a {
+  .news-content a {
     text-decoration: underline;
     font-size: 1rem;
     font-style: normal;
@@ -199,33 +199,33 @@
     line-height: 150%;
     letter-spacing: 0.0025rem;
   }
-  .newsContent p {
+  .news-content p {
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
     letter-spacing: 0.0025rem;
   }
-  .newsContent ul,
-  .newsContent ol {
+  .news-content ul,
+  .news-content ol {
     padding-left: 0.75rem;
   }
-  .newsContent ul li,
-  .newsContent ol li {
+  .news-content ul li,
+  .news-content ol li {
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
     letter-spacing: 0.0025rem;
   }
-  .newsContent li {
+  .news-content li {
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
     letter-spacing: 0.0025rem;
   }
-  .summaryList li {
+  .summary-list li {
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;

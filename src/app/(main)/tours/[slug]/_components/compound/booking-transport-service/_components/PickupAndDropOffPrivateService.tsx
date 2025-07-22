@@ -7,23 +7,48 @@ import React, {useContext} from 'react'
 import useIsMobile from '@/hooks/useIsMobile'
 import Image from 'next/image'
 
-export default function PickupAndDropOffPrivateService() {
+interface PickupAndDropOffPrivateServiceProps {
+  onCloseMb?: () => void
+}
+
+export default function PickupAndDropOffPrivateService({
+  onCloseMb,
+}: PickupAndDropOffPrivateServiceProps) {
   const pageContext = useContext(PageContext)
   if (!pageContext) throw new Error('Page context is missing')
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
   const isMobile = useIsMobile()
   const schedulePrivate = apiData.package_tour?.schedule_private_hanoi_hagiang
-
+  const handleClickCloseMb = () => {
+    if (onCloseMb) {
+      onCloseMb()
+    }
+  }
   return (
-    <div className='font-trip-sans xsm:max-h-[80vh] xsm:overflow-y-auto hidden_scroll xsm:gap-[1rem] xsm:justify-start xsm:p-[1rem] xsm:rounded-b-none flex w-fit max-w-full flex-col gap-[1.5rem] rounded-[1.5rem] bg-white p-[3.75rem]'>
-      <p className='font-dvn-luckiest-guy xsm:text-[1rem] xsm:font-trip-sans xsm:font-medium xsm:text-left xsm:normal-case text-center text-[1.625rem] leading-[150%] tracking-[0.01563rem] text-[#303030] uppercase'>
-        {isMobile
-          ? 'Private transport service'
-          : 'Pick up and drop off Private transport service'}
-      </p>
+    <div className='font-trip-sans xsm:gap-0 xsm:justify-start xsm:px-[1rem] xsm:pb-[1rem] xsm:pt-0 xsm:rounded-b-none flex w-fit max-w-full flex-col gap-[1.5rem] rounded-[1.5rem] bg-white p-[3.75rem] sm:w-[78.25rem]'>
+      <div className='xsm:justify-between xsm:sticky xsm:top-0 xsm:py-[1rem] z-10 flex items-center justify-center bg-white'>
+        <p className='font-dvn-luckiest-guy xsm:text-[1rem] xsm:font-trip-sans xsm:font-medium xsm:text-left xsm:normal-case text-center text-[1.625rem] leading-[150%] tracking-[0.01563rem] text-[#303030] uppercase'>
+          {isMobile
+            ? 'Private transport service'
+            : 'Pick up and drop off Private transport service'}
+        </p>
+        <button
+          type='button'
+          onClick={handleClickCloseMb}
+          className='sm:hidden'
+        >
+          <Image
+            alt=''
+            width={20}
+            height={20}
+            src={'/icons/x-close.svg'}
+            className='h-auto w-[1.25rem]'
+          />
+        </button>
+      </div>
 
-      <div className='xsm:pb-[1rem] xsm:max-h-[unset] hidden_scroll relative max-h-[35rem] max-w-full self-stretch overflow-x-auto pb-[3.75rem]'>
-        <table className='xsm:table-fixed xsm:w-full w-[76.9375rem] border border-solid border-[#EDEDED]'>
+      <div className='hidden_scroll xsm:mb-[1rem] relative self-stretch overflow-x-auto'>
+        <table className='xsm:table-fixed xsm:w-full border border-solid border-[#EDEDED]'>
           <thead className='border border-solid border-[#EDEDED] text-[0.875rem] leading-[120%] font-bold tracking-[0.00219rem] text-[#303030]'>
             <tr>
               <th

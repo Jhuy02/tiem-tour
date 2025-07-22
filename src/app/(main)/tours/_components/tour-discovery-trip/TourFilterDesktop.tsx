@@ -22,7 +22,7 @@ export default function TourFilter({
   const {handleFilterChange, filters}: TourDiscoveryTripType = context
 
   return (
-    <div className='flex h-[5.1875rem] items-end self-stretch bg-white p-[0.5rem]'>
+    <div className='flex items-end self-stretch bg-white px-[0.5rem]'>
       <FilterSelectOption
         keyParam='location'
         icon='./tours/compass.svg'
@@ -30,7 +30,7 @@ export default function TourFilter({
         select='multiple'
         value={filters.location}
         options={tourLocation}
-        className='h-[4.1875rem] flex-1'
+        className='flex-1'
         onChange={handleFilterChange}
       />
       <FilterSelectOption
@@ -40,7 +40,7 @@ export default function TourFilter({
         select='multiple'
         value={filters.duration}
         options={tourDuration}
-        className='h-[4.1875rem] flex-1'
+        className='flex-1'
         onChange={handleFilterChange}
       />
       <FilterSelectOption
@@ -50,7 +50,7 @@ export default function TourFilter({
         select='single'
         value={filters.orderby}
         options={tourBudget}
-        className='h-[4.1875rem] flex-1'
+        className='flex-1'
         onChange={handleFilterChange}
       />
     </div>

@@ -21,6 +21,7 @@ interface TourBestChooseType {
 
 export default function TourBestChoose({title, tour_list}: TourBestChooseType) {
   const isMobile = useIsMobile()
+
   return (
     <section className='best-choose relative'>
       <div className='mx-auto max-w-[87.5rem] pt-[1.875rem] max-sm:py-[2rem]'>

@@ -215,7 +215,7 @@ export default function BookingCheckout() {
 
   return (
     <>
-      <div className='font-trip-sans sticky top-[0.5rem] h-fit rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.25rem]'>
+      <div className='font-trip-sans sticky top-[0.5rem] h-fit max-h-[100vh] overflow-y-auto rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white p-[1.25rem]'>
         <h3 className='mb-[1.25rem] border-b border-solid border-[#EDEDED] pb-[0.75rem] text-[1.125rem] leading-[130%] font-black tracking-[0.0025rem] text-[#303030]'>
           Subtotal
         </h3>
@@ -501,7 +501,7 @@ export default function BookingCheckout() {
                     {Number(totalPaymentPrice).toLocaleString('en-US')} USD
                   </span>
                   <span className='flex h-[1.25rem] w-fit items-center justify-center rounded-[1rem] bg-[#115A46]/60 px-[0.375rem] py-[0.1875rem] text-[0.75rem] font-bold text-white'>
-                    -27%
+                    -{tourSalePercent * 100}%
                   </span>
                 </p>
               </>
