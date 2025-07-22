@@ -1,4 +1,6 @@
 'use client'
+import {v4 as uuidv4} from 'uuid'
+
 import React, {useContext, useEffect, useMemo} from 'react'
 import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
 import {TourDetailApiResType} from '@/types/tours.interface'
@@ -6,27 +8,32 @@ import {useFormContext, useWatch} from 'react-hook-form'
 import {BookingFormValues} from '@/schemas/booking.schema'
 import {format} from 'date-fns'
 import Image from 'next/image'
-import {FormField, FormItem, FormMessage} from '@/components/ui/form'
-import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group'
-import {Label} from '@/components/ui/label'
+import {FormField, FormItem} from '@/components/ui/form'
+
+import {Button} from '@/components/ui/button'
+import clsx from 'clsx'
 
 interface CheckoutDrawerProps {
+  onOpenDrawerConfirm: () => void
   onCloseCheckoutDrawer: () => void
-  onOpenConfirmDrawer: () => void
   onUpdateTotalPayment: (price: number) => void
 }
 
 export default function CheckoutDrawer({
+  onOpenDrawerConfirm,
   onUpdateTotalPayment,
   onCloseCheckoutDrawer,
-  onOpenConfirmDrawer,
 }: CheckoutDrawerProps) {
   const pageContext = useContext(PageContext)
   if (!pageContext) throw new Error('Page context is missing')
   const {data: apiData}: {data: TourDetailApiResType} = pageContext
   const {control} = useFormContext<BookingFormValues>()
+  // const {errors} = useFormState<BookingFormValues>()
+  // const hasErrors = Object.keys(errors).length > 0
 
   const tourSalePercent = Number(apiData.acf_fields.tour_sale_percent) / 100
+  const dayCount = Number(apiData?.package_tour?.duration_number)
+
   // Lấy dữ liệu từ form
   const scheduleStart: Date | null = useWatch({control, name: 'schedule_start'})
   const scheduleEnd: Date | null = useWatch({control, name: 'schedule_end'})
@@ -103,7 +110,7 @@ export default function CheckoutDrawer({
         )
         outboundTripVehicle = {
           name: vehicle?.title,
-          price: Number(vehicle?.fields?.price_car_pax),
+          price: Number(vehicle?.fields?.price_car_pax) * Number(adults),
         }
       } else if (outboundTripTransportType === 'private_transport') {
         const vehicle = apiData.package_tour.private_transport.find(
@@ -115,7 +122,7 @@ export default function CheckoutDrawer({
         )?.price
         outboundTripVehicle = {
           name: vehicleName,
-          price: Number(vehiclePrice),
+          price: Number(vehiclePrice) * Number(adults),
         }
       } else if (outboundTripTransportType === 'personal_vehicle') {
         outboundTripVehicle = null
@@ -128,7 +135,7 @@ export default function CheckoutDrawer({
         )
         returnTripVehicle = {
           name: vehicle?.title,
-          price: Number(vehicle?.fields?.price_car_pax),
+          price: Number(vehicle?.fields?.price_car_pax) * Number(adults),
         }
       } else if (returnTripTransportType === 'private_transport') {
         const vehicle = apiData.package_tour.private_transport.find(
@@ -140,7 +147,7 @@ export default function CheckoutDrawer({
         )?.price
         returnTripVehicle = {
           name: vehicleName,
-          price: Number(vehiclePrice),
+          price: Number(vehiclePrice) * Number(adults),
         }
       } else if (returnTripTransportType === 'personal_vehicle') {
         returnTripVehicle = null
@@ -151,6 +158,7 @@ export default function CheckoutDrawer({
       returnTripVehicle,
     }
   }, [
+    adults,
     apiData.package_tour.main_car_pick_up_data,
     apiData.package_tour.private_transport,
     outboundTripTransportPickupLocation,
@@ -172,7 +180,7 @@ export default function CheckoutDrawer({
         : Number(transportVehicle.returnTripVehicle?.price)
     const totalRentMotorbikePrice = rentMotorcycleList.reduce(
       (total, {price, quantity}) => {
-        return total + Number(price) * Number(quantity)
+        return total + Number(price) * Number(quantity) * dayCount
       },
       0,
     )
@@ -183,6 +191,7 @@ export default function CheckoutDrawer({
       returnTripTransportPrice
     )
   }, [
+    dayCount,
     outboundTripTransportType,
     rentMotorcycleList,
     returnTripTransportType,
@@ -372,18 +381,30 @@ export default function CheckoutDrawer({
               <p className='text-[1rem] leading-[120%] font-bold tracking-[0.0025rem] text-[#3B3943]'>
                 Rent motorcycles
               </p>
-              <div className='flex items-center justify-between'>
-                <p className='flex items-center space-x-[0.25rem] text-[0.875rem] leading-[120%] tracking-[0.01563rem] text-[rgba(48,48,48,0.80)]'>
-                  <span className='font-extrabold'>01</span>
-                  <span className='font-normal'>
-                    Honda 110cc - Semi automatic
-                  </span>
-                </p>
-                <p className='flex items-center space-x-[0.25rem] text-right text-[0.875rem] leading-[150%] font-bold tracking-[0.00219rem] text-[#303030]'>
-                  <span>300.000</span>
-                  <span>USD</span>
-                </p>
-              </div>
+
+              {Array.isArray(rentMotorcycleList) &&
+                rentMotorcycleList.map(({name, quantity, price}) => {
+                  const subtotal = Number(price) * Number(quantity) * dayCount
+                  return (
+                    <div
+                      key={uuidv4()}
+                      className='flex items-center justify-between'
+                    >
+                      <p className='flex items-center space-x-[0.25rem] text-[0.875rem] leading-[120%] tracking-[0.01563rem] text-[rgba(48,48,48,0.80)]'>
+                        <span className='font-extrabold'>
+                          {quantity?.toString()?.padStart(2, '0')}
+                        </span>
+                        <span
+                          className='font-normal'
+                          dangerouslySetInnerHTML={{__html: name ?? ''}}
+                        ></span>
+                      </p>
+                      <p className='flex items-center space-x-[0.25rem] text-right text-[0.875rem] leading-[150%] font-bold tracking-[0.00219rem] text-[#303030]'>
+                        {subtotal.toLocaleString('en-US')} USD
+                      </p>
+                    </div>
+                  )
+                })}
             </div>
             {tourPackage && (
               <div className='flex flex-col space-y-[0.25rem]'>
@@ -392,7 +413,11 @@ export default function CheckoutDrawer({
                 </p>
                 <div className='flex items-center justify-between'>
                   <p className='flex items-center space-x-[0.25rem] text-[0.875rem] leading-[120%] tracking-[0.01563rem] text-[rgba(48,48,48,0.80)]'>
-                    <span className='font-normal'>{tourPackage} x</span>
+                    <span>
+                      {tourPackage === 'saving' && 'Saving Package'}
+                      {tourPackage === 'budget' && 'Budget Package'}
+                      {tourPackage === 'premium' && 'Premium Package'} x
+                    </span>
                     <span className='font-extrabold'>No Fee</span>
                   </p>
                 </div>
@@ -400,53 +425,25 @@ export default function CheckoutDrawer({
             )}
           </div>
         </div>
-        <div className=''>
-          <FormField
-            control={control}
-            name='deposit'
-            render={({field}) => (
-              <FormItem>
-                <RadioGroup
-                  className=''
-                  onValueChange={field.onChange}
-                  name={field.name}
-                >
-                  <Label className='inline-flex w-full cursor-pointer items-center gap-0'>
-                    <RadioGroupItem
-                      value={'deposit'}
-                      className='peer sr-only'
-                    />
-                    <Image
-                      alt=''
-                      width={22}
-                      height={22}
-                      src={'/icons/radio-unchecked.svg'}
-                      className='hidden! h-auto w-[1.25rem] peer-data-[state="unchecked"]:block!'
-                    />
-                    <Image
-                      alt=''
-                      width={22}
-                      height={22}
-                      src={'/icons/radio-checked.svg'}
-                      className='hidden! h-auto w-[1.25rem] peer-data-[state="checked"]:block!'
-                    />
-                    <div className='flex flex-1 flex-col space-y-[0.5rem] pl-[0.5rem]'>
-                      <p className='inline-flex items-center space-x-[0.5rem] tracking-[0.00219rem] text-[#303030]'>
-                        <span className='inline-block h-[1.1875rem] text-[1rem] leading-[120%] font-medium'>
-                          Deposit
-                        </span>
-                        <span className='inline-block h-[1rem] text-[0.75rem] leading-[150%] font-normal'>
-                          (<span className='text-[#F64722]'>*</span>
-                          Non-refundable in case of cancellation)
-                        </span>
-                      </p>
-                    </div>
-                  </Label>
-                  <FormMessage className='font-trip-sans col-span-1 pl-[0.125rem] text-[0.75rem] leading-[120%] font-bold tracking-[0.00188rem] text-[#EA3434]' />
-                </RadioGroup>
-              </FormItem>
-            )}
+        <div className='inline-flex w-full cursor-pointer items-center gap-0'>
+          <Image
+            alt=''
+            width={22}
+            height={22}
+            src={'/icons/radio-checked.svg'}
+            className='h-auto w-[1.25rem]'
           />
+          <div className='flex flex-1 flex-col space-y-[0.5rem] pl-[0.5rem]'>
+            <p className='inline-flex items-center space-x-[0.5rem] tracking-[0.00219rem] text-[#303030]'>
+              <span className='inline-block h-[1.1875rem] text-[1rem] leading-[120%] font-medium'>
+                Deposit
+              </span>
+              <span className='inline-block h-[1rem] text-[0.75rem] leading-[150%] font-normal'>
+                (<span className='text-[#F64722]'>*</span>
+                Non-refundable in case of cancellation)
+              </span>
+            </p>
+          </div>
         </div>
         <div className="mb-[0.5rem] flex items-center justify-between rounded-[1rem] bg-[url('/common/common-background-pc.webp')] bg-cover bg-center bg-no-repeat p-[0.75rem]">
           <div className='flex flex-col space-y-[0.25rem] px-[0.75rem]'>
@@ -474,16 +471,22 @@ export default function CheckoutDrawer({
               </>
             )}
           </div>
-
-          <button
+          <Button
             type='button'
-            onClick={onOpenConfirmDrawer}
-            className='flex h-[4.375rem] w-[10.40625rem] cursor-pointer flex-col items-center justify-center rounded-[0.75rem] bg-[#C83E21] text-white duration-300 ease-out hover:bg-[#EA6A44]'
+            onClick={() => {
+              if (onOpenDrawerConfirm) {
+                onOpenDrawerConfirm()
+              }
+            }}
+            // disabled={hasErrors}
+            className={clsx(
+              'flex h-[4.375rem] w-[10.40625rem] cursor-pointer flex-col items-center justify-center rounded-[0.75rem] bg-[#C83E21] text-white duration-300 ease-out hover:bg-[#EA6A44] disabled:pointer-events-none disabled:bg-[rgba(48,48,48,0.40)]',
+            )}
           >
             <span className='text-[1.125rem] leading-[120%] font-extrabold tracking-[-0.0025rem] uppercase'>
               Check out
             </span>
-            {tourSalePercent && (
+            {tourSalePercent > 0 && (
               <span className='text-[0.75rem] leading-[130%] tracking-[0.00188rem]'>
                 Save{' '}
                 {Number(totalPaymentPrice * tourSalePercent).toLocaleString(
@@ -492,7 +495,7 @@ export default function CheckoutDrawer({
                 USD
               </span>
             )}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
