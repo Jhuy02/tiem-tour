@@ -12,6 +12,7 @@ import 'swiper/css'
 import {Navigation} from 'swiper/modules'
 import {Swiper, SwiperSlide} from 'swiper/react'
 import './tripsforyou.css'
+import {ROUTES} from '@/constants/routes'
 interface IndataTripsForYour {
   title: string
   slug: string
@@ -33,7 +34,7 @@ export default function TripsForYour({
           TRIPS FOR YOU
         </div>
         <Link
-          href='/contact'
+          href={ROUTES.CONTACT}
           className='xsm:w-full btn__learn-more xsm:self-stretch relative mt-[1.375rem] w-fit cursor-pointer overflow-hidden rounded-[3.125rem]'
         >
           <div className='xsm:py-[1.125rem] xsm:h-[3.375rem] xsm:border-[3px] flex h-[4rem] items-center justify-center rounded-[3.125rem] border-[4px] border-solid border-[rgba(0,0,0,0.12)] px-[2.5rem] py-[1.25rem] hover:border-transparent'>

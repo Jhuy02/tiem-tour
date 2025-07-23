@@ -2,6 +2,7 @@
 import BlogContent from '@/app/(main)/news/[slug]/news-content'
 import RelatedNewsList from '@/app/_components/related-news'
 import fetchData from '@/fetches/fetchData'
+import {notFound} from 'next/navigation'
 
 export async function generateStaticParams() {
   const posts = await fetchData({
@@ -29,6 +30,10 @@ export default async function BlogDetail({
       method: 'GET',
     }),
   ])
+
+  if (!detailBlog.success) {
+    notFound()
+  }
 
   return (
     <main className="xsm:pb-[5rem] relative bg-[url('/images/background-page-mobile.webp')] bg-cover bg-fixed bg-center bg-no-repeat pb-[12rem] sm:bg-[url('/images/background-page-pc.webp')]">

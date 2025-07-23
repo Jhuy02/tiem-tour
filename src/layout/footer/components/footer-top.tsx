@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import {Arrow} from '@/components/blue-button'
 import {IFooter} from '@/types/footer.interface'
+import {ROUTES} from '@/constants/routes'
 
 interface FooterTopProps {
   data: IFooter
@@ -26,7 +27,7 @@ const FooterTop = ({data}: FooterTopProps) => {
               {data.footer_email}
             </Link>
             <Link
-              href={`/contact`}
+              href={ROUTES.CONTACT}
               target={data.footer_link.target}
               className='footer__top-right--content-button space-x-[0.625rem]'
             >

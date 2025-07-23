@@ -28,6 +28,7 @@ import {TourDetailApiResType} from '@/types/tours.interface'
 import {PageContext} from '@/app/(main)/tours/[slug]/context/PageProvider'
 import clsx from 'clsx'
 import {Input} from '@/components/ui/input'
+import {ROUTES} from '@/constants/routes'
 
 export default function ServiceOutboundTripWithPrivateTransport() {
   const pageContext = useContext(PageContext)
@@ -364,7 +365,7 @@ export default function ServiceOutboundTripWithPrivateTransport() {
           </div>
           <div className='xsm:basis-full xsm:flex xsm:justify-end shrink-0'>
             <Link
-              href={'/contact'}
+              href={ROUTES.CONTACT}
               className='text-[0.875rem] leading-[120%] font-medium tracking-[0.00219rem] text-[#006CE4] underline'
             >
               Contact us
