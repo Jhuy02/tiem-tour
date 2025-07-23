@@ -45,7 +45,7 @@ export default function BookingForm({data}: BookTourNowProps) {
       motorcycles: data?.motorbike_rents?.motorbike_rent_list?.map((motor) => ({
         name: motor?.title,
         id: motor?.id,
-        price: motor?.price.toString(),
+        price: motor?.price?.toString(),
         quantity: 0,
       })),
       gifts: '',
@@ -187,7 +187,9 @@ export default function BookingForm({data}: BookTourNowProps) {
       customer_name: values?.yourName,
       phone: values?.yourPhone,
       note: values?.yourMessage,
+      total_day: Number(apiData.package_tour.duration_number),
     }
+
     setTransition(async () => {
       const response = await fetchData({
         method: 'POST',
