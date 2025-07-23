@@ -1,5 +1,5 @@
-import { NextConfig } from 'next';
-import bundleAnalyzer from '@next/bundle-analyzer';
+import {NextConfig} from 'next'
+import bundleAnalyzer from '@next/bundle-analyzer'
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -9,8 +9,8 @@ const nextConfig: NextConfig = {
     formats: ['image/webp'],
     minimumCacheTTL: 2678400,
     remotePatterns: [
-      { protocol: 'https', hostname: '**' },
-      { protocol: 'http', hostname: '**' },
+      {protocol: 'https', hostname: '**'},
+      {protocol: 'http', hostname: '**'},
     ],
     deviceSizes: [430, 768, 1080, 1280, 1600, 1920],
   },
@@ -33,8 +33,8 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-};
+}
 
 //ANALYZE=true npm run build
 
-export default withBundleAnalyzer(nextConfig);
+export default withBundleAnalyzer(nextConfig)

@@ -3,6 +3,5 @@ export const ROUTES = {
   ABOUT: '/about',
   CONTACT: '/contact',
   ACTIVITY: '/blog',
-  BLOG_POST: '/blog',
-  PROJECTS: '/projects',
+  TOUR_LIST: '/tours',
 }
