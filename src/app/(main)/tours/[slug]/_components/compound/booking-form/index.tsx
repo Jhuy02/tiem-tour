@@ -153,7 +153,7 @@ export default function BookingForm({data}: BookTourNowProps) {
           quantity: Number(values?.riders[1].quantity),
         },
         {
-          type: 'behind_after',
+          type: 'seat_behind_friend',
           quantity: Number(values?.riders[2].quantity),
         },
       ],
@@ -188,7 +188,6 @@ export default function BookingForm({data}: BookTourNowProps) {
       phone: values?.yourPhone,
       note: values?.yourMessage,
     }
-
     setTransition(async () => {
       const response = await fetchData({
         method: 'POST',
