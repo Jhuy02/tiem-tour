@@ -9,7 +9,7 @@ import {TAXONOMY} from '@/constants/taxonomy'
 import {useDiscoveryTour} from '@/hooks/useDiscoveryTour'
 import useIsMobile from '@/hooks/useIsMobile'
 import {DiscoveryTourProps, TourTaxonomy} from '@/types/tours.interface'
-import {createContext} from 'react'
+import {createContext, useEffect, useRef} from 'react'
 
 export interface TourDiscoveryTripType {
   handleFilterChange: (key: string, value: {slug: string}[]) => void
@@ -40,6 +40,7 @@ export default function TourDiscoveryTrip({
   tourDurationTax,
 }: DiscoveryTourProps) {
   const isMobile = useIsMobile()
+  const sectionRef = useRef<HTMLDivElement | null>(null)
 
   const {
     containerRef,
@@ -59,6 +60,21 @@ export default function TourDiscoveryTrip({
     tourLocationTax,
     tourDurationTax,
   })
+
+  // Scroll to this section if isSearch=true in query params
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('isSearch') === 'true' && sectionRef.current) {
+        sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        // Remove isSearch param from URL after scroll
+        params.delete('isSearch')
+        const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '')
+        window.history.replaceState({}, '', newUrl)
+      }
+    }
+  }, [])
+
   return (
     <TourDiscoveryTripContext.Provider
       value={{
@@ -69,7 +85,10 @@ export default function TourDiscoveryTrip({
       }}
     >
       <section
-        ref={containerRef}
+        ref={(el: HTMLDivElement | null) => {
+          (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = el
+          sectionRef.current = el
+        }}
         className='relative pt-[2.5rem] pb-[6.25rem] max-sm:px-[1rem] max-sm:py-[2rem]'
       >
         <div className='mx-auto flex max-w-[87.5rem] flex-col sm:space-y-[3rem]'>

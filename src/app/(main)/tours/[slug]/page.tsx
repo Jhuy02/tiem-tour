@@ -41,14 +41,13 @@ export default async function TourDetail({
   if (data.data.status === 404) {
     notFound()
   }
-  // console.log(data)
 
   return (
     <PageProvider data={data}>
       <main className='xsm:pb-[5rem]'>
         <Banner data={data} />
         <div className='relative h-auto'>
-          <Tab />
+          <Tab price={data.acf_fields.price} />
           <div
             id='tour-detail'
             className='xsm:px-[1rem] xsm:mt-[0.5rem] xsm:flex-col xsm:space-x-0 relative mx-auto mt-[2rem] flex h-auto max-w-[87.5rem] space-x-[3.75rem]'

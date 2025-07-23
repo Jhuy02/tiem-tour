@@ -11,7 +11,7 @@ const tabs = [
   {label: 'FAQ', id: 'faq'},
 ]
 
-export const Tab = () => {
+export const Tab = ({price}: {price: string}) => {
   const [active, setActive] = useState(0)
   const [isStickyVisible, setIsStickyVisible] = useState(true)
   const stickyTabRef = useRef<HTMLDivElement>(null)
@@ -87,13 +87,14 @@ export const Tab = () => {
           <p className='leading-[1.6rem] tracking-[0.0025rem] text-[#303030]'>
             From{' '}
             <strong className='font-dvn-luckiest-guy text-[1.25rem] leading-[1.875rem] tracking-[0.00313rem] text-[#19C2C2]'>
-              1.100.000
+              {price} USD
             </strong>
           </p>
           <Button
             red
             icon
             className='cursor-pointer'
+            onClick={() => scrollToElement(null, 'book-tour-now', 1, 6)}
           >
             Book now
           </Button>
