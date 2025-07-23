@@ -3,6 +3,7 @@
 import {
   IDiscover,
   IDiscoverLocation,
+  IDiscoverPackage,
   IDiscoverTour,
 } from '@/types/discover.interface'
 import Image from 'next/image'
@@ -22,12 +23,15 @@ const Discover = ({
   data,
   tours,
   location,
+  package: packageData,
 }: {
   data: IDiscover
   tours: IDiscoverTour[]
   location: IDiscoverLocation[]
+  package: IDiscoverPackage[]
 }) => {
   const [activeLocation, setActiveLocation] = useState('')
+  const [activePackage, setActivePackage] = useState('saving')
   const swiperRef = useRef<SwiperType | null>(null)
   const isMobile = useIsMobile()
 
@@ -38,9 +42,8 @@ const Discover = ({
   }, [activeLocation])
 
   const query = useMemo(() => {
-    if (!activeLocation) return null
-    return `/wp-json/api/v1/get-all/tour?page=1&limit=6&tax=location&location=${activeLocation}&order=DESC&orderby=date`
-  }, [activeLocation])
+    return `/wp-json/api/v1/tours?limit=8&page=1&location=${activeLocation}&package=${activePackage}&order=DESC&orderby=date`
+  }, [activeLocation, activePackage])
 
   const {data: toursData, isLoading} = useSWR(query, fetcherCMS, {
     revalidateIfStale: false,
@@ -55,6 +58,12 @@ const Discover = ({
     swiperRef.current = swiper
   }
 
+  const handlePackageChange = (slug: string) => {
+    setActivePackage(slug)
+  }
+
+  console.log(toursData)
+
   return (
     <section id='discover'>
       <Image
@@ -67,12 +76,22 @@ const Discover = ({
 
       <div className='discover__container'>
         <DiscoverHeader
+          packageData={packageData}
           data={data}
           location={location}
           activeLocation={activeLocation}
           onLocationChange={handleLocationChange}
+          activePackage={activePackage}
+          onPackageChange={handlePackageChange}
         />
-
+        {toursData?.data?.length === 0 && (
+          <div className='mt-[7rem] flex flex-col items-center justify-center'>
+            <h2 className='text-2xl font-bold text-white'>No tours found</h2>
+            <p className='text-white'>
+              We couldn't find any tours matching your criteria.
+            </p>
+          </div>
+        )}
         {isMobile ? (
           <MobileTourList
             tours={tours}
