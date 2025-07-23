@@ -7,9 +7,8 @@ import {Tripadvisor} from '@/app/(main)/tours/[slug]/_components/overview-compou
 import {TripadvisorTab} from '@/app/(main)/tours/[slug]/_components/overview-compound/tripadvisor-tab'
 import TripsForYour from '@/app/(main)/tours/[slug]/_components/tripsforyour'
 import PageProvider from '@/app/(main)/tours/[slug]/context/PageProvider'
-
-import NotFound from '@/components/NotFound'
 import fetchData from '@/fetches/fetchData'
+import {notFound} from 'next/navigation'
 
 export default async function TourDetail({
   params,
@@ -35,9 +34,12 @@ export default async function TourDetail({
       },
     }),
   ])
-
-  if (!data || slug === 'undefined') {
-    return <NotFound />
+  // console.log('Data: ', data)
+  // if (!data || slug === 'undefined') {
+  //   return <NotFound />
+  // }
+  if (data.data.status === 404) {
+    notFound()
   }
   // console.log(data)
 
