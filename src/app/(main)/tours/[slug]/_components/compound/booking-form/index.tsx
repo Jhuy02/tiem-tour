@@ -153,7 +153,7 @@ export default function BookingForm({data}: BookTourNowProps) {
           quantity: Number(values?.riders[1].quantity),
         },
         {
-          type: 'behind_after',
+          type: 'seat_behind_friend',
           quantity: Number(values?.riders[2].quantity),
         },
       ],
@@ -188,21 +188,21 @@ export default function BookingForm({data}: BookTourNowProps) {
       phone: values?.yourPhone,
       note: values?.yourMessage,
     }
-
-    setTransition(async () => {
-      const response = await fetchData({
-        method: 'POST',
-        api: 'custom/v1/create-order',
-        option: {
-          body: JSON.stringify(formData),
-        },
-      })
-      if (response?.redirect_url) {
-        window.location.href = response.redirect_url
-      } else {
-        console.error('Không nhận được đường dẫn thanh toán từ server')
-      }
-    })
+    console.log('Form data: ', formData)
+    // setTransition(async () => {
+    //   const response = await fetchData({
+    //     method: 'POST',
+    //     api: 'custom/v1/create-order',
+    //     option: {
+    //       body: JSON.stringify(formData),
+    //     },
+    //   })
+    //   if (response?.redirect_url) {
+    //     window.location.href = response.redirect_url
+    //   } else {
+    //     console.error('Không nhận được đường dẫn thanh toán từ server')
+    //   }
+    // })
   }
 
   return !isMobile ? (

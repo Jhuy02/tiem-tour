@@ -122,7 +122,7 @@ export default function BookingFormMobile({data}: BookTourNowProps) {
           quantity: Number(values?.riders[1].quantity),
         },
         {
-          type: 'behind_after',
+          type: 'seat_behind_friend',
           quantity: Number(values?.riders[2].quantity),
         },
       ],
